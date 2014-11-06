@@ -1,0 +1,34 @@
+pkgname=spotify
+pkgver=0.9.11.27
+_anotherpkgver=.g2b1a638.81-1
+pkgrel=1
+pkgdesc="A proprietary peer-to-peer music streaming service"
+arch=('x86_64')
+license=('custom:"Copyright (c) 2006-2013 Spotify Ltd"')
+install=spotify.install
+url="http://www.spotify.com"
+options=('!strip')
+conflicts=('spotify-beta')
+
+source=("http://repository-origin.spotify.com/pool/non-free/s/spotify/spotify-client_${pkgver}${_anotherpkgver}_amd64.deb")
+sha256sums=('4f93776cac562f622e635c64fa61ee46cb9bdfbda0a2aff0905acf007894d479')
+
+depends=("alsa-lib>=1.0.14" "glibc>=2.6" "libxss" "qtwebkit" "gconf" "nspr>=4.0"
+         "nss" "dbus" "systemd" "libgcrypt15" "gtk2")
+optdepends=('desktop-file-utils: Adds URI support to compatible desktop environments'
+            'ffmpeg-compat: Adds support for playback of local files')
+
+package() {
+  cd "${srcdir}"
+
+  ar x "spotify-client_${pkgver}${_anotherpkgver}_amd64.deb"
+  tar -xzf data.tar.gz
+
+  install -d "${pkgdir}/usr/share"
+  cp -a "${srcdir}/opt/spotify" "${pkgdir}/usr/share/"
+  install -d "${pkgdir}/usr/bin"
+  ln -s "/usr/share/spotify/spotify-client/spotify" "${pkgdir}/usr/bin/spotify"
+  install -Dm644 "${srcdir}/usr/share/doc/spotify-client/copyright" "${pkgdir}/usr/share/licenses/spotify/copyright"
+
+  ln -s /usr/lib/libudev.so "${pkgdir}/usr/share/spotify/spotify-client/Data/libudev.so.0"
+}

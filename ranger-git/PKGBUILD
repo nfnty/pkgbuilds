@@ -1,0 +1,41 @@
+pkgname=('ranger-git')
+_srcname='ranger'
+pkgver=1.6.1.117.g2c7d360
+pkgrel=1
+pkgdesc='A simple, vim-like file manager'
+arch=('any')
+url='https://github.com/hut/ranger'
+license=('GPL3')
+
+depends=('python')
+optdepends=(
+	'file: for determining file types'
+	'python-chardet: in case of encoding detection problems'
+	'sudo: to use the "run as root"-feature'
+	'libcaca: for ASCII-art image previews'
+	'highlight: for syntax highlighting of code'
+	'atool: for previews of archives'
+	'w3m: for previews of images and html pages'
+	'lynx: for previews of html pages'
+	'elinks: for previews of html pages'
+	'poppler: for pdf previews'
+	'transmission-cli: for viewing bittorrent information'
+	'mediainfo: for viewing information about media files'
+	'perl-image-exiftool: for viewing information about media files'
+)
+makedepends=('git')
+provides=('ranger')
+conflicts=('ranger')
+
+source=("$_srcname::git+https://github.com/hut/ranger.git")
+sha256sums=('SKIP')
+
+pkgver() {
+	cd "$_srcname"
+	git describe --always | sed -e 's|-|.|g' -e '1s|^.||'
+}
+
+package() {
+	cd "$_srcname"
+	python setup.py -q install --root="$pkgdir" --optimize=1
+}
