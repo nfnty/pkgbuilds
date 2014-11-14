@@ -1,0 +1,131 @@
+diff --git a/Panel.c b/Panel.c
+index 4355b1e..8c2a13d 100644
+--- a/Panel.c
++++ b/Panel.c
+@@ -346,51 +346,25 @@ void Panel_draw(Panel* this, bool focus) {
+ bool Panel_onKey(Panel* this, int key) {
+    assert (this != NULL);
+    switch (key) {
+-   case KEY_DOWN:
+-   case KEY_CTRLN:
++   case 'e':
+       if (this->selected + 1 < Vector_size(this->items))
+          this->selected++;
+       return true;
+-   case KEY_UP:
+-   case KEY_CTRLP:
++   case 'u':
+       if (this->selected > 0)
+          this->selected--;
+       return true;
+-   #ifdef KEY_C_DOWN
+-   case KEY_C_DOWN:
+-      if (this->selected + 1 < Vector_size(this->items)) {
+-         this->selected++;
+-         if (this->scrollV < Vector_size(this->items) - this->h) {
+-            this->scrollV++;
+-            this->needsRedraw = true;
+-         }
+-      }
+-      return true;
+-   #endif
+-   #ifdef KEY_C_UP
+-   case KEY_C_UP:
+-      if (this->selected > 0) {
+-         this->selected--;
+-         if (this->scrollV > 0) {
+-            this->scrollV--;
+-            this->needsRedraw = true;
+-         }
+-      }
+-      return true;
+-   #endif
+-   case KEY_LEFT:
+-   case KEY_CTRLB:
++   case 'h':
+       if (this->scrollH > 0) {
+          this->scrollH -= CRT_scrollHAmount;
+          this->needsRedraw = true;
+       }
+       return true;
+-   case KEY_RIGHT:
+-   case KEY_CTRLF:
++   case 't':
+       this->scrollH += CRT_scrollHAmount;
+       this->needsRedraw = true;
+       return true;
+-   case KEY_PPAGE:
++   case 'U':
+       this->selected -= (this->h - 1);
+       this->scrollV -= (this->h - 1);
+       if (this->selected < 0)
+@@ -399,7 +373,7 @@ bool Panel_onKey(Panel* this, int key) {
+          this->scrollV = 0;
+       this->needsRedraw = true;
+       return true;
+-   case KEY_NPAGE:
++   case 'E':
+       this->selected += (this->h - 1);
+       int size = Vector_size(this->items);
+       if (this->selected < 0)
+@@ -411,10 +385,10 @@ bool Panel_onKey(Panel* this, int key) {
+          this->scrollV = MAX(0, size - this->h - 1);
+       this->needsRedraw = true;
+       return true;
+-   case KEY_HOME:
++   case 'g':
+       this->selected = 0;
+       return true;
+-   case KEY_END:
++   case 'G':
+       this->selected = Vector_size(this->items) - 1;
+       return true;
+    }
+diff --git a/htop.c b/htop.c
+index aee07c0..c0dcd0e 100644
+--- a/htop.c
++++ b/htop.c
+@@ -661,7 +661,7 @@ int main(int argc, char** argv) {
+          setSortKey(pl, defaultBar, PERCENT_MEM, panel, settings);
+          break;
+       }
+-      case 'T':
++      case 'r':
+       {
+          refreshTimeout = 0;
+          setSortKey(pl, defaultBar, TIME, panel, settings);
+@@ -674,7 +674,7 @@ int main(int argc, char** argv) {
+          tagAllChildren(panel, p);
+          break;
+       }
+-      case 'U':
++      case 'x':
+       {
+          for (int i = 0; i < Panel_size(panel); i++) {
+             Process* p = (Process*) Panel_get(panel, i);
+@@ -690,7 +690,6 @@ int main(int argc, char** argv) {
+          break;
+       }
+       case KEY_F(1):
+-      case 'h':
+       case '?':
+       {
+          showHelp(pl);
+@@ -759,7 +758,7 @@ int main(int argc, char** argv) {
+          follow = true;
+          continue;
+       }
+-      case 'u':
++      case 'L':
+       {
+          Panel* usersPanel = Panel_new(0, 0, 0, 0, true, Class(ListItem));
+          Panel_setHeader(usersPanel, "Show processes of:");
+@@ -911,7 +910,7 @@ int main(int argc, char** argv) {
+          refreshTimeout = 0;
+          doRefresh = true;
+          continue;
+-      case 't':
++      case 'T':
+       case KEY_F(5):
+          refreshTimeout = 0;
+          collapsed = false;
