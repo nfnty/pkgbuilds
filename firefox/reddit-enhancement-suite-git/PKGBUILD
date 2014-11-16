@@ -1,0 +1,42 @@
+pkgname=('reddit-enhancement-suite-firefox-git')
+_srcname='reddit-enhancement-suite-firefox'
+pkgver=r4037.97ad212
+pkgrel=1
+pkgdesc='A firefox extension that enhances your Reddit browsing experience'
+arch=('any')
+url='https://github.com/honestbleeps/Reddit-Enhancement-Suite'
+license=('GPL3')
+
+depends=('firefox')
+makedepends=('git' 'unzip')
+provides=('reddit-enhancement-suite-firefox')
+conflicts=('reddit-enhancement-suite-firefox')
+
+source=("$_srcname::git+${url}.git" 'addon-sdk::git+https://github.com/mozilla/addon-sdk.git' 'python2.patch')
+sha256sums=('SKIP' 'SKIP' 'bb7bfe1906ac7bdfb64db21f836eabb5457511ba46cfc207f93cf862a94e363f')
+
+_extension_id='jid1-xUfzOsOFlzSOXg@jetpack'
+_xpi_name='reddit_res.xpi'
+
+pkgver() {
+	cd "$srcdir/$_srcname"
+	printf 'r%s.%s\n' "$(git rev-list HEAD | wc -l)" "$(git rev-parse --short HEAD)"
+}
+
+prepare() {
+	cd "$srcdir/addon-sdk"
+	git apply ../python2.patch
+}
+
+build() {
+	cd "$srcdir/$_srcname"
+	bash 'makelinks.sh'
+	cd "$srcdir/$_srcname/XPI"
+	"$srcdir/addon-sdk/bin/cfx" xpi
+}
+
+package() {
+	local destdir="${pkgdir}/usr/lib/firefox/browser/extensions/$_extension_id"
+	install -d "$destdir"
+	unzip -d "$destdir" "$srcdir/$_srcname/XPI/$_xpi_name"
+}

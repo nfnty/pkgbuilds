@@ -1,0 +1,20 @@
+diff --git a/bin/cfx b/bin/cfx
+index 3e781fa..a03cba5 100755
+--- a/bin/cfx
++++ b/bin/cfx
+@@ -1,4 +1,4 @@
+-#! /usr/bin/env python
++#! /usr/bin/env python2
+ # This Source Code Form is subject to the terms of the Mozilla Public
+ # License, v. 2.0. If a copy of the MPL was not distributed with this
+ # file, You can obtain one at http://mozilla.org/MPL/2.0/.
+diff --git a/bin/integration-scripts/integration-check b/bin/integration-scripts/integration-check
+index 2505c15..da455ce 100644
+--- a/bin/integration-scripts/integration-check
++++ b/bin/integration-scripts/integration-check
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python2
+ # This Source Code Form is subject to the terms of the Mozilla Public
+ # License, v. 2.0. If a copy of the MPL was not distributed with this
+ # file, You can obtain one at http://mozilla.org/MPL/2.0/.
