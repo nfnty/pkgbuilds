@@ -1,6 +1,6 @@
 pkgname=('vimperator-git')
 _srcname='vimperator'
-pkgver=r4842.69e52fd
+pkgver=r4846.95c39f4
 pkgrel=1
 pkgdesc='Make Firefox look and behave like Vim'
 arch=('any')
