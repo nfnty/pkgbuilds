@@ -1,27 +1,3 @@
-diff --git a/CategoriesPanel.c b/CategoriesPanel.c
-index bf6ee54..f0de2fd 100644
---- a/CategoriesPanel.c
-+++ b/CategoriesPanel.c
-@@ -86,14 +86,11 @@ static HandlerResult CategoriesPanel_eventHandler(Panel* super, int ch) {
-       case EVENT_SETSELECTED:
-          result = HANDLED;
-          break;
--      case KEY_UP:
--      case KEY_CTRLP:
--      case KEY_DOWN:
--      case KEY_CTRLN:
--      case KEY_NPAGE:
--      case KEY_PPAGE:
--      case KEY_HOME:
--      case KEY_END: {
-+      case 'u':
-+      case 'e':
-+      case 'U':
-+      case 'E':
-+      {
-          int previous = selected;
-          Panel_onKey(super, ch);
-          selected = Panel_getSelectedIndex(super);
 diff --git a/Panel.c b/Panel.c
 index 4355b1e..ce873b2 100644
 --- a/Panel.c
@@ -81,52 +57,6 @@ index 4355b1e..ce873b2 100644
        this->selected = Vector_size(this->items) - 1;
        return true;
     }
-diff --git a/RichString.c b/RichString.c
-index 34720c1..4d27727 100644
---- a/RichString.c
-+++ b/RichString.c
-@@ -18,7 +18,7 @@ in the source distribution for its full text.
- 
- #include <assert.h>
- #ifdef HAVE_NCURSESW_CURSES_H
--#include <ncursesw/curses.h>
-+#include <curses.h>
- #elif HAVE_NCURSES_NCURSES_H
- #include <ncurses/ncurses.h>
- #elif HAVE_NCURSES_CURSES_H
-diff --git a/RichString.h b/RichString.h
-index a9cb3f6..a86d9c7 100644
---- a/RichString.h
-+++ b/RichString.h
-@@ -16,7 +16,7 @@ in the source distribution for its full text.
- 
- #include <assert.h>
- #ifdef HAVE_NCURSESW_CURSES_H
--#include <ncursesw/curses.h>
-+#include <curses.h>
- #elif HAVE_NCURSES_NCURSES_H
- #include <ncurses/ncurses.h>
- #elif HAVE_NCURSES_CURSES_H
-diff --git a/ScreenManager.c b/ScreenManager.c
-index 646ee2f..bf47ca9 100644
---- a/ScreenManager.c
-+++ b/ScreenManager.c
-@@ -205,6 +205,7 @@ void ScreenManager_run(ScreenManager* this, Panel** lastFocus, int* lastKey) {
-       }
-       case KEY_LEFT:
-       case KEY_CTRLB:
-+      case 'h':
-          if (!this->allowFocusChange)
-             break;
-          tryLeft:
-@@ -216,6 +217,7 @@ void ScreenManager_run(ScreenManager* this, Panel** lastFocus, int* lastKey) {
-          break;
-       case KEY_RIGHT:
-       case KEY_CTRLF:
-+      case 't':
-       case 9:
-          if (!this->allowFocusChange)
-             break;
 diff --git a/htop.c b/htop.c
 index aee07c0..c0dcd0e 100644
 --- a/htop.c
@@ -175,13 +105,3 @@ index aee07c0..c0dcd0e 100644
        case KEY_F(5):
           refreshTimeout = 0;
           collapsed = false;
-diff --git a/scripts/MakeHeader.py b/scripts/MakeHeader.py
-index c0fdc85..1e07dd7 100755
---- a/scripts/MakeHeader.py
-+++ b/scripts/MakeHeader.py
-@@ -1,4 +1,4 @@
--#!/usr/bin/python
-+#!/usr/bin/python2
- 
- import os, sys, string
- 

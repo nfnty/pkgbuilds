@@ -14,7 +14,7 @@ provides=('htop')
 conflicts=('htop')
 options=('!emptydirs')
 source=("git+${url}.git" 'vi.patch')
-sha256sums=('SKIP' 'a4f4a5b9a6be2c5feb3851576c9daea9ba6a832cba18862f6f53233089faa0b2')
+sha256sums=('SKIP' 'SKIP')
 
 pkgver() {
 	 cd "${srcdir}/${gitname}"
