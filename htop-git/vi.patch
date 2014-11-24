@@ -1,45 +1,40 @@
 diff --git a/CategoriesPanel.c b/CategoriesPanel.c
-index bf6ee54..f0de2fd 100644
+index bf6ee54..8c1f59c 100644
 --- a/CategoriesPanel.c
 +++ b/CategoriesPanel.c
-@@ -86,14 +86,11 @@ static HandlerResult CategoriesPanel_eventHandler(Panel* super, int ch) {
-       case EVENT_SETSELECTED:
-          result = HANDLED;
+@@ -88,10 +88,14 @@ static HandlerResult CategoriesPanel_eventHandler(Panel* super, int ch) {
           break;
--      case KEY_UP:
--      case KEY_CTRLP:
--      case KEY_DOWN:
--      case KEY_CTRLN:
--      case KEY_NPAGE:
--      case KEY_PPAGE:
--      case KEY_HOME:
--      case KEY_END: {
+       case KEY_UP:
+       case KEY_CTRLP:
 +      case 'u':
+       case KEY_DOWN:
 +      case 'e':
-+      case 'U':
+       case KEY_CTRLN:
+       case KEY_NPAGE:
 +      case 'E':
-+      {
+       case KEY_PPAGE:
++      case 'U':
+       case KEY_HOME:
+       case KEY_END: {
           int previous = selected;
-          Panel_onKey(super, ch);
-          selected = Panel_getSelectedIndex(super);
 diff --git a/Panel.c b/Panel.c
-index 4355b1e..ce873b2 100644
+index 4355b1e..0b33e54 100644
 --- a/Panel.c
 +++ b/Panel.c
-@@ -346,11 +346,13 @@ void Panel_draw(Panel* this, bool focus) {
- bool Panel_onKey(Panel* this, int key) {
-    assert (this != NULL);
+@@ -348,11 +348,13 @@ bool Panel_onKey(Panel* this, int key) {
     switch (key) {
-+   case 'e':
     case KEY_DOWN:
     case KEY_CTRLN:
++   case 'e':
        if (this->selected + 1 < Vector_size(this->items))
           this->selected++;
        return true;
-+   case 'u':
     case KEY_UP:
     case KEY_CTRLP:
++   case 'u':
        if (this->selected > 0)
+          this->selected--;
+       return true;
 @@ -380,17 +382,20 @@ bool Panel_onKey(Panel* this, int key) {
     #endif
     case KEY_LEFT:
@@ -81,32 +76,6 @@ index 4355b1e..ce873b2 100644
        this->selected = Vector_size(this->items) - 1;
        return true;
     }
-diff --git a/RichString.c b/RichString.c
-index 34720c1..4d27727 100644
---- a/RichString.c
-+++ b/RichString.c
-@@ -18,7 +18,7 @@ in the source distribution for its full text.
- 
- #include <assert.h>
- #ifdef HAVE_NCURSESW_CURSES_H
--#include <ncursesw/curses.h>
-+#include <curses.h>
- #elif HAVE_NCURSES_NCURSES_H
- #include <ncurses/ncurses.h>
- #elif HAVE_NCURSES_CURSES_H
-diff --git a/RichString.h b/RichString.h
-index a9cb3f6..a86d9c7 100644
---- a/RichString.h
-+++ b/RichString.h
-@@ -16,7 +16,7 @@ in the source distribution for its full text.
- 
- #include <assert.h>
- #ifdef HAVE_NCURSESW_CURSES_H
--#include <ncursesw/curses.h>
-+#include <curses.h>
- #elif HAVE_NCURSES_NCURSES_H
- #include <ncurses/ncurses.h>
- #elif HAVE_NCURSES_CURSES_H
 diff --git a/ScreenManager.c b/ScreenManager.c
 index 646ee2f..bf47ca9 100644
 --- a/ScreenManager.c
@@ -175,13 +144,3 @@ index aee07c0..c0dcd0e 100644
        case KEY_F(5):
           refreshTimeout = 0;
           collapsed = false;
-diff --git a/scripts/MakeHeader.py b/scripts/MakeHeader.py
-index c0fdc85..1e07dd7 100755
---- a/scripts/MakeHeader.py
-+++ b/scripts/MakeHeader.py
-@@ -1,4 +1,4 @@
--#!/usr/bin/python
-+#!/usr/bin/python2
- 
- import os, sys, string
- 
