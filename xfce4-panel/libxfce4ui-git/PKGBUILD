@@ -1,0 +1,45 @@
+pkgname=('libxfce4ui-git')
+srcname='libxfce4ui'
+pkgver=r820.4.11.1.30.g7608895
+pkgrel=1
+pkgdesc='Commonly used Xfce widgets among Xfce applications'
+arch=('i686' 'x86_64')
+url='http://git.xfce.org/xfce/libxfce4ui'
+license=('GPL2')
+
+groups=('xfce4-git')
+depends=('libxfce4util-git' 'gtk2' 'xfconf' 'startup-notification')
+makedepends=('git' 'xfce4-dev-tools-git' 'gtk-doc')
+provides=('libxfce4ui')
+conflicts=('libxfce4ui')
+
+source=("$srcname::git+git://git.xfce.org/xfce/libxfce4ui")
+sha256sums=('SKIP')
+
+pkgver() {
+	cd "$srcdir/$srcname"
+	printf 'r%s.%s\n' \
+		"$(git rev-list HEAD | wc -l)" \
+		"$(git describe --always | sed 's/-/./g' | sed 's/libxfce4ui.//g')"
+}
+
+build() {
+	cd "$srcdir/$srcname"
+	./autogen.sh --prefix=/usr
+	./configure \
+		--prefix=/usr \
+		--sysconfdir=/etc \
+		--sbindir=/usr/bin \
+		--libexecdir=/usr/lib \
+		--localstatedir=/var \
+		--disable-static \
+		--enable-gtk-doc \
+		--disable-debug \
+		--enable-maintainer-mode
+	make
+}
+
+package() {
+	cd "$srcdir/$srcname"
+	make DESTDIR="$pkgdir" install
+}
