@@ -7,7 +7,7 @@
 pkgbase='python-mpd2'
 pkgname='python-mpd2-git'
 pkgrel=1
-pkgver=20140625
+pkgver=20141121
 pkgdesc="Python MPD client library"
 depends=('python')
 conflicts=('python-mpd2')
