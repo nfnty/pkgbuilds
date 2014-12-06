@@ -1,4 +1,4 @@
-pkgname=('vimpager')
+pkgname=('vimpager-nfnty')
 srcname='vimpager'
 pkgver=r5.6859875
 pkgrel=1
