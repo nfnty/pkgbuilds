@@ -1,0 +1,34 @@
+pkgname=('i3ipc-python-git')
+srcname='i3ipc-python'
+pkgver=r17.e8efde9
+pkgrel=1
+pkgdesc='An improved Python library to control i3wm'
+arch=('i686' 'x86_64')
+url='https://github.com/acrisci/i3ipc-python'
+license=('GPL3')
+
+depends=('python' 'i3ipc-glib-git' 'python-gobject')
+makedepends=('git')
+provides=('i3ipc-python')
+conflicts=('i3ipc-python')
+
+source=("$srcname::git+https://github.com/acrisci/i3ipc-python.git")
+sha256sums=('SKIP')
+
+pkgver() {
+	cd "$srcdir/$srcname"
+	printf 'r%s.%s\n' \
+		"$(git rev-list HEAD | wc --lines)" \
+		"$(git describe --always | sed 's/-/./g')"
+}
+
+build() {
+	cd "$srcdir/$srcname"
+	./autogen.sh --prefix=/usr
+	make
+}
+
+package() {
+	cd "$srcdir/$srcname"
+	make DESTDIR="$pkgdir" install
+}
