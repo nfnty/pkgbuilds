@@ -12,8 +12,14 @@ makedepends=('git')
 provides=('vimperator')
 conflicts=('vimperator' 'vimperator-hg')
 
-source=("$srcname::git+https://github.com/vimperator/vimperator-labs.git" 'no_zip.patch')
-sha256sums=('SKIP' 'faec2c61cbfbe39084ad3275d3b70f10ce0be9f5498d8be0a15e6336c5ad1fa5')
+source=(
+	"$srcname::git+https://github.com/vimperator/vimperator-labs.git"
+	'no_zip.patch'
+)
+sha256sums=(
+	'SKIP'
+	'faec2c61cbfbe39084ad3275d3b70f10ce0be9f5498d8be0a15e6336c5ad1fa5'
+)
 
 EXTENSION_ID='vimperator@mozdev.org'
 
