@@ -1,6 +1,6 @@
 pkgname=('ranger-git')
-_srcname='ranger'
-pkgver=1.6.1.152.g807402c
+srcname='ranger'
+pkgver=r2543.v1.6.1.186.ge0a2838
 pkgrel=1
 pkgdesc='A simple, vim-like file manager'
 arch=('any')
@@ -27,15 +27,17 @@ makedepends=('git')
 provides=('ranger')
 conflicts=('ranger')
 
-source=("$_srcname::git+https://github.com/hut/ranger.git")
+source=("$srcname::git+https://github.com/hut/ranger.git")
 sha256sums=('SKIP')
 
 pkgver() {
-	cd "$_srcname"
-	git describe --always | sed -e 's|-|.|g' -e '1s|^.||'
+	cd "$srcdir/$srcname"
+	printf 'r%s.%s\n' \
+		"$(git rev-list HEAD | wc --lines)" \
+		"$(git describe --always | sed 's/-/./g')"
 }
 
 package() {
-	cd "$_srcname"
+	cd "$srcdir/$srcname"
 	python setup.py -q install --root="$pkgdir" --optimize=1
 }
