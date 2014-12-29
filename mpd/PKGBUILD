@@ -1,0 +1,111 @@
+# $Id$
+# Maintainer: Gaetan Bisson <bisson@archlinux.org>
+# Contributor: Angel Velasquez <angvp@archlinux.org>
+# Contributor: Andrea Scarpino <andrea@archlinux.org>
+# Contributor: Damir Perisa <damir.perisa@bluewin.ch>
+# Contributor: Ben <ben@benmazer.net>
+
+pkgname=mpd
+pkgver=0.19.7
+pkgrel=1
+pkgdesc='Flexible, powerful, server-side application for playing music'
+url='http://www.musicpd.org/'
+license=('GPL')
+arch=('i686' 'x86_64')
+depends=('ffmpeg' 'audiofile' 'libmad' 'faad2'
+         'sqlite' 'wavpack' 'libid3tag' 'yajl' 'libmpdclient' 'icu' )
+makedepends=('boost' 'doxygen')
+source=("http://www.musicpd.org/download/${pkgname}/${pkgver%.*}/${pkgname}-${pkgver}.tar.xz"{,.sig})
+sha1sums=('6f67d8ac14881c2d72c2907c2c1e14c6b2fd04c5' 'SKIP')
+
+groups=('modified')
+
+build() {
+	cd "${srcdir}/${pkgname}-${pkgver}"
+	./configure \
+		--prefix=/usr \
+		--sysconfdir=/etc \
+		--enable-eventfd \
+		--enable-signalfd \
+		--disable-poll \
+		--enable-epoll \
+		--enable-database \
+		--enable-libmpdclient \
+		--disable-expat \
+		--disable-upnp \
+		--disable-adplug \
+		--enable-alsa \
+		--disable-roar \
+		--disable-ao \
+		--enable-audiofile \
+		--disable-zlib \
+		--disable-bzip2 \
+		--disable-cdio-paranoia \
+		--disable-curl \
+		--disable-smbclient \
+		--disable-nfs \
+		--disable-debug \
+		--disable-documentation \
+		--disable-dsd \
+		--enable-ffmpeg \
+		--disable-fifo \
+		--enable-flac \
+		--disable-fluidsynth \
+		--disable-gme \
+		--disable-httpd-output \
+		--enable-id3 \
+		--enable-inotify \
+		--disable-ipv6 \
+		--disable-iso9660 \
+		--disable-jack \
+		--enable-largefile \
+		--disable-despotify \
+		--disable-soundcloud \
+		--disable-lame-encoder \
+		--disable-libwrap \
+		--enable-lsr \
+		--disable-soxr \
+		--enable-mad \
+		--disable-mikmod \
+		--disable-mms \
+		--disable-modplug \
+		--disable-mpc \
+		--enable-mpg123 \
+		--disable-openal \
+		--disable-opus \
+		--disable-oss \
+		--disable-osx \
+		--disable-pipe-output \
+		--disable-pulse \
+		--disable-recorder-output \
+		--disable-sidplay \
+		--disable-shine-encoder \
+		--disable-shout \
+		--disable-sndfile \
+		--disable-solaris-output \
+		--enable-sqlite \
+		--disable-systemd-daemon \
+		--enable-tcp \
+		--disable-test \
+		--disable-twolame-encoder \
+		--enable-un \
+		--disable-vorbis \
+		--disable-vorbis-encoder \
+		--disable-wave-encoder \
+		--disable-wavpack \
+		--disable-werror \
+		--disable-wildmidi \
+		--disable-zzip \
+		--enable-icu \
+		--enable-glib \
+		--disable-neighbor-plugins \
+		--enable-aac \
+		--disable-daemon \
+		--with-zeroconf=no
+	make
+}
+
+package() {
+	cd "${srcdir}/${pkgname}-${pkgver}"
+	make DESTDIR="${pkgdir}" install
+}
