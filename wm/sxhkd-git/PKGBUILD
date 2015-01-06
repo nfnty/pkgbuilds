@@ -2,7 +2,7 @@
 
 _pkgname=sxhkd
 pkgname=${_pkgname}-git
-pkgver=130
+pkgver=133
 pkgrel=1
 pkgdesc='A simple X hotkey daemon'
 arch=('i686' 'x86_64' 'armv7h')
