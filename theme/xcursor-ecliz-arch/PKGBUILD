@@ -14,7 +14,7 @@ source=("https://sites.google.com/site/sarmacidarch/xcursor-ecliz-arch-2.0-2-x86
 md5sums=('37335c5c8cf6ca7fc1e86034297be78a')
 
 package() {
-	mkdir -p "$pkgdir/usr/share/icons"
-		cp -r "$srcdir/usr/share/icons/$_pkgname" "$pkgdir/usr/share/icons"
-		cp -r "$srcdir/usr/share/icons/$_pkgname-Small" "$pkgdir/usr/share/icons"
+    mkdir -p "$pkgdir/usr/share/icons"
+    cp -r "$srcdir/usr/share/icons/$_pkgname" "$pkgdir/usr/share/icons"
+    cp -r "$srcdir/usr/share/icons/$_pkgname-Small" "$pkgdir/usr/share/icons"
 }

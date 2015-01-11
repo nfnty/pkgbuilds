@@ -14,13 +14,13 @@ source=("http://pypi.python.org/packages/source/s/selenium/selenium-${pkgver}.ta
 md5sums=('8802d73fb989d007ba1b43f070361cd1')
 
 build() {
-	cd "$srcdir/selenium-$pkgver"
-	python setup.py build
+    cd "$srcdir/selenium-$pkgver"
+    python setup.py build
 }
 
 package() {
-	cd "$srcdir/selenium-$pkgver"
-	python setup.py install --root="$pkgdir/" --optimize=1
+    cd "$srcdir/selenium-$pkgver"
+    python setup.py install --root="$pkgdir/" --optimize=1
 }
 
 # check() takes too many dependencies to run

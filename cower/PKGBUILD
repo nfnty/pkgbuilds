@@ -13,20 +13,20 @@ source=("$pkgname::git+https://github.com/falconindy/cower.git")
 md5sums=('SKIP')
 
 prepare() {
-	cd "$pkgname"
-	git checkout tags/"$pkgver"
+    cd "$pkgname"
+    git checkout tags/"$pkgver"
 }
 
 build() {
-  cd "$pkgname"
+    cd "$pkgname"
 
-  make
-  sed '/^$/q' cower.c >LICENSE
+    make
+    sed '/^$/q' cower.c >LICENSE
 }
 
 package() {
-  cd "$pkgname"
+    cd "$pkgname"
 
-  make PREFIX=/usr DESTDIR="$pkgdir" install
-  install -Dm644 LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+    make PREFIX=/usr DESTDIR="$pkgdir" install
+    install -Dm644 LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
 }

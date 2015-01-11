@@ -9,19 +9,19 @@ license=('GPL3')
 
 depends=('python')
 optdepends=(
-	'file: for determining file types'
-	'python-chardet: in case of encoding detection problems'
-	'sudo: to use the "run as root"-feature'
-	'libcaca: for ASCII-art image previews'
-	'highlight: for syntax highlighting of code'
-	'atool: for previews of archives'
-	'w3m: for previews of images and html pages'
-	'lynx: for previews of html pages'
-	'elinks: for previews of html pages'
-	'poppler: for pdf previews'
-	'transmission-cli: for viewing bittorrent information'
-	'mediainfo: for viewing information about media files'
-	'perl-image-exiftool: for viewing information about media files'
+    'file: for determining file types'
+    'python-chardet: in case of encoding detection problems'
+    'sudo: to use the "run as root"-feature'
+    'libcaca: for ASCII-art image previews'
+    'highlight: for syntax highlighting of code'
+    'atool: for previews of archives'
+    'w3m: for previews of images and html pages'
+    'lynx: for previews of html pages'
+    'elinks: for previews of html pages'
+    'poppler: for pdf previews'
+    'transmission-cli: for viewing bittorrent information'
+    'mediainfo: for viewing information about media files'
+    'perl-image-exiftool: for viewing information about media files'
 )
 makedepends=('git')
 provides=('ranger')
@@ -31,13 +31,13 @@ source=("$srcname::git+https://github.com/hut/ranger.git")
 sha256sums=('SKIP')
 
 pkgver() {
-	cd "$srcdir/$srcname"
-	printf 'r%s.%s\n' \
-		"$(git rev-list HEAD | wc --lines)" \
-		"$(git describe --always | sed 's/-/./g')"
+    cd "$srcdir/$srcname"
+    printf 'r%s.%s\n' \
+        "$(git rev-list HEAD | wc --lines)" \
+        "$(git describe --always | sed 's/-/./g')"
 }
 
 package() {
-	cd "$srcdir/$srcname"
-	python setup.py -q install --root="$pkgdir" --optimize=1
+    cd "$srcdir/$srcname"
+    python setup.py -q install --root="$pkgdir" --optimize=1
 }

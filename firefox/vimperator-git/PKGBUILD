@@ -13,35 +13,35 @@ provides=('vimperator')
 conflicts=('vimperator' 'vimperator-hg')
 
 source=(
-	"$srcname::git+https://github.com/vimperator/vimperator-labs.git"
-	'no_zip.patch'
+    "$srcname::git+https://github.com/vimperator/vimperator-labs.git"
+    'no_zip.patch'
 )
 sha256sums=(
-	'SKIP'
-	'd5dac6a677b2fc8b537c3173d0050bc3e6de6196c1d067f5a7fe448cb780aa3c'
+    'SKIP'
+    'd5dac6a677b2fc8b537c3173d0050bc3e6de6196c1d067f5a7fe448cb780aa3c'
 )
 
 EXTENSION_ID='vimperator@mozdev.org'
 
 pkgver() {
-	cd "$srcdir/$srcname"
-	printf 'r%s.%s\n' \
-		"$(git rev-list HEAD | wc --lines)" \
-		"$(git describe --always | sed 's/-/./g')"
+    cd "$srcdir/$srcname"
+    printf 'r%s.%s\n' \
+        "$(git rev-list HEAD | wc --lines)" \
+        "$(git describe --always | sed 's/-/./g')"
 }
 
 prepare() {
-	cd "$srcdir/$srcname"
-	git apply "$srcdir/no_zip.patch"
+    cd "$srcdir/$srcname"
+    git apply "$srcdir/no_zip.patch"
 }
 
 build() {
-	cd "$srcdir/$srcname/vimperator"
-	make VERSION="$pkgver" xpi
+    cd "$srcdir/$srcname/vimperator"
+    make VERSION="$pkgver" xpi
 }
 
 package() {
-	local destdir="$pkgdir/usr/lib/firefox/browser/extensions"
-	install --directory "$destdir"
-	cp --recursive "$srcname/downloads/vimperator-$pkgver" "$destdir/$EXTENSION_ID"
+    local destdir="$pkgdir/usr/lib/firefox/browser/extensions"
+    install --directory "$destdir"
+    cp --recursive "$srcname/downloads/vimperator-$pkgver" "$destdir/$EXTENSION_ID"
 }

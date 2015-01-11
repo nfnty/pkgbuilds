@@ -42,13 +42,13 @@ prepare() {
 
   find -type f -name *.py -exec sed 's|^#!.*python$|#!/usr/bin/python2|' -i "{}" +
   sed 's|^#!.*python$|#!/usr/bin/python2|' -i tools/depends/native/rpl-native/rpl
-	sed 's/python/python2/' -i tools/Linux/kodi.sh.in
+    sed 's/python/python2/' -i tools/Linux/kodi.sh.in
 }
 
 build() {
   cd "$srcdir/xbmc-$pkgver-$_codename"
 
-	# Bootstrapping
+    # Bootstrapping
   MAKEFLAGS=-j1 ./bootstrap
 
   #./configure --help
@@ -57,65 +57,65 @@ build() {
   # Configuring XBMC
   export PYTHON_VERSION=2  # external python v2
   ./configure --prefix=$_prefix --exec-prefix=$_prefix \
-    --disable-silent-rules \
-    --disable-shared-lib \
-    --disable-debug \
-    --enable-optimizations \
-    --enable-gl \
-    --disable-gles \
-    --enable-sdl \
-    --disable-vdpau \
-    --enable-vaapi \
-    --disable-crystalhd \
-    --disable-vtbdecoder \
-    --disable-openmax \
-    --disable-tegra \
-    --disable-profiling \
-    --disable-xvba \
-    --disable-joystick \
-    --enable-xrandr \
-    --disable-waveform \
-    --disable-spectrum \
-    --disable-goom \
-    --disable-rsxs \
-    --disable-fishbmc \
-    --disable-projectm \
-    --enable-x11 \
-    --disable-ccache \
-    --enable-alsa \
-    --disable-pulse \
-    --disable-ssh \
-    --enable-rtmp \
-    --disable-samba \
-    --disable-nfs \
-    --disable-afpclient \
-    --disable-airplay \
-    --disable-airtunes \
-    --disable-ffmpeg-libvorbis \
-    --disable-dvdcss \
-    --disable-mid \
-    --disable-hal \
-    --disable-avahi \
-    --disable-mdnsembedded \
-    --disable-non-free \
-    --disable-asap-codec \
-    --enable-webserver \
-    --disable-optical-drive \
-    --enable-libbluray \
-    --enable-texturepacker \
-    --enable-external-libraries \
-    --enable-udev \
-    --disable-libusb \
-    --disable-libcec \
-    --disable-libmp3lame \
-    --disable-libvorbisenc \
-    --disable-libcap \
-    --disable-player \
-    --disable-gtest \
-    --disable-codec \
-    --disable-libav-compat \
-    --enable-dependency-tracking \
-    --with-lirc-device=/run/lirc/lircd
+      --disable-silent-rules \
+      --disable-shared-lib \
+      --disable-debug \
+      --enable-optimizations \
+      --enable-gl \
+      --disable-gles \
+      --enable-sdl \
+      --disable-vdpau \
+      --enable-vaapi \
+      --disable-crystalhd \
+      --disable-vtbdecoder \
+      --disable-openmax \
+      --disable-tegra \
+      --disable-profiling \
+      --disable-xvba \
+      --disable-joystick \
+      --enable-xrandr \
+      --disable-waveform \
+      --disable-spectrum \
+      --disable-goom \
+      --disable-rsxs \
+      --disable-fishbmc \
+      --disable-projectm \
+      --enable-x11 \
+      --disable-ccache \
+      --enable-alsa \
+      --disable-pulse \
+      --disable-ssh \
+      --enable-rtmp \
+      --disable-samba \
+      --disable-nfs \
+      --disable-afpclient \
+      --disable-airplay \
+      --disable-airtunes \
+      --disable-ffmpeg-libvorbis \
+      --disable-dvdcss \
+      --disable-mid \
+      --disable-hal \
+      --disable-avahi \
+      --disable-mdnsembedded \
+      --disable-non-free \
+      --disable-asap-codec \
+      --enable-webserver \
+      --disable-optical-drive \
+      --enable-libbluray \
+      --enable-texturepacker \
+      --enable-external-libraries \
+      --enable-udev \
+      --disable-libusb \
+      --disable-libcec \
+      --disable-libmp3lame \
+      --disable-libvorbisenc \
+      --disable-libcap \
+      --disable-player \
+      --disable-gtest \
+      --disable-codec \
+      --disable-libav-compat \
+      --enable-dependency-tracking \
+      --with-lirc-device=/run/lirc/lircd
 
   # Now (finally) build
   make
@@ -160,10 +160,10 @@ package_kodi() {
   make DESTDIR="$pkgdir" install
 
   # Licenses
-	install -dm755 ${pkgdir}${_prefix}/share/licenses/${pkgname}
+  install -dm755 ${pkgdir}${_prefix}/share/licenses/${pkgname}
   for licensef in LICENSE.GPL copying.txt; do
-		mv ${pkgdir}${_prefix}/share/doc/kodi/${licensef} \
-			${pkgdir}${_prefix}/share/licenses/${pkgname}
+      mv ${pkgdir}${_prefix}/share/doc/kodi/${licensef} \
+          ${pkgdir}${_prefix}/share/licenses/${pkgname}
   done
 }
 

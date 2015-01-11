@@ -17,36 +17,36 @@ source=("git+${url}.git" 'vi.patch')
 sha256sums=('SKIP' 'SKIP')
 
 pkgver() {
-	 cd "${srcdir}/${gitname}"
-	 local ver="$(git rev-list --count HEAD).$(git rev-parse --short HEAD)"
-	 printf "%s" "${ver//-/.}"
+     cd "${srcdir}/${gitname}"
+     local ver="$(git rev-list --count HEAD).$(git rev-parse --short HEAD)"
+     printf "%s" "${ver//-/.}"
 }
 
 prepare() {
-	 cd "${srcdir}/${gitname}"
+     cd "${srcdir}/${gitname}"
 
-	 git apply ../vi.patch
+     git apply ../vi.patch
 
-	 ./autogen.sh
+     ./autogen.sh
 
-	 sed -i 's|ncursesw/curses.h|curses.h|' RichString.[ch] configure
-	 sed -i 's|python|python2|' scripts/MakeHeader.py
+     sed -i 's|ncursesw/curses.h|curses.h|' RichString.[ch] configure
+     sed -i 's|python|python2|' scripts/MakeHeader.py
 
-	 ./configure \
-        --prefix=/usr \
-        --enable-unicode \
-        --enable-openvz \
-        --enable-vserver \
-        --enable-cgroup \
-        --enable-oom
+     ./configure \
+         --prefix=/usr \
+         --enable-unicode \
+         --enable-openvz \
+         --enable-vserver \
+         --enable-cgroup \
+         --enable-oom
 }
 
 build() {
-	 cd "${srcdir}/${gitname}"
-	 make
+     cd "${srcdir}/${gitname}"
+     make
 }
 
 package() {
-	 cd "${srcdir}/${gitname}"
-	 make DESTDIR="${pkgdir}" install
+     cd "${srcdir}/${gitname}"
+     make DESTDIR="${pkgdir}" install
 }

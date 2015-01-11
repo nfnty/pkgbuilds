@@ -16,14 +16,14 @@ source=("$_srcname::git+https://github.com/nfnty/dvorak-nfnty.git")
 sha256sums=('SKIP')
 
 pkgver() {
-	cd "$_srcname"
-	printf 'r%s.%s\n' "$(git rev-list HEAD | wc -l)" "$(git describe --always)"
+    cd "$_srcname"
+    printf 'r%s.%s\n' "$(git rev-list HEAD | wc -l)" "$(git describe --always)"
 }
 
 package() {
-	cd "$_srcname"
-	install -m 644 -D 'xkb/nfnty_desk' "$pkgdir/usr/share/X11/xkb/symbols/nfnty_desk"
-	install -m 644 -D 'xkb/nfnty_lap' "$pkgdir/usr/share/X11/xkb/symbols/nfnty_lap"
-	gzip -c 'kbd/nfnty_desk.map' > 'kbd/nfnty_desk.map.gz'
-	install -m 644 -D 'kbd/nfnty_desk.map.gz' "$pkgdir/usr/share/kbd/keymaps/nfnty_desk.map.gz"
+    cd "$_srcname"
+    install -m 644 -D 'xkb/nfnty_desk' "$pkgdir/usr/share/X11/xkb/symbols/nfnty_desk"
+    install -m 644 -D 'xkb/nfnty_lap' "$pkgdir/usr/share/X11/xkb/symbols/nfnty_lap"
+    gzip -c 'kbd/nfnty_desk.map' > 'kbd/nfnty_desk.map.gz'
+    install -m 644 -D 'kbd/nfnty_desk.map.gz' "$pkgdir/usr/share/kbd/keymaps/nfnty_desk.map.gz"
 }
