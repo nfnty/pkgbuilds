@@ -2,8 +2,8 @@ pkgname=('simple-mtpfs-git')
 srcname='simple-mtpfs'
 pkgver=r93.76be403
 pkgrel=1
-pkgdesc='Simple MTP fuse filesystem driver.'
-arch=('x86_64' 'i686')
+pkgdesc='Simple MTP fuse filesystem driver'
+arch=('i686' 'x86_64')
 url='https://github.com/phatina/simple-mtpfs'
 license=('GPL2')
 
