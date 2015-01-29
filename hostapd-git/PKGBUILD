@@ -1,0 +1,73 @@
+pkgname=('hostapd-git')
+srcname='hostapd'
+pkgver=r7407.hostap_2_3
+pkgrel=1
+pkgdesc='IEEE 802.11 AP, IEEE 802.1X/WPA/WPA2/EAP/RADIUS Authenticator'
+arch=('i686' 'x86_64')
+url='http://w1.fi/hostapd/'
+license=('custom')
+
+depends=('openssl' 'libnl')
+makedepends=('git')
+provides=('hostapd')
+conflicts=('hostapd')
+
+source=(
+    "$srcname::git+git://w1.fi/hostap.git#tag=hostap_2_3"
+    'config'
+    'hostapd.service'
+    '40mhz.patch'
+)
+sha256sums=(
+    'SKIP'
+    '143e117d173b19418b6d70eab9408f0ff2349bf15d9693e058be7309f25214cf'
+    '75d61399750bc458e43b8b4d45d0a3226743de78229a0549cd2ef7fa963dbb3f'
+    '3b0beca4650046948f7e07d279ba5e0cd54284eca8b65d1a6d60a7ccc4ea7a23'
+)
+
+pkgver() {
+    cd "$srcdir/$srcname"
+    printf 'r%s.%s\n' \
+        "$(git rev-list HEAD | wc --lines)" \
+        "$(git describe --always | sed 's/-/./g')"
+}
+
+prepare() {
+    cd "$srcdir/$srcname"
+    git apply "$srcdir/40mhz.patch"
+}
+
+build() {
+    cd "$srcdir/$srcname/hostapd"
+    cp "$srcdir/config" .config
+    sed -i 's#/etc/hostapd#/etc/hostapd/hostapd#' hostapd.conf
+    export CFLAGS="$CFLAGS $(pkg-config --cflags libnl-3.0)"
+    make
+}
+
+package() {
+    # Systemd unit
+    install -Dm644 "$srcdir/hostapd.service" "$pkgdir/usr/lib/systemd/system/hostapd.service"
+
+    cd "$srcdir/$srcname"
+
+    # License
+    install -Dm644 COPYING "$pkgdir/usr/share/licenses/$pkgname/COPYING"
+
+    cd hostapd
+
+    # Binaries
+    install -d "$pkgdir/usr/bin"
+    install -t "$pkgdir/usr/bin" hostapd hostapd_cli
+
+    # Configuration
+    install -d "$pkgdir/etc/hostapd"
+    install -d "$pkgdir/usr/share/doc/hostapd"
+    install -m644 -t "$pkgdir/usr/share/doc/hostapd" \
+        hostapd.{accept,conf,deny,eap_user,radius_clients,sim_db,vlan,wpa_psk} \
+        wired.conf hlr_auc_gw.milenage_db
+
+    # Man pages
+    install -Dm644 hostapd.8 "$pkgdir/usr/share/man/man8/hostapd.8"
+    install -Dm644 hostapd_cli.1 "$pkgdir/usr/share/man/man1/hostapd_cli.1"
+}
