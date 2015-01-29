@@ -1,0 +1,13 @@
+diff --git a/xbmc/cores/dvdplayer/DVDCodecs/Video/VAAPI.cpp b/xbmc/cores/dvdplayer/DVDCodecs/Video/VAAPI.cpp
+index 6afb892..8160813 100644
+--- a/xbmc/cores/dvdplayer/DVDCodecs/Video/VAAPI.cpp
++++ b/xbmc/cores/dvdplayer/DVDCodecs/Video/VAAPI.cpp
+@@ -595,7 +595,7 @@ bool CDecoder::Open(AVCodecContext* avctx, const enum PixelFormat fmt, unsigned
+ 
+   // add an extra surface for safety, some faulty material
+   // make ffmpeg require more buffers
+-  m_vaapiConfig.maxReferences += surfaces + 1;
++  m_vaapiConfig.maxReferences += surfaces + 3;
+ 
+   if (!ConfigVAAPI())
+   {
