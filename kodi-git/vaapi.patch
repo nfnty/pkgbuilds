@@ -1,13 +1,175 @@
+From fe0df5044f1c8b4271122f115c2336ffe2875eee Mon Sep 17 00:00:00 2001
+From: Rainer Hochecker <fernetmenta@online.de>
+Date: Sat, 31 Jan 2015 21:16:33 +0100
+Subject: [PATCH 1/3] dvdplayer: drop dead code - IHardwareDecoder::Section
+
+---
+ xbmc/cores/dvdplayer/DVDCodecs/Video/DVDVideoCodecFFmpeg.cpp | 6 +-----
+ xbmc/cores/dvdplayer/DVDCodecs/Video/DVDVideoCodecFFmpeg.h   | 1 -
+ xbmc/cores/dvdplayer/DVDCodecs/Video/VDA.h                   | 1 -
+ 3 files changed, 1 insertion(+), 7 deletions(-)
+
+diff --git a/xbmc/cores/dvdplayer/DVDCodecs/Video/DVDVideoCodecFFmpeg.cpp b/xbmc/cores/dvdplayer/DVDCodecs/Video/DVDVideoCodecFFmpeg.cpp
+index ae67480..e4b7c74 100644
+--- a/xbmc/cores/dvdplayer/DVDCodecs/Video/DVDVideoCodecFFmpeg.cpp
++++ b/xbmc/cores/dvdplayer/DVDCodecs/Video/DVDVideoCodecFFmpeg.cpp
+@@ -451,10 +451,6 @@ int CDVDVideoCodecFFmpeg::Decode(uint8_t* pData, int iSize, double dts, double p
+   shared_ptr<CSingleLock> lock;
+   if(m_pHardware)
+   {
+-    CCriticalSection* section = m_pHardware->Section();
+-    if(section)
+-      lock = shared_ptr<CSingleLock>(new CSingleLock(*section));
+-
+     int result;
+     if(pData)
+       result = m_pHardware->Check(m_pCodecContext);
+@@ -909,4 +905,4 @@ void CDVDVideoCodecFFmpeg::DisposeHWDecoders()
+     m_disposeDecoders.back()->Release();
+     m_disposeDecoders.pop_back();
+   }
+-}
+\ No newline at end of file
++}
+diff --git a/xbmc/cores/dvdplayer/DVDCodecs/Video/DVDVideoCodecFFmpeg.h b/xbmc/cores/dvdplayer/DVDCodecs/Video/DVDVideoCodecFFmpeg.h
+index f18da12..ed806f8 100644
+--- a/xbmc/cores/dvdplayer/DVDCodecs/Video/DVDVideoCodecFFmpeg.h
++++ b/xbmc/cores/dvdplayer/DVDCodecs/Video/DVDVideoCodecFFmpeg.h
+@@ -52,7 +52,6 @@ class CDVDVideoCodecFFmpeg : public CDVDVideoCodec
+     virtual unsigned GetAllowedReferences() { return 0; }
+     virtual bool CanSkipDeint() {return false; }
+     virtual const std::string Name() = 0;
+-    virtual CCriticalSection* Section() { return NULL; }
+   };
+ 
+   CDVDVideoCodecFFmpeg();
+diff --git a/xbmc/cores/dvdplayer/DVDCodecs/Video/VDA.h b/xbmc/cores/dvdplayer/DVDCodecs/Video/VDA.h
+index 95adb94..5586259 100644
+--- a/xbmc/cores/dvdplayer/DVDCodecs/Video/VDA.h
++++ b/xbmc/cores/dvdplayer/DVDCodecs/Video/VDA.h
+@@ -39,7 +39,6 @@ class CDecoder
+   virtual int  Check     (AVCodecContext* avctx);
+   virtual void Close();
+   virtual const std::string Name() { return "vda"; }
+-  virtual CCriticalSection* Section() {  return NULL; }
+   virtual unsigned GetAllowedReferences();
+ 
+   int   GetBuffer(AVCodecContext *avctx, AVFrame *pic, int flags);
+
+From 1b8cbb70bdc35ce43377f03c0b6ac28fadb20f8b Mon Sep 17 00:00:00 2001
+From: Rainer Hochecker <fernetmenta@online.de>
+Date: Sat, 31 Jan 2015 21:37:27 +0100
+Subject: [PATCH 2/3] dvdplayer: allow checking error state for ffmpeg-hw
+ decoders
+
+---
+ xbmc/cores/dvdplayer/DVDCodecs/Video/DVDVideoCodecFFmpeg.cpp | 11 +++++++++++
+ xbmc/cores/dvdplayer/DVDCodecs/Video/DVDVideoCodecFFmpeg.h   | 11 ++++++++++-
+ 2 files changed, 21 insertions(+), 1 deletion(-)
+
+diff --git a/xbmc/cores/dvdplayer/DVDCodecs/Video/DVDVideoCodecFFmpeg.cpp b/xbmc/cores/dvdplayer/DVDCodecs/Video/DVDVideoCodecFFmpeg.cpp
+index e4b7c74..5f32652 100644
+--- a/xbmc/cores/dvdplayer/DVDCodecs/Video/DVDVideoCodecFFmpeg.cpp
++++ b/xbmc/cores/dvdplayer/DVDCodecs/Video/DVDVideoCodecFFmpeg.cpp
+@@ -459,6 +459,8 @@ int CDVDVideoCodecFFmpeg::Decode(uint8_t* pData, int iSize, double dts, double p
+ 
+     if(result)
+       return result;
++
++    m_pHardware->ClearDecoderError();
+   }
+ 
+   if(m_pFilterGraph)
+@@ -495,6 +497,15 @@ int CDVDVideoCodecFFmpeg::Decode(uint8_t* pData, int iSize, double dts, double p
+ 
+   if (len < 0)
+   {
++    if(m_pHardware)
++    {
++      // we can recover from this error, no need to flush
++      if (m_pHardware->GetDecoderError() == IHardwareDecoder::GETBUFFER_ERROR)
++      {
++        int result = m_pHardware->Decode(m_pCodecContext, NULL);
++        return result;
++      }
++    }
+     CLog::Log(LOGERROR, "%s - avcodec_decode_video returned failure", __FUNCTION__);
+     return VC_ERROR;
+   }
+diff --git a/xbmc/cores/dvdplayer/DVDCodecs/Video/DVDVideoCodecFFmpeg.h b/xbmc/cores/dvdplayer/DVDCodecs/Video/DVDVideoCodecFFmpeg.h
+index ed806f8..0df3a60 100644
+--- a/xbmc/cores/dvdplayer/DVDCodecs/Video/DVDVideoCodecFFmpeg.h
++++ b/xbmc/cores/dvdplayer/DVDCodecs/Video/DVDVideoCodecFFmpeg.h
+@@ -42,7 +42,14 @@ class CDVDVideoCodecFFmpeg : public CDVDVideoCodec
+   class IHardwareDecoder : public IDVDResourceCounted<IHardwareDecoder>
+   {
+     public:
+-             IHardwareDecoder() {}
++
++    enum DecoderError
++    {
++      NO_ERROR = 0,
++      GETBUFFER_ERROR
++    };
++
++    IHardwareDecoder() {}
+     virtual ~IHardwareDecoder() {};
+     virtual bool Open      (AVCodecContext* avctx, const enum PixelFormat, unsigned int surfaces) = 0;
+     virtual int  Decode    (AVCodecContext* avctx, AVFrame* frame) = 0;
+@@ -52,6 +59,8 @@ class CDVDVideoCodecFFmpeg : public CDVDVideoCodec
+     virtual unsigned GetAllowedReferences() { return 0; }
+     virtual bool CanSkipDeint() {return false; }
+     virtual const std::string Name() = 0;
++    virtual void ClearDecoderError() {}
++    virtual DecoderError GetDecoderError() { return NO_ERROR; }
+   };
+ 
+   CDVDVideoCodecFFmpeg();
+
+From e85bc5642941d317032aa032417767dc30f131b5 Mon Sep 17 00:00:00 2001
+From: Rainer Hochecker <fernetmenta@online.de>
+Date: Sat, 31 Jan 2015 21:42:10 +0100
+Subject: [PATCH 3/3] VAAPI: avoid reset when running out of surfaces
+
+---
+ xbmc/cores/dvdplayer/DVDCodecs/Video/VAAPI.cpp | 4 ++--
+ xbmc/cores/dvdplayer/DVDCodecs/Video/VAAPI.h   | 3 +++
+ 2 files changed, 5 insertions(+), 2 deletions(-)
+
 diff --git a/xbmc/cores/dvdplayer/DVDCodecs/Video/VAAPI.cpp b/xbmc/cores/dvdplayer/DVDCodecs/Video/VAAPI.cpp
-index 6afb892..8160813 100644
+index 4be8f39..1727a87 100644
 --- a/xbmc/cores/dvdplayer/DVDCodecs/Video/VAAPI.cpp
 +++ b/xbmc/cores/dvdplayer/DVDCodecs/Video/VAAPI.cpp
-@@ -595,7 +595,7 @@ bool CDecoder::Open(AVCodecContext* avctx, const enum PixelFormat fmt, unsigned
+@@ -697,9 +697,9 @@ int CDecoder::FFGetBuffer(AVCodecContext *avctx, AVFrame *pic, int flags)
+     uint16_t decoded, processed, render;
+     bool vpp;
+     va->m_bufferStats.Get(decoded, processed, render, vpp);
+-    CLog::Log(LOGERROR, "VAAPI::FFGetBuffer - no surface available - dec: %d, render: %d",
++    CLog::Log(LOGWARNING, "VAAPI::FFGetBuffer - no surface available - dec: %d, render: %d",
+                          decoded, render);
+-    va->m_DisplayState = VAAPI_ERROR;
++    va->m_decoderError = GETBUFFER_ERROR;
+     return -1;
+   }
  
-   // add an extra surface for safety, some faulty material
-   // make ffmpeg require more buffers
--  m_vaapiConfig.maxReferences += surfaces + 1;
-+  m_vaapiConfig.maxReferences += surfaces + 3;
+diff --git a/xbmc/cores/dvdplayer/DVDCodecs/Video/VAAPI.h b/xbmc/cores/dvdplayer/DVDCodecs/Video/VAAPI.h
+index 6b2b67a..214e243 100644
+--- a/xbmc/cores/dvdplayer/DVDCodecs/Video/VAAPI.h
++++ b/xbmc/cores/dvdplayer/DVDCodecs/Video/VAAPI.h
+@@ -413,6 +413,8 @@ class CDecoder
+   virtual long Release();
+   virtual bool CanSkipDeint();
+   virtual unsigned GetAllowedReferences() { return 4; }
++  virtual void ClearDecoderError() {m_decoderError = NO_ERROR; }
++  virtual DecoderError GetDecoderError() { return m_decoderError; }
  
-   if (!ConfigVAAPI())
-   {
+   virtual int  Check(AVCodecContext* avctx);
+   virtual const std::string Name() { return "vaapi"; }
+@@ -449,6 +451,7 @@ class CDecoder
+   CVideoSurfaces m_videoSurfaces;
+   vaapi_context m_hwContext;
+   AVCodecContext* m_avctx;
++  DecoderError m_decoderError;
+ 
+   COutput m_vaapiOutput;
+   CVaapiBufferStats m_bufferStats;
