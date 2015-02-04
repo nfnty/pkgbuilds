@@ -2,10 +2,10 @@
 
 pkgname=('python2-graphy')
 pkgver=1.0
-pkgrel=1
-pkgdesc="Simple Chart Library for Python (deprecated Google Chart API)"
+pkgrel=2
+pkgdesc='Simple Chart Library for Python (deprecated Google Chart API)'
 arch=('any')
-url="https://code.google.com/p/graphy/"
+url='https://code.google.com/p/graphy/'
 license=('Apache')
 depends=('python2')
 makedepends=('python2-distribute')
