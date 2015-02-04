@@ -1,19 +1,34 @@
-# Maintainer: Michael Sproul <micsproul@gmail.com>
-# Request Changes: https://github.com/michaelsproul/rust-nightly-archlinux
+# Maintainer: Michael Sproul
+# Source Available: https://github.com/michaelsproul/rust-nightly-archlinux
 pkgname=rust-nightly-bin
-pkgver=0.13.0_2014.12.15
+pkgver=1.0.0_2015.02.04
 pkgrel=1
 arch=('i686' 'x86_64')
-pkgdesc='A safe, concurrent, practical language from Mozilla.'
+pkgdesc='Fast, concurrent, safe. The Rust programming language and its package manager, Cargo.'
 url='http://www.rust-lang.org/'
-provides='rust'
-conflicts=('rust' 'rust-git' 'rust-nightly')
+provides=('rust' 'cargo')
+conflicts=('rust' 'rust-git' 'rust-nightly' 'cargo-nightly-bin')
+depends=('shared-mime-info')
 license=('MIT' 'Apache')
-source=("https://static.rust-lang.org/dist/rust-nightly-${CARCH}-unknown-linux-gnu.tar.gz")
-sha256sums=('SKIP')
+source=("https://static.rust-lang.org/dist/rust-nightly-${CARCH}-unknown-linux-gnu.tar.gz"
+        'rust-nightly.conf')
+sha256sums=('SKIP' 'SKIP')
 options=(staticlibs !strip)
 
 package() {
-    cd "rust-nightly-${CARCH}-unknown-linux-gnu"
-    ./install.sh --prefix="$pkgdir/usr"
+    local INSTALL_DIR='/usr/local'
+    local MAN_DIR='/usr/local/man'
+
+    # Rust, Cargo and Documentation.
+    cd "$srcdir/rust-nightly-${CARCH}-unknown-linux-gnu"
+    sed -i '/rust-docs/d' components
+
+    ./install.sh --prefix="${pkgdir}${INSTALL_DIR}" --mandir="${pkgdir}${MAN_DIR}"
+
+    # Dynamic linker configuration (no LD_LIBRARY_PATH required).
+    mkdir -p "${pkgdir}/etc/ld.so.conf.d"
+    install -m 644 "${srcdir}/rust-nightly.conf" "${pkgdir}/etc/ld.so.conf.d/rust-nightly.conf"
+
+    # Remove manifest file referencing $pkgdir.
+    rm -f "${pkgdir}/usr/local/lib/rustlib/manifest-rustc"
 }
