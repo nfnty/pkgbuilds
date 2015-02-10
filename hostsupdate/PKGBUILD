@@ -1,0 +1,29 @@
+pkgname=('hostsupdate-nfnty')
+srcname='hostsupdate'
+pkgver='1'
+pkgrel='1'
+pkgdesc='Update hosts.d lists'
+arch=('any')
+url=''
+license=('MIT')
+
+depends=('python')
+provides=('hostsupdate')
+conflicts=('hostsupdate')
+
+source=(
+    'hostsupdate.py'
+    'hostsupdate.service'
+    'hostsupdate.timer'
+)
+sha256sums=(
+    '26a3dc1a906e1bd9c9dfb64e32befb80e3f17f2b4b7de9afed8c37ab6e7c38f0'
+    '657755114b36753ad9b0294519ac23200f78f2bd49c82ca651ddf4fec32a1b66'
+    '2cef073ddada7c87a561e54958243d9639cf2023e877dc0c2976383966d30c8b'
+)
+
+package() {
+     install -m 755 -D "$srcdir/hostsupdate.py" "$pkgdir/usr/bin/hostsupdate.py"
+     install -m 644 -D "$srcdir/hostsupdate.service" "$pkgdir/usr/lib/systemd/system/hostsupdate.service"
+     install -m 644 -D "$srcdir/hostsupdate.timer" "$pkgdir/usr/lib/systemd/system/hostsupdate.timer"
+}

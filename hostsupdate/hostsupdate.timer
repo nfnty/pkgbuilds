@@ -1,0 +1,10 @@
+[Unit]
+Description='Weekly hosts.d update'
+
+[Timer]
+OnCalendar=weekly
+Persistent=true
+AccuracySec=1h
+
+[Install]
+WantedBy=timers.target
