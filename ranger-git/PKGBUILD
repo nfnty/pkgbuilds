@@ -1,6 +1,6 @@
 pkgname=('ranger-git')
 srcname='ranger'
-pkgver=r2553.v1.6.1.196.ge0a236c
+pkgver=r2607.v1.6.1.250.g64c42d8
 pkgrel=1
 pkgdesc='A simple, vim-like file manager'
 arch=('any')

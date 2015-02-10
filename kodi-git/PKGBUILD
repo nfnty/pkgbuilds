@@ -1,6 +1,6 @@
 pkgname=('kodi-git')
 srcname='kodi'
-pkgver=r30869.14.0a3.Helix.1687.g38e4046
+pkgver=r30887.14.0a3.Helix.1705.g3ddaa3c
 pkgrel=1
 pkgdesc='Software media player and entertainment hub for digital media'
 arch=('i686' 'x86_64')
@@ -42,9 +42,8 @@ provides=('kodi')
 conflicts=('kodi')
 replaces=('xbmc')
 
-source=("$srcname::git+https://github.com/xbmc/xbmc.git#branch=Helix"
-        'vaapi.patch')
-sha256sums=('SKIP' 'SKIP')
+source=("$srcname::git+https://github.com/xbmc/xbmc.git#branch=Helix")
+sha256sums=('SKIP')
 
 install='kodi.install'
 
@@ -57,8 +56,6 @@ pkgver() {
 
 prepare() {
     cd "$srcdir/$srcname"
-
-    git apply "$srcdir/vaapi.patch"
 
     find -type f -name *.py -exec sed 's|^#!.*python$|#!/usr/bin/python2|' -i "{}" +
     sed 's|^#!.*python$|#!/usr/bin/python2|' -i tools/depends/native/rpl-native/rpl
@@ -125,7 +122,7 @@ build() {
         --enable-webserver \
         --disable-optical-drive \
         --enable-libbluray \
-        --enable-texturepacker \
+        --disable-texturepacker \
         --enable-external-libraries \
         --enable-udev \
         --disable-libusb \
