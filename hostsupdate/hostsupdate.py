@@ -1,9 +1,11 @@
-#!/usr/bin/python3
+#!/usr/bin/python3 -u
 ''' update domain blocking hosts '''
 
 import requests
 import os
 import re
+import time
+import subprocess
 
 DESTDIR = '/etc/hosts.d'
 SOURCES = [
@@ -42,40 +44,59 @@ def main():
         r'$'
     )
 
-    for source_name, source_url in SOURCES:
-        print('### ' + source_name + ' ###')
+    while SOURCES:
+        for source_name, source_url in list(SOURCES):
+            print('### ' + source_name + ' ###')
 
-        req = requests.get(source_url)
+            try:
+                req = requests.get(source_url, timeout=30)
+            except requests.exceptions.Timeout as error:
+                print(error)
+                continue
 
-        lines = []
-        for line in req.text.splitlines():
-            line = line.partition('#')
-            if line[0].strip():
-                lines.append(line[0].split())
+            lines = []
+            for line in req.text.splitlines():
+                line = line.partition('#')
+                if line[0].strip():
+                    lines.append(line[0].split())
 
-        with open(os.path.join(DESTDIR, source_name), 'w') as hosts_file:
-            for line in lines:
-                try:
-                    domain_name = line[-1].encode('idna').decode('UTF-8')
-                except UnicodeError as error:
-                    print('Error: ' + error)
-                    print('Error: "' + line[-1] + '"')
-                    continue
-                if line[-1] != domain_name:
-                    print('Before: "' + line[-1] + '"')
-                    print('After: "' + domain_name + '"')
+            with open(os.path.join(DESTDIR, source_name), 'w') as hosts_file:
+                for line in lines:
+                    try:
+                        domain_name = line[-1].encode('idna').decode('UTF-8')
+                    except UnicodeError as error:
+                        print('Error: ' + error)
+                        print('Error: "' + line[-1] + '"')
+                        continue
+                    if line[-1] != domain_name:
+                        print('Before: "' + line[-1] + '"')
+                        print('After: "' + domain_name + '"')
 
-                if len(domain_name) > 253 \
-                        or domain_name in INVALID_DOMAINS \
-                        or not domain_regex.fullmatch(domain_name):
-                    print('Invalid: "' + domain_name + '"')
-                    continue
+                    if len(domain_name) > 253 \
+                            or domain_name in INVALID_DOMAINS \
+                            or not domain_regex.fullmatch(domain_name):
+                        print('Invalid: "' + domain_name + '"')
+                        continue
 
-                if domain_name in EXCLUDED_DOMAINS:
-                    print('Excluded: "' + domain_name + '"')
-                    continue
+                    if domain_name in EXCLUDED_DOMAINS:
+                        print('Excluded: "' + domain_name + '"')
+                        continue
 
-                hosts_file.write('0.0.0.0 ' + domain_name + '\n')
+                    hosts_file.write('0.0.0.0 ' + domain_name + '\n')
+
+            SOURCES.remove((source_name, source_url))
+
+        subprocess.call([
+            '/usr/bin/pkill',
+            '--uid', 'dnsmasq',
+            '--group', 'dnsmasq',
+            '--exact',
+            '--signal', 'SIGHUP',
+            'dnsmasq',
+        ])
+        if SOURCES:
+            print('Sleeping for 600 seconds due to timeout.')
+            time.sleep(1800)
 
 if __name__ == '__main__':
     main()

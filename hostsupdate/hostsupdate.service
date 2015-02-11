@@ -6,4 +6,3 @@ Type=oneshot
 User=dnsmasq
 Group=dnsmasq
 ExecStart=/usr/bin/hostsupdate.py
-ExecStart=/usr/bin/systemctl reload dnsmasq

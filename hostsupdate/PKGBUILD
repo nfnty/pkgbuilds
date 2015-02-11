@@ -7,7 +7,7 @@ arch=('any')
 url=''
 license=('MIT')
 
-depends=('python')
+depends=('python' 'python-requests')
 provides=('hostsupdate')
 conflicts=('hostsupdate')
 
@@ -17,8 +17,8 @@ source=(
     'hostsupdate.timer'
 )
 sha256sums=(
-    '26a3dc1a906e1bd9c9dfb64e32befb80e3f17f2b4b7de9afed8c37ab6e7c38f0'
-    '657755114b36753ad9b0294519ac23200f78f2bd49c82ca651ddf4fec32a1b66'
+    '91645ff12c0406b7fb360f38d30e810510d6b404fa7d01c56850db3ea42c1050'
+    'f5372577ff97084dc411afbd199430c029c52cdb158b022939e4e037165cd333'
     '2cef073ddada7c87a561e54958243d9639cf2023e877dc0c2976383966d30c8b'
 )
 
