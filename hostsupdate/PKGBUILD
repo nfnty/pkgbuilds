@@ -37,8 +37,8 @@ pkgver() {
 
 package() {
      install -m 755 -D "$srcdir/$srcname/hostsupdate.py" "$pkgdir/usr/bin/hostsupdate.py"
-     install -d "$pkgdir/etc/hostsupdate"
-     install -m 664 "$srcdir/$srcname/conf/"* "$pkgdir/etc/hostsupdate"
+     install -m 755 -d "$pkgdir/etc/hostsupdate"
+     install -m 644 "$srcdir/$srcname/conf/"* "$pkgdir/etc/hostsupdate"
      install -m 644 -D "$srcdir/hostsupdate.service" "$pkgdir/usr/lib/systemd/system/hostsupdate.service"
      install -m 644 -D "$srcdir/hostsupdate.timer" "$pkgdir/usr/lib/systemd/system/hostsupdate.timer"
 }
