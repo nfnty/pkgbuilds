@@ -6,35 +6,32 @@ import os
 import re
 import time
 import subprocess
+import json
+import sys
 
 DESTDIR = '/etc/hosts.d'
-SOURCES = [
-    ('malwaredomainlist_com', 'http://www.malwaredomainlist.com/hostslist/hosts.txt'),
-    ('someonewhocares_org', 'http://someonewhocares.org/hosts/zero/hosts'),
-    ('mvps_org', 'http://winhelp2002.mvps.org/hosts.txt'),
-    ('pgl_yoyo_org', 'http://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=1&mimetype=plaintext'),
-    ('hosts-file_net_ad_servers', 'http://hosts-file.net/ad_servers.txt'),
-    ('hosts-file_net_emd', 'http://hosts-file.net/emd.txt'),
-    ('hosts-file_net_exp', 'http://hosts-file.net/exp.txt'),
-    ('hosts-file_net_fsa', 'http://hosts-file.net/fsa.txt'),
-    ('hosts-file_net_grm', 'http://hosts-file.net/grm.txt'),
-    ('hosts-file_net_hfs', 'http://hosts-file.net/hfs.txt'),
-    ('hosts-file_net_hjk', 'http://hosts-file.net/hjk.txt'),
-    ('hosts-file_net_mmt', 'http://hosts-file.net/mmt.txt'),
-    ('hosts-file_net_pha', 'http://hosts-file.net/pha.txt'),
-    ('hosts-file_net_psh', 'http://hosts-file.net/psh.txt'),
-    ('malwaredomains_com', 'http://mirror1.malwaredomains.com/files/justdomains'),
-]
+CONFDIR = '/etc/hostsupdate'
 
-INVALID_DOMAINS = [
-    'localhost.localdomain'
-]
-
-EXCLUDED_DOMAINS = [
-]
+def load_conf(conf_file):
+    ''' load json config file '''
+    try:
+        json_data = json.load(open(os.path.join(CONFDIR, conf_file)))
+    except OSError as error:
+        print('Error: ' + error)
+        print('Error: ' + conf_file)
+        sys.exit(1)
+    except ValueError as error:
+        print('Error: ' + error)
+        print('Error: ' + conf_file)
+        sys.exit(1)
+    return json_data
 
 def main():
     ''' main func '''
+
+    sources = load_conf('sources.json')['sources']
+    invalid_domains = load_conf('invalid.json')['domains']
+    excluded_domains = load_conf('excluded.json')['domains']
 
     domain_regex = re.compile(
         r'^' +
@@ -44,8 +41,8 @@ def main():
         r'$'
     )
 
-    while SOURCES:
-        for source_name, source_url in list(SOURCES):
+    while sources:
+        for source_name, source_url in list(sources):
             print('### ' + source_name + ' ###')
 
             try:
@@ -73,18 +70,18 @@ def main():
                         print('After: "' + domain_name + '"')
 
                     if len(domain_name) > 253 \
-                            or domain_name in INVALID_DOMAINS \
+                            or domain_name in invalid_domains \
                             or not domain_regex.fullmatch(domain_name):
                         print('Invalid: "' + domain_name + '"')
                         continue
 
-                    if domain_name in EXCLUDED_DOMAINS:
+                    if domain_name in excluded_domains:
                         print('Excluded: "' + domain_name + '"')
                         continue
 
                     hosts_file.write('0.0.0.0 ' + domain_name + '\n')
 
-            SOURCES.remove((source_name, source_url))
+            sources.remove((source_name, source_url))
 
         subprocess.call([
             '/usr/bin/pkill',
@@ -94,7 +91,7 @@ def main():
             '--signal', 'SIGHUP',
             'dnsmasq',
         ])
-        if SOURCES:
+        if sources:
             print('Sleeping for 600 seconds due to timeout.')
             time.sleep(1800)
 

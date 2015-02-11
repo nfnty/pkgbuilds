@@ -1,0 +1,64 @@
+{
+    "sources": [
+        {
+            "name": "malwaredomainlist_com",
+            "url": "http://www.malwaredomainlist.com/hostslist/hosts.txt"
+        },
+        {
+            "name": "someonewhocares_org",
+            "url": "http://someonewhocares.org/hosts/zero/hosts"
+        },
+        {
+            "name": "mvps_org",
+            "url": "http://winhelp2002.mvps.org/hosts.txt"
+        },
+        {
+            "name": "pgl_yoyo_org",
+            "url": "http://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=1&mimetype=plaintext"
+        },
+        {
+            "name": "hosts-file_net_ad_servers",
+            "url": "http://hosts-file.net/ad_servers.txt"
+        },
+        {
+            "name": "hosts-file_net_emd",
+            "url": "http://hosts-file.net/emd.txt"
+        },
+        {
+            "name": "hosts-file_net_exp",
+            "url": "http://hosts-file.net/exp.txt"
+        },
+        {
+            "name": "hosts-file_net_fsa",
+            "url": "http://hosts-file.net/fsa.txt"
+        },
+        {
+            "name": "hosts-file_net_grm",
+            "url": "http://hosts-file.net/grm.txt"
+        },
+        {
+            "name": "hosts-file_net_hfs",
+            "url": "http://hosts-file.net/hfs.txt"
+        },
+        {
+            "name": "hosts-file_net_hjk",
+            "url": "http://hosts-file.net/hjk.txt"
+        },
+        {
+            "name": "hosts-file_net_mmt",
+            "url": "http://hosts-file.net/mmt.txt"
+        },
+        {
+            "name": "hosts-file_net_pha",
+            "url": "http://hosts-file.net/pha.txt"
+        },
+        {
+            "name": "hosts-file_net_psh",
+            "url": "http://hosts-file.net/psh.txt"
+        },
+        {
+            "name": "malwaredomains_com",
+            "url": "http://mirror1.malwaredomains.com/files/justdomains"
+        }
+    ]
+}
