@@ -1,10 +1,10 @@
-pkgname=('hostsupdate-nfnty')
+pkgname=('hostsupdate-git')
 srcname='hostsupdate'
-pkgver='1'
-pkgrel='1'
+pkgver=r4.c740aac
+pkgrel=1
 pkgdesc='Update hosts.d lists'
 arch=('any')
-url=''
+url='https://github.com/nfnty/hostsupdate.git'
 license=('MIT')
 
 depends=('python' 'python-requests')
@@ -12,18 +12,33 @@ provides=('hostsupdate')
 conflicts=('hostsupdate')
 
 source=(
-    'hostsupdate.py'
+    "$srcname::git+https://github.com/nfnty/hostsupdate.git"
     'hostsupdate.service'
     'hostsupdate.timer'
 )
 sha256sums=(
-    '4c59e8f536f828957030f72e16eaeba6bc84d8e38e4001353886f9f6c6746d46'
+    'SKIP'
     'f5372577ff97084dc411afbd199430c029c52cdb158b022939e4e037165cd333'
     '2cef073ddada7c87a561e54958243d9639cf2023e877dc0c2976383966d30c8b'
 )
 
+backup=(
+    'etc/hostsupdate/sources.json'
+    'etc/hostsupdate/invalid.json'
+    'etc/hostsupdate/excluded.json'
+)
+
+pkgver() {
+    cd "$srcdir/$srcname"
+    printf 'r%s.%s\n' \
+        "$(git rev-list HEAD | wc --lines)" \
+        "$(git describe --always | sed 's/-/./g')"
+}
+
 package() {
-     install -m 755 -D "$srcdir/hostsupdate.py" "$pkgdir/usr/bin/hostsupdate.py"
+     install -m 755 -D "$srcdir/$srcname/hostsupdate.py" "$pkgdir/usr/bin/hostsupdate.py"
+     install -d "$pkgdir/etc/hostsupdate"
+     install -m 664 "$srcdir/$srcname/conf/"* "$pkgdir/etc/hostsupdate"
      install -m 644 -D "$srcdir/hostsupdate.service" "$pkgdir/usr/lib/systemd/system/hostsupdate.service"
      install -m 644 -D "$srcdir/hostsupdate.timer" "$pkgdir/usr/lib/systemd/system/hostsupdate.timer"
 }
