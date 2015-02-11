@@ -1,6 +1,6 @@
 pkgname=('ranger-git')
 srcname='ranger'
-pkgver=r2607.v1.6.1.250.g64c42d8
+pkgver=r2608.v1.6.1.251.ge37671c
 pkgrel=1
 pkgdesc='A simple, vim-like file manager'
 arch=('any')
@@ -27,14 +27,25 @@ makedepends=('git')
 provides=('ranger')
 conflicts=('ranger')
 
-source=("$srcname::git+https://github.com/hut/ranger.git")
-sha256sums=('SKIP')
+source=(
+    "$srcname::git+https://github.com/hut/ranger.git"
+    "mime.patch"
+)
+sha256sums=(
+    'SKIP'
+    '7857b3482cfbb821354f222ec13e1a9d92046ee5ae154e8640425ef6a5565a5d'
+)
 
 pkgver() {
     cd "$srcdir/$srcname"
     printf 'r%s.%s\n' \
         "$(git rev-list HEAD | wc --lines)" \
         "$(git describe --always | sed 's/-/./g')"
+}
+
+prepare() {
+    cd "$srcdir/$srcname"
+    git apply "$srcdir/mime.patch"
 }
 
 package() {
