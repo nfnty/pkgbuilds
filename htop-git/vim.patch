@@ -1,0 +1,167 @@
+diff --git a/CategoriesPanel.c b/CategoriesPanel.c
+index bf6ee54..39a6185 100644
+--- a/CategoriesPanel.c
++++ b/CategoriesPanel.c
+@@ -87,13 +87,11 @@ static HandlerResult CategoriesPanel_eventHandler(Panel* super, int ch) {
+          result = HANDLED;
+          break;
+       case KEY_UP:
+-      case KEY_CTRLP:
++      case 'u':
+       case KEY_DOWN:
+-      case KEY_CTRLN:
+-      case KEY_NPAGE:
+-      case KEY_PPAGE:
+-      case KEY_HOME:
+-      case KEY_END: {
++      case 'e':
++      case 'E':
++      case 'U': {
+          int previous = selected;
+          Panel_onKey(super, ch);
+          selected = Panel_getSelectedIndex(super);
+diff --git a/Panel.c b/Panel.c
+index 4355b1e..fa82fee 100644
+--- a/Panel.c
++++ b/Panel.c
+@@ -347,12 +347,12 @@ bool Panel_onKey(Panel* this, int key) {
+    assert (this != NULL);
+    switch (key) {
+    case KEY_DOWN:
+-   case KEY_CTRLN:
++   case 'e':
+       if (this->selected + 1 < Vector_size(this->items))
+          this->selected++;
+       return true;
+    case KEY_UP:
+-   case KEY_CTRLP:
++   case 'u':
+       if (this->selected > 0)
+          this->selected--;
+       return true;
+@@ -379,18 +379,18 @@ bool Panel_onKey(Panel* this, int key) {
+       return true;
+    #endif
+    case KEY_LEFT:
+-   case KEY_CTRLB:
++   case 'h':
+       if (this->scrollH > 0) {
+          this->scrollH -= CRT_scrollHAmount;
+          this->needsRedraw = true;
+       }
+       return true;
++   case 't':
+    case KEY_RIGHT:
+-   case KEY_CTRLF:
+       this->scrollH += CRT_scrollHAmount;
+       this->needsRedraw = true;
+       return true;
+-   case KEY_PPAGE:
++   case 'U':
+       this->selected -= (this->h - 1);
+       this->scrollV -= (this->h - 1);
+       if (this->selected < 0)
+@@ -399,7 +399,7 @@ bool Panel_onKey(Panel* this, int key) {
+          this->scrollV = 0;
+       this->needsRedraw = true;
+       return true;
+-   case KEY_NPAGE:
++   case 'E':
+       this->selected += (this->h - 1);
+       int size = Vector_size(this->items);
+       if (this->selected < 0)
+@@ -411,10 +411,10 @@ bool Panel_onKey(Panel* this, int key) {
+          this->scrollV = MAX(0, size - this->h - 1);
+       this->needsRedraw = true;
+       return true;
+-   case KEY_HOME:
++   case 'g':
+       this->selected = 0;
+       return true;
+-   case KEY_END:
++   case 'G':
+       this->selected = Vector_size(this->items) - 1;
+       return true;
+    }
+diff --git a/htop.c b/htop.c
+index 66088e7..1f18f41 100644
+--- a/htop.c
++++ b/htop.c
+@@ -499,51 +499,51 @@ static Htop_Reaction actionTagAllChildren(Panel* panel) {
+ 
+ static void setBindings(Htop_Action* keys) {
+    keys[KEY_RESIZE] = actionResize;
+-   keys['M'] = actionSortByMemory;
+-   keys['T'] = actionSortByTime;
+-   keys['P'] = actionSortByCPU;
++   // keys['M'] = actionSortByMemory;
++   // keys['T'] = actionSortByTime;
++   // keys['P'] = actionSortByCPU;
+    keys['H'] = actionToggleUserlandThreads;
+    keys['K'] = actionToggleKernelThreads;
+-   keys['t'] = actionToggleTreeView;
+-   keys[KEY_F(5)] = actionToggleTreeView;
+-   keys[KEY_F(4)] = actionIncFilter;
+-   keys['\\'] = actionIncFilter;
+-   keys[KEY_F(3)] = actionIncSearch;
+-   keys['/'] = actionIncSearch;
++   keys['T'] = actionToggleTreeView;
++   // keys[KEY_F(5)] = actionToggleTreeView;
++   // keys[KEY_F(4)] = actionIncFilter;
++   keys['/'] = actionIncFilter;
++   // keys[KEY_F(3)] = actionIncSearch;
++   keys['f'] = actionIncSearch;
+ 
+    keys[']'] = actionHigherPriority;
+-   keys[KEY_F(7)] = actionHigherPriority;
++   // keys[KEY_F(7)] = actionHigherPriority;
+    keys['['] = actionLowerPriority;
+-   keys[KEY_F(8)] = actionLowerPriority;
+-   keys['I'] = actionInvertSortOrder;
+-   keys[KEY_F(6)] = actionExpandCollapseOrSortColumn;
+-   keys[KEY_F(18)] = actionExpandCollapseOrSortColumn;
+-   keys['<'] = actionSetSortColumn;
+-   keys[','] = actionSetSortColumn;
+-   keys['>'] = actionSetSortColumn;
+-   keys['.'] = actionSetSortColumn;
+-   keys[KEY_F(10)] = actionQuit;
++   // keys[KEY_F(8)] = actionLowerPriority;
++   keys['R'] = actionInvertSortOrder;
++   // keys[KEY_F(6)] = actionExpandCollapseOrSortColumn;
++   // keys[KEY_F(18)] = actionExpandCollapseOrSortColumn;
++   keys['O'] = actionSetSortColumn;
++   // keys[','] = actionSetSortColumn;
++   // keys['>'] = actionSetSortColumn;
++   // keys['.'] = actionSetSortColumn;
++   // keys[KEY_F(10)] = actionQuit;
+    keys['q'] = actionQuit;
+    keys['a'] = actionSetAffinity;
+-   keys[KEY_F(9)] = actionKill;
++   // keys[KEY_F(9)] = actionKill;
+    keys['k'] = actionKill;
+    keys['+'] = actionExpandOrCollapse;
+    keys['='] = actionExpandOrCollapse;
+    keys['-'] = actionExpandOrCollapse;
+    keys['u'] = actionFilterByUser;
+    keys['F'] = actionFollow;
+-   keys['S'] = actionSetup;
+-   keys['C'] = actionSetup;
++   // keys['S'] = actionSetup;
++   // keys['C'] = actionSetup;
+    keys[KEY_F(2)] = actionSetup;
+    keys['l'] = actionLsof;
+    keys['s'] = actionStrace;
+    keys[' '] = actionTag;
+    keys['\014'] = actionRedraw; // Ctrl+L
+    keys[KEY_F(1)] = actionHelp;
+-   keys['h'] = actionHelp;
+-   keys['?'] = actionHelp;
+-   keys['U'] = actionUntagAll;
+-   keys['c'] = actionTagAllChildren;
++   // keys['h'] = actionHelp;
++   // keys['?'] = actionHelp;
++   keys['x'] = actionUntagAll;
++   keys['v'] = actionTagAllChildren;
+ }
+ 
+ // ----------------------------------------

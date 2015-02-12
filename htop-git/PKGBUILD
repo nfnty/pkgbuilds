@@ -1,9 +1,9 @@
-gitname=htop
-pkgname=${gitname}-git
-pkgver=417.430c7c9
+pkgname=htop-git
+srcname=htop
+pkgver=r420.aed9b9d
 pkgrel=1
 pkgdesc="Interactive text-mode process viewer"
-url="https://github.com/hishamhm/${gitname}"
+url="https://github.com/hishamhm/htop"
 license=('GPL')
 arch=('i686' 'x86_64')
 depends=('ncurses')
@@ -12,20 +12,28 @@ optdepends=('lsof: list open files for running process'
             'strace: attach to running process')
 provides=('htop')
 conflicts=('htop')
-options=('!emptydirs')
-source=("git+${url}.git" 'vi.patch')
-sha256sums=('SKIP' 'SKIP')
+source=(
+    "git+https://github.com/hishamhm/htop.git"
+    'vim.patch'
+)
+sha256sums=(
+    'SKIP'
+    'SKIP'
+)
+
+options=('!strip')
 
 pkgver() {
-     cd "${srcdir}/${gitname}"
-     local ver="$(git rev-list --count HEAD).$(git rev-parse --short HEAD)"
-     printf "%s" "${ver//-/.}"
+    cd "$srcdir/$srcname"
+    printf 'r%s.%s\n' \
+        "$(git rev-list HEAD | wc -l)" \
+        "$(git describe --always | sed 's/-/./g')"
 }
 
 prepare() {
-     cd "${srcdir}/${gitname}"
+     cd "${srcdir}/${srcname}"
 
-     git apply ../vi.patch
+     git apply "$srcdir/vim.patch"
 
      ./autogen.sh
 
@@ -42,11 +50,11 @@ prepare() {
 }
 
 build() {
-     cd "${srcdir}/${gitname}"
-     make
+     cd "${srcdir}/${srcname}"
+     make debug
 }
 
 package() {
-     cd "${srcdir}/${gitname}"
+     cd "${srcdir}/${srcname}"
      make DESTDIR="${pkgdir}" install
 }
