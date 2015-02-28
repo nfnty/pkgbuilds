@@ -1,6 +1,6 @@
 pkgname=htop-git
 srcname=htop
-pkgver=r420.aed9b9d
+pkgver=r424.0a184b7
 pkgrel=1
 pkgdesc="Interactive text-mode process viewer"
 url="https://github.com/hishamhm/htop"
