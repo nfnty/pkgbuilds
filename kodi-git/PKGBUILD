@@ -1,6 +1,6 @@
 pkgname=('kodi-git')
 srcname='kodi'
-pkgver=r30887.14.0a3.Helix.1705.g3ddaa3c
+pkgver=r30952.14.0a3.Helix.1770.g4606179
 pkgrel=1
 pkgdesc='Software media player and entertainment hub for digital media'
 arch=('i686' 'x86_64')
