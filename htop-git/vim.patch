@@ -84,7 +84,7 @@ index 4355b1e..fa82fee 100644
        return true;
     }
 diff --git a/htop.c b/htop.c
-index 66088e7..1f18f41 100644
+index 66088e7..6537b87 100644
 --- a/htop.c
 +++ b/htop.c
 @@ -499,51 +499,51 @@ static Htop_Reaction actionTagAllChildren(Panel* panel) {
@@ -142,7 +142,8 @@ index 66088e7..1f18f41 100644
     keys['+'] = actionExpandOrCollapse;
     keys['='] = actionExpandOrCollapse;
     keys['-'] = actionExpandOrCollapse;
-    keys['u'] = actionFilterByUser;
+-   keys['u'] = actionFilterByUser;
++   keys['?'] = actionFilterByUser;
     keys['F'] = actionFollow;
 -   keys['S'] = actionSetup;
 -   keys['C'] = actionSetup;
