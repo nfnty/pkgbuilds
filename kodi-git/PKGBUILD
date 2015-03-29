@@ -64,9 +64,6 @@ prepare() {
 build() {
     cd "$srcdir/$srcname"
 
-    TMPDIR="$srcdir/tmp"
-    mkdir --parents "$TMPDIR"
-
     # Bootstrapping
     MAKEFLAGS=-j1 ./bootstrap
 
