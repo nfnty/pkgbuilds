@@ -1,7 +1,7 @@
 pkgname=('telldus-core-git')
 srcname='telldus-core'
 pkgver='1'
-pkgrel='2'
+pkgrel='1'
 pkgdesc='Driver and tools for controlling a Telldus Technologies TellStick'
 arch=('i686' 'x86_64')
 url='https://github.com/telldus/telldus'
