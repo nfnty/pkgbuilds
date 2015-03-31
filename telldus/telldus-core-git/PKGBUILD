@@ -35,7 +35,7 @@ pkgver() {
 build() {
     cd "$srcdir/$srcname/telldus-core"
 
-    cmake -DCMAKE_INSTALL_PREFIX=/usr .
+    cmake -DCMAKE_INSTALL_PREFIX=/usr -DFORCE_COMPILE_FROM_TRUNK=TRUE .
     make
 }
 
