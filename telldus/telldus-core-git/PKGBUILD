@@ -51,7 +51,7 @@ package() {
 
     make DESTDIR="$pkgdir" install
 
-    install --directory --mode=644 \
+    install -D --mode=644 \
         "$srcdir/telldusd.service" \
         "$pkgdir/usr/lib/systemd/system/telldusd.service"
 }
