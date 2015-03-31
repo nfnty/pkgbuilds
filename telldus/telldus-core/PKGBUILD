@@ -1,0 +1,50 @@
+pkgname=('telldus-core-git')
+srcname='telldus-core'
+pkgver='1'
+pkgrel='1'
+pkgdesc='Driver and tools for controlling a Telldus Technologies TellStick'
+arch=('i686' 'x86_64')
+url='https://github.com/telldus/telldus'
+license=('GPL2')
+
+depends=('libftdi-compat' 'confuse')
+makedepends=('gcc' 'cmake' 'make' 'git' 'doxygen')
+provides=('telldus-core')
+conflicts=('telldus-core')
+
+source=(
+    "$srcname::git+https://github.com/telldus/telldus.git"
+    'telldusd.service'
+)
+sha512sums=(
+    'SKIP'
+    '6f1df90a7d073acc2825d480552dc25fc0ccbafc58295542278a1a69a42030c2df7221bb3915a96c7a37924b1c276b78fe9d821b371cbe84c6eb09f6e987ebde'
+)
+
+backup=('etc/tellstick.conf')
+
+pkgver() {
+    cd "$srcdir/$srcname/telldus-core"
+
+    printf 'r%s.%s\n' \
+        "$(git rev-list HEAD | wc --lines)" \
+        "$(git describe --always | sed 's/-/./g')"
+}
+
+
+build() {
+    cd "$srcdir/$srcname/telldus-core"
+
+    cmake -DCMAKE_INSTALL_PREFIX=/usr .
+    make
+}
+
+package() {
+    cd "$srcdir/$srcname/telldus-core"
+
+    make DESTDIR="$pkgdir" install
+
+    install --directory --mode=644 \
+        "$srcdir/telldusd.service" \
+        "$pkgdir/usr/lib/systemd/system/telldusd.service"
+}
