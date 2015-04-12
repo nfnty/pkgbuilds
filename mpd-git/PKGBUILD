@@ -76,7 +76,7 @@ prepare() {
         --disable-mms \
         --disable-modplug \
         --disable-mpc \
-        --enable-mpg123 \
+        --disable-mpg123 \
         --disable-openal \
         --disable-opus \
         --disable-oss \
