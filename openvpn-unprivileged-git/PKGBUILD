@@ -13,7 +13,7 @@ provides=('openvpn')
 conflicts=('openvpn')
 
 source=(
-    "$srcname::git+https://github.com/OpenVPN/openvpn.git"
+    "$srcname::git+https://github.com/OpenVPN/openvpn.git#tag=v2.2.3"
     'tunsetiff.patch'
 )
 sha512sums=(
