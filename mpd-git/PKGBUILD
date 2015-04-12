@@ -7,7 +7,7 @@ arch=('i686' 'x86_64')
 url='https://github.com/MaxKellermann/MPD'
 license=('GPL2')
 
-depends=('ffmpeg' 'audiofile' 'libmad' 'faad2' 'sqlite' 'wavpack' 'libid3tag' 'yajl' 'libmpdclient' 'icu')
+depends=('ffmpeg' 'libsamplerate' 'audiofile' 'libmad' 'faad2' 'sqlite' 'wavpack' 'libid3tag' 'yajl' 'libmpdclient' 'icu')
 makedepends=('git' 'boost' 'doxygen')
 provides=('mpd')
 conflicts=('mpd')
