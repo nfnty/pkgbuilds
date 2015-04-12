@@ -18,7 +18,7 @@ source=(
 )
 sha512sums=(
     'SKIP'
-    'a8cab6c933aab9468739f8477f51e64826ad0ea2e1e3571d4e453cdb2cad0771'
+    'cd2a49b55b3f30de552dc72acbfddd08e31d3ffe3073fc817ac83878997192ba697bbc91b360cfd6e4a2f21d57e3e4a61d2583228ed361c57b99fb41c3cc5fa2'
 )
 
 pkgver() {
