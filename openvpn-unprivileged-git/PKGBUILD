@@ -13,12 +13,12 @@ provides=('openvpn')
 conflicts=('openvpn')
 
 source=(
-    "$srcname::git+https://github.com/OpenVPN/openvpn.git#tag=v2.2.3"
+    "$srcname::git+https://github.com/OpenVPN/openvpn.git#tag=v2.3.6"
     'tunsetiff.patch'
 )
 sha512sums=(
     'SKIP'
-    'cb074f67cc31c43abd03b7c564fce33f44ea61dafe9c55484052c46acd7df29c639971d6576f54f3f4289a801a0078111de217fdb3cef3d2b5cb959da31cb043'
+    'b979ff1f5e1b6c1156f27a8ea766fc26378b359e69bd900d40577fb8b9850a0e364fcc140434cdddb2e3edd9fa1e02bccaaefdc0709e92ac39b01c86d8f24516'
 )
 
 pkgver() {
