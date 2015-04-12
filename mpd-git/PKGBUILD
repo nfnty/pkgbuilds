@@ -26,6 +26,8 @@ pkgver() {
 prepare() {
     cd "$srcdir/$srcname"
 
+    ./autogen.sh
+
     ./configure \
         --prefix=/usr \
         --sysconfdir=/etc \
