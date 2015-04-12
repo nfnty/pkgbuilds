@@ -1,28 +1,31 @@
-# $Id$
-# Maintainer: Gaetan Bisson <bisson@archlinux.org>
-# Contributor: Angel Velasquez <angvp@archlinux.org>
-# Contributor: Andrea Scarpino <andrea@archlinux.org>
-# Contributor: Damir Perisa <damir.perisa@bluewin.ch>
-# Contributor: Ben <ben@benmazer.net>
-
-pkgname=mpd
-pkgver=0.19.9
-pkgrel=2
-pkgdesc='Flexible, powerful, server-side application for playing music'
-url='http://www.musicpd.org/'
-license=('GPL')
+pkgname=('mpd')
+srcname='mpd'
+pkgver='1'
+pkgrel='1'
+pkgdesc='Daemon for playing music of various formats.'
 arch=('i686' 'x86_64')
-depends=('ffmpeg' 'audiofile' 'libmad' 'faad2'
-         'sqlite' 'wavpack' 'libid3tag' 'yajl' 'libmpdclient' 'icu' )
-makedepends=('boost' 'doxygen')
-source=("http://www.musicpd.org/download/${pkgname}/${pkgver%.*}/${pkgname}-${pkgver}.tar.xz"{,.sig})
-sha1sums=('6683bee5f132eda318c5a61ec14b2df8d9164d60' 'SKIP')
-validpgpkeys=('0392335A78083894A4301C43236E8A58C6DB4512')
+url='https://github.com/MaxKellermann/MPD'
+license=('GPL2')
 
-groups=('modified')
+depends=('ffmpeg' 'audiofile' 'libmad' 'faad2' 'sqlite' 'wavpack' 'libid3tag' 'yajl' 'libmpdclient' 'icu')
+makedepends=('git' 'boost' 'doxygen')
+provides=('mpd')
+conflicts=('mpd')
 
-build() {
-    cd "${srcdir}/${pkgname}-${pkgver}"
+source=("$srcname::git+https://github.com/MaxKellermann/MPD.git")
+sha512sums=('SKIP')
+
+pkgver() {
+    cd "$srcdir/$srcname"
+
+    printf 'r%s.%s\n' \
+        "$(git rev-list HEAD | wc --lines)" \
+        "$(git describe --always | sed 's/-/./g')"
+}
+
+prepare() {
+    cd "$srcdir/$srcname"
+
     ./configure \
         --prefix=/usr \
         --sysconfdir=/etc \
@@ -103,10 +106,16 @@ build() {
         --enable-aac \
         --disable-daemon \
         --with-zeroconf=no
+}
+
+build() {
+    cd "$srcdir/$srcname"
+
     make
 }
 
 package() {
-    cd "${srcdir}/${pkgname}-${pkgver}"
-    make DESTDIR="${pkgdir}" install
+    cd "$srcdir/$srcname"
+
+    make DESTDIR="$pkgdir" install
 }
