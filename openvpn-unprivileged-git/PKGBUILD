@@ -12,8 +12,14 @@ makedepends=('git')
 provides=('openvpn')
 conflicts=('openvpn')
 
-source=("$srcname::git+https://github.com/OpenVPN/openvpn.git")
-sha512sums=('SKIP')
+source=(
+    "$srcname::git+https://github.com/OpenVPN/openvpn.git"
+    'tunsetiff.patch'
+)
+sha512sums=(
+    'SKIP'
+    'a8cab6c933aab9468739f8477f51e64826ad0ea2e1e3571d4e453cdb2cad0771'
+)
 
 pkgver() {
     cd "$srcdir/$srcname"
