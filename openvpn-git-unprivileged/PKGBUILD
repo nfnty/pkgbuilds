@@ -1,0 +1,50 @@
+pkgname=('openvpn-unprivileged-git')
+srcname='openvpn'
+pkgver='1'
+pkgrel='1'
+pkgdesc='A Secure tunneling daemon; Customized for running as unprivileged container'
+arch=('i686' 'x86_64')
+url='https://github.com/OpenVPN/openvpn'
+license=('custom')
+
+depends=('openssl' 'lzo' 'iproute2')
+makedepends=('git')
+provides=('openvpn')
+conflicts=('openvpn')
+
+source=("$srcname::git+https://github.com/OpenVPN/openvpn.git")
+sha512sums=('SKIP')
+
+pkgver() {
+    cd "$srcdir/$srcname"
+
+    printf 'r%s.%s\n' \
+        "$(git rev-list HEAD | wc --lines)" \
+        "$(git describe --always | sed 's/-/./g')"
+}
+
+prepare() {
+    cd "$srcdir/$srcname"
+
+    git apply "$srcdir/tunsetiff.patch"
+}
+
+build() {
+    cd "$srcdir/$srcname"
+
+    autoreconf --install --verbose --force
+
+    CFLAGS="$CFLAGS -DPLUGIN_LIBDIR=\\\"/usr/lib/openvpn\\\"" ./configure \
+        --prefix=/usr \
+        --sbindir=/usr/bin \
+        --mandir=/usr/share/man \
+        --enable-iproute2
+
+    make
+}
+
+package() {
+    cd "$srcdir/$srcname"
+
+    make DESTDIR="$pkgdir" install
+}
