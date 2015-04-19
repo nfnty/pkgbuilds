@@ -13,7 +13,7 @@ makedepends=('git')
 optdepends=('sxhkd-git: to define keyboard and pointer bindings' 'bar-aint-recursive: for the example panel' 'xtitle-git: for the example panel' 'sutils-git: for the example panel' 'terminus-font: for the example panel')
 provides=("${_pkgname}")
 conflicts=("${_pkgname}")
-source=("git://github.com/baskerville/${_pkgname}.git")
+source=("git://github.com/nfnty/${_pkgname}.git")
 md5sums=('SKIP')
 
 pkgver() {
