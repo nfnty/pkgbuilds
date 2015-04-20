@@ -1,35 +1,38 @@
-# Maintainer: Bastien Dejean <nihilhill@gmail.com>
-
-_pkgname=bspwm
-pkgname=${_pkgname}-git
-pkgver=984
-pkgrel=1
+pkgname=('bspwm-git')
+srcname='bspwm'
+pkgver='1'
+pkgrel='1'
 pkgdesc='A tiling window manager based on binary space partitioning'
-arch=('i686' 'x86_64' 'armv7h')
-url="https://github.com/baskerville/${_pkgname}"
+arch=('i686' 'x86_64')
+url='https://github.com/nfnty/bspwm'
 license=('custom:BSD')
-depends=('libxcb' 'xcb-util' 'xcb-util-wm' 'jansson')
-makedepends=('git')
-optdepends=('sxhkd-git: to define keyboard and pointer bindings' 'bar-aint-recursive: for the example panel' 'xtitle-git: for the example panel' 'sutils-git: for the example panel' 'terminus-font: for the example panel')
-provides=("${_pkgname}")
-conflicts=("${_pkgname}")
-source=("git://github.com/nfnty/${_pkgname}.git")
-md5sums=('SKIP')
 
-options=('!strip')
+depends=('libxcb' 'xcb-util' 'xcb-util-wm')
+optdepends=('jansson')
+makedepends=('git' 'jansson')
+provides=('bspwm')
+conflicts=('bspwm')
+
+source=("${srcname}::git+https://github.com/nfnty/bspwm.git#branch=json")
+sha512sums=('SKIP')
 
 pkgver() {
-    cd "$srcdir/$_pkgname"
-    git rev-list --count HEAD
+    cd "${srcdir}/${srcname}"
+
+    printf 'r%s.%s\n' \
+        "$( git rev-list HEAD | wc --lines )" \
+        "$( git describe --always | sed 's/-/./g' )"
 }
 
 build() {
-    cd "$srcdir/$_pkgname"
-    make debug PREFIX=/usr
+    cd "${srcdir}/${srcname}"
+
+    make PREFIX='/usr'
 }
 
 package() {
-    cd "$srcdir/$_pkgname"
-    make PREFIX=/usr DESTDIR="$pkgdir" install
-    install -D -m644 LICENSE "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
+    cd "${srcdir}/${srcname}"
+
+    make PREFIX='/usr' DESTDIR="${pkgdir}" install
+    install -D --mode='644' LICENSE "${pkgdir}/usr/share/licenses/${srcname}/LICENSE"
 }
