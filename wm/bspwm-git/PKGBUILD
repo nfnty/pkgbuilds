@@ -16,6 +16,8 @@ conflicts=("${_pkgname}")
 source=("git://github.com/nfnty/${_pkgname}.git")
 md5sums=('SKIP')
 
+options=('!strip')
+
 pkgver() {
     cd "$srcdir/$_pkgname"
     git rev-list --count HEAD
@@ -23,7 +25,7 @@ pkgver() {
 
 build() {
     cd "$srcdir/$_pkgname"
-    make PREFIX=/usr
+    make debug PREFIX=/usr
 }
 
 package() {
