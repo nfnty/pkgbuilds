@@ -27,7 +27,7 @@ build() {
     cd "${srcdir}/${srcname}"
 
     ./configure --prefix='/usr' --enable-optimize --disable-debug --disable-verify-install
-    make VERBOSE='TRUE'
+    make
 }
 
 package() {
