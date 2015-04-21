@@ -27,7 +27,7 @@ build() {
     cd "${srcdir}/${srcname}"
 
     ./configure --prefix='/usr'
-    make
+    make VERBOSE='TRUE'
 }
 
 package() {
