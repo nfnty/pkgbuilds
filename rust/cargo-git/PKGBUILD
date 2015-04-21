@@ -26,7 +26,7 @@ pkgver() {
 build() {
     cd "${srcdir}/${srcname}"
 
-    ./configure --prefix='/usr'
+    ./configure --prefix='/usr' --enable-optimize --disable-debug --disable-verify-install
     make VERBOSE='TRUE'
 }
 
