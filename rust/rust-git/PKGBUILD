@@ -11,7 +11,7 @@ makedepends=('git' 'gcc' 'python2' 'make' 'curl')
 provides=('rust')
 conflicts=('rust')
 
-source=("${srcname}::git+https://github.com/rust-lang/rust.git")
+source=("${srcname}::git+https://github.com/rust-lang/rust.git#tag=1.0.0-beta")
 sha512sums=('SKIP')
 
 pkgver() {
@@ -25,7 +25,8 @@ pkgver() {
 build() {
     cd "${srcdir}/${srcname}"
 
-    ./configure --prefix='/usr'
+    ./configure --prefix='/usr' --enable-optimize --disable-debug --disable-docs --disable-verify-install
+
     make
 }
 
