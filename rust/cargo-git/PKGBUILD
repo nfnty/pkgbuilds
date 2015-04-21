@@ -23,10 +23,17 @@ pkgver() {
         "$( git describe --always | sed 's/-/./g' )"
 }
 
+prepare() {
+    cd "${srcdir}/${srcname}"
+
+    git submodule update --init
+}
+
 build() {
     cd "${srcdir}/${srcname}"
 
     ./configure --prefix='/usr' --enable-optimize --disable-debug --disable-verify-install
+
     make
 }
 
