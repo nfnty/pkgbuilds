@@ -1,0 +1,38 @@
+pkgname=('wtftw-git')
+srcname='wtftw'
+pkgver='1'
+pkgrel='1'
+pkgdesc='Window Tiling For The Win. A tiling window manager written in Rust'
+arch=('i686' 'x86_64')
+url='https://github.com/Kintaro/wtftw'
+license=('custom:BSD')
+
+depends=('rust')
+makedepends=('git')
+provides=('wtftw')
+conflicts=('wtftw')
+
+source=("${srcname}::git+https://github.com/Kintaro/wtftw.git")
+sha512sums=('SKIP')
+
+pkgver() {
+    cd "${srcdir}/${srcname}"
+
+    printf 'r%s.%s\n' \
+        "$( git rev-list HEAD | wc --lines )" \
+        "$( git describe --always | sed 's/-/./g' )"
+}
+
+build() {
+    cd "${srcdir}/${srcname}"
+
+    cargo build --release
+}
+
+package() {
+    cd "${srcdir}/${srcname}"
+
+    install -D --mode=755 target/release/wtftw "${pkgdir}/usr/bin/wtftw"
+    install -D --mode=644 config/config.rs "${pkgdir}/usr/share/wtftw/config.rs"
+    install -D --mode=644 LICENSE "${pkgdir}/usr/share/licences/wtftw/LICENSE"
+}
