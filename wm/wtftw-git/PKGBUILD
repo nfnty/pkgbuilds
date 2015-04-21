@@ -7,8 +7,8 @@ arch=('i686' 'x86_64')
 url='https://github.com/Kintaro/wtftw'
 license=('custom:BSD')
 
-depends=('rust')
-makedepends=('git')
+depends=('rust-git')
+makedepends=('git' 'cargo-git')
 provides=('wtftw')
 conflicts=('wtftw')
 

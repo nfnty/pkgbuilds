@@ -1,0 +1,36 @@
+pkgname=('rust-git')
+srcname='rust'
+pkgver='1'
+pkgrel='1'
+pkgdesc='A safe, concurrent, practical language'
+arch=('i686' 'x86_64')
+url='https://github.com/rust-lang/rust'
+license=('MIT' 'Apache')
+
+makedepends=('git' 'gcc' 'python2' 'make' 'curl')
+provides=('rust')
+conflicts=('rust')
+
+source=("${srcname}::git+https://github.com/rust-lang/rust.git")
+sha512sums=('SKIP')
+
+pkgver() {
+    cd "${srcdir}/${srcname}"
+
+    printf 'r%s.%s\n' \
+        "$( git rev-list HEAD | wc --lines )" \
+        "$( git describe --always | sed 's/-/./g' )"
+}
+
+build() {
+    cd "${srcdir}/${srcname}"
+
+    ./configure --prefix='/usr'
+    make
+}
+
+package() {
+    cd "${srcdir}/${srcname}"
+
+    make DESTDIR="${pkgdir}" install
+}
