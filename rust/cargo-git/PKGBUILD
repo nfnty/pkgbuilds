@@ -41,4 +41,5 @@ package() {
     cd "${srcdir}/${srcname}"
 
     make DESTDIR="${pkgdir}" install
+    rm --recursive "${pkgdir}/usr/lib/rustlib"
 }

@@ -34,4 +34,5 @@ package() {
     cd "${srcdir}/${srcname}"
 
     make DESTDIR="${pkgdir}" install
+    rm "${pkgdir}/usr/lib/rustlib/"{components,install.log,manifest-rustc,rust-installer-version,uninstall.sh}
 }
