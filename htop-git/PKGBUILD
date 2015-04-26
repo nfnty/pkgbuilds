@@ -9,11 +9,21 @@ license=('GPL2')
 
 depends=('ncurses')
 makedepends=('git' 'python2')
+optdepends=(
+    'lsof: List open files for running process'
+    'strace: Attach to running process'
+)
 provides=('htop')
 conflicts=('htop')
 
-source=("${srcname}::git+https://github.com/hishamhm/htop.git")
-sha512sums=('SKIP')
+source=(
+    "${srcname}::git+https://github.com/hishamhm/htop.git"
+    'vim.patch'
+)
+sha512sums=(
+    'SKIP'
+    '99d32515d18d60a55e935c04c5765695dd7b4d4e0d2153e6bc780692e69db79a16033daac9506a019ac69f5ee103c4c715e2ee6f2b2cdc95a9cff00d3148bfaa'
+)
 
 pkgver() {
     cd "${srcdir}/${srcname}"
@@ -29,9 +39,6 @@ prepare() {
     git apply "${srcdir}/vim.patch"
 
     ./autogen.sh
-
-    sed -i 's|ncursesw/curses.h|curses.h|' RichString.[ch] configure
-    sed -i 's|python|python2|' scripts/MakeHeader.py
 
     ./configure \
         --prefix=/usr \
