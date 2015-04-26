@@ -1,7 +1,7 @@
 pkgname=('hostsupdate-git')
 srcname='hostsupdate'
-pkgver=r4.c740aac
-pkgrel=1
+pkgver='1'
+pkgrel='1'
 pkgdesc='Update hosts.d lists'
 arch=('any')
 url='https://github.com/nfnty/hostsupdate.git'
@@ -12,7 +12,7 @@ provides=('hostsupdate')
 conflicts=('hostsupdate')
 
 source=(
-    "$srcname::git+https://github.com/nfnty/hostsupdate.git"
+    "${srcname}::git+https://github.com/nfnty/hostsupdate.git"
     'hostsupdate.service'
     'hostsupdate.timer'
 )
@@ -29,16 +29,17 @@ backup=(
 )
 
 pkgver() {
-    cd "$srcdir/$srcname"
+    cd "${srcdir}/${srcname}"
+
     printf 'r%s.%s\n' \
-        "$(git rev-list HEAD | wc --lines)" \
-        "$(git describe --always | sed 's/-/./g')"
+        "$( git rev-list HEAD | wc --lines )" \
+        "$( git describe --always | sed 's/-/./g' )"
 }
 
 package() {
-     install -m 755 -D "$srcdir/$srcname/hostsupdate.py" "$pkgdir/usr/bin/hostsupdate.py"
-     install -m 755 -d "$pkgdir/etc/hostsupdate"
-     install -m 644 "$srcdir/$srcname/conf/"* "$pkgdir/etc/hostsupdate"
-     install -m 644 -D "$srcdir/hostsupdate.service" "$pkgdir/usr/lib/systemd/system/hostsupdate.service"
-     install -m 644 -D "$srcdir/hostsupdate.timer" "$pkgdir/usr/lib/systemd/system/hostsupdate.timer"
+     install -m 755 -D "${srcdir}/${srcname}/hostsupdate.py" "${pkgdir}/usr/bin/hostsupdate.py"
+     install -m 755 -d "${pkgdir}/etc/hostsupdate"
+     install -m 644 "${srcdir}/${srcname}/conf/"* "${pkgdir}/etc/hostsupdate"
+     install -m 644 -D "${srcdir}/hostsupdate.service" "${pkgdir}/usr/lib/systemd/system/hostsupdate.service"
+     install -m 644 -D "${srcdir}/hostsupdate.timer" "${pkgdir}/usr/lib/systemd/system/hostsupdate.timer"
 }

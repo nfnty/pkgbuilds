@@ -1,7 +1,7 @@
 pkgname=('kodi-git')
 srcname='kodi'
-pkgver=r30952.14.0a3.Helix.1770.g4606179
-pkgrel=1
+pkgver='1'
+pkgrel='1'
 pkgdesc='Software media player and entertainment hub for digital media'
 arch=('i686' 'x86_64')
 url='https://github.com/xbmc/xbmc'
@@ -41,20 +41,21 @@ provides=('kodi')
 conflicts=('kodi')
 replaces=('xbmc')
 
-source=("$srcname::git+https://github.com/xbmc/xbmc.git#branch=Helix")
+source=("${srcname}::git+https://github.com/xbmc/xbmc.git#branch=Helix")
 sha256sums=('SKIP')
 
 install='kodi.install'
 
 pkgver() {
-    cd "$srcdir/$srcname"
+    cd "${srcdir}/${srcname}"
+
     printf 'r%s.%s\n' \
-        "$(git rev-list HEAD | wc --lines)" \
-        "$(git describe --always | sed 's/-/./g')"
+        "$( git rev-list HEAD | wc --lines )" \
+        "$( git describe --always | sed 's/-/./g' )"
 }
 
 prepare() {
-    cd "$srcdir/$srcname"
+    cd "${srcdir}/${srcname}"
 
     find -type f -name *.py -exec sed 's|^#!.*python$|#!/usr/bin/python2|' -i "{}" +
     sed 's|^#!.*python$|#!/usr/bin/python2|' -i tools/depends/native/rpl-native/rpl
@@ -62,7 +63,7 @@ prepare() {
 }
 
 build() {
-    cd "$srcdir/$srcname"
+    cd "${srcdir}/${srcname}"
 
     # Bootstrapping
     MAKEFLAGS=-j1 ./bootstrap
@@ -138,9 +139,9 @@ build() {
 }
 
 package() {
-    cd "$srcdir/$srcname"
+    cd "${srcdir}/${srcname}"
     # Running make install
-    make DESTDIR="$pkgdir" install
+    make DESTDIR="${pkgdir}" install
 
     # Licenses
     install -dm755 "${pkgdir}/usr/share/licenses/${pkgname}"

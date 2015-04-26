@@ -1,7 +1,7 @@
 pkgname=('vimpager-nfnty')
 srcname='vimpager'
-pkgver=r5.6859875
-pkgrel=1
+pkgver='1'
+pkgrel='1'
 pkgdesc='Vim as pager with escape sequences stripped'
 arch=('any')
 url='https://github.com/nfnty/vimpager'
@@ -12,20 +12,21 @@ makedepends=('git')
 provides=('vimpager')
 conflicts=('vimpager')
 
-source=("$srcname::git+https://github.com/nfnty/vimpager.git")
+source=("${srcname}::git+https://github.com/nfnty/vimpager.git")
 sha256sums=('SKIP')
 
 pkgver() {
-    cd "$srcdir/$srcname"
+    cd "${srcdir}/${srcname}"
+
     printf 'r%s.%s\n' \
-        "$(git rev-list HEAD | wc -l)" \
-        "$(git describe --always | sed 's/-/./g')"
+        "$( git rev-list HEAD | wc --lines )" \
+        "$( git describe --always | sed 's/-/./g' )"
 }
 
 package() {
-    cd "$srcdir/$srcname"
-    install -D -m755 vimpager.sh "$pkgdir/usr/bin/vimpager"
-    install -D -m755 manpager.sh "$pkgdir/usr/bin/manpager"
-    install -D -m755 diffpager.sh "$pkgdir/usr/bin/diffpager"
-    install -D -m755 gitpager.sh "$pkgdir/usr/bin/gitpager"
+    cd "${srcdir}/${srcname}"
+    install -D -m755 vimpager.sh "${pkgdir}/usr/bin/vimpager"
+    install -D -m755 manpager.sh "${pkgdir}/usr/bin/manpager"
+    install -D -m755 diffpager.sh "${pkgdir}/usr/bin/diffpager"
+    install -D -m755 gitpager.sh "${pkgdir}/usr/bin/gitpager"
 }

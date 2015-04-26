@@ -1,7 +1,7 @@
 pkgname=('ranger-git')
 srcname='ranger'
-pkgver=r2622.v1.6.1.265.g16edaeb
-pkgrel=1
+pkgver='1'
+pkgrel='1'
 pkgdesc='A simple, vim-like file manager'
 arch=('any')
 url='https://github.com/hut/ranger'
@@ -28,7 +28,7 @@ provides=('ranger')
 conflicts=('ranger')
 
 source=(
-    "$srcname::git+https://github.com/hut/ranger.git"
+    "${srcname}::git+https://github.com/hut/ranger.git"
     "mime.patch"
 )
 sha256sums=(
@@ -37,18 +37,21 @@ sha256sums=(
 )
 
 pkgver() {
-    cd "$srcdir/$srcname"
+    cd "${srcdir}/${srcname}"
+
     printf 'r%s.%s\n' \
-        "$(git rev-list HEAD | wc --lines)" \
-        "$(git describe --always | sed 's/-/./g')"
+        "$( git rev-list HEAD | wc --lines )" \
+        "$( git describe --always | sed 's/-/./g' )"
 }
 
 prepare() {
-    cd "$srcdir/$srcname"
-    git apply "$srcdir/mime.patch"
+    cd "${srcdir}/${srcname}"
+
+    git apply "${srcdir}/mime.patch"
 }
 
 package() {
-    cd "$srcdir/$srcname"
-    python setup.py -q install --root="$pkgdir" --optimize=1
+    cd "${srcdir}/${srcname}"
+
+    python setup.py -q install --root="${pkgdir}" --optimize=1
 }

@@ -20,13 +20,13 @@ prepare() {
 }
 
 package() {
-    install -dm755 "$pkgdir/usr/share/themes/"
-    install -Dm644 FlatStudio/LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+    install -dm755 "${pkgdir}/usr/share/themes/"
+    install -Dm644 FlatStudio/LICENSE "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
 
     rm -rf FlatStudio/{LICENSE,*.txt,*.tar.gz}
 
-    cp -rf FlatStudio{,Dark,Gray,Light} "$pkgdir/usr/share/themes/"
+    cp -rf FlatStudio{,Dark,Gray,Light} "${pkgdir}/usr/share/themes/"
 
-    find "$pkgdir/" -type d -exec chmod 755 "{}" \;
-    find "$pkgdir/" -type f -exec chmod 644 "{}" \;
+    find "${pkgdir}" -type d -exec chmod 755 "{}" \;
+    find "${pkgdir}" -type f -exec chmod 644 "{}" \;
 }
