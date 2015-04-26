@@ -8,7 +8,7 @@ url='https://github.com/hishamhm/htop'
 license=('GPL2')
 
 depends=('ncurses')
-makedepends=('git' 'python2')
+makedepends=('git' 'python')
 optdepends=(
     'lsof: List open files for running process'
     'strace: Attach to running process'
@@ -17,7 +17,7 @@ provides=('htop')
 conflicts=('htop')
 
 source=(
-    "${srcname}::git+https://github.com/hishamhm/htop.git"
+    "${srcname}::git+https://github.com/hishamhm/htop.git#commit=e3d1ca0d2074ec89155f9412c6caa621265a8824"
     'vim.patch'
 )
 sha512sums=(
