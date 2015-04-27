@@ -13,5 +13,6 @@ provides=('haraka')
 conflicts=('haraka')
 
 package() {
+    npm config set python python2
     npm install --user root -g --prefix "${pkgdir}/usr" "${srcname}@${pkgver}"
 }
