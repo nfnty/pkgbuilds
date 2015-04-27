@@ -1,5 +1,5 @@
 pkgname=('haraka')
-srcname='haraka'
+srcname='Haraka'
 pkgver='2.6.1'
 pkgrel='1'
 pkgdesc='Event driven SMTP server'
