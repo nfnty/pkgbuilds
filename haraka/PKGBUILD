@@ -1,0 +1,19 @@
+pkgname=('haraka')
+srcname='haraka'
+pkgver='2.6.1'
+pkgrel='1'
+pkgdesc='Event driven SMTP server'
+arch=('i686' 'x86_64')
+url='https://github.com/baudehlo/Haraka'
+license=('MIT')
+
+depends=('nodejs')
+makedepends=('python2' 'gcc' 'make')
+provides=('haraka')
+conflicts=('haraka')
+
+package() {
+    cd "${srcdir}/${srcname}"
+
+    npm install --user root -g --prefix "${pkgdir}/usr" "${srcname}@${pkgver}"
+}
