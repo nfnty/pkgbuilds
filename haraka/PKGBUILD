@@ -13,7 +13,5 @@ provides=('haraka')
 conflicts=('haraka')
 
 package() {
-    cd "${srcdir}/${srcname}"
-
     npm install --user root -g --prefix "${pkgdir}/usr" "${srcname}@${pkgver}"
 }
