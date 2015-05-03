@@ -8,8 +8,15 @@ url='https://github.com/docker/compose'
 license=('Apache')
 
 depends=(
-    'python' 'python-docopt' 'python-yaml' 'python-requests'
-    'python-texttable' 'python-dockerpty' 'python-docker-py' 'python-six'
+    'python'
+    'python-docopt'
+    'python-yaml'
+    'python-requests'
+    'python-texttable'
+    'python-websocket-client'
+    'python-docker-py'
+    'python-dockerpty'
+    'python-six'
     'python-setuptools'
 )
 makedepends=('git')
