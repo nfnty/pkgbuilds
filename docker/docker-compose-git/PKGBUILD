@@ -10,8 +10,9 @@ license=('Apache')
 depends=(
     'python' 'python-docopt' 'python-yaml' 'python-requests'
     'python-texttable' 'python-dockerpty' 'python-docker-py' 'python-six'
+    'python-setuptools'
 )
-makedepends=('git' 'python-setuptools')
+makedepends=('git')
 provides=('docker-compose')
 conflicts=('docker-compose')
 
@@ -30,4 +31,7 @@ package() {
     cd "${srcdir}/${srcname}"
 
     python setup.py install --root="${pkgdir}" --optimize=1
+
+    install -D --mode=644 LICENSE "${pkgdir}/usr/share/licenses/${srcname}/LICENSE"
+    install -D --mode=644 contrib/completion/bash/docker-compose "${pkgdir}/etc/bash_completion.d/docker-compose"
 }
