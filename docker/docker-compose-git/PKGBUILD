@@ -1,0 +1,33 @@
+pkgname=('docker-compose-git')
+srcname='docker-compose'
+pkgver='1'
+pkgrel='1'
+pkgdesc='Define and run complex applications using Docker'
+arch=('any')
+url='https://github.com/docker/compose'
+license=('Apache')
+
+depends=(
+    'python' 'python-docopt' 'python-yaml' 'python-requests'
+    'python-texttable' 'python-dockerpty' 'python-docker-py' 'python-six'
+)
+makedepends=('git' 'python-setuptools')
+provides=('docker-compose')
+conflicts=('docker-compose')
+
+source=("${srcname}::git+https://github.com/docker/compose.git")
+sha512sums=('SKIP')
+
+pkgver() {
+    cd "${srcdir}/${srcname}"
+
+    printf 'r%s.%s\n' \
+        "$( git rev-list HEAD | wc --lines )" \
+        "$( git describe --always | sed 's/-/./g' )"
+}
+
+package() {
+    cd "${srcdir}/${srcname}"
+
+    python setup.py install --root="${pkgdir}" --optimize=1
+}
