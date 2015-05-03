@@ -15,7 +15,7 @@ makedepends=('git' 'python-setuptools')
 provides=('docker-compose')
 conflicts=('docker-compose')
 
-source=("${srcname}::git+https://github.com/docker/compose.git")
+source=("${srcname}::git+https://github.com/docker/compose.git#tag=1.2.0")
 sha512sums=('SKIP')
 
 pkgver() {
