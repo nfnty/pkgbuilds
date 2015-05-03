@@ -12,7 +12,7 @@ makedepends=('git' 'python-setuptools')
 provides=('python-docker-py')
 conflicts=('python-docker-py')
 
-source=("${srcname}::git+https://github.com/docker/docker-py.git#tag=1.2.0")
+source=("${srcname}::git+https://github.com/docker/docker-py.git#tag=1.2.1")
 sha512sums=('SKIP')
 
 pkgver() {
