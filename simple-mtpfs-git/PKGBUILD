@@ -13,7 +13,7 @@ provides=('simple-mtpfs')
 conflicts=('simple-mtpfs')
 
 source=("${srcname}::git+https://github.com/phatina/simple-mtpfs.git")
-sha256sums=('SKIP')
+sha512sums=('SKIP')
 
 pkgver() {
     cd "${srcdir}/${srcname}"
