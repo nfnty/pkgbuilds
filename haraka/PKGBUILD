@@ -8,7 +8,7 @@ url='https://github.com/baudehlo/Haraka'
 license=('MIT')
 
 depends=('nodejs')
-makedepends=('python2' 'gcc' 'make')
+makedepends=('python2' 'gcc' 'make' 'npm')
 provides=('haraka')
 conflicts=('haraka')
 
