@@ -57,9 +57,9 @@ pkgver() {
 prepare() {
     cd "${srcdir}/${srcname}"
 
-    find -type f -name *.py -exec sed 's|^#!.*python$|#!/usr/bin/python2|' -i "{}" +
-    sed 's|^#!.*python$|#!/usr/bin/python2|' -i tools/depends/native/rpl-native/rpl
-    sed 's/python/python2/' -i tools/Linux/kodi.sh.in
+    find . -type f -name '*.py' -exec sed --in-place 's|^#!.*python$|#!/usr/bin/python2|' "{}" +
+    sed 's|^#!.*python$|#!/usr/bin/python2|' --in-place tools/depends/native/rpl-native/rpl
+    sed 's/python/python2/' --in-place tools/Linux/kodi.sh.in
 }
 
 build() {
@@ -67,9 +67,6 @@ build() {
 
     # Bootstrapping
     MAKEFLAGS=-j1 ./bootstrap
-
-    #./configure --help
-    #return 1
 
     # Configuring XBMC
     export PYTHON_VERSION=2  # external python v2
@@ -144,7 +141,7 @@ package() {
     make DESTDIR="${pkgdir}" install
 
     # Licenses
-    install -dm755 "${pkgdir}/usr/share/licenses/${pkgname}"
+    install --directory --mode=755 "${pkgdir}/usr/share/licenses/${pkgname}"
     for licensef in LICENSE.GPL copying.txt; do
         mv "${pkgdir}/usr/share/doc/kodi/${licensef}" \
             "${pkgdir}/usr/share/licenses/${pkgname}"

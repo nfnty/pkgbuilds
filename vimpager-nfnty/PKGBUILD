@@ -13,7 +13,7 @@ provides=('vimpager')
 conflicts=('vimpager')
 
 source=("${srcname}::git+https://github.com/nfnty/vimpager.git")
-sha256sums=('SKIP')
+sha512sums=('SKIP')
 
 pkgver() {
     cd "${srcdir}/${srcname}"
@@ -25,8 +25,8 @@ pkgver() {
 
 package() {
     cd "${srcdir}/${srcname}"
-    install -D -m755 vimpager.sh "${pkgdir}/usr/bin/vimpager"
-    install -D -m755 manpager.sh "${pkgdir}/usr/bin/manpager"
-    install -D -m755 diffpager.sh "${pkgdir}/usr/bin/diffpager"
-    install -D -m755 gitpager.sh "${pkgdir}/usr/bin/gitpager"
+    install -D --mode=755 vimpager.sh "${pkgdir}/usr/bin/vimpager"
+    install -D --mode=755 manpager.sh "${pkgdir}/usr/bin/manpager"
+    install -D --mode=755 diffpager.sh "${pkgdir}/usr/bin/diffpager"
+    install -D --mode=755 gitpager.sh "${pkgdir}/usr/bin/gitpager"
 }
