@@ -8,7 +8,7 @@ url='https://github.com/vimperator/vimperator-labs'
 license=('MIT')
 
 makedepends=('git')
-optdepends=('firefox')
+optdepends=('firefox: Web browser')
 provides=('vimperator')
 conflicts=('vimperator' 'vimperator-hg')
 
