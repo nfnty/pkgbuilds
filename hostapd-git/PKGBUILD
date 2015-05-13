@@ -1,7 +1,7 @@
 pkgname=('hostapd-git')
 srcname='hostapd'
-pkgver=1
-pkgrel=1
+pkgver='r1'
+pkgrel='1'
 pkgdesc='IEEE 802.11 AP, IEEE 802.1X/WPA/WPA2/EAP/RADIUS Authenticator'
 arch=('i686' 'x86_64')
 url='http://w1.fi/hostapd/'

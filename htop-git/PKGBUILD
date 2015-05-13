@@ -1,6 +1,6 @@
 pkgname=('htop-git')
 srcname='htop'
-pkgver='1'
+pkgver='r1'
 pkgrel='1'
 pkgdesc='Interactive text-mode process viewer'
 arch=('i686' 'x86_64')

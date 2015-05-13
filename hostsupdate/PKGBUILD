@@ -1,6 +1,6 @@
 pkgname=('hostsupdate-git')
 srcname='hostsupdate'
-pkgver='1'
+pkgver='r1'
 pkgrel='1'
 pkgdesc='Update hosts.d lists'
 arch=('any')

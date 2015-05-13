@@ -1,6 +1,6 @@
 pkgname=('cargo-git')
 srcname='cargo'
-pkgver='1'
+pkgver='r1'
 pkgrel='1'
 pkgdesc='The Rust package manager'
 arch=('i686' 'x86_64')

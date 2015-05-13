@@ -1,6 +1,6 @@
 pkgname=('mpd-git')
 srcname='mpd'
-pkgver='1'
+pkgver='r1'
 pkgrel='1'
 pkgdesc='Daemon for playing music of various formats.'
 arch=('i686' 'x86_64')

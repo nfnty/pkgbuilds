@@ -1,6 +1,6 @@
 pkgname=('wtftw-git')
 srcname='wtftw'
-pkgver='1'
+pkgver='r1'
 pkgrel='1'
 pkgdesc='Window Tiling For The Win. A tiling window manager written in Rust'
 arch=('i686' 'x86_64')

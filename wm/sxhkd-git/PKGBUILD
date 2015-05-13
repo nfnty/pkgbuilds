@@ -1,6 +1,6 @@
 pkgname=('sxhkd-git')
 srcname='sxhkd'
-pkgver='1'
+pkgver='r1'
 pkgrel='1'
 pkgdesc='Simple X hotkey daemon'
 arch=('i686' 'x86_64')

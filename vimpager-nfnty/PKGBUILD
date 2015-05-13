@@ -1,6 +1,6 @@
 pkgname=('vimpager-nfnty')
 srcname='vimpager'
-pkgver='1'
+pkgver='r1'
 pkgrel='1'
 pkgdesc='Vim as pager with escape sequences stripped'
 arch=('any')
