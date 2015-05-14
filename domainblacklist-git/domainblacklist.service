@@ -1,8 +1,15 @@
 [Unit]
 Description='Domain blacklists update'
+Requires=domainblacklist_fetch.service
+After=domainblacklist_fetch.service
 
 [Service]
+Environment='SRCDIR=/tmp/domainblacklist' 'DESTDIR=/srv/docker/powerdns-recursor/config/blacklist'
+Environment='CNAME=powerdns-recursor' 'UGID=240000'
+
 Type=oneshot
-User=nobody
-Group=nobody
-ExecStart=/usr/bin/domainblacklist '/etc/domainblacklist' '/tmp/domainblacklist'
+ExecStart=/usr/bin/chown --recursive root:${UGID} ${SRCDIR}
+ExecStart=/usr/bin/chmod --recursive u=rwX,g=rX,o= ${SRCDIR}
+ExecStart=/usr/bin/rm --recursive ${DESTDIR}
+ExecStart=/usr/bin/mv ${SRCDIR} ${DESTDIR}
+ExecStart=/usr/bin/docker exec ${CNAME} rec_control reload-lua-script /powerdns/config/preresolve.lua

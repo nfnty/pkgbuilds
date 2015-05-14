@@ -1,0 +1,10 @@
+[Unit]
+Description=Fetch new domain blacklists
+
+[Service]
+Environment='CONFIGDIR=/etc/domainblacklist' 'DESTDIR=/tmp/domainblacklist'
+
+Type=oneshot
+User=blacklistupdater
+Group=blacklistupdater
+ExecStart=/usr/bin/domainblacklist ${CONFIGDIR} ${DESTDIR}
