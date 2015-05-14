@@ -1,5 +1,6 @@
 [Unit]
 Description=Fetch new domain blacklists
+BindsTo=domainblacklist.service
 
 [Service]
 Environment='CONFIGDIR=/etc/domainblacklist' 'DESTDIR=/tmp/domainblacklist'
