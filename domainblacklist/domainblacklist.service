@@ -1,0 +1,8 @@
+[Unit]
+Description='Domain blacklists update'
+
+[Service]
+Type=oneshot
+User=nobody
+Group=nobody
+ExecStart=/usr/bin/domainblacklist

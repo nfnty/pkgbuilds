@@ -1,0 +1,52 @@
+pkgname=('domainblacklist-git')
+srcname='domainblacklist'
+pkgver='r1'
+pkgrel='1'
+pkgdesc='Update domain blacklists'
+arch=('any')
+url='https://github.com/nfnty/domainblacklist.git'
+license=('MIT')
+
+depends=('python' 'python-requests')
+provides=('domainblacklist')
+conflicts=('domainblacklist')
+
+source=(
+    "${srcname}::git+https://github.com/nfnty/domainblacklist.git"
+    'domainblacklist.service'
+    'domainblacklist.timer'
+)
+sha512sums=(
+    'SKIP'
+    'd1415bdd4e5c907c72bd38dc3dd173ef1a191d7b67876c127b6fbb59b927ebe191106c5a9bd33e97163afdb026fbaf68672eeb1c6d3d1e47c35e184361c72ec3'
+    '3a5a18ac2b9bf86fd6856493a0be92586751c9d126af79651090c376d5f8edff6762404793968dc090b74bc3fac144b2638fa6eb0e615b6c5d0da7d0f3aed0aa'
+)
+
+backup=(
+    'etc/domainblacklist/excluded.json'
+    'etc/domainblacklist/invalid.json'
+    'etc/domainblacklist/sources.json'
+)
+
+pkgver() {
+    cd "${srcdir}/${srcname}"
+
+    printf 'r%s.%s\n' \
+        "$( git rev-list HEAD | wc --lines )" \
+        "$( git describe --always | sed 's/-/./g' )"
+}
+
+package() {
+    cd "${srcdir}/${srcname}"
+
+    # systemd
+    install -D --mode=644 "${srcdir}/domainblacklist.service" "${pkgdir}/usr/lib/systemd/system/domainblacklist.service"
+    install -D --mode=644 "${srcdir}/domainblacklist.timer" "${pkgdir}/usr/lib/systemd/system/domainblacklist.timer"
+
+    # script
+    install -D --mode=755 domainblacklist.py "${pkgdir}/usr/bin/domainblacklist"
+
+    # config
+    install --directory --mode=755 "${pkgdir}/etc/domainblacklist"
+    install --mode=644 --target-directory="${pkgdir}/etc/domainblacklist" "config/"{excluded.json,invalid.json,sources.json}
+}

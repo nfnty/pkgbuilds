@@ -1,5 +1,5 @@
 [Unit]
-Description='Weekly hosts.d update'
+Description='Weekly domain blacklists update'
 
 [Timer]
 OnCalendar=weekly
