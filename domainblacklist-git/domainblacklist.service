@@ -5,4 +5,4 @@ Description='Domain blacklists update'
 Type=oneshot
 User=nobody
 Group=nobody
-ExecStart=/usr/bin/domainblacklist
+ExecStart=/usr/bin/domainblacklist '/etc/domainblacklist' '/tmp/domainblacklist'
