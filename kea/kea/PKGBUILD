@@ -30,6 +30,9 @@ makedepends=(
     'libmariadbclient'
     'postgresql-libs'
     'postgresql'
+    'python'
+    'libxslt'
+    'elinks'
 )
 provides=('kea')
 conflicts=('kea')
