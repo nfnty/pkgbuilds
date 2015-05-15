@@ -47,7 +47,8 @@ prepare() {
         --sbindir='${exec_prefix}/bin' \
         --with-openssl \
         --with-dhcp-mysql \
-        --with-dhcp-pgsql
+        --with-dhcp-pgsql \
+        --enable-generate-docs
 }
 
 build() {
