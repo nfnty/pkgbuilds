@@ -43,10 +43,11 @@ prepare() {
     autoreconf --install
 
     ./configure \
-        --prefix=/usr \
+        --prefix='/usr' \
         --with-openssl \
         --with-dhcp-mysql \
-        --with-dhcp-pgsql
+        --with-dhcp-pgsql \
+        --with-log4cplus='/usr/include/log4cpp'
 }
 
 build() {
