@@ -1,6 +1,6 @@
 pkgname=('log4plus')
 srcname='log4cplus'
-pkgver='1.2.0-RC3'
+pkgver='1.2.0rc3'
 pkgrel='1'
 pkgdesc='Simple to use C++ logging API providing thread-safe, flexible, and arbitrarily granular control over log management and configuration'
 arch=('i686' 'x86_64')
