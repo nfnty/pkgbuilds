@@ -2,7 +2,7 @@ pkgname=('kea')
 srcname='kea'
 pkgver='0.9.1'
 pkgrel='1'
-pkgdesc=''
+pkgdesc='DHCPv4/DHCPv6 server'
 arch=('i686' 'x86_64')
 url='http://kea.isc.org'
 license=('ISC')
@@ -14,8 +14,8 @@ depends=(
     'postgresql-libs'
 )
 optdepends=(
-    'postgresql: database'
-    'mariadb: database'
+    'mariadb: Lease information database'
+    'postgresql: Lease information database'
 )
 makedepends=(
     'git'
