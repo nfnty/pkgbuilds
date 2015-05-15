@@ -9,7 +9,7 @@ license=('ISC')
 
 depends=(
     'openssl'
-    'log4cpp'
+    'log4cplus'
     'libmariadbclient'
     'postgresql-libs'
 )
@@ -21,7 +21,7 @@ makedepends=(
     'git'
     'boost'
     'openssl'
-    'log4cpp'
+    'log4cplus'
     'gcc'
     'make'
     'automake'
@@ -46,8 +46,7 @@ prepare() {
         --prefix='/usr' \
         --with-openssl \
         --with-dhcp-mysql \
-        --with-dhcp-pgsql \
-        --with-log4cplus='/usr/include/log4cpp'
+        --with-dhcp-pgsql
 }
 
 build() {
