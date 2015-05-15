@@ -1,0 +1,58 @@
+pkgname=('kea')
+srcname='kea'
+pkgver='0.9.1'
+pkgrel='1'
+pkgdesc=''
+arch=('i686' 'x86_64')
+url='http://kea.isc.org'
+license=('ISC')
+
+depends=(
+    'botan'
+    'log4cpp'
+    'libmariadbclient'
+    'postgresql-libs'
+)
+optdepends=(
+    'postgresql: database'
+    'mariadb: database'
+)
+makedepends=(
+    'git'
+    'boost'
+    'botan'
+    'log4cpp'
+    'gcc'
+    'make'
+    'automake'
+    'libtoolize'
+    'autoconf'
+)
+provides=('kea')
+conflicts=('kea')
+
+source=("${srcname}::git+git://git.kea.isc.org/kea.git#tag=kea-${pkgver}-release")
+sha512sums=('SKIP')
+
+prepare() {
+    cd "${srcdir}/${srcname}"
+
+    autoreconf --install
+
+    ./configure \
+        --prefix=/usr \
+        --with-dhcp-mysql \
+        --with-dhcp-pgsql
+}
+
+build() {
+    cd "${srcdir}/${srcname}"
+
+    make
+}
+
+package() {
+    cd "${srcdir}/${srcname}"
+
+    make DESTDIR="${pkgdir}" install
+}
