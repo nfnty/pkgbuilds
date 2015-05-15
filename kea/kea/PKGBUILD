@@ -31,7 +31,10 @@ makedepends=(
     'postgresql-libs'
     'postgresql'
     'python'
+    'perl'
+    'gawk'
     'libxslt'
+    'docbook-xsl'
     'elinks'
 )
 provides=('kea')
