@@ -8,7 +8,7 @@ url='http://kea.isc.org'
 license=('ISC')
 
 depends=(
-    'botan'
+    'openssl'
     'log4cpp'
     'libmariadbclient'
     'postgresql-libs'
@@ -20,13 +20,16 @@ optdepends=(
 makedepends=(
     'git'
     'boost'
-    'botan'
+    'openssl'
     'log4cpp'
     'gcc'
     'make'
     'automake'
     'libtool'
     'autoconf'
+    'libmariadbclient'
+    'postgresql-libs'
+    'postgresql'
 )
 provides=('kea')
 conflicts=('kea')
@@ -41,6 +44,7 @@ prepare() {
 
     ./configure \
         --prefix=/usr \
+        --with-openssl \
         --with-dhcp-mysql \
         --with-dhcp-pgsql
 }
