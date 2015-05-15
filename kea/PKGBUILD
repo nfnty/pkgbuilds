@@ -31,7 +31,7 @@ makedepends=(
 provides=('kea')
 conflicts=('kea')
 
-source=("${srcname}::git+git://git.kea.isc.org/kea.git#tag=kea-${pkgver}-release")
+source=("${srcname}::git+git://git.kea.isc.org/kea.git#branch=kea-${pkgver}-release")
 sha512sums=('SKIP')
 
 prepare() {
