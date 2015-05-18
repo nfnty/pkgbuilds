@@ -26,20 +26,13 @@ sha256sums=(
     '3b0beca4650046948f7e07d279ba5e0cd54284eca8b65d1a6d60a7ccc4ea7a23'
 )
 
-pkgver() {
-    cd "${srcdir}/${srcname}"
-
-    printf 'r%s.%s\n' \
-        "$( git rev-list HEAD | wc --lines )" \
-        "$( git describe --always | sed 's/-/./g' )"
-}
-
 prepare() {
     cd "${srcdir}/${srcname}"
 
     git apply "${srcdir}/40mhz.patch"
 
-    cp "${srcdir}/config" hostapd/.config
+    cd hostapd
+    cp "${srcdir}/config" .config
     sed --in-place 's#/etc/hostapd#/etc/hostapd/hostapd#' hostapd.conf
 }
 
