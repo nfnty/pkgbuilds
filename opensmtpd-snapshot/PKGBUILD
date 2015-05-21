@@ -31,6 +31,8 @@ prepare() {
 
     sed -ri 's,/etc/mail,/etc/smtpd,g' smtpd/smtpd.conf
 
+    ./bootstrap
+
     ./configure \
         --prefix=/usr \
         --sysconfdir=/etc/smtpd \
