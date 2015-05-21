@@ -1,0 +1,14 @@
+diff --git a/smtpd/smtpd.conf.5 b/smtpd/smtpd.conf.5
+index 6117109..9e2634a 100644
+--- a/smtpd/smtpd.conf.5
++++ b/smtpd/smtpd.conf.5
+@@ -554,7 +554,8 @@ will generate a failure report when an envelope is in the queue for more
+ than one hour, six hours and two days.
+ The default is 4h.
+ .It Xo
+-.It Ic ca Ar hostname Ic certificate Ar cafile
++.Ic ca Ar hostname Ic certificate Ar cafile
++.Xc
+ Associate a custom CA certificate
+ .Ar cafile
+ with

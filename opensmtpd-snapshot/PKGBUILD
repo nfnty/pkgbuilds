@@ -16,11 +16,13 @@ source=(
     "${srcname}::git+https://github.com/OpenSMTPD/OpenSMTPD.git#tag=opensmtpd-${pkgver}"
     'smtpd.service'
     'smtpd.socket'
+    'mdoc.patch'
 )
 sha512sums=(
     'SKIP'
     '6068bda683dd7378811b818046a660501ddd04bcdbba27126f915393dd5740b674d6e6906b96ede9e661bd02a32474b5143838e9368d7554bdd992fdff050c38'
     '806025d000ba34e86338bf127951e853849e077fe6941f7d0f43c362303ed191554f1d983d422f1acec22e89091517237a60da6e7ae6db1cb977fffe666e48c4'
+    '17e7f22ce00363d4b0ce4393dd45dab0d981aef0c7a1b2ed2fc6d420f57b101a36ae5a27a1d4974c02ab37c8a3bbbe47610dbfbdf499ff7dfb699d53d9bfc5a0'
 )
 
 install='opensmtpd.install'
@@ -28,6 +30,8 @@ backup=('etc/smtpd/smtpd.conf' 'etc/smtpd/aliases')
 
 prepare() {
     cd "${srcdir}/${srcname}"
+
+    git apply "${srcdir}/mdoc.patch"
 
     sed -ri 's,/etc/mail,/etc/smtpd,g' smtpd/smtpd.conf
 
