@@ -34,7 +34,7 @@ prepare() {
     cd "${srcdir}/${srcname}"
 
     git apply "${srcdir}/mdoc.patch"
-    git apply "${srcdir}/purg_task.patch"
+    git apply "${srcdir}/purge_task.patch"
 
     sed -ri 's,/etc/mail,/etc/smtpd,g' smtpd/smtpd.conf
 
