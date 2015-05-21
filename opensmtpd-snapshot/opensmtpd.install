@@ -1,0 +1,4 @@
+post_install() {
+  getent passwd smtpd >/dev/null || useradd -d / -u 91 -g 1 smtpd
+  getent passwd smtpq >/dev/null || useradd -d /var/spool/smtpd -u 92 -g 1 smtpq
+}
