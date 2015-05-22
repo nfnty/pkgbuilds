@@ -16,17 +16,11 @@ source=(
     "${srcname}::git+https://github.com/OpenSMTPD/OpenSMTPD.git#tag=opensmtpd-${pkgver}"
     'smtpd.service'
     'smtpd.socket'
-    'mdoc.patch'
-    'purge_task.patch'
-    'die_gracefully.patch'
 )
 sha512sums=(
     'SKIP'
     '6068bda683dd7378811b818046a660501ddd04bcdbba27126f915393dd5740b674d6e6906b96ede9e661bd02a32474b5143838e9368d7554bdd992fdff050c38'
     '806025d000ba34e86338bf127951e853849e077fe6941f7d0f43c362303ed191554f1d983d422f1acec22e89091517237a60da6e7ae6db1cb977fffe666e48c4'
-    '17e7f22ce00363d4b0ce4393dd45dab0d981aef0c7a1b2ed2fc6d420f57b101a36ae5a27a1d4974c02ab37c8a3bbbe47610dbfbdf499ff7dfb699d53d9bfc5a0'
-    '5f565d66c8e79ed7d5de1d3df3c2ce0161ecd0a66e261f3cbbe05a445842e910241334d44f94194d0af2887e41e336d747f516f5798959644e495e1fc37e360c'
-    '4d1fca53e9fe948c000208938c48461365805004f4fe074cb4ed3eec5c058ee4e2ede316526be7c72878d2d70585003c305beed661505551578b88bdbc6bbd45'
 )
 
 install='opensmtpd.install'
@@ -34,10 +28,6 @@ backup=('etc/smtpd/smtpd.conf' 'etc/smtpd/aliases')
 
 prepare() {
     cd "${srcdir}/${srcname}"
-
-    git apply "${srcdir}/mdoc.patch"
-    git apply "${srcdir}/purge_task.patch"
-    git apply "${srcdir}/die_gracefully.patch"
 
     sed -ri 's,/etc/mail,/etc/smtpd,g' smtpd/smtpd.conf
 
