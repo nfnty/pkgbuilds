@@ -658,11 +658,11 @@ HEADERS_CHARSET="ISO-8859-1"
 SUPPORT_TLS=yes
 
 # Uncomment this setting if you are using OpenSSL
-TLS_LIBS=-lssl -lcrypto
+# TLS_LIBS=-lssl -lcrypto
 
 # Uncomment these settings if you are using GnuTLS
-# USE_GNUTLS=yes
-# TLS_LIBS=-lgnutls -ltasn1 -lgcrypt
+USE_GNUTLS=yes
+TLS_LIBS=-lgnutls -ltasn1 -lgcrypt
 
 # If you are running Exim as a server, note that just building it with TLS
 # support is not all you need to do. You also need to set up a suitable
