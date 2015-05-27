@@ -1,0 +1,39 @@
+pkgname=('qbittorrent-nox')
+srcname='qbittorrent'
+pkgver='3.2.0'
+pkgrel='1'
+pkgdesc='BitTorrent client'
+arch=('i686' 'x86_64')
+url='https://github.com/qbittorrent/qBittorrent'
+license=('GPL2')
+
+depends=('libtorrent-rasterbar' 'boost-libs')
+makedepends=('boost')
+provides=('qbittorrent')
+conflicts=('qbittorrent')
+
+source=("${srcname}::git+https://github.com/qbittorrent/qBittorrent.git#tag=release-${pkgver}")
+sha512sums=('SKIP')
+
+prepare() {
+    cd "${srcdir}/${srcname}"
+
+    autoreconf --install
+
+    ./configure \
+        --prefix='/usr' \
+        --disable-gui \
+        --with-systemd
+}
+
+build() {
+    cd "${srcdir}/${srcname}"
+
+    make
+}
+
+package() {
+    cd "${srcdir}/${srcname}"
+
+    make DESTDIR="${pkgdir}" install
+}
