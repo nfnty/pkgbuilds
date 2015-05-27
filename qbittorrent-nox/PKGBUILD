@@ -7,8 +7,8 @@ arch=('i686' 'x86_64')
 url='https://github.com/qbittorrent/qBittorrent'
 license=('GPL2')
 
-depends=('libtorrent-rasterbar' 'boost-libs')
-makedepends=('boost' 'qt4')
+depends=('libtorrent-rasterbar' 'boost-libs' 'qt4')
+makedepends=('boost')
 provides=('qbittorrent')
 conflicts=('qbittorrent')
 
