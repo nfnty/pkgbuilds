@@ -8,7 +8,7 @@ url='https://github.com/qbittorrent/qBittorrent'
 license=('GPL2')
 
 depends=('libtorrent-rasterbar' 'boost-libs')
-makedepends=('boost')
+makedepends=('boost' 'qt4')
 provides=('qbittorrent')
 conflicts=('qbittorrent')
 
@@ -23,7 +23,7 @@ prepare() {
     ./configure \
         --prefix='/usr' \
         --disable-gui \
-        --with-systemd
+        --enable-systemd
 }
 
 build() {
