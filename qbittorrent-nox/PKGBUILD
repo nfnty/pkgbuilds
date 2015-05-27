@@ -35,5 +35,5 @@ build() {
 package() {
     cd "${srcdir}/${srcname}"
 
-    make DESTDIR="${pkgdir}" install
+    make INSTALL_ROOT="${pkgdir}" install
 }
