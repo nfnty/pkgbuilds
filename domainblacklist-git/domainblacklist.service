@@ -8,8 +8,8 @@ Environment='SRCDIR=/tmp/domainblacklist' 'DESTDIR=/srv/docker/powerdns-recursor
 Environment='CNAME=powerdns-recursor' 'UGID=240000'
 
 Type=oneshot
-ExecStart=/usr/bin/chown --recursive root:${UGID} ${SRCDIR}
-ExecStart=/usr/bin/chmod --recursive u=rwX,g=rX,o= ${SRCDIR}
+ExecStart=/usr/bin/chown --recursive ${UGID}:${UGID} ${SRCDIR}
+ExecStart=/usr/bin/chmod --recursive u=rX,g=,o= ${SRCDIR}
 ExecStart=/usr/bin/rm --recursive ${DESTDIR}
 ExecStart=/usr/bin/mv ${SRCDIR} ${DESTDIR}
 ExecStart=/usr/bin/docker exec ${CNAME} rec_control reload-lua-script /powerdns/config/preresolve.lua
