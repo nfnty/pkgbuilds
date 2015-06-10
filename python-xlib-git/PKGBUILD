@@ -1,0 +1,30 @@
+pkgname=('python-xlib-git')
+srcname='python3-xlib'
+pkgdesc='X11 interface for Python3'
+pkgver='r1'
+pkgrel='1'
+arch=('any')
+url='https://github.com/LiuLang/python3-xlib'
+license=('GPL2')
+
+depends=('python')
+makedepends=('git' 'python-setuptools')
+provides=('python-xlib')
+conflicts=('python-xlib')
+
+source=("${srcname}::git+https://github.com/LiuLang/python3-xlib.git")
+sha512sums=('SKIP')
+
+pkgver() {
+    cd "${srcdir}/${srcname}"
+
+    printf 'r%s.%s\n' \
+        "$( git rev-list HEAD | wc --lines )" \
+        "$( git describe --always | sed 's/-/./g' )"
+}
+
+package() {
+    cd "${srcdir}/${srcname}"
+
+    python setup.py install --root="${pkgdir}" --optimize=1
+}
