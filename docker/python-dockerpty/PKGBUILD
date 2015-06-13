@@ -1,6 +1,6 @@
-pkgname=('python-dockerpty-git')
+pkgname=('python-dockerpty')
 srcname='dockerpty'
-pkgver='r1'
+pkgver='0.3.4'
 pkgrel='1'
 pkgdesc='Pseudo-tty handler for docker Python client'
 arch=('any')
@@ -12,16 +12,8 @@ makedepends=('git' 'python-setuptools')
 provides=('python-dockerpty')
 conflicts=('python-dockerpty')
 
-source=("${srcname}::git+https://github.com/d11wtq/dockerpty.git")
+source=("${srcname}::git+https://github.com/d11wtq/dockerpty.git#tag=v${pkgver}")
 sha512sums=('SKIP')
-
-pkgver() {
-    cd "${srcdir}/${srcname}"
-
-    printf 'r%s.%s\n' \
-        "$( git rev-list HEAD | wc --lines )" \
-        "$( git describe --always | sed 's/-/./g' )"
-}
 
 package() {
     cd "${srcdir}/${srcname}"
