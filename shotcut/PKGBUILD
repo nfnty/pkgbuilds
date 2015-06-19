@@ -26,14 +26,21 @@ makedepends=('git')
 provides=('shotcut')
 conflicts=('shotcut')
 
-source=("${srcname}::git+https://github.com/mltframework/shotcut.git#tag=v${pkgver}")
-sha512sums=('SKIP')
+source=(
+    "${srcname}::git+https://github.com/mltframework/shotcut.git#tag=v${pkgver}"
+    'cutelogger.patch'
+)
+sha512sums=(
+    'SKIP'
+    'fe18194558fca8096643528d239f91d0f7c948e58c8297e0338d6905e4df3732dd915eecc8bd25a62b1fba9731f21fcabc8f4ec32e45c46b74b061f549fb1c6a'
+)
 
 prepare() {
     cd "${srcdir}/${srcname}"
 
+    git apply "${srcdir}/cutelogger.patch"
+
     qmake PREFIX='/usr/'
-    perl -p -i -e 's/\$\(INSTALL_ROOT\).*\$\(INSTALL_ROOT\)/\$\(INSTAL_ROOT\)/g' CuteLogger/Makefile
 }
 
 build() {
