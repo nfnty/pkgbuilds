@@ -33,6 +33,7 @@ prepare() {
     cd "${srcdir}/${srcname}"
 
     qmake PREFIX='/usr/'
+    perl -p -i -e 's/\$\(INSTALL_ROOT\).*\$\(INSTALL_ROOT\)/\$\(INSTAL_ROOT\)/g' CuteLogger/Makefile
 }
 
 build() {
