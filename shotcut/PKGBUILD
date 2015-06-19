@@ -7,7 +7,21 @@ arch=('i686' 'x86_64')
 url='https://github.com/mltframework/shotcut'
 license=('GPL3')
 
-depends=('qt5-base' 'mlt' 'ffmpeg' 'libx264' 'libvpx' 'lame' 'frei0r-plugins' 'ladspa')
+depends=(
+    'qt5-base'
+    'qt5-declarative'
+    'qt5-multimedia'
+    'qt5-quick'
+    'qt5-webkit'
+    'qt5-x11extras'
+    'mlt'
+    'ffmpeg'
+    'libx264'
+    'libvpx'
+    'lame'
+    'frei0r-plugins'
+    'ladspa'
+)
 makedepends=('git')
 provides=('shotcut')
 conflicts=('shotcut')
