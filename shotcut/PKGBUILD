@@ -1,0 +1,34 @@
+pkgname=('shotcut')
+srcname='shotcut'
+pkgdesc='Video editor'
+pkgver='15.06'
+pkgrel='1'
+arch=('i686' 'x86_64')
+url='https://github.com/mltframework/shotcut'
+license=('GPL3')
+
+depends=('qt5-base' 'mlt' 'ffmpeg' 'libx264' 'libvpx' 'lame' 'frei0r-plugins' 'ladspa')
+makedepends=('git')
+provides=('shotcut')
+conflicts=('shotcut')
+
+source=("${srcname}::git+https://github.com/mltframework/shotcut.git#tag=v${pkgver}")
+sha512sums=('SKIP')
+
+prepare() {
+    cd "${srcdir}/${srcname}"
+
+    qmake PREFIX='/usr/'
+}
+
+build() {
+    cd "${srcdir}/${srcname}"
+
+    make
+}
+
+package() {
+    cd "${srcdir}/${srcname}"
+
+    make DESTDIR="${pkgdir}" install
+}
