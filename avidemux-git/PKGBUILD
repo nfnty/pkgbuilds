@@ -29,6 +29,7 @@ makedepends=(
     'qt5-base'
     'qt5-script'
     'qt5-tools'
+    'sdl'
     'sqlite'
     'twolame'
     'x265'
