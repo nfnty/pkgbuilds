@@ -39,8 +39,6 @@ makedepends=(
 source=("${srcname}::git+https://github.com/mean00/avidemux2.git")
 sha512sums=('SKIP')
 
-_builddir="${srcdir}/build"
-
 pkgver() {
     cd "${srcdir}/${srcname}"
 
@@ -62,6 +60,7 @@ prepare() {
 
 build() {
     gitdir="${srcdir}/${srcname}"
+    builddir="${srcdir}/build"
     fakerootdir="${srcdir}/fakeroot"
     cmake_base=(
         '-DCMAKE_BUILD_TYPE=Release'
@@ -72,42 +71,42 @@ build() {
         "-DAVIDEMUX_SOURCE_DIR=${gitdir}"
     )
 
-    cd "${_builddir}/core"
+    cd "${builddir}/core"
     cmake "${gitdir}/avidemux_core" ${cmake_base[@]}
     make
     make DESTDIR="${fakerootdir}" install
 
-    cd "${_builddir}/cli"
+    cd "${builddir}/cli"
     cmake "${gitdir}/avidemux/cli" ${cmake_base[@]}
     make
     make DESTDIR="${fakerootdir}" install
 
-    cd "${_builddir}/qt"
+    cd "${builddir}/qt"
     cmake "${gitdir}/avidemux/qt4" ${cmake_base[@]} \
         -DENABLE_QT5=True
     make
     make DESTDIR="${fakerootdir}" install
 
-    cd "${_builddir}/core_plugins"
+    cd "${builddir}/core_plugins"
     cmake "${gitdir}/avidemux_plugins" ${cmake_base[@]} ${cmake_base_plugins[@]} \
         -DPLUGIN_UI=COMMON
     make
     make DESTDIR="${fakerootdir}" install
 
-    cd "${_builddir}/cli_plugins"
+    cd "${builddir}/cli_plugins"
     cmake "${gitdir}/avidemux_plugins" ${cmake_base[@]} ${cmake_base_plugins[@]} \
         -DPLUGIN_UI=CLI
     make
     make DESTDIR="${fakerootdir}" install
 
-    cd "${_builddir}/qt_plugins"
+    cd "${builddir}/qt_plugins"
     cmake "${gitdir}/avidemux_plugins" ${cmake_base[@]} ${cmake_base_plugins[@]} \
         -DPLUGIN_UI=QT4 \
         -DENABLE_QT5=True
     make
     make DESTDIR="${fakerootdir}" install
 
-    cd "${_builddir}/core_plugins_settings"
+    cd "${builddir}/core_plugins_settings"
     cmake "${gitdir}/avidemux_plugins" ${cmake_base[@]} ${cmake_base_plugins[@]} \
         -DPLUGIN_UI=SETTINGS
     make
@@ -139,7 +138,7 @@ package_avidemux-cli-git() {
     )
     optdepends=('avidemux-qt-git: QT GUI')
 
-    cd "${_builddir}"
+    cd "${srcdir}/build"
 
     make DESTDIR="${pkgdir}" --directory='core' install
     make DESTDIR="${pkgdir}" --directory='core_plugins' install
@@ -155,7 +154,7 @@ package_avidemux-qt-git() {
     depends=('avidemux-cli-git' 'qt5-base' 'qt5-script' 'libxv' 'sdl' 'desktop-file-utils')
     install='avidemux.install'
 
-    cd "${_builddir}"
+    cd "${srcdir}/build"
 
     make DESTDIR="${pkgdir}" --directory='qt' install
     make DESTDIR="${pkgdir}" --directory='qt_plugins' install
