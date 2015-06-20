@@ -17,6 +17,7 @@ makedepends=(
     'fribidi'
     'git'
     'glu'
+    'gtk3'
     'jack2'
     'lame'
     'libdca'
