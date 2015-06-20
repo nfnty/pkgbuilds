@@ -166,7 +166,8 @@ package_avidemux-qt-git() {
         "${srcdir}/${srcname}/avidemux_icon.png" \
         "${pkgdir}/usr/share/pixmaps/avidemux-qt.png"
     perl -p -i \
-        -e 's/^Icon=avidemux$/Icon=avidemux-qt/g;' \
+        -e 's/^Icon=avidemux$/Icon=avidemux-qt/;' \
+        -e 's/^Exec=avidemux2_gtk$/Exec=avidemux3_qt5/;' \
         -e 's/^Name=avidemux2$/Name=Avidemux QT/;' \
         "${pkgdir}/usr/share/applications/avidemux-qt.desktop"
 }
