@@ -1,0 +1,168 @@
+pkgname=('avidemux-cli-git' 'avidemux-gtk-git')
+srcname='avidemux'
+pkgbase='avidemux-git'
+pkgdesc='Simple video editor'
+pkgver='r1'
+pkgrel='1'
+arch=('i686' 'x86_64')
+url='https://github.com/mean00/avidemux2'
+license=('GPL2')
+
+makedepends=(
+    # 'aften'
+    'cmake'
+    # 'dcaenc'
+    'faac'
+    'faad2'
+    'fribidi'
+    'git'
+    'glu'
+    'jack2'
+    'lame'
+    'libdca'
+    'libpulse'
+    'libva'
+    'libvpx'
+    'libx264'
+    'libxv'
+    'opencore-amr'
+    'sqlite'
+    'twolame'
+    'x265'
+    'xvidcore'
+    'yasm'
+)
+
+source=("${srcname}::git+https://github.com/mean00/avidemux2.git")
+sha512sums=('SKIP')
+
+_builddir="${srcdir}/build"
+
+pkgver() {
+    cd "${srcdir}/${srcname}"
+
+    printf 'r%s.%s\n' \
+        "$( git rev-list HEAD | wc --lines )" \
+        "$( git describe --always | sed 's/-/./g' )"
+}
+
+prepare() {
+    cd "${srcdir}"
+
+    mkdir --parents build/core{,_plugins,_plugins_settings}
+    mkdir --parents build/cli{,_plugins}
+    mkdir --parents build/gtk{,_plugins}
+
+    # http://avidemux.org/smuf/index.php/topic,16302.msg71463.html#msg71463
+    # sed --in-place 's|hf_hflip|vf_hflip|g' "${srcdir}/${srcname}/avidemux_plugins/ADM_videoFilters6/horizontalFlip/CMakeLists.txt"
+}
+
+build() {
+    gitdir="${srcdir}/${srcname}"
+    fakerootdir="${srcdir}/fakeroot"
+    cmake_base=(
+        '-DCMAKE_BUILD_TYPE=Release'
+        '-DCMAKE_INSTALL_PREFIX=/usr'
+        "-DFAKEROOT=${fakerootdir}"
+    )
+    cmake_base_plugins=(
+        "-DAVIDEMUX_SOURCE_DIR=${gitdir}"
+    )
+
+    cd "${_builddir}/core"
+    cmake "${gitdir}/avidemux_core" ${cmake_base[@]}
+    make
+    make DESTDIR="${fakerootdir}" install
+
+    cd "${_builddir}/cli"
+    cmake "${gitdir}/avidemux/cli" ${cmake_base[@]}
+    make
+    make DESTDIR="${fakerootdir}" install
+
+    cd "${_builddir}/gtk"
+    cmake "${gitdir}/avidemux/gtk" ${cmake_base[@]}
+    make
+    make DESTDIR="${fakerootdir}" install
+
+    cd "${_builddir}/core_plugins"
+    cmake "${gitdir}/avidemux_plugins" ${cmake_base[@]} ${cmake_base_plugins[@]} \
+        -DPLUGIN_UI=COMMON
+    make
+    make DESTDIR="${fakerootdir}" install
+
+    cd "${_builddir}/cli_plugins"
+    cmake "${gitdir}/avidemux_plugins" ${cmake_base[@]} ${cmake_base_plugins[@]} \
+        -DPLUGIN_UI=CLI
+    make
+    make DESTDIR="${fakerootdir}" install
+
+    cd "${_builddir}/gtk_plugins"
+    cmake "${gitdir}/avidemux_plugins" ${cmake_base[@]} ${cmake_base_plugins[@]} \
+        -DPLUGIN_UI=GTK
+    make
+    make DESTDIR="${fakerootdir}" install
+
+    cd "${_builddir}/core_plugins_settings"
+    cmake "${gitdir}/avidemux_plugins" ${cmake_base[@]} ${cmake_base_plugins[@]} \
+        -DPLUGIN_UI=SETTINGS
+    make
+    make DESTDIR="${fakerootdir}" install
+}
+
+package_avidemux-cli-git() {
+    pkgdesc="Simple video editor"
+    provides=('avidemux-cli')
+    conflicts=('avidemux-cli')
+    depends=(
+        # 'aften'
+        # 'dcaenc'
+        'faac'
+        'faad2'
+        'fribidi'
+        'jack2'
+        'lame'
+        'libdca'
+        'libpulse'
+        'libva'
+        'libvpx'
+        'libx264'
+        'opencore-amr'
+        'sqlite'
+        'twolame'
+        'x265'
+        'xvidcore'
+    )
+    optdepends=('avidemux-gtk-git: GTK3 GUI')
+
+    cd "${_builddir}"
+
+    make DESTDIR="${pkgdir}" --directory='core' install
+    make DESTDIR="${pkgdir}" --directory='core_plugins' install
+    make DESTDIR="${pkgdir}" --directory='core_plugins_settings' install
+    make DESTDIR="${pkgdir}" --directory='cli' install
+    make DESTDIR="${pkgdir}" --directory='cli_plugins' install
+}
+
+package_avidemux-gtk-git() {
+    pkgdesc="Simple video editor (GTK)"
+    provides=('avidemux-gtk')
+    conflicts=('avidemux-gtk')
+    depends=('avidemux-cli-git' 'gtk3' 'libxv' 'sdl' 'desktop-file-utils')
+    install='avidemux.install'
+
+    cd "${_builddir}"
+
+    make DESTDIR="${pkgdir}" --directory='gtk' install
+    make DESTDIR="${pkgdir}" --directory='gtk_plugins' install
+
+    install -D --mode=644 \
+        "${srcdir}/${srcname}/avidemux2.desktop" \
+        "${pkgdir}/usr/share/applications/avidemux-gtk.desktop"
+    install -D --mode=644 \
+        "${srcdir}/${srcname}/avidemux_icon.png" \
+        "${pkgdir}/usr/share/pixmaps/avidemux-gtk.png"
+    perl -p -i \
+        -e 's/^Icon=avidemux$/Icon=avidemux-gtk/g;' \
+        -e 's/^Name=avidemux2$/Name=Avidemux GTK/;' \
+        "${pkgdir}/usr/share/applications/avidemux-gtk.desktop"
+}
