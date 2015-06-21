@@ -39,4 +39,6 @@ package() {
     cd "${srcdir}/${srcname}"
 
     make DESTDIR="${pkgdir}" install
+
+    install --mode='755' --target-directory="${pkgdir}/usr/bin" tools/retroarch-joyconfig
 }
