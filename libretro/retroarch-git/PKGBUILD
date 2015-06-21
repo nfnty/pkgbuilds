@@ -1,0 +1,42 @@
+pkgname=('retroarch-git')
+srcname='retroarch'
+pkgdesc='Reference frontend for the libretro API'
+pkgver='r1'
+pkgrel='1'
+arch=('i686' 'x86_64')
+url='https://github.com/libretro/RetroArch'
+license=('GPL3')
+
+depends=('libgl')
+makedepends=('git')
+provides=('retroarch')
+conflicts=('retroarch')
+
+source=("${srcname}::git+https://github.com/libretro/RetroArch.git")
+sha512sums=('SKIP')
+
+pkgver() {
+    cd "${srcdir}/${srcname}"
+
+    printf 'r%s.%s\n' \
+        "$( git rev-list HEAD | wc --lines )" \
+        "$( git describe --always | sed 's/-/./g' )"
+}
+
+prepare() {
+    cd "${srcdir}/${srcname}"
+
+    ./configure --prefix='/usr'
+}
+
+build() {
+    cd "${srcdir}/${srcname}"
+
+    make
+}
+
+package() {
+    cd "${srcdir}/${srcname}"
+
+    make DESTDIR="${pkgdir}" install
+}
