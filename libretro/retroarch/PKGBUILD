@@ -16,14 +16,6 @@ conflicts=('retroarch')
 source=("${srcname}::git+https://github.com/libretro/RetroArch.git#tag=${_gittag}")
 sha512sums=('SKIP')
 
-pkgver() {
-    cd "${srcdir}/${srcname}"
-
-    printf 'r%s.%s\n' \
-        "$( git rev-list HEAD | wc --lines )" \
-        "$( git describe --always | sed 's/-/./g' )"
-}
-
 prepare() {
     cd "${srcdir}/${srcname}"
 
