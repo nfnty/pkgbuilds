@@ -1,0 +1,42 @@
+pkgname=('libretro-pcsx-rearmed-git')
+srcname='pcsx_rearmed'
+pkgdesc='ARM optimized PCSX fork'
+pkgver='r1'
+pkgrel='1'
+arch=('i686' 'x86_64')
+url='https://github.com/libretro/pcsx_rearmed'
+license=('GPL2')
+
+makedepends=('git')
+provides=('pcsx_rearmed')
+conflicts=('pcsx_rearmed')
+
+source=(
+    "${srcname}::git+https://github.com/libretro/pcsx_rearmed.git"
+    "https://raw.githubusercontent.com/libretro/libretro-super/master/dist/info/${srcname}_libretro.info"
+)
+sha512sums=(
+    'SKIP'
+    'fb5922ef2c38bf5eecfc78109a1ec9e4048243bcd4fde49810cb2b91667561be9f628a76f93d9890913f5a1a874bf2bcdc266e76373c2c0011c261a9169bcd98'
+)
+
+pkgver() {
+    cd "${srcdir}/${srcname}"
+
+    printf 'r%s.%s\n' \
+        "$( git rev-list HEAD | wc --lines )" \
+        "$( git describe --always | sed 's/-/./g' )"
+}
+
+build() {
+    cd "${srcdir}/${srcname}"
+
+    make -f Makefile.libretro
+}
+
+package() {
+    cd "${srcdir}/${srcname}"
+
+    install -D --mode='644' "${srcname}_libretro.so" "${pkgdir}/usr/lib/libretro/${srcname}_libretro.so"
+    install -D --mode='644' "${srcdir}/${srcname}_libretro.info" "${pkgdir}/usr/lib/libretro/${srcname}_libretro.info"
+}
