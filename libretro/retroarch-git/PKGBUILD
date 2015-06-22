@@ -7,7 +7,7 @@ arch=('i686' 'x86_64')
 url='https://github.com/libretro/RetroArch'
 license=('GPL3')
 
-depends=('libgl' 'alsa-lib' 'freetype2' 'libxml2')
+depends=('libgl' 'alsa-lib' 'freetype2' 'libxml2' 'nvidia-cg-toolkit')
 makedepends=('git')
 provides=('retroarch')
 conflicts=('retroarch')
