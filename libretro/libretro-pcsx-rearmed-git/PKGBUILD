@@ -1,6 +1,6 @@
 pkgname=('libretro-pcsx-rearmed-git')
 srcname='pcsx_rearmed'
-pkgdesc='ARM optimized PCSX fork'
+pkgdesc='libretro: PCSX-ReARMed'
 pkgver='r1'
 pkgrel='1'
 arch=('i686' 'x86_64')

@@ -1,0 +1,43 @@
+pkgname=('libretro-mednafen-psx-git')
+srcname='mednafen-psx-libretro'
+pkgdesc='libretro: Mednafen PSX'
+pkgver='r1'
+pkgrel='1'
+arch=('i686' 'x86_64')
+url="https://github.com/libretro/${srcname}"
+license=('GPL2')
+
+makedepends=('git')
+provides=("${pkgname[0]%-git}")
+conflicts=("${pkgname[0]%-git}")
+
+_corename="${srcname//-/_}"
+source=(
+    "${srcname}::git+https://github.com/libretro/${srcname}.git"
+    "https://raw.githubusercontent.com/libretro/libretro-super/master/dist/info/${_corename}.info"
+)
+sha512sums=(
+    'SKIP'
+    'db9156e622fe5c1bf859ab1d452ba4a1976bdfa8257eec0aa6b42d801716649fc67ee08a2c492219cc8c09223e29ede4a8ae2029352f4dac63098b712e5316fc'
+)
+
+pkgver() {
+    cd "${srcdir}/${srcname}"
+
+    printf 'r%s.%s\n' \
+        "$( git rev-list HEAD | wc --lines )" \
+        "$( git describe --always | sed 's/-/./g' )"
+}
+
+build() {
+    cd "${srcdir}/${srcname}"
+
+    make
+}
+
+package() {
+    cd "${srcdir}/${srcname}"
+
+    install -D --mode='644' "${_corename}.so" "${pkgdir}/usr/lib/libretro/${_corename}.so"
+    install -D --mode='644' "${srcdir}/${_corename}.info" "${pkgdir}/usr/lib/libretro/${_corename}.info"
+}
