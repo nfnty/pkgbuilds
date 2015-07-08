@@ -1,0 +1,13 @@
+diff --git a/linux/LinuxProcessList.c b/linux/LinuxProcessList.c
+index e4bc8e5..a42c42b 100644
+--- a/linux/LinuxProcessList.c
++++ b/linux/LinuxProcessList.c
+@@ -232,7 +232,7 @@ static bool LinuxProcessList_statProcessDir(Process* process, const char* dirnam
+    time_t ctime = sstat.st_ctime;
+    process->starttime_ctime = ctime;
+    (void) localtime_r((time_t*) &ctime, &date);
+-   strftime(process->starttime_show, 7, ((ctime > curTime - 86400) ? "%R " : "%b%d "), &date);
++   strftime(process->starttime_show, 7, ((ctime > curTime - 86400) ? "%H:%M " : "%m-%d "), &date);
+    
+    return true;
+ }
