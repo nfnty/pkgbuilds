@@ -1,17 +1,14 @@
 diff --git a/Action.c b/Action.c
-index af6f2be..2e106e7 100644
+index af6f2be..ee5e79b 100644
 --- a/Action.c
 +++ b/Action.c
-@@ -496,38 +496,38 @@ static Htop_Reaction actionTagAllChildren(State* st) {
+@@ -496,50 +496,29 @@ static Htop_Reaction actionTagAllChildren(State* st) {
  
  void Action_setBindings(Htop_Action* keys) {
     keys[KEY_RESIZE] = actionResize;
 -   keys['M'] = actionSortByMemory;
 -   keys['T'] = actionSortByTime;
 -   keys['P'] = actionSortByCPU;
-+   // keys['M'] = actionSortByMemory;
-+   // keys['T'] = actionSortByTime;
-+   // keys['P'] = actionSortByCPU;
     keys['H'] = actionToggleUserlandThreads;
     keys['K'] = actionToggleKernelThreads;
 -   keys['t'] = actionToggleTreeView;
@@ -21,15 +18,11 @@ index af6f2be..2e106e7 100644
 -   keys[KEY_F(3)] = actionIncSearch;
 -   keys['/'] = actionIncSearch;
 +   keys['T'] = actionToggleTreeView;
-+   // keys[KEY_F(5)] = actionToggleTreeView;
-+   // keys[KEY_F(4)] = actionIncFilter;
 +   keys['/'] = actionIncFilter;
-+   // keys[KEY_F(3)] = actionIncSearch;
 +   keys['f'] = actionIncSearch;
  
     keys[']'] = actionHigherPriority;
 -   keys[KEY_F(7)] = actionHigherPriority;
-+   // keys[KEY_F(7)] = actionHigherPriority;
     keys['['] = actionLowerPriority;
 -   keys[KEY_F(8)] = actionLowerPriority;
 -   keys['I'] = actionInvertSortOrder;
@@ -40,29 +33,22 @@ index af6f2be..2e106e7 100644
 -   keys['>'] = actionSetSortColumn;
 -   keys['.'] = actionSetSortColumn;
 -   keys[KEY_F(10)] = actionQuit;
-+   // keys[KEY_F(8)] = actionLowerPriority;
 +   keys['r'] = actionInvertSortOrder;
-+   // keys[KEY_F(6)] = actionExpandCollapseOrSortColumn;
-+   // keys[KEY_F(18)] = actionExpandCollapseOrSortColumn;
-+   // keys['<'] = actionSetSortColumn;
-+   // keys[','] = actionSetSortColumn;
-+   // keys['>'] = actionSetSortColumn;
-+   // keys['.'] = actionSetSortColumn;
-+   // keys[KEY_F(10)] = actionQuit;
     keys['q'] = actionQuit;
     keys['a'] = actionSetAffinity;
 -   keys[KEY_F(9)] = actionKill;
-+   // keys[KEY_F(9)] = actionKill;
     keys['k'] = actionKill;
     keys['+'] = actionExpandOrCollapse;
     keys['='] = actionExpandOrCollapse;
     keys['-'] = actionExpandOrCollapse;
 -   keys['u'] = actionFilterByUser;
-+   keys['?'] = actionFilterByUser;
++   keys['S'] = actionFilterByUser;
     keys['F'] = actionFollow;
-    keys['S'] = actionSetup;
-    keys['C'] = actionSetup;
-@@ -537,9 +537,9 @@ void Action_setBindings(Htop_Action* keys) {
+-   keys['S'] = actionSetup;
+-   keys['C'] = actionSetup;
+    keys[KEY_F(2)] = actionSetup;
+    keys['l'] = actionLsof;
+    keys['s'] = actionStrace;
     keys[' '] = actionTag;
     keys['\014'] = actionRedraw; // Ctrl+L
     keys[KEY_F(1)] = actionHelp;
@@ -70,12 +56,10 @@ index af6f2be..2e106e7 100644
 -   keys['?'] = actionHelp;
 -   keys['U'] = actionUntagAll;
 -   keys['c'] = actionTagAllChildren;
-+   // keys['h'] = actionHelp;
-+   // keys['?'] = actionHelp;
 +   keys['x'] = actionUntagAll;
 +   keys['v'] = actionTagAllChildren;
  }
- 
+-
 diff --git a/CategoriesPanel.c b/CategoriesPanel.c
 index d67be86..46e04bc 100644
 --- a/CategoriesPanel.c
@@ -101,10 +85,10 @@ index d67be86..46e04bc 100644
           Panel_onKey(super, ch);
           selected = Panel_getSelectedIndex(super);
 diff --git a/Panel.c b/Panel.c
-index c426526..7edc9d2 100644
+index c426526..06e2f2d 100644
 --- a/Panel.c
 +++ b/Panel.c
-@@ -373,49 +373,49 @@ bool Panel_onKey(Panel* this, int key) {
+@@ -373,49 +373,39 @@ bool Panel_onKey(Panel* this, int key) {
     int size = Vector_size(this->items);
     switch (key) {
     case KEY_DOWN:
@@ -127,16 +111,6 @@ index c426526..7edc9d2 100644
 -      this->selected--;
 -      break;
 -   #endif
-+   // #ifdef KEY_C_DOWN
-+   // case KEY_C_DOWN:
-+   //    this->selected++;
-+   //    break;
-+   // #endif
-+   // #ifdef KEY_C_UP
-+   // case KEY_C_UP:
-+   //    this->selected--;
-+   //    break;
-+   // #endif
     case KEY_LEFT:
 -   case KEY_CTRLB:
 +   case 'h':

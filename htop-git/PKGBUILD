@@ -17,12 +17,12 @@ provides=('htop')
 conflicts=('htop')
 
 source=(
-    "${srcname}::git+https://github.com/hishamhm/htop.git#commit=e3d1ca0d2074ec89155f9412c6caa621265a8824"
+    "${srcname}::git+https://github.com/hishamhm/htop.git"
     'vim.patch'
 )
 sha512sums=(
     'SKIP'
-    '25cf0e8d59777ec7003182008f73e5cf15103ed2a0db0f5bc6ce437172456f98514ffebc14868f820059d6596bfc60c27912b15bbfebece9dc0a7f86fd889080'
+    'e459cb18ae8741f4397de2b9ce7526a2aa6fb1a390b7852ce08c7d1cca14926ae9fc067c1d8c9da3eadf561402c68f41cb75b889a68088375fbfe9fb34b9a7f4'
 )
 
 pkgver() {
@@ -36,7 +36,7 @@ pkgver() {
 prepare() {
     cd "${srcdir}/${srcname}"
 
-    # git apply "${srcdir}/vim.patch"
+    git apply "${srcdir}/vim.patch"
 
     ./autogen.sh
 
