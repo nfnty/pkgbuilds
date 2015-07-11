@@ -7,7 +7,7 @@ arch=('i686' 'x86_64')
 url='https://github.com/MaxKellermann/MPD'
 license=('GPL2')
 
-depends=('ffmpeg' 'libsamplerate' 'audiofile' 'libmad' 'faad2' 'sqlite' 'wavpack' 'libid3tag' 'yajl' 'libmpdclient' 'icu')
+depends=('libsamplerate' 'sqlite' 'libvorbis' 'yajl' 'libmpdclient' 'icu')
 makedepends=('git' 'boost' 'doxygen')
 provides=('mpd')
 conflicts=('mpd')
@@ -43,7 +43,7 @@ prepare() {
         --enable-alsa \
         --disable-roar \
         --disable-ao \
-        --enable-audiofile \
+        --disable-audiofile \
         --disable-zlib \
         --disable-bzip2 \
         --disable-cdio-paranoia \
@@ -53,13 +53,13 @@ prepare() {
         --disable-debug \
         --disable-documentation \
         --disable-dsd \
-        --enable-ffmpeg \
+        --disable-ffmpeg \
         --disable-fifo \
-        --enable-flac \
+        --disable-flac \
         --disable-fluidsynth \
         --disable-gme \
         --disable-httpd-output \
-        --enable-id3 \
+        --disable-id3 \
         --enable-inotify \
         --disable-ipv6 \
         --disable-iso9660 \
@@ -95,7 +95,7 @@ prepare() {
         --disable-test \
         --disable-twolame-encoder \
         --enable-un \
-        --disable-vorbis \
+        --enable-vorbis \
         --disable-vorbis-encoder \
         --disable-wave-encoder \
         --disable-wavpack \
@@ -103,9 +103,8 @@ prepare() {
         --disable-wildmidi \
         --disable-zzip \
         --enable-icu \
-        --enable-glib \
         --disable-neighbor-plugins \
-        --enable-aac \
+        --disable-aac \
         --disable-daemon \
         --with-zeroconf=no
 }
