@@ -71,7 +71,7 @@ prepare() {
         --disable-libwrap \
         --enable-lsr \
         --disable-soxr \
-        --enable-mad \
+        --disable-mad \
         --disable-mikmod \
         --disable-mms \
         --disable-modplug \
