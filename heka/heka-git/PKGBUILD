@@ -1,0 +1,43 @@
+pkgname=('heka-git')
+srcname='heka'
+pkgdesc='Data collection and processing made easy'
+pkgver='r1'
+pkgrel='1'
+arch=('i686' 'x86_64')
+url="https://github.com/mozilla-services/${srcname}"
+license=('MPL2')
+
+makedepends=(
+    'cmake'
+    'gcc'
+    'git'
+    'go'
+    'make'
+    'mercurial'
+    'patch'
+)
+provides=("${pkgname[0]%-git}")
+conflicts=("${pkgname[0]%-git}")
+
+source=("${srcname}::git+https://github.com/mozilla-services/${srcname}.git")
+sha512sums=('SKIP')
+
+pkgver() {
+    cd "${srcdir}/${srcname}"
+
+    printf 'r%s.%s\n' \
+        "$( git rev-list HEAD | wc --lines )" \
+        "$( git describe --always | sed 's/-/./g' )"
+}
+
+build() {
+    cd "${srcdir}/${srcname}"
+
+    ./build.sh
+}
+
+package() {
+    cd "${srcdir}/${srcname}"
+
+    make DESTDIR="${pkgdir}" install
+}
