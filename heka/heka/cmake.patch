@@ -1,8 +1,8 @@
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 5e80d02..11979ec 100644
+index dfabba7..c1a0ffc 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -18,7 +18,6 @@ find_package(Go 1.3 REQUIRED)
+@@ -19,7 +19,6 @@ find_package(Go 1.4 REQUIRED)
  find_package(Git REQUIRED)
  find_package(Protobuf 2.3 QUIET)
  set(CPACK_PACKAGE_FILE_NAME ${CMAKE_PROJECT_NAME}-${CPACK_PACKAGE_VERSION_MAJOR}_${CPACK_PACKAGE_VERSION_MINOR}_${CPACK_PACKAGE_VERSION_PATCH}-${GO_PLATFORM}-${GO_ARCH})
@@ -10,9 +10,9 @@ index 5e80d02..11979ec 100644
  set(PROJECT_PATH "${CMAKE_BINARY_DIR}/heka")
  set(HEKA_PATH "${PROJECT_PATH}/src/github.com/mozilla-services/heka")
  set(LUA_INCLUDE_PATH "${PROJECT_PATH}/include")
-@@ -274,9 +273,9 @@ endif()
+@@ -285,9 +284,9 @@ endif()
  if (INCLUDE_MOZSVC)
-     add_test(mozsvc ${GO_EXECUTABLE} test ${BENCHMARK_FLAG} github.com/mozilla-services/heka-mozsvc-plugins)
+     add_test(mozsvc ${GO_EXECUTABLE} test ${BENCHMARK_FLAG} ${COVERAGE_FLAG} github.com/mozilla-services/heka-mozsvc-plugins)
  endif()
 -install(FILES "${HEKA_PATH}/cmd/heka-sbmgr/sbmgr.toml" "${HEKA_PATH}/cmd/heka-sbmgr/hekad.toml.sbmgr" DESTINATION bin)
 +install(FILES "${HEKA_PATH}/cmd/heka-sbmgr/sbmgr.toml" "${HEKA_PATH}/cmd/heka-sbmgr/hekad.toml.sbmgr" DESTINATION "share/${CMAKE_PROJECT_NAME}/examples")
