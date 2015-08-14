@@ -7,7 +7,7 @@ arch=('i686' 'x86_64')
 url='https://github.com/MaxKellermann/MPD'
 license=('GPL2')
 
-depends=('libsamplerate' 'sqlite' 'libvorbis' 'yajl' 'libmpdclient' 'icu')
+depends=('libsamplerate' 'sqlite' 'libpulse' 'libvorbis' 'yajl' 'libmpdclient' 'icu')
 makedepends=('git' 'boost' 'doxygen')
 provides=('mpd')
 conflicts=('mpd')
@@ -40,7 +40,7 @@ prepare() {
         --disable-expat \
         --disable-upnp \
         --disable-adplug \
-        --enable-alsa \
+        --disable-alsa \
         --disable-roar \
         --disable-ao \
         --disable-audiofile \
@@ -82,7 +82,7 @@ prepare() {
         --disable-oss \
         --disable-osx \
         --disable-pipe-output \
-        --disable-pulse \
+        --enable-pulse \
         --disable-recorder-output \
         --disable-sidplay \
         --disable-shine-encoder \
