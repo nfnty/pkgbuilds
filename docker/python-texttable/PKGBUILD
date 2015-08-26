@@ -12,11 +12,11 @@ makedepends=('python-setuptools')
 provides=('python-texttable')
 conflicts=('python-texttable')
 
+source=("https://pypi.python.org/packages/source/t/texttable/texttable-${pkgver}.tar.gz")
 md5sums=('dc31d62f5e3fb095d14f3c673d22b339')
-source=("${srcname}::https://pypi.python.org/packages/source/t/texttable/texttable-${pkgver}.tar.gz#md5=${md5sums[0]}")
 
 package() {
-    cd "${srcdir}/${srcname}"
+    cd "${srcdir}/${srcname}-${pkgver}"
 
     python setup.py install --root="${pkgdir}" --optimize=1
 }
