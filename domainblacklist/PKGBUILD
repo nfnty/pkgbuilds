@@ -1,4 +1,4 @@
-pkgname=('domainblacklist-git')
+pkgname=('domainblacklist')
 srcname='domainblacklist'
 pkgver='r1'
 pkgrel='1'
