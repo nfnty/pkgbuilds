@@ -1,8 +1,8 @@
 diff --git a/Action.c b/Action.c
-index af6f2be..ee5e79b 100644
+index 6c387de..e28f7db 100644
 --- a/Action.c
 +++ b/Action.c
-@@ -496,50 +496,29 @@ static Htop_Reaction actionTagAllChildren(State* st) {
+@@ -501,52 +501,29 @@ static Htop_Reaction actionTagAllChildren(State* st) {
  
  void Action_setBindings(Htop_Action* keys) {
     keys[KEY_RESIZE] = actionResize;
@@ -11,6 +11,7 @@ index af6f2be..ee5e79b 100644
 -   keys['P'] = actionSortByCPU;
     keys['H'] = actionToggleUserlandThreads;
     keys['K'] = actionToggleKernelThreads;
+-   keys['p'] = actionToggleProgramPath;
 -   keys['t'] = actionToggleTreeView;
 -   keys[KEY_F(5)] = actionToggleTreeView;
 -   keys[KEY_F(4)] = actionIncFilter;
@@ -38,6 +39,7 @@ index af6f2be..ee5e79b 100644
     keys['a'] = actionSetAffinity;
 -   keys[KEY_F(9)] = actionKill;
     keys['k'] = actionKill;
+-   keys[KEY_RECLICK] = actionExpandOrCollapse;
     keys['+'] = actionExpandOrCollapse;
     keys['='] = actionExpandOrCollapse;
     keys['-'] = actionExpandOrCollapse;
@@ -85,10 +87,10 @@ index d67be86..46e04bc 100644
           Panel_onKey(super, ch);
           selected = Panel_getSelectedIndex(super);
 diff --git a/Panel.c b/Panel.c
-index c426526..06e2f2d 100644
+index 7424fa4..f5caf3d 100644
 --- a/Panel.c
 +++ b/Panel.c
-@@ -373,49 +373,39 @@ bool Panel_onKey(Panel* this, int key) {
+@@ -376,41 +376,31 @@ bool Panel_onKey(Panel* this, int key) {
     int size = Vector_size(this->items);
     switch (key) {
     case KEY_DOWN:
@@ -136,7 +138,10 @@ index c426526..06e2f2d 100644
        this->selected += (this->h - 1);
        this->scrollV += (this->h - 1);
        this->needsRedraw = true;
+@@ -430,10 +420,10 @@ bool Panel_onKey(Panel* this, int key) {
+       this->needsRedraw = true;
        break;
+    }
 -   case KEY_HOME:
 +   case 'g':
        this->selected = 0;
