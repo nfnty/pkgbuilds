@@ -1,6 +1,6 @@
 pkgname=('docker-compose')
 srcname='compose'
-pkgver='1.4.0'
+pkgver='1.4.2'
 pkgrel='1'
 pkgdesc='Define and run complex applications using Docker'
 arch=('any')
@@ -24,20 +24,8 @@ makedepends=('git')
 provides=('docker-compose')
 conflicts=('docker-compose')
 
-source=(
-    "${srcname}::git+https://github.com/docker/compose.git#tag=${pkgver}"
-    'version.patch'
-)
-sha512sums=(
-    'SKIP'
-    'd716f03591b720f178599bb9b4d3ac31d7fde4a20637d5edf626f517f159fd38dd3e47b1f8dfa303ff2523b54b729363c6be0b887c260581663b8e63e0005e43'
-)
-
-prepare() {
-    cd "${srcdir}/${srcname}"
-
-    git apply "${srcdir}/version.patch"
-}
+source=("${srcname}::git+https://github.com/docker/compose.git#tag=${pkgver}")
+sha512sums=('SKIP')
 
 package() {
     cd "${srcdir}/${srcname}"
