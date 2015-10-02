@@ -29,11 +29,13 @@ conflicts=('ranger')
 
 source=(
     "${srcname}::git+https://github.com/hut/ranger.git"
-    "mime.patch"
+    'mime.patch'
+    'sort_natural.patch'
 )
 sha256sums=(
     'SKIP'
-    '7857b3482cfbb821354f222ec13e1a9d92046ee5ae154e8640425ef6a5565a5d'
+    'SKIP'
+    'SKIP'
 )
 
 pkgver() {
@@ -48,6 +50,7 @@ prepare() {
     cd "${srcdir}/${srcname}"
 
     git apply "${srcdir}/mime.patch"
+    git apply "${srcdir}/sort_natural.patch"
 }
 
 package() {
