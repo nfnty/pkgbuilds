@@ -1,26 +1,15 @@
-diff --git a/compat/cfmakeraw.c b/compat/cfmakeraw.c
-index 85b2c9b..d55fc9b 100644
---- a/compat/cfmakeraw.c
-+++ b/compat/cfmakeraw.c
-@@ -22,7 +22,7 @@
- void
- cfmakeraw(struct termios *tio)
- {
--	tio->c_iflag &= ~(IGNBRK|BRKINT|PARMRK|ISTRIP|INLCR|IGNCR|ICRNL|IXON);
-+	tio->c_iflag &= ~(IGNBRK|BRKINT|PARMRK|ISTRIP|INLCR|IGNCR|ICRNL);
- 	tio->c_oflag &= ~OPOST;
- 	tio->c_lflag &= ~(ECHO|ECHONL|ICANON|ISIG|IEXTEN);
- 	tio->c_cflag &= ~(CSIZE|PARENB);
 diff --git a/tty.c b/tty.c
-index 7be952c..2f94a85 100644
+index 7be952c..531b067 100644
 --- a/tty.c
 +++ b/tty.c
-@@ -198,7 +198,7 @@ tty_init_termios(int fd, struct termios *orig_tio, struct bufferevent *bufev)
+@@ -198,8 +198,8 @@ tty_init_termios(int fd, struct termios *orig_tio, struct bufferevent *bufev)
  		bufferevent_enable(bufev, EV_READ|EV_WRITE);
  
  	memcpy(&tio, orig_tio, sizeof tio);
 -	tio.c_iflag &= ~(IXON|IXOFF|ICRNL|INLCR|IGNCR|IMAXBEL|ISTRIP);
+-	tio.c_iflag |= IGNBRK;
 +	tio.c_iflag &= ~(ICRNL|INLCR|IGNCR|IMAXBEL|ISTRIP);
- 	tio.c_iflag |= IGNBRK;
++	tio.c_iflag |= (IGNBRK|IXON|IXOFF);
  	tio.c_oflag &= ~(OPOST|ONLCR|OCRNL|ONLRET);
  	tio.c_lflag &= ~(IEXTEN|ICANON|ECHO|ECHOE|ECHONL|ECHOCTL|
+ 	    ECHOPRT|ECHOKE|ISIG);
