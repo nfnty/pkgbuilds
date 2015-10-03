@@ -1,12 +1,24 @@
-diff --git a/tty.c b/tty.c
-index 7be952c..cffbc2b 100644
---- a/tty.c
-+++ b/tty.c
-@@ -213,6 +213,7 @@ void
- tty_start_tty(struct tty *tty)
- {
- 	tty_init_termios(tty->fd, &tty->tio, tty->event);
-+	tty->tio.c_iflag &= ~(IXON|IXOFF);
- 
- 	tty_putcode(tty, TTYC_SMCUP);
+diff --git a/client.c b/client.c
+index 970d132..6851583 100644
+--- a/client.c
++++ b/client.c
+@@ -295,6 +295,7 @@ client_main(struct event_base *base, int argc, char **argv, int flags)
+ 		}
+ 		cfmakeraw(&tio);
+ 		tio.c_iflag = ICRNL|IXANY;
++		tio.c_iflag &= ~(IXON|IXOFF);
+ 		tio.c_oflag = OPOST|ONLCR;
+ #ifdef NOKERNINFO
+ 		tio.c_lflag = NOKERNINFO;
+diff --git a/window.c b/window.c
+index d66cb1f..c75efeb 100644
+--- a/window.c
++++ b/window.c
+@@ -864,6 +864,7 @@ window_pane_spawn(struct window_pane *wp, int argc, char **argv,
+ 		if (options_get_number(&wp->window->options, "utf8"))
+ 			tio2.c_iflag |= IUTF8;
+ #endif
++		tio2.c_iflag &= ~(IXON|IXOFF);
+ 		if (tcsetattr(STDIN_FILENO, TCSANOW, &tio2) != 0)
+ 			fatal("tcgetattr failed");
  
