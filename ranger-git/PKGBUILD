@@ -28,7 +28,7 @@ provides=('ranger')
 conflicts=('ranger')
 
 source=(
-    "${srcname}::git+https://github.com/hut/ranger.git"
+    "${srcname}::git+https://github.com/nfnty/ranger.git"
     'mime.patch'
 )
 sha256sums=(
