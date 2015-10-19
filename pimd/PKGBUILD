@@ -30,7 +30,9 @@ prepare() {
 
     sed -i 's#/sbin#/bin#g' Makefile
 
-    ./configure --prefix='/usr'
+    ./configure \
+        --prefix='/usr' \
+        --sysconfdir='/etc'
 }
 
 build() {
