@@ -1,0 +1,48 @@
+pkgname=('pimd')
+srcname='pimd'
+pkgdesc='PIM-SM multicast routing daemon'
+pkgver='2.3.0'
+pkgrel='1'
+arch=('i686' 'x86_64')
+url="https://github.com/troglobit/${srcname}"
+license=('BSD')
+
+depends=('')
+makedepends=('git')
+provides=("${pkgname[0]%-git}")
+conflicts=("${pkgname[0]%-git}")
+
+source=(
+    "${srcname}::git+https://github.com/troglobit/${srcname}.git#tag=${pkgver}"
+    'pimd.service'
+)
+sha512sums=(
+    'SKIP'
+    'SKIP'
+)
+
+backup=('etc/pimd.conf')
+
+prepare() {
+    cd "${srcdir}/${srcname}"
+
+    git submodule update --init
+
+    sed -i 's#/sbin#/bin#g' Makefile
+
+    ./configure --prefix='/usr'
+}
+
+build() {
+    cd "${srcdir}/${srcname}"
+
+    make
+}
+
+package() {
+    cd "${srcdir}/${srcname}"
+
+    make DESTDIR="${pkgdir}" install
+
+    install -D --mode=644 "${srcdir}/pimd.service" "${pkgdir}/usr/lib/systemd/system/pimd.service"
+}
