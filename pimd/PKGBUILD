@@ -15,8 +15,10 @@ conflicts=("${pkgname[0]%-git}")
 source=(
     "${srcname}::git+https://github.com/troglobit/${srcname}.git"
     'pimd.service'
+    'noroot.patch'
 )
 sha512sums=(
+    'SKIP'
     'SKIP'
     'SKIP'
 )
@@ -25,6 +27,8 @@ backup=('etc/pimd.conf')
 
 prepare() {
     cd "${srcdir}/${srcname}"
+
+    git apply "${srcdir}/noroot.patch"
 
     git submodule update --init
 
