@@ -1,7 +1,7 @@
 pkgname=('pimd')
 srcname='pimd'
 pkgdesc='PIM-SM multicast routing daemon'
-pkgver='2.3.0'
+pkgver='2.3.1'
 pkgrel='1'
 arch=('i686' 'x86_64')
 url="https://github.com/troglobit/${srcname}"
@@ -13,7 +13,7 @@ provides=("${pkgname[0]%-git}")
 conflicts=("${pkgname[0]%-git}")
 
 source=(
-    "${srcname}::git+https://github.com/troglobit/${srcname}.git#tag=${pkgver}"
+    "${srcname}::git+https://github.com/troglobit/${srcname}.git"
     'pimd.service'
 )
 sha512sums=(
