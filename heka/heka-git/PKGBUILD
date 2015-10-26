@@ -17,6 +17,7 @@ makedepends=(
     'mercurial'
     'patch'
 )
+optdepends=('geoip-citydata: GeoIpDecoder')
 provides=("${pkgname[0]%-git}")
 conflicts=("${pkgname[0]%-git}")
 
@@ -72,4 +73,7 @@ package() {
 
     cd "${BUILD_DIR}"
     make DESTDIR="${pkgdir}" install
+
+    install -D --directory "${pkgdir}/var/cache/hekad"
+    install -D --directory "${pkgdir}/etc/heka/conf.d"
 }
