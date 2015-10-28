@@ -47,7 +47,7 @@ prepare() {
     cd "${srcdir}/${srcname}"
 
     # /var/kea -> /var/lib/kea
-    find . -type f -exec sed --in-place  \
+    find . -path './.git' -prune -or -type f -exec sed --in-place  \
         --expression='s|/var/kea/kea-|/var/kea/|g' \
         --expression='s|/var/kea|/var/lib/kea|g' \
         --expression='s|@localstatedir@/@PACKAGE@|@localstatedir@/lib/@PACKAGE@|g' \
@@ -55,7 +55,7 @@ prepare() {
         '{}' '+'
 
     # /var/log -> /var/log/kea
-    find . -type f -exec sed --in-place  \
+    find . -path './.git' -prune -or -type f -exec sed --in-place  \
         --expression='s|/var/log/kea-|/var/log/|g' \
         --expression='s|/var/log|/var/log/kea|g' \
         --expression='s|\${localstatedir}/log/|\${localstatedir}/log/\${PACKAGE_NAME}|g' \
