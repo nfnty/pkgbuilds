@@ -1,0 +1,31 @@
+diff --git a/ntpd/ntpd.c b/ntpd/ntpd.c
+index a517391..7339b3d 100644
+--- a/ntpd/ntpd.c
++++ b/ntpd/ntpd.c
+@@ -585,16 +585,16 @@ ntpdmain(
+ 	isc_error_setfatal(library_fatal_error);
+ 	isc_error_setunexpected(library_unexpected_error);
+ 
+-	/* MPE lacks the concept of root */
+-# if defined(HAVE_GETUID) && !defined(MPE)
+-	uid = getuid();
+-	if (uid && !HAVE_OPT( SAVECONFIGQUIT )) {
+-		msyslog_term = TRUE;
+-		msyslog(LOG_ERR,
+-			"must be run as root, not uid %ld", (long)uid);
+-		exit(1);
+-	}
+-# endif
++	// /* MPE lacks the concept of root */
++// # if defined(HAVE_GETUID) && !defined(MPE)
++	// uid = getuid();
++	// if (uid && !HAVE_OPT( SAVECONFIGQUIT )) {
++	// 	msyslog_term = TRUE;
++	// 	msyslog(LOG_ERR,
++	// 		"must be run as root, not uid %ld", (long)uid);
++	// 	exit(1);
++	// }
++// # endif
+ 
+ /*
+  * Enable the Multi-Media Timer for Windows?
