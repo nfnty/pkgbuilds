@@ -89,5 +89,5 @@ package() {
 
     make DESTDIR="${pkgdir}" install
 
-    rmdir --parents "${pkgdir}/var/run/kea"
+    rmdir "${pkgdir}/var/run"{/kea,}
 }
