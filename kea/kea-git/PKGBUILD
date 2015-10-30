@@ -46,8 +46,6 @@ sha512sums=('SKIP')
 prepare() {
     cd "${srcdir}/${srcname}"
 
-    git cherry-pick --no-commit 47f2e13646dc91c7c6fa8a248e81a2d324fe2278
-
     # /var/kea -> /var/lib/kea
     find . -path './.git' -prune -or -type f -exec sed --in-place  \
         --expression='s|/var/kea/kea-|/var/kea/|g' \
