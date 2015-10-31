@@ -23,10 +23,6 @@ pkgver() {
         "$( git describe --always | sed 's/-/./g' )"
 }
 
-prepare() {
-    mkdir "${srcdir}/cargo"
-}
-
 build() {
     cd "${srcdir}/${srcname}"
 
@@ -35,6 +31,9 @@ build() {
 }
 
 package() {
-    export CARGO_HOME="${srcdir}/cargo"
-    cargo install --path "${srcdir}/${srcname}" --root "${pkgdir}"
+    cd "${srcdir}/${srcname}"
+
+    install -D --mode=755 target/release/wtftw "${pkgdir}/usr/bin/wtftw"
+    install -D --mode=644 config/config.rs "${pkgdir}/usr/share/wtftw/config.rs"
+    install -D --mode=644 LICENSE "${pkgdir}/usr/share/licences/wtftw/LICENSE"
 }
