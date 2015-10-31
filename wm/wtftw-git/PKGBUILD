@@ -7,8 +7,8 @@ arch=('i686' 'x86_64')
 url='https://github.com/Kintaro/wtftw'
 license=('custom:BSD')
 
-depends=('rust-git' 'libxinerama')
-makedepends=('git' 'cargo-git')
+depends=('rust')
+makedepends=('git' 'cargo')
 provides=('wtftw')
 conflicts=('wtftw')
 
@@ -32,7 +32,5 @@ build() {
 package() {
     cd "${srcdir}/${srcname}"
 
-    install -D --mode=755 target/release/wtftw "${pkgdir}/usr/bin/wtftw"
-    install -D --mode=644 config/config.rs "${pkgdir}/usr/share/wtftw/config.rs"
-    install -D --mode=644 LICENSE "${pkgdir}/usr/share/licences/wtftw/LICENSE"
+    cargo install --root "${pkgdir}"
 }
