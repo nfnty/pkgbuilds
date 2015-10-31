@@ -26,6 +26,8 @@ pkgver() {
 build() {
     cd "${srcdir}/${srcname}"
 
+    mkdir "${srcdir}/cargo"
+    export CARGO_HOME="${srcdir}/cargo"
     cargo build --release
 }
 
