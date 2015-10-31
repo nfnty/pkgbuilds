@@ -23,14 +23,18 @@ pkgver() {
         "$( git describe --always | sed 's/-/./g' )"
 }
 
+prepare() {
+    mkdir "${srcdir}/cargo"
+}
+
 build() {
     cd "${srcdir}/${srcname}"
 
-    mkdir "${srcdir}/cargo"
     export CARGO_HOME="${srcdir}/cargo"
     cargo build --release
 }
 
 package() {
+    export CARGO_HOME="${srcdir}/cargo"
     cargo install --path "${srcdir}/${srcname}" --root "${pkgdir}"
 }
