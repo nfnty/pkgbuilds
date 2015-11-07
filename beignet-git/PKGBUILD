@@ -1,0 +1,42 @@
+pkgname=('beignet-git')
+srcname='beignet'
+pkgdesc='OpenCL Library for Intel Ivy Bridge and newer GPUs'
+pkgver='r1'
+pkgrel='1'
+arch=('x86_64')
+url='http://cgit.freedesktop.org/beignet'
+license=('LGPL2')
+
+depends=('libdrm' 'libxfixes' 'glu' 'libsm' 'libxext' 'mesa' 'ncurses' 'ocl-icd' 'llvm')
+makedepends=('git' 'clang' 'cmake' 'python2')
+provides=("${pkgname[0]%-git}" 'opencl-intel' 'opencl-headers' 'opencl-headers12')
+conflicts=("${pkgname[0]%-git}" 'opencl-intel' 'opencl-headers' 'opencl-headers12')
+
+source=("${srcname}::git+git://anongit.freedesktop.org/beignet")
+sha512sums=('SKIP')
+
+pkgver() {
+    cd "${srcdir}/${srcname}"
+
+    printf 'r%s.%s\n' \
+        "$( git rev-list HEAD | wc --lines )" \
+        "$( git describe --always | sed 's/-/./g' )"
+}
+
+build() {
+    cd "${srcdir}/${srcname}"
+
+    cmake \
+        -DCMAKE_INSTALL_PREFIX='/usr' \
+        -DCMAKE_INSTALL_LIBDIR='/usr/lib' \
+        -DCMAKE_BUILD_TYPE='RELEASE' \
+        -DPYTHON_EXECUTABLE:FILEPATH='/usr/bin/python2' \
+        .
+    make
+}
+
+package() {
+    cd "${srcdir}/${srcname}"
+
+    make DESTDIR="${pkgdir}" install
+}
