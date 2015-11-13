@@ -18,6 +18,12 @@ sha512sums=('SKIP')
 
 options=('!strip')
 
+prepare() {
+    cd "${srcdir}/${srcname}"
+
+    git cherry-pick --no-commit 3d26201702b11d0c839b8594bbce4ce443471b40
+}
+
 pkgver() {
     cd "${srcdir}/${srcname}"
 
