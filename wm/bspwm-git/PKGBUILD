@@ -22,6 +22,7 @@ prepare() {
     cd "${srcdir}/${srcname}"
 
     git cherry-pick --no-commit 3d26201702b11d0c839b8594bbce4ce443471b40
+    git cherry-pick --no-commit 56c8025e4db62eaa80d99093d3d0d0e287485da7
 }
 
 pkgver() {
