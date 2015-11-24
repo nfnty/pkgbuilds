@@ -1,0 +1,37 @@
+pkgname=('qtile-git')
+srcname='qtile'
+pkgdesc='A small, flexible, scriptable tiling window manager written in Python'
+pkgver='r1'
+pkgrel='1'
+arch=('any')
+url="https://github.com/qtile/${srcname}"
+license=('MIT')
+
+depends=('python' 'pango' 'python-xcffib' 'python-cairocffi')
+optdepends=(
+    'python-setproctitle: change the process name to qtile'
+    'xcb-util-cursor: show the activity in desktop to qtile'
+    'python-gobject: widget, notify'
+    'python-dbus: widget, notify'
+    'python-wifi: widget, wlan'
+)
+makedepends=('git' 'python-setuptools')
+provides=("${pkgname[0]%-git}")
+conflicts=("${pkgname[0]%-git}")
+
+source=("${srcname}::git+https://github.com/qtile/${srcname}.git")
+sha512sums=('SKIP')
+
+pkgver() {
+    cd "${srcdir}/${srcname}"
+
+    printf 'r%s.%s\n' \
+        "$( git rev-list HEAD | wc --lines )" \
+        "$( git describe --always | sed 's/-/./g' )"
+}
+
+package() {
+    cd "${srcdir}/${srcname}"
+
+    python setup.py install --root="${pkgdir}" --optimize=1
+}
