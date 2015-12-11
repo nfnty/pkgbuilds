@@ -1,0 +1,13 @@
+diff --git a/avahi-daemon/main.c b/avahi-daemon/main.c
+index 10cb41e..92efd85 100644
+--- a/avahi-daemon/main.c
++++ b/avahi-daemon/main.c
+@@ -1514,7 +1514,7 @@ int main(int argc, char *argv[]) {
+     config.n_entries_per_entry_group_max = 0;
+ #endif
+ 
+-    config.drop_root = 1;
++    config.drop_root = 0;
+     config.set_rlimits = 1;
+ #ifdef ENABLE_CHROOT
+     config.use_chroot = 1;
