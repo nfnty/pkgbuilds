@@ -1,9 +1,0 @@
-[Desktop Entry]
-Name=QtQR
-Comment=QtQR is a Qt based software that let's you generate QR Codes easily, scan an image file for QR Codes and decode them or use your webcam to scan a printed one.
-Exec=qtqr
-Icon=qtqr
-Terminal=false
-Type=Application
-Categories=Graphics"
-
