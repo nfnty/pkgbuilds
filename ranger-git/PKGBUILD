@@ -47,8 +47,6 @@ pkgver() {
 prepare() {
     cd "${srcdir}/${srcname}"
 
-    git cherry-pick --no-commit d4384b6cd04cbbd5f096eb2b3b61674b11bd6b1c
-
     git apply "${srcdir}/mime.patch"
 }
 
