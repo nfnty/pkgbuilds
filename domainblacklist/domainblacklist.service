@@ -4,7 +4,7 @@ Requires=domainblacklist_fetch.service
 After=domainblacklist_fetch.service
 
 [Service]
-Environment='SRCDIR=/tmp/domainblacklist' 'DESTDIR=/srv/docker/powerdns-recursor/config/blacklist'
+Environment='SRCDIR=/tmp/domainblacklist' 'DESTDIR=/srv/docker/powerdns-recursor/etc/blacklist'
 Environment='CNAME=powerdns-recursor' 'UGID=240000'
 
 Type=oneshot
