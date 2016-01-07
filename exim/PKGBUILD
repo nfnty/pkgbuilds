@@ -1,7 +1,7 @@
 # $Id$
 # Maintainer: Felix Yan <felixonmars@archlinux.org>
 # Contributor: Bartłomiej Piotrowski <bpiotrowski@archlinux.org>
-# Contributor: Lukas Fleischer <archlinux at cryptocrack dot de>
+# Contributor: Lukas Fleischer <lfleischer@archlinux.org>
 # Contributor: Angel Velasquez <angvp@archlinux.org>
 # Contributor: judd <jvinet@zeroflux.org>
 
@@ -14,7 +14,7 @@ url='http://www.exim.org/'
 license=('GPL')
 backup=(etc/mail/aliases etc/mail/exim.conf etc/logrotate.d/exim)
 install=exim.install
-depends=('gdbm' 'pcre' 'pam' 'gnutls' 'libldap' 'libspf2')
+depends=('gdbm' 'pcre' 'pam' 'openssl' 'libldap' 'libspf2')
 provides=('smtp-server' 'smtp-forwarder')
 conflicts=('smtp-server' 'smtp-forwarder')
 options=('!makeflags')
@@ -30,7 +30,7 @@ source=(http://mirror.switch.ch/ftp/mirror/exim/exim/exim4/exim-$pkgver.tar.bz2
 md5sums=('797f248ef3e0c0e2f178e915f88fc4e9'
          '4874006f0585253ddab027d441009757'
          'e18a535218718c5eb394ed5c9296fe06'
-         'ca98e8fefe2c0b968436d4e74997dd63'
+         '920e4dd88fdf8c59078e0fd1876243d5'
          '88cf76405367a6ed371d05db1d3c9565'
          'be8fdcf7b2d6b6368a21705e69743265'
          '6f5a5c2b0835b33f59d2513cce18c65b'
