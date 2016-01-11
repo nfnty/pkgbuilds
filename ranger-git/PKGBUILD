@@ -29,10 +29,8 @@ conflicts=('ranger')
 
 source=(
     "${srcname}::git+https://github.com/nfnty/ranger.git"
-    'mime.patch'
 )
 sha256sums=(
-    'SKIP'
     'SKIP'
 )
 
@@ -42,12 +40,6 @@ pkgver() {
     printf 'r%s.%s\n' \
         "$( git rev-list HEAD | wc --lines )" \
         "$( git describe --always | sed 's/-/./g' )"
-}
-
-prepare() {
-    cd "${srcdir}/${srcname}"
-
-    git apply "${srcdir}/mime.patch"
 }
 
 package() {
