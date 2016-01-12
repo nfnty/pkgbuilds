@@ -4,10 +4,11 @@ Requires=domainblacklist_fetch.service
 After=domainblacklist_fetch.service
 
 [Service]
+Type=oneshot
+
 Environment='SRCDIR=/tmp/domainblacklist' 'DESTDIR=/srv/docker/powerdns-recursor/etc/blacklist'
 Environment='CNAME=powerdns-recursor' 'UGID=240000'
 
-Type=oneshot
 ExecStart=/usr/bin/chown --recursive ${UGID}:${UGID} ${SRCDIR}
 ExecStart=/usr/bin/chmod --recursive u=rX,g=,o= ${SRCDIR}
 ExecStart=/usr/bin/rm --recursive ${DESTDIR}
