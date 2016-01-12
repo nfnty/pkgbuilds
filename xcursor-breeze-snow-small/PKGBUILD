@@ -1,35 +1,18 @@
 pkgname=('xcursor-breeze-snow-small')
-srcname='Breeze_Snow'
-pkgbase='xcursor-breeze-snow-small'
+srcname='breeze-snow-small'
 pkgdesc='Breeze snow cursor theme'
 pkgver='2.0'
 pkgrel='1'
 arch=('any')
-url='https://kver.wordpress.com/2015/01/09/curses-i-mean-cursors'
-license=('GPL2')
+url="https://github.com/nfnty/${srcname}.git"
+license=('GPL2' 'LGPL3')
 
-makedepends=('git' 'inkscape' 'xorg-xcursorgen' 'python')
+makedepends=('git' 'inkscape' 'xorg-xcursorgen')
 provides=("${pkgname[0]%-git}")
 conflicts=("${pkgname[0]%-git}")
 
-source=(
-    "https://share.kde.org/index.php/s/4ec772e01cdc15c75b81026f886ccb93/download"
-    'dpi.patch'
-    'convert.py'
-)
-sha512sums=(
-    'b22c6ca2bf235315c19555d5a5701fb869a7f905ee213515fa762719e3a5c5450d97fe6ca8530f787e44fd73bd12b44d79e2243d87088af88c98bba8b1308708'
-    'SKIP'
-    'SKIP'
-)
-
-prepare() {
-    cd "${srcdir}/${srcname}"
-
-    patch --strip=1 --input="${srcdir}/dpi.patch"
-
-    "${srcdir}/convert.py" "${srcdir}/${srcname}/src/config"
-}
+source=("${srcname}::git+https://github.com/nfnty/${srcname}.git")
+sha512sums=('SKIP')
 
 build() {
     cd "${srcdir}/${srcname}"
@@ -41,6 +24,6 @@ package() {
     cd "${srcdir}/${srcname}"
 
     install --directory --mode=755 "${pkgdir}/usr/share/icons"
-    cp --recursive "${srcname}" "${pkgdir}/usr/share/icons/"
-    chmod --recursive 'u=rwX,g=rX,o=rX' "${pkgdir}/usr/share/icons/${srcname}"
+    cp --recursive "Breeze_Snow_Small" "${pkgdir}/usr/share/icons/"
+    chmod --recursive 'u=rwX,g=rX,o=rX' "${pkgdir}/usr/share/icons/Breeze_Snow_Small"
 }
