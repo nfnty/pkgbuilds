@@ -1,0 +1,36 @@
+pkgname=('echoprint-codegen-git')
+srcname='echoprint-codegen'
+pkgdesc='Codegen for Echoprint'
+pkgver='r1'
+pkgrel='1'
+arch=('i686' 'x86_64')
+url="https://github.com/echonest/${srcname}"
+license=('MIT')
+
+depends=('ffmpeg' 'taglib' 'boost-libs' 'zlib')
+makedepends=('git' 'boost')
+provides=("${pkgname[0]%-git}")
+conflicts=("${pkgname[0]%-git}")
+
+source=("${srcname}::git+https://github.com/echonest/${srcname}.git")
+sha512sums=('SKIP')
+
+pkgver() {
+    cd "${srcdir}/${srcname}"
+
+    printf 'r%s.%s\n' \
+        "$( git rev-list HEAD | wc --lines )" \
+        "$( git describe --always | sed 's/-/./g' )"
+}
+
+build() {
+    cd "${srcdir}/${srcname}/src"
+
+    make
+}
+
+package() {
+    cd "${srcdir}/${srcname}/src"
+
+    make DESTDIR="${pkgdir}/usr" install
+}
