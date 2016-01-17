@@ -1,14 +1,14 @@
-pkgname=('python-pydub')
+pkgname=('python2-pydub')
 srcname='pydub'
 pkgdesc='Manipulate audio with a simple and easy high level interface'
 pkgver='0.16.3'
 pkgrel='1'
-arch=('any' 'i686' 'x86_64')
+arch=('any')
 url="https://github.com/jiaaro/${srcname}"
 license=('MIT')
 
-depends=('python')
-makedepends=('git' 'python-setuptools')
+depends=('python2')
+makedepends=('git' 'python2-setuptools')
 provides=("${pkgname[0]%-git}")
 conflicts=("${pkgname[0]%-git}")
 
@@ -18,5 +18,5 @@ sha512sums=('SKIP')
 package() {
     cd "${srcdir}/${srcname}"
 
-    python setup.py install --root="${pkgdir}" --optimize=1
+    python2 setup.py install --root="${pkgdir}" --optimize=1
 }
