@@ -1,0 +1,36 @@
+pkgname=('pg_acoustid')
+srcname='pg_acoustid'
+pkgdesc='AcoustID utility functions for PostgreSQL'
+pkgver='r1'
+pkgrel='1'
+arch=('i686' 'x86_64')
+url="https://bitbucket.org/acoustid/${srcname}"
+license=('custom:postgresql')
+
+depends=('postgresql')
+makedepends=('git')
+provides=("${pkgname[0]%-git}")
+conflicts=("${pkgname[0]%-git}")
+
+source=("${srcname}::git+https://bitbucket.org/acoustid/${srcname}.git")
+sha512sums=('SKIP')
+
+pkgver() {
+    cd "${srcdir}/${srcname}"
+
+    printf 'r%s.%s\n' \
+        "$( git rev-list HEAD | wc --lines )" \
+        "$( git describe --always | sed 's/-/./g' )"
+}
+
+build() {
+    cd "${srcdir}/${srcname}"
+
+    make
+}
+
+package() {
+    cd "${srcdir}/${srcname}"
+
+    make DESTDIR="${pkgdir}" install
+}
