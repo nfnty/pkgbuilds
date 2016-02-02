@@ -22,13 +22,17 @@ provides=("${pkgname[0]%-git}")
 conflicts=("${pkgname[0]%-git}")
 
 source=(
-    "${srcname}::git+https://github.com/mozilla-services/${srcname}.git"
-    "cmake.patch"
+    "${srcname}::git+https://github.com/mozilla-services/${srcname}.git#tag=v${pkgver}"
+    'heka.service'
+    'cmake.patch'
 )
 sha512sums=(
     'SKIP'
     'SKIP'
+    'SKIP'
 )
+
+install='heka.install'
 
 pkgver() {
     cd "${srcdir}/${srcname}"
@@ -65,10 +69,16 @@ build() {
 }
 
 package() {
-    cd "${srcdir}/build"
+    path_build="${srcdir}/build"
+    cd "${path_build}"
+
+    export GOPATH="${path_build}/heka"
+    export GOBIN="${GOPATH}/bin"
+    export PATH="${GOBIN}:${PATH}"
 
     make DESTDIR="${pkgdir}" install
 
-    install -D --directory "${pkgdir}/var/cache/hekad"
-    install -D --directory "${pkgdir}/etc/heka/conf.d"
+    install --owner='533' --group='533' --mode='750' --directory "${pkgdir}/var/cache/hekad"
+    install --directory "${pkgdir}/etc/heka/conf.d"
+    install -D --mode='644' "${srcdir}/heka.service" "${pkgdir}/usr/lib/systemd/system/heka.service"
 }
