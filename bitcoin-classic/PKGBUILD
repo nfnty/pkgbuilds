@@ -1,0 +1,32 @@
+pkgname=('bitcoin-classic')
+srcname='bitcoinclassic'
+pkgbase='bitcoin-classic'
+pkgdesc='Bitcoin Classic'
+pkgver='0.11.2.cl1'
+pkgrel='1'
+arch=('i686' 'x86_64')
+url="https://github.com/bitcoinclassic/${srcname}"
+license=('MIT')
+
+depends=('boost-libs' 'openssl')
+makedepends=('boost')
+provides=("${pkgname[0]%-git}")
+conflicts=("${pkgname[0]%-git}")
+
+source=("${srcname}::git+https://github.com/bitcoinclassic/${srcname}.git#tag=v${pkgver}")
+sha512sums=('SKIP')
+
+build() {
+    cd "${srcdir}/${srcname}"
+
+    ./autogen.sh
+    ./configure --prefix=/usr --with-incompatible-bdb --disable-wallet
+
+    make
+}
+
+package() {
+    cd "${srcdir}/${srcname}"
+
+    make DESTDIR="${pkgdir}" install
+}
