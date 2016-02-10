@@ -40,7 +40,7 @@ conflicts=("${pkgname[0]%-git}")
 source=("${srcname}::git+https://github.com/tych0/${srcname}.git")
 sha512sums=('SKIP')
 
-options=('!strip')
+options=('!strip' 'debug')
 
 pkgver() {
     cd "${srcdir}/${srcname}"
