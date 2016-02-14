@@ -12,8 +12,22 @@ makedepends=('gcc' 'make' 'coreutils' 'sed')
 provides=("${pkgname[0]%-git}")
 conflicts=("${pkgname[0]%-git}")
 
-source=("http://smarden.org/runit/runit-${pkgver}.tar.gz")
-sha256sums=('6fd0160cb0cf1207de4e66754b6d39750cff14bb0aa66ab49490992c0c47ba18')
+source=(
+    "http://smarden.org/runit/runit-${pkgver}.tar.gz"
+    'makefile.diff'
+    '0001-default-directory-for-services-on-Debian-is-etc-servi.diff'
+    '0002-support-etc-runit-nosync-file-to-make-sync-on-shutdow.diff'
+    '0003-utmpset.c-mixes-int32_t-and-time_t.diff'
+    '0004-src-Makefile-don-t-use-static-to-link-runit-runit-ini.diff'
+)
+sha256sums=(
+    '6fd0160cb0cf1207de4e66754b6d39750cff14bb0aa66ab49490992c0c47ba18'
+    'SKIP'
+    'SKIP'
+    'SKIP'
+    'SKIP'
+    'SKIP'
+)
 
 noextract=("runit-${pkgver}.tar.gz")
 
@@ -23,10 +37,10 @@ prepare() {
     mkdir "${srcname}"
     tar --extract --file="runit-${pkgver}.tar.gz" --gzip --strip-components='2' --directory="${srcname}"
 
-    cd "${srcname}/src"
-    echo "${CC:-gcc} $CFLAGS" > conf-cc
-    echo "${CC:-gcc -s} $LDFLAGS" > conf-ld
-    sed --in-place --regexp-extended 's|^(char \*varservice =")/service/(";)$|\1/etc/runit/\2|' sv.c
+    cd "${srcname}"
+    cat "${srcdir}/"*.diff | patch --strip=2 --input=-
+    echo "${CC:-gcc} ${CFLAGS}" > src/conf-cc
+    echo "${CC:-gcc -s} ${LDFLAGS}" > src/conf-ld
 }
 
 build() {
@@ -38,15 +52,11 @@ build() {
 package() {
     cd "${srcdir}/${srcname}"
 
-    install --directory \
-        "${pkgdir}/etc/runit" \
-        "${pkgdir}/usr/bin" \
-        "${pkgdir}/usr/share/doc/runit" \
-        "${pkgdir}/usr/share/man/man8"
+    install --directory "${pkgdir}/etc/runit" "${pkgdir}/usr/bin" "${pkgdir}/usr/share/man/man8"
 
     for file in $( cat package/commands ); do
-        install --strip --mode='755' "src/${file}" "${pkgdir}/usr/bin/"
+        install --mode='755' "src/${file}" "${pkgdir}/usr/bin/"
     done
 
-    install --mode='644' man/* "$pkgdir/usr/share/man/man8"
+    install --mode='644' man/* "$pkgdir/usr/share/man/man8/"
 }
