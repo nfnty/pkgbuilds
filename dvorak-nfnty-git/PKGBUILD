@@ -1,4 +1,4 @@
-pkgname=('dvorak-nfnty')
+pkgname=('dvorak-nfnty-git')
 srcname='dvorak-nfnty'
 pkgver='r1'
 pkgrel='1'

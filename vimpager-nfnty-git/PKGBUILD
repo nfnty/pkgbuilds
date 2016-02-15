@@ -1,4 +1,4 @@
-pkgname=('vimpager-nfnty')
+pkgname=('vimpager-nfnty-git')
 srcname='vimpager'
 pkgver='r1'
 pkgrel='1'
