@@ -16,8 +16,12 @@ source=("git://github.com/enkore/j4-dmenu-desktop")
 md5sums=('SKIP')
 
 pkgver() {
-    cd $_gitname
-    git describe --long | sed -r 's/^r//;s/([^-]*-g)/r\1/;s/-/./g'
+    cd "${srcdir}/${srcname}"
+
+    printf 'r%s.%s.%s\n' \
+        "$( git rev-list --count 'HEAD' )" \
+        "$( git log --max-count='1' --pretty='format:%ct' )" \
+        "$( git rev-parse --short 'HEAD' )"
 }
 
 build() {
