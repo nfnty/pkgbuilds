@@ -1,4 +1,4 @@
-pkgname=('pg_acoustid')
+pkgname=('pg_acoustid-git')
 srcname='pg_acoustid'
 pkgdesc='AcoustID utility functions for PostgreSQL'
 pkgver='r1'
