@@ -53,6 +53,8 @@ package() {
 
     make DESTDIR="${pkgdir}" install
 
+    install --directory --owner='534' --group='534' --mode='750' "${pkgdir}/var/log/rsyslog"
+
     install --directory --mode='755' "${pkgdir}/usr/lib/tmpfiles.d"
     install --mode='644' "${srcdir}/tmpfiles.conf" "${pkgdir}/usr/lib/tmpfiles.d/rsyslog.conf"
 }
