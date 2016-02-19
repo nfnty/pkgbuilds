@@ -1,0 +1,47 @@
+pkgname=('rsyslog')
+srcname='rsyslog'
+pkgdesc='a Rocket-fast SYStem for LOG processing'
+pkgver='8.16.0'
+pkgrel='1'
+arch=('i686' 'x86_64')
+url="https://github.com/rsyslog/${srcname}"
+license=('GPL3')
+depends=(
+    'zlib'
+    'json-c'
+    'libutil-linux'
+    'libgcrypt'
+    'liblogging'
+    'libestr'
+)
+makedepends=(
+    'git'
+    'gcc'
+    'make'
+    'libtool'
+    'python-docutils'
+    'bison'
+    'flex'
+)
+provides=("${pkgname[0]%-git}")
+conflicts=("${pkgname[0]%-git}")
+
+source=("${srcname}::git+https://github.com/rsyslog/${srcname}.git#tag=v${pkgver}")
+sha512sums=('SKIP')
+
+build() {
+    cd "${srcdir}/${srcname}"
+
+    autoreconf --install
+    ./configure \
+        --prefix='/usr' \
+        --sbindir='/usr/bin' \
+        --enable-elasticsearch
+    make
+}
+
+package() {
+    cd "${srcdir}/${srcname}"
+
+    make DESTDIR="${pkgdir}" install
+}
