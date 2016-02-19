@@ -1,0 +1,9 @@
+post_install() {
+    groupadd --gid 534 rsyslog >/dev/null
+    useradd --uid 534 --gid 534 --home-dir / --shell /usr/bin/false rsyslog >/dev/null
+}
+
+post_remove() {
+    getent passwd rsyslog &>/dev/null && userdel rsyslog >/dev/null
+    getent group rsyslog &>/dev/null && groupdel rsyslog >/dev/null
+}
