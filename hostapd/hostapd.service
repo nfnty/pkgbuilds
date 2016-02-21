@@ -4,7 +4,8 @@ After=network.target
 
 [Service]
 ExecStart=/usr/bin/hostapd /etc/hostapd/hostapd.conf
-ExecReload=/bin/kill -HUP $MAINPID
+
+ExecReload=/bin/kill -HUP "${MAINPID}"
 
 [Install]
 WantedBy=multi-user.target
