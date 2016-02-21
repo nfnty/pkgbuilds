@@ -35,7 +35,7 @@ sha512sums=(
     'SKIP'
 )
 
-install='install'
+install='install.sh'
 
 build() {
     cd "${srcdir}/${srcname}"
