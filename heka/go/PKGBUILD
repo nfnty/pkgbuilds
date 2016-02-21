@@ -98,7 +98,7 @@ check() {
   export GOROOT_BOOTSTRAP=/usr/lib/go
 
   for tool in godoc goimports gomvpkg gorename gotype \
-    benchcmp bundle callgraph digraph eg fiximports html2article oracle present ssadump stress stringer; do
+    benchcmp callgraph digraph eg fiximports html2article oracle present ssadump stress stringer; do
     GOPATH="$srcdir" $GOROOT/bin/go test -v -x $_gourl/$tool
   done
 
