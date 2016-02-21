@@ -41,10 +41,7 @@ build() {
     cd "${srcdir}/${srcname}"
 
     autoreconf --install
-    ./configure \
-        --prefix='/usr' \
-        --sbindir='/usr/bin' \
-        --enable-elasticsearch
+    ./configure --prefix='/usr' --sbindir='/usr/bin'
     make
 }
 
