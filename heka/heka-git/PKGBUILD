@@ -12,7 +12,7 @@ makedepends=(
     'cmake'
     'gcc'
     'git'
-    'go'
+    'go=1.5.3'
     'make'
     'mercurial'
     'patch'
