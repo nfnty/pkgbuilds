@@ -41,16 +41,13 @@ prepare() {
 
     git apply "${srcdir}/vim.patch"
     git apply "${srcdir}/starttime.patch"
-
-    ./autogen.sh
-
-    ./configure \
-        --prefix=/usr \
-        --enable-unicode
 }
 
 build() {
     cd "${srcdir}/${srcname}"
+
+    autoreconf --install --force --warnings='all'
+    ./configure --prefix='/usr' --enable-unicode
 
     make
 }

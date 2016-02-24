@@ -59,12 +59,11 @@ pkgver() {
 build() {
     cd "${srcdir}/${srcname}"
 
-    autoreconf --install
-
+    autoreconf --install --force --warnings='all'
     ./configure \
-        --prefix=/usr \
-        --sbindir=/usr/bin \
-        --sysconfdir=/etc \
+        --prefix='/usr' \
+        --sbindir='/usr/bin' \
+        --sysconfdir='/etc' \
         --with-mysql \
         --with-pgsql \
         --with-dbi

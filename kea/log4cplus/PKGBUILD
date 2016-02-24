@@ -15,18 +15,11 @@ conflicts=('log4cplus')
 source=("${srcname}::git+https://github.com/log4cplus/log4cplus.git#tag=REL_1_2_0-RC4")
 sha512sums=('SKIP')
 
-prepare() {
-    cd "${srcdir}/${srcname}"
-
-    autoreconf --install
-
-    ./configure \
-        --prefix='/usr' \
-        --with-working-locale
-}
-
 build() {
     cd "${srcdir}/${srcname}"
+
+    autoreconf --install --force --warnings='all'
+    ./configure --prefix='/usr' --with-working-locale
 
     make
 }

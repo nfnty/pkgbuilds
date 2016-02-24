@@ -40,8 +40,9 @@ install='install.sh'
 build() {
     cd "${srcdir}/${srcname}"
 
-    autoreconf --install
+    autoreconf --install --force --warnings='all'
     ./configure --prefix='/usr' --sbindir='/usr/bin'
+
     make
 }
 

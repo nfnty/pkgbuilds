@@ -19,8 +19,8 @@ sha512sums=('SKIP')
 build() {
     cd "${srcdir}/${srcname}"
 
-    ./autogen.sh
-    ./configure --prefix=/usr --with-incompatible-bdb --disable-wallet
+    autoreconf --install --force --warnings='all'
+    ./configure --prefix='/usr' --with-incompatible-bdb --disable-wallet
 
     make
 }

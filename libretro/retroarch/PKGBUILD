@@ -15,14 +15,10 @@ conflicts=('retroarch')
 source=("${srcname}::git+https://github.com/libretro/RetroArch.git#tag=v${pkgver}")
 sha512sums=('SKIP')
 
-prepare() {
+build() {
     cd "${srcdir}/${srcname}"
 
     ./configure --prefix='/usr'
-}
-
-build() {
-    cd "${srcdir}/${srcname}"
 
     make
 }

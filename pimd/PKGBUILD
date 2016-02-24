@@ -33,14 +33,12 @@ prepare() {
     git submodule update --init
 
     sed -i 's#/sbin#/bin#g' Makefile
-
-    ./configure \
-        --prefix='/usr' \
-        --sysconfdir='/etc'
 }
 
 build() {
     cd "${srcdir}/${srcname}"
+
+    ./configure --prefix='/usr' --sysconfdir='/etc'
 
     make
 }
