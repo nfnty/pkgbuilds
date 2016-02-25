@@ -1,0 +1,44 @@
+pkgname=('influxdb')
+srcname='influxdb'
+pkgdesc='Scalable datastore for metrics, events, and real-time analytics'
+pkgver='0.10.1'
+pkgrel='1'
+arch=('i686' 'x86_64')
+url="https://github.com/influxdb/${srcname}"
+license=('MIT')
+
+makedepends=('git' 'go' 'python2')
+provides=("${pkgname[0]%-git}")
+conflicts=("${pkgname[0]%-git}")
+
+source=("${srcname}::git+https://github.com/influxdb/${srcname}.git#tag=v${pkgver}")
+sha512sums=('SKIP')
+
+_url_go="${url#*//}"
+_url_git="${url}.git"
+
+prepare() {
+    cd "${srcdir}"
+
+    export GOPATH="${srcdir}/gopath"
+    mkdir --parents "${GOPATH}/src/${_url_go}"
+    mv "${srcname}" "${GOPATH}/src/${_url_go%${srcname}}"
+}
+
+build() {
+    cd "${srcdir}"
+
+    export GOPATH="${srcdir}/gopath"
+    cd "${GOPATH}/src/${_url_go}"
+    go get -d ./...
+    cd "${GOPATH}/src/${_url_go}"
+    go install -v -x -ldflags="-X main.version=${pkgver}" ./...
+}
+
+package() {
+    cd "${srcdir}"
+
+    export GOPATH="${srcdir}/gopath"
+    install --directory "${pkgdir}/usr/bin"
+    install "${GOPATH}/bin/"* "${pkgdir}/usr/bin/"
+}
