@@ -19,26 +19,37 @@ _url_git="${url}.git"
 
 prepare() {
     cd "${srcdir}"
-
     export GOPATH="${srcdir}/gopath"
+
     mkdir --parents "${GOPATH}/src/${_url_go}"
     mv "${srcname}" "${GOPATH}/src/${_url_go%${srcname}}"
+
+    cd "${GOPATH}/src/${_url_go}"
+    go get -v -x -d ./...
+    git checkout --quiet "v${pkgver}"
 }
 
 build() {
     cd "${srcdir}"
-
     export GOPATH="${srcdir}/gopath"
+
     cd "${GOPATH}/src/${_url_go}"
-    go get -d ./...
-    cd "${GOPATH}/src/${_url_go}"
-    go install -v -x -ldflags="-X main.version=${pkgver}" ./...
+    go install -v -x -ldflags="\
+-X main.version=${pkgver} \
+-X main.branch=$( git rev-parse --abbrev-ref HEAD ) \
+-X main.commit=$( git rev-parse HEAD ) \
+-X main.buildtime=$( date --utc --iso-8601=seconds )" \
+    ./...
 }
 
 package() {
     cd "${srcdir}"
-
     export GOPATH="${srcdir}/gopath"
+
     install --directory "${pkgdir}/usr/bin"
     install "${GOPATH}/bin/"* "${pkgdir}/usr/bin/"
+
+    cd "${GOPATH}/src/${_url_go}"
+    install -D --mode=644 etc/config.sample.toml "${pkgdir}/etc/influxdb/config.toml"
+    install --directory "${pkgdir}/var/lib/influxdb"
 }
