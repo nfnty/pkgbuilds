@@ -1,17 +1,17 @@
-pkgname=('influxdb')
-srcname='influxdb'
-pkgdesc='Scalable datastore for metrics, events, and real-time analytics'
-pkgver='0.10.1'
+pkgname=('grafana')
+srcname='grafana'
+pkgdesc='Feature rich metrics dashboard and graph editor'
+pkgver='2.6.0'
 pkgrel='1'
 arch=('i686' 'x86_64')
-url="https://github.com/influxdb/${srcname}"
-license=('MIT')
+url="https://github.com/grafana/${srcname}"
+license=('Apache')
 
-makedepends=('git' 'go' 'python2')
+makedepends=('git' 'go' 'godep' 'nodejs' 'nodejs-grunt-cli' 'npm')
 provides=("${pkgname[0]%-git}")
 conflicts=("${pkgname[0]%-git}")
 
-source=("${srcname}::git+https://github.com/influxdb/${srcname}.git#tag=v${pkgver}")
+source=("${srcname}::git+https://github.com/grafana/${srcname}.git#tag=v${pkgver}")
 sha512sums=('SKIP')
 
 _url_go="${url#*//}"
@@ -26,6 +26,9 @@ prepare() {
     cd "${GOPATH}/src/${_url_go}"
     go get -v -x -d ./...
     git checkout --quiet "v${pkgver}"
+    godep restore
+
+    npm install
 }
 
 build() {
@@ -35,10 +38,11 @@ build() {
     cd "${GOPATH}/src/${_url_go}"
     go install -v -x -ldflags="\
 -X main.version=${pkgver} \
--X main.branch=$( git rev-parse --abbrev-ref HEAD ) \
 -X main.commit=$( git rev-parse HEAD ) \
--X main.buildtime=$( date --utc --iso-8601=seconds )" \
+-X main.buildstamp=$( date --utc --iso-8601=seconds )" \
     ./...
+
+    grunt release
 }
 
 package() {
@@ -49,6 +53,11 @@ package() {
     install "${GOPATH}/bin/"* "${pkgdir}/usr/bin/"
 
     cd "${GOPATH}/src/${_url_go}"
-    install -D --mode='644' etc/config.sample.toml "${pkgdir}/etc/${srcname}/config.toml"
+    install --directory "${pkgdir}/usr/share/${srcname}"
+    cp --recursive tmp/* "${pkgdir}/usr/share/${srcname}/"
+    chmod --recursive 'u=rwX,g=rX,o=rX' "${pkgdir}/usr/share/${srcname}"
+    install -D --mode='644' conf/sample.ini "${pkgdir}/etc/${srcname}/sample.ini"
+    install -D --mode='644' conf/ldap.toml "${pkgdir}/etc/${srcname}/ldap.toml"
+    install -D --mode='644' conf/defaults.ini "${pkgdir}/usr/share/${srcname}/conf/defaults.ini"
     install --directory "${pkgdir}/var/lib/${srcname}"
 }
