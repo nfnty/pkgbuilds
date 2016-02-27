@@ -65,6 +65,7 @@ build() {
         -DCMAKE_INSTALL_PREFIX='/usr' \
         -DCMAKE_BUILD_TYPE='release' \
         -DHEKA_PATH='/usr/share/heka' \
+        -DINCLUDE_SANDBOX='OFF' \
         "${srcdir}/${srcname}"
     make
 }
