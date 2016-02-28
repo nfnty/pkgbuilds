@@ -53,15 +53,13 @@ package() {
     cd "${srcdir}"
     export GOPATH="${srcdir}/gopath"
 
-    install --directory "${pkgdir}/usr/bin"
-    install "${GOPATH}/bin/"* "${pkgdir}/usr/bin/"
+    install --directory "${pkgdir}/"{"etc/${srcname}",usr,usr/share,"var/lib/${srcname}"}
+    cp --recursive "${GOPATH}/bin" "${pkgdir}/usr/"
 
     cd "${GOPATH}/src/${_url_go}"
-    install --directory "${pkgdir}/usr/share"
     cp --recursive tmp "${pkgdir}/usr/share/${srcname}"
-    chmod --recursive 'u=rwX,g=rX,o=rX' "${pkgdir}/usr/share/${srcname}"
-    install -D --mode='644' conf/sample.ini "${pkgdir}/etc/${srcname}/grafana.ini"
-    install -D --mode='644' conf/ldap.toml "${pkgdir}/etc/${srcname}/ldap.toml"
-    install -D --mode='644' packaging/deb/default/grafana-server "${pkgdir}/etc/conf.d/grafana-server"
-    install --directory "${pkgdir}/var/lib/${srcname}"
+    cp conf/ldap.toml "${pkgdir}/etc/${srcname}/"
+    cp conf/sample.ini "${pkgdir}/etc/${srcname}/grafana.ini"
+
+    chmod --recursive 'u=rwX,g=rX,o=rX' "${pkgdir}"
 }

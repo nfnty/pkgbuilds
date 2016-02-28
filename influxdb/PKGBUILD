@@ -49,10 +49,11 @@ package() {
     cd "${srcdir}"
     export GOPATH="${srcdir}/gopath"
 
-    install --directory "${pkgdir}/usr/bin"
-    install "${GOPATH}/bin/"* "${pkgdir}/usr/bin/"
+    install --directory "${pkgdir}/"{"etc/${srcname}",usr,"var/lib/${srcname}"}
+    cp --recursive "${GOPATH}/bin" "${pkgdir}/usr/"
 
     cd "${GOPATH}/src/${_url_go}"
-    install -D --mode='644' etc/config.sample.toml "${pkgdir}/etc/${srcname}/config.toml"
-    install --directory "${pkgdir}/var/lib/${srcname}"
+    cp etc/config.sample.toml "${pkgdir}/etc/${srcname}/config.toml"
+
+    chmod --recursive 'u=rwX,g=rX,o=rX' "${pkgdir}"
 }
