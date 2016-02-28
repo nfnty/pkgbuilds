@@ -11,11 +11,10 @@ makedepends=('git' 'go' 'python2')
 provides=("${pkgname[0]%-git}")
 conflicts=("${pkgname[0]%-git}")
 
-_url_go="${url#*//}"
-_url_git="${url}.git"
-
-source=("${srcname}::git+${_url_git}")
+source=("${srcname}::git+${url}.git")
 sha512sums=('SKIP')
+
+_url_go="${url#*//}"
 
 prepare() {
     cd "${srcdir}"
@@ -26,10 +25,10 @@ prepare() {
     mv "${srcname}" "${GOPATH}/src/${_url_go}"
 
     cd "${GOPATH}/src/${_url_go}"
-    git remote set-url origin "${_url_git}"
-    git checkout --quiet "$( git rev-parse --abbrev-ref origin/HEAD | sed 's|^.*/||' )"
-    go get -v -x -u -d ./...
-    git checkout --quiet "v${pkgver}"
+    git remote set-url origin "${url}"
+    git branch --move master tmp
+    git checkout -b master origin/0.10.0
+    go get -v -u -d ./...
 }
 
 build() {
@@ -37,7 +36,7 @@ build() {
     export GOPATH="${srcdir}/gopath"
 
     cd "${GOPATH}/src/${_url_go}"
-    go install -v -x -ldflags="\
+    go install -v -ldflags="\
 -X main.version=${pkgver} \
 -X main.branch=$( git rev-parse --abbrev-ref HEAD ) \
 -X main.commit=$( git rev-parse HEAD ) \
