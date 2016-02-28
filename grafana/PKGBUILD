@@ -42,7 +42,7 @@ build() {
 -X main.buildstamp=$( date --utc --iso-8601=seconds )" \
     ./...
 
-    grunt release
+    grunt --force release
 }
 
 package() {
