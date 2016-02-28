@@ -22,11 +22,12 @@ prepare() {
     export GOPATH="${srcdir}/gopath"
 
     mkdir --parents "${GOPATH}/src/${_url_go}"
-    mv "${srcname}" "${GOPATH}/src/${_url_go%${srcname}}"
+    rm --recursive "${GOPATH}/src/${_url_go}"
+    mv "${srcname}" "${GOPATH}/src/${_url_go}"
 
     cd "${GOPATH}/src/${_url_go}"
-    git checkout --quiet master
     git remote set-url origin "${_url_git}"
+    git checkout --quiet "$( git rev-parse --abbrev-ref origin/HEAD | sed 's|^.*/||' )"
     go get -v -x -u -d ./...
     git checkout --quiet "v${pkgver}"
 }
@@ -41,7 +42,7 @@ build() {
 -X main.branch=$( git rev-parse --abbrev-ref HEAD ) \
 -X main.commit=$( git rev-parse HEAD ) \
 -X main.buildtime=$( date --utc --iso-8601=seconds )" \
-    ./...
+        ./...
 }
 
 package() {

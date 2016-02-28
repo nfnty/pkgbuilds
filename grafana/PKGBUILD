@@ -22,11 +22,12 @@ prepare() {
     export GOPATH="${srcdir}/gopath"
 
     mkdir --parents "${GOPATH}/src/${_url_go}"
-    mv "${srcname}" "${GOPATH}/src/${_url_go%${srcname}}"
+    rm --recursive "${GOPATH}/src/${_url_go}"
+    mv "${srcname}" "${GOPATH}/src/${_url_go}"
 
     cd "${GOPATH}/src/${_url_go}"
-    git checkout --quiet master
     git remote set-url origin "${_url_git}"
+    git checkout --quiet "$( git rev-parse --abbrev-ref origin/HEAD | sed 's|^.*/||' )"
     go get -v -x -u -d ./...
     git checkout --quiet "v${pkgver}"
     godep restore
@@ -43,7 +44,7 @@ build() {
 -X main.version=${pkgver} \
 -X main.commit=$( git rev-parse HEAD ) \
 -X main.buildstamp=$( date --utc '+%s' )" \
-    ./...
+        ./...
 
     grunt --force release
 }
@@ -56,8 +57,8 @@ package() {
     install "${GOPATH}/bin/"* "${pkgdir}/usr/bin/"
 
     cd "${GOPATH}/src/${_url_go}"
-    install --directory "${pkgdir}/usr/share/${srcname}"
-    cp --recursive tmp/* "${pkgdir}/usr/share/${srcname}/"
+    install --directory "${pkgdir}/usr/share"
+    cp --recursive tmp "${pkgdir}/usr/share/${srcname}"
     chmod --recursive 'u=rwX,g=rX,o=rX' "${pkgdir}/usr/share/${srcname}"
     install -D --mode='644' conf/sample.ini "${pkgdir}/etc/${srcname}/grafana.ini"
     install -D --mode='644' conf/ldap.toml "${pkgdir}/etc/${srcname}/ldap.toml"
