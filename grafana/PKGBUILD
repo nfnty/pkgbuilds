@@ -42,7 +42,7 @@ build() {
     go install -v -x -ldflags="\
 -X main.version=${pkgver} \
 -X main.commit=$( git rev-parse HEAD ) \
--X main.buildstamp=$( date --utc --iso-8601=seconds )" \
+-X main.buildstamp=$( date --utc '+%s' )" \
     ./...
 
     grunt --force release
