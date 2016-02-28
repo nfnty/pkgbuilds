@@ -11,10 +11,11 @@ makedepends=('git' 'go' 'godep' 'nodejs' 'nodejs-grunt-cli' 'npm' 'phantomjs')
 provides=("${pkgname[0]%-git}")
 conflicts=("${pkgname[0]%-git}")
 
-source=("${srcname}::git+https://github.com/grafana/${srcname}.git#tag=v${pkgver}")
-sha512sums=('SKIP')
-
 _url_go="${url#*//}"
+_url_git="${url}.git"
+
+source=("${srcname}::git+${_url_git}")
+sha512sums=('SKIP')
 
 prepare() {
     cd "${srcdir}"
@@ -24,7 +25,9 @@ prepare() {
     mv "${srcname}" "${GOPATH}/src/${_url_go%${srcname}}"
 
     cd "${GOPATH}/src/${_url_go}"
-    go get -v -x -d ./...
+    git checkout --quiet master
+    git remote set-url origin "${_url_git}"
+    go get -v -x -u -d ./...
     git checkout --quiet "v${pkgver}"
     godep restore
 
