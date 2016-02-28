@@ -56,8 +56,8 @@ package() {
     install --directory "${pkgdir}/usr/share/${srcname}"
     cp --recursive tmp/* "${pkgdir}/usr/share/${srcname}/"
     chmod --recursive 'u=rwX,g=rX,o=rX' "${pkgdir}/usr/share/${srcname}"
-    install -D --mode='644' conf/sample.ini "${pkgdir}/etc/${srcname}/sample.ini"
+    install -D --mode='644' conf/sample.ini "${pkgdir}/etc/${srcname}/grafana.ini"
     install -D --mode='644' conf/ldap.toml "${pkgdir}/etc/${srcname}/ldap.toml"
-    install -D --mode='644' conf/defaults.ini "${pkgdir}/usr/share/${srcname}/conf/defaults.ini"
+    install -D --mode='644' packaging/deb/default/grafana-server "${pkgdir}/etc/conf.d/grafana-server"
     install --directory "${pkgdir}/var/lib/${srcname}"
 }
