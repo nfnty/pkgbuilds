@@ -1,0 +1,72 @@
+pkgname=('grafana-git')
+srcname='grafana'
+pkgdesc='Feature rich metrics dashboard and graph editor'
+pkgver='r1'
+pkgrel='1'
+arch=('i686' 'x86_64')
+url="https://github.com/grafana/${srcname}"
+license=('Apache')
+
+makedepends=('git' 'go' 'godep' 'nodejs' 'nodejs-grunt-cli' 'npm' 'phantomjs')
+provides=("${pkgname[0]%-git}")
+conflicts=("${pkgname[0]%-git}")
+
+source=("${srcname}::git+${url}.git")
+sha512sums=('SKIP')
+
+_url_go="${url#*//}"
+
+pkgver() {
+    export GOPATH="${srcdir}/gopath"
+    cd "${GOPATH}/src/${_url_go}"
+
+    printf 'r%s.%s.%s\n' \
+        "$( git rev-list --count 'HEAD' )" \
+        "$( git log --max-count='1' --pretty='format:%ct' )" \
+        "$( git rev-parse --short 'HEAD' )"
+}
+
+prepare() {
+    cd "${srcdir}"
+    export GOPATH="${srcdir}/gopath"
+
+    mkdir --parents "${GOPATH}/src/${_url_go}"
+    rm --recursive "${GOPATH}/src/${_url_go}"
+    mv "${srcname}" "${GOPATH}/src/${_url_go}"
+
+    cd "${GOPATH}/src/${_url_go}"
+    git remote set-url origin "${url}"
+    go get -v -u -d ./...
+    godep restore
+
+    npm install
+}
+
+build() {
+    cd "${srcdir}"
+    export GOPATH="${srcdir}/gopath"
+
+    cd "${GOPATH}/src/${_url_go}"
+    go install -v -ldflags="\
+-X main.version=${pkgver} \
+-X main.commit=$( git rev-parse HEAD ) \
+-X main.buildstamp=$( date --utc '+%s' )" \
+        ./...
+
+    grunt --force release
+}
+
+package() {
+    cd "${srcdir}"
+    export GOPATH="${srcdir}/gopath"
+
+    install --directory "${pkgdir}/"{"etc/${srcname}",usr,usr/share,"var/lib/${srcname}"}
+    cp --recursive "${GOPATH}/bin" "${pkgdir}/usr/"
+
+    cd "${GOPATH}/src/${_url_go}"
+    cp --recursive tmp "${pkgdir}/usr/share/${srcname}"
+    cp conf/ldap.toml "${pkgdir}/etc/${srcname}/"
+    cp conf/sample.ini "${pkgdir}/etc/${srcname}/grafana.ini"
+
+    chmod --recursive 'u=rwX,g=rX,o=rX' "${pkgdir}"
+}
