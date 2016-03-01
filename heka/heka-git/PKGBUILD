@@ -24,10 +24,8 @@ conflicts=("${pkgname[0]%-git}")
 source=(
     "${srcname}::git+https://github.com/nfnty/${srcname}.git"
     'heka.service'
-    'cmake.patch'
 )
 sha512sums=(
-    'SKIP'
     'SKIP'
     'SKIP'
 )
@@ -46,7 +44,7 @@ pkgver() {
 prepare() {
     cd "${srcdir}/${srcname}"
 
-    git apply "${srcdir}/cmake.patch"
+    git cherry-pick --no-commit origin/dev..origin/cmake
 }
 
 build() {
