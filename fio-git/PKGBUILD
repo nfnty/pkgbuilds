@@ -1,0 +1,37 @@
+pkgname=('fio-git')
+srcname='fio'
+pkgdesc='Flexible I/O Tester'
+pkgver='r1'
+pkgrel='1'
+arch=('i686' 'x86_64')
+url="https://github.com/axboe/${srcname}"
+license=('GPL2')
+
+makedepends=('git' 'libaio' 'make')
+provides=("${pkgname[0]%-git}")
+conflicts=("${pkgname[0]%-git}")
+
+source=("${srcname}::git+${url}.git")
+sha512sums=('SKIP')
+
+pkgver() {
+    cd "${srcdir}/${srcname}"
+
+    printf 'r%s.%s.%s\n' \
+        "$( git rev-list --count 'HEAD' )" \
+        "$( git log --max-count='1' --pretty='format:%ct' )" \
+        "$( git rev-parse --short 'HEAD' )"
+}
+
+build() {
+    cd "${srcdir}/${srcname}"
+
+    ./configure
+    make
+}
+
+package() {
+    cd "${srcdir}/${srcname}"
+
+    make DESTDIR="${pkgdir}" prefix='/usr' mandir='/usr/share/man' install
+}
