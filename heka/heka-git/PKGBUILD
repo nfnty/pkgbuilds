@@ -41,12 +41,6 @@ pkgver() {
         "$( git rev-parse --short 'HEAD' )"
 }
 
-prepare() {
-    cd "${srcdir}/${srcname}"
-
-    git cherry-pick --no-commit origin/dev..origin/cmake
-}
-
 build() {
     path_build="${srcdir}/build"
     mkdir --parents "${path_build}"
