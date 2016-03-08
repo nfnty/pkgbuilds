@@ -2,7 +2,7 @@ pkgname=('hostapd')
 srcname='hostapd'
 pkgver='2.5'
 tag='hostap_2_5'
-pkgrel='1'
+pkgrel='2'
 pkgdesc='IEEE 802.11 AP, IEEE 802.1X/WPA/WPA2/EAP/RADIUS Authenticator'
 arch=('i686' 'x86_64')
 url='http://w1.fi/hostapd/'
@@ -21,9 +21,9 @@ source=(
 )
 sha256sums=(
     'SKIP'
-    '143e117d173b19418b6d70eab9408f0ff2349bf15d9693e058be7309f25214cf'
-    '989bc6855f44c0b360e3d4cd4a146c35b7c12f8a0ced627b4b033f58edcade8e'
-    '3b0beca4650046948f7e07d279ba5e0cd54284eca8b65d1a6d60a7ccc4ea7a23'
+    'SKIP'
+    'SKIP'
+    'SKIP'
 )
 
 prepare() {
