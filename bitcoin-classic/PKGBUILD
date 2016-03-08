@@ -2,13 +2,13 @@ pkgname=('bitcoin-classic')
 srcname='bitcoinclassic'
 pkgbase='bitcoin-classic'
 pkgdesc='Bitcoin Classic'
-pkgver='0.11.2.cl1'
+pkgver='0.12.0cl1'
 pkgrel='1'
 arch=('i686' 'x86_64')
 url="https://github.com/bitcoinclassic/${srcname}"
 license=('MIT')
 
-depends=('boost-libs' 'openssl')
+depends=('boost-libs' 'openssl' 'libevent')
 makedepends=('boost')
 provides=("${pkgname[0]%-git}")
 conflicts=("${pkgname[0]%-git}")
