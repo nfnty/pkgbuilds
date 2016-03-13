@@ -1,0 +1,50 @@
+pkgname=('prometheus-exporter-node')
+srcname='node_exporter'
+pkgdesc='Prometheus exporter for machine metrics'
+pkgver='0.12.0'
+pkgrel='1'
+arch=('i686' 'x86_64')
+url="https://github.com/prometheus/${srcname}"
+license=('Apache')
+
+makedepends=('git' 'go')
+provides=("${pkgname[0]%-git}")
+conflicts=("${pkgname[0]%-git}")
+
+source=("${srcname}::git+${url}.git")
+sha512sums=('SKIP')
+
+_url_go="${url#*//}"
+
+prepare() {
+    cd "${srcdir}"
+    export GOPATH="${srcdir}/gopath"
+
+    mkdir --parents "${GOPATH}/src/${_url_go}"
+    rm --recursive "${GOPATH}/src/${_url_go}"
+    mv "${srcname}" "${GOPATH}/src/${_url_go}"
+
+    cd "${GOPATH}/src/${_url_go}"
+    git remote set-url origin "${url}"
+    GO15VENDOREXPERIMENT=1 go get -v -u -d ./...
+}
+
+build() {
+    cd "${srcdir}"
+    export GOPATH="${srcdir}/gopath"
+
+    cd "${GOPATH}/src/${_url_go}"
+    GO15VENDOREXPERIMENT=1 go install -v -ldflags="\
+-X main.Version=${pkgver} \
+-X collector.Version=${pkgver} \
+-X collector.Revision=$( git rev-parse HEAD ) \
+-X collector.Branch=$( git rev-parse --abbrev-ref HEAD )" \
+        ./...
+}
+
+package() {
+    cd "${srcdir}"
+    export GOPATH="${srcdir}/gopath"
+
+    install -D "${GOPATH}/bin/node_exporter" "${pkgdir}/usr/bin/prometheus-exporter-node"
+}
