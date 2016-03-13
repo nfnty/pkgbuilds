@@ -11,8 +11,16 @@ makedepends=('git' 'go')
 provides=("${pkgname[0]%-git}")
 conflicts=("${pkgname[0]%-git}")
 
-source=("${srcname}::git+${url}.git")
-sha512sums=('SKIP')
+source=(
+    "${srcname}::git+${url}.git"
+    'prometheus-exporter-node.service'
+)
+sha512sums=(
+    'SKIP'
+    'SKIP'
+)
+
+install='install.sh'
 
 _url_go="${url#*//}"
 
@@ -46,5 +54,7 @@ package() {
     cd "${srcdir}"
     export GOPATH="${srcdir}/gopath"
 
-    install -D "${GOPATH}/bin/node_exporter" "${pkgdir}/usr/bin/prometheus-exporter-node"
+    install -D "${GOPATH}/bin/${srcname}" "${pkgdir}/usr/bin/prometheus-exporter-node"
+    install -D --mode='644' "${srcdir}/prometheus-exporter-node.service" \
+        "${pkgdir}/usr/lib/systemd/system/prometheus-exporter-node.service"
 }
