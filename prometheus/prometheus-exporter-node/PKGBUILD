@@ -44,9 +44,9 @@ build() {
     cd "${GOPATH}/src/${_url_go}"
     GO15VENDOREXPERIMENT=1 go install -v -ldflags="\
 -X main.Version=${pkgver} \
--X collector.Version=${pkgver} \
--X collector.Revision=$( git rev-parse HEAD ) \
--X collector.Branch=$( git rev-parse --abbrev-ref HEAD )" \
+-X ${_url_go}/collector.Version=${pkgver} \
+-X ${_url_go}/collector.Revision=$( git rev-parse HEAD ) \
+-X ${_url_go}/collector.Branch=$( git rev-parse --abbrev-ref HEAD )" \
         ./...
 }
 
