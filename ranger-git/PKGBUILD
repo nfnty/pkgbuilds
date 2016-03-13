@@ -27,12 +27,8 @@ makedepends=('git')
 provides=('ranger')
 conflicts=('ranger')
 
-source=(
-    "${srcname}::git+https://github.com/nfnty/ranger.git"
-)
-sha256sums=(
-    'SKIP'
-)
+source=("${srcname}::git+https://github.com/hut/ranger.git")
+sha256sums=('SKIP')
 
 pkgver() {
     cd "${srcdir}/${srcname}"
@@ -46,5 +42,5 @@ pkgver() {
 package() {
     cd "${srcdir}/${srcname}"
 
-    python setup.py -q install --root="${pkgdir}" --optimize=1
+    python setup.py install --root="${pkgdir}" --optimize=1
 }
