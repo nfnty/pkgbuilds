@@ -1,7 +1,7 @@
 pkgname=('pimd')
 srcname='pimd'
 pkgdesc='PIM-SM multicast routing daemon'
-pkgver='2.3.1'
+pkgver='2.3.2'
 pkgrel='1'
 arch=('i686' 'x86_64')
 url="https://github.com/troglobit/${srcname}"
@@ -28,10 +28,9 @@ backup=('etc/pimd.conf')
 prepare() {
     cd "${srcdir}/${srcname}"
 
-    git apply "${srcdir}/noroot.patch"
-
     git submodule update --init
 
+    git apply "${srcdir}/noroot.patch"
     sed -i 's#/sbin#/bin#g' Makefile
 }
 

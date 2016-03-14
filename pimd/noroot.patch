@@ -1,10 +1,10 @@
 diff --git a/main.c b/main.c
-index 15e108c..1e22d45 100644
+index 71e29fd..9918153 100644
 --- a/main.c
 +++ b/main.c
-@@ -456,9 +456,6 @@ int main(int argc, char *argv[])
+@@ -422,9 +422,6 @@ int main(int argc, char *argv[])
      if (argc > 0)
- 	return usage();
+ 	return usage(1);
  
 -    if (geteuid() != 0)
 -	errx(1, "Need root privileges to start.");
