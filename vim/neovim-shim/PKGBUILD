@@ -1,0 +1,15 @@
+pkgname=('neovim-shim')
+pkgdesc='nvim shim'
+pkgver='1.0'
+pkgrel='1'
+arch=('any')
+
+provides=("${pkgname[0]%-git}")
+conflicts=("${pkgname[0]%-git}")
+
+package() {
+    cd "${srcdir}/${srcname}"
+
+    install --directory "${pkgdir}/usr/bin"
+    ln --symbolic /usr/bin/nvim "${pkgdir}/usr/bin/vim"
+}
