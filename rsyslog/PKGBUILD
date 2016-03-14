@@ -1,8 +1,8 @@
 pkgname=('rsyslog')
 srcname='rsyslog'
 pkgdesc='a Rocket-fast SYStem for LOG processing'
-pkgver='8.16.0'
-pkgrel='2'
+pkgver='8.17.0'
+pkgrel='1'
 arch=('i686' 'x86_64')
 url="https://github.com/rsyslog/${srcname}"
 license=('GPL3')
@@ -13,6 +13,7 @@ depends=(
     'libgcrypt'
     'liblogging'
     'libestr'
+    'libfastjson'
 )
 makedepends=(
     'git'
@@ -27,7 +28,7 @@ provides=("${pkgname[0]%-git}")
 conflicts=("${pkgname[0]%-git}")
 
 source=(
-    "${srcname}::git+https://github.com/rsyslog/${srcname}.git#tag=v${pkgver}"
+    "${srcname}::git+${url}.git#tag=v${pkgver}"
     'tmpfiles.conf'
 )
 sha512sums=(
