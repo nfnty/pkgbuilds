@@ -1,0 +1,40 @@
+pkgname=('neovim-qt')
+srcname='neovim-qt'
+pkgbase='neovim-qt'
+pkgdesc='Neovim client library and GUI, in Qt5'
+pkgver='0.1.1'
+pkgrel='1'
+arch=('i686' 'x86_64')
+url="https://github.com/equalsraf/${srcname}"
+license=('ISC')
+
+depends=('neovim' 'qt5-base' 'msgpack-c' 'libxkbcommon-x11')
+makedepends=('git' 'cmake')
+provides=("${pkgname[0]%-git}")
+conflicts=("${pkgname[0]%-git}")
+
+source=("${srcname}::git+${url}.git#tag=v${pkgver}")
+sha512sums=('SKIP')
+
+build() {
+    mkdir --parents "${srcdir}/build"
+    cd "${srcdir}/build"
+
+    cmake \
+        -G 'Unix Makefiles' \
+        -DCMAKE_INSTALL_PREFIX='/usr' \
+        -DCMAKE_BUILD_TYPE='Release' \
+        -DUSE_SYSTEM_MSGPACK='ON' \
+        "${srcdir}/${srcname}"
+
+    make
+}
+
+package() {
+    cd "${srcdir}/${srcname}"
+
+    install --directory "${pkgdir}/usr/"{,bin}
+    install "${srcdir}/build/bin/nvim-qt" "${pkgdir}/usr/bin/nvim-qt"
+    cp --recursive "${srcdir}/build/lib" "${pkgdir}/usr/"
+    chmod --recursive 'u=rwX,g=rX,o=rX' "${pkgdir}"
+}
