@@ -1,0 +1,39 @@
+pkgname=('lilyterm-git')
+srcname='lilyterm'
+pkgdesc='A lightweight, but functional terminal emulator'
+pkgver='r1'
+pkgrel='1'
+arch=('i686' 'x86_64')
+url="https://github.com/Tetralet/${srcname}"
+license=('GPL3')
+
+depends=('vte')
+makedepends=('git' 'gettext' 'intltool' 'pkgconfig')
+provides=("${pkgname[0]%-git}")
+conflicts=("${pkgname[0]%-git}")
+
+source=("${srcname}::git+${url}.git")
+sha512sums=('SKIP')
+
+pkgver() {
+    cd "${srcdir}/${srcname}"
+
+    printf 'r%s.%s.%s\n' \
+        "$( git rev-list --count 'HEAD' )" \
+        "$( git log --max-count='1' --pretty='format:%ct' )" \
+        "$( git rev-parse --short 'HEAD' )"
+}
+
+build() {
+    cd "${srcdir}/${srcname}"
+
+    ./configure --prefix='/usr' --sysconfdir='/etc'
+
+    make
+}
+
+package() {
+    cd "${srcdir}/${srcname}"
+
+    make DESTDIR="${pkgdir}" install
+}
