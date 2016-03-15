@@ -1,0 +1,10 @@
+diff --git a/src/Makefile.am b/src/Makefile.am
+index a226103..6705e1c 100644
+--- a/src/Makefile.am
++++ b/src/Makefile.am
+@@ -1,4 +1,4 @@
+-INCLUDES = -DICONDIR=\"$(datadir)/pixmaps\" -DETCDIR=\"$(sysconfdir)/xdg\"
++INCLUDES = -DENABLE_VTE_BACKGROUND="TRUE" -DICONDIR=\"$(datadir)/pixmaps\" -DETCDIR=\"$(sysconfdir)/xdg\"
+ 
+ bin_PROGRAMS = $_BINARY
+ lilyterm_CFLAGS  = $(GTK_CFLAGS) $(vte_CFLAGS)

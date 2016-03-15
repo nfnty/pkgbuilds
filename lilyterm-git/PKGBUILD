@@ -7,13 +7,19 @@ arch=('i686' 'x86_64')
 url="https://github.com/Tetralet/${srcname}"
 license=('GPL3')
 
-depends=('vte')
+depends=('vte3')
 makedepends=('git' 'gettext' 'intltool' 'pkgconfig')
 provides=("${pkgname[0]%-git}")
 conflicts=("${pkgname[0]%-git}")
 
-source=("${srcname}::git+${url}.git")
-sha512sums=('SKIP')
+source=(
+    "${srcname}::git+${url}.git"
+    'vte_background.patch'
+)
+sha512sums=(
+    'SKIP'
+    'SKIP'
+)
 
 pkgver() {
     cd "${srcdir}/${srcname}"
@@ -24,12 +30,19 @@ pkgver() {
         "$( git rev-parse --short 'HEAD' )"
 }
 
+prepare() {
+    cd "${srcdir}/${srcname}"
+
+    git apply "${srcdir}/vte_background.patch"
+}
+
 build() {
     cd "${srcdir}/${srcname}"
 
+    ./autogen.sh
     ./configure --prefix='/usr' --sysconfdir='/etc'
 
-    make
+    make ENABLE_VTE_BACKGROUND='Y'
 }
 
 package() {
