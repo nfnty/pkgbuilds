@@ -1,0 +1,57 @@
+pkgname=('tmux-git')
+srcname='tmux'
+pkgdesc='Terminal multiplexer'
+pkgver='r1'
+pkgrel='1'
+arch=('i686' 'x86_64')
+url="https://github.com/tmux/${srcname}"
+license=('ISC')
+
+depends=('ncurses' 'libevent')
+makedepends=('git')
+provides=("${pkgname[0]%-git}")
+conflicts=("${pkgname[0]%-git}")
+
+source=(
+    "${srcname}::git+${url}.git"
+    'git+https://github.com/przepompownia/tmux-bash-completion.git'
+    'ixon.patch'
+)
+sha512sums=(
+    'SKIP'
+    'SKIP'
+    'SKIP'
+)
+
+pkgver() {
+    cd "${srcdir}/${srcname}"
+
+    printf 'r%s.%s.%s\n' \
+        "$( git rev-list --count 'HEAD' )" \
+        "$( git log --max-count='1' --pretty='format:%ct' )" \
+        "$( git rev-parse --short 'HEAD' )"
+}
+
+prepare() {
+    cd "${srcdir}/${srcname}"
+
+    git apply "${srcdir}/ixon.patch"
+}
+
+build() {
+    cd "${srcdir}/${srcname}"
+
+    ./autogen.sh
+    ./configure --prefix='/usr'
+
+    make
+}
+
+package() {
+    cd "${srcdir}/${srcname}"
+
+    make DESTDIR="${pkgdir}" install
+
+    install -D --mode='644' "${srcdir}/tmux-bash-completion/completions/tmux" \
+        "${pkgdir}/usr/share/bash-completion/completions/tmux"
+}
