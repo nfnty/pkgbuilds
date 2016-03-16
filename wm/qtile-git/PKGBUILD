@@ -7,7 +7,7 @@ arch=('any')
 url="https://github.com/qtile/${srcname}"
 license=('MIT')
 
-depends=('python' 'pango' 'python-xcffib' 'python-cairocffi')
+depends=('python' 'python-xcffib-git' 'pango' 'python-cairocffi')
 optdepends=(
     'python-setproctitle: change the process name to qtile'
     'xcb-util-cursor: show the activity in desktop to qtile'
