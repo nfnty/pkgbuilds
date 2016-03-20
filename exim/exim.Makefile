@@ -748,7 +748,7 @@ LOG_FILE_PATH=/var/log/exim/%slog
 # Non-printable characters are usually unacceptable regardless, so log entries
 # are still split on newline characters.
 
-# SYSLOG_LONG_LINES=yes
+SYSLOG_LONG_LINES=yes
 
 # If you are not interested in the process identifier (pid) of the Exim that is
 # making the call to syslog, then comment out the following line.
