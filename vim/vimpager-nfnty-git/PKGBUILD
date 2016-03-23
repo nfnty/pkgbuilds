@@ -25,8 +25,8 @@ pkgver() {
 
 package() {
     cd "${srcdir}/${srcname}"
-    install -D --mode=755 vimpager.sh "${pkgdir}/usr/bin/vimpager"
-    install -D --mode=755 manpager.sh "${pkgdir}/usr/bin/manpager"
-    install -D --mode=755 diffpager.sh "${pkgdir}/usr/bin/diffpager"
-    install -D --mode=755 gitpager.sh "${pkgdir}/usr/bin/gitpager"
+    install -D default.sh "${pkgdir}/usr/bin/pager"
+    install -D man.sh "${pkgdir}/usr/bin/pager-man"
+    install -D diff.sh "${pkgdir}/usr/bin/pager-diff"
+    install -D gitlog.sh "${pkgdir}/usr/bin/pager-gitlog"
 }
