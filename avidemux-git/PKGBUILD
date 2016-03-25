@@ -50,10 +50,6 @@ pkgver() {
 prepare() {
     cd "${srcdir}"
 
-    mkdir --parents build/core{,_plugins,_plugins_settings}
-    mkdir --parents build/cli{,_plugins}
-    mkdir --parents build/qt{,_plugins}
-
     # http://avidemux.org/smuf/index.php/topic,16302.msg71463.html#msg71463
     # sed --in-place 's|hf_hflip|vf_hflip|g' "${srcdir}/${srcname}/avidemux_plugins/ADM_videoFilters6/horizontalFlip/CMakeLists.txt"
 }
@@ -70,6 +66,10 @@ build() {
     cmake_base_plugins=(
         "-DAVIDEMUX_SOURCE_DIR=${gitdir}"
     )
+
+    mkdir --parents "${builddir}/core"{,_plugins,_plugins_settings}
+    mkdir --parents "${builddir}/cli"{,_plugins}
+    mkdir --parents "${builddir}/qt"{,_plugins}
 
     cd "${builddir}/core"
     cmake "${gitdir}/avidemux_core" ${cmake_base[@]}
