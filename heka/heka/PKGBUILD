@@ -12,12 +12,12 @@ makedepends=(
     'cmake'
     'gcc'
     'git'
-    'go=2:1.5.3'
+    'go'
     'make'
     'mercurial'
     'patch'
 )
-optdepends=('geoip-citydata: GeoIpDecoder')
+optdepends=('geoip-database-extra: GeoIpDecoder')
 provides=("${pkgname[0]%-git}")
 conflicts=("${pkgname[0]%-git}")
 
