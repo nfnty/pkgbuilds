@@ -1,0 +1,22 @@
+pkgname=('python-pydbus')
+srcname='pydbus'
+pkgdesc='Pythonic DBus library'
+pkgver='0.3'
+pkgrel='1'
+arch=('any')
+url="https://github.com/LEW21/${srcname}"
+license=('LGPL2')
+
+depends=('python')
+makedepends=('git' 'python-setuptools')
+provides=("${pkgname[0]%-git}")
+conflicts=("${pkgname[0]%-git}")
+
+source=("${srcname}::git+${url}.git#tag=v${pkgver}")
+sha512sums=('SKIP')
+
+package() {
+    cd "${srcdir}/${srcname}"
+
+    python setup.py install --root="${pkgdir}" --optimize=1
+}
