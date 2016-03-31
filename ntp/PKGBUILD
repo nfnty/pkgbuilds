@@ -1,12 +1,12 @@
-# $Id$
-# Maintainer: Gaetan Bisson <bisson@archlinux.org>
+# Maintainer: Lukas Fleischer <lfleischer@archlinux.org>
+# Contributor: Gaetan Bisson <bisson@archlinux.org>
 # Contributor: kevin <kevin@archlinux.org>
 
 pkgname=ntp
 _pkgname=ntp #-dev
 _pkgver=4.2.8p6
 pkgver=${_pkgver/p/.p}
-pkgrel=1
+pkgrel=3
 pkgdesc='Network Time Protocol reference implementation'
 url='http://www.ntp.org/'
 license=('custom')
@@ -25,7 +25,7 @@ sha1sums=('7244b0fb66ceb66283480e8f83a4c4a2099f9cd7'
           'SKIP')
 
 options=('!emptydirs')
-install=install
+install=ntp.install
 
 prepare() {
 	cd "${srcdir}/${_pkgname}-${_pkgver}"
