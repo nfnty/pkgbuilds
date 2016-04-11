@@ -1,9 +1,9 @@
 diff --git a/client.c b/client.c
-index 970d132..6851583 100644
+index 3203412..7a00379 100644
 --- a/client.c
 +++ b/client.c
-@@ -295,6 +295,7 @@ client_main(struct event_base *base, int argc, char **argv, int flags)
- 		}
+@@ -316,6 +316,7 @@ client_main(struct event_base *base, int argc, char **argv, int flags,
+ 			fatal("tcgetattr failed");
  		cfmakeraw(&tio);
  		tio.c_iflag = ICRNL|IXANY;
 +		tio.c_iflag &= ~(IXON|IXOFF);
@@ -11,12 +11,12 @@ index 970d132..6851583 100644
  #ifdef NOKERNINFO
  		tio.c_lflag = NOKERNINFO;
 diff --git a/window.c b/window.c
-index d66cb1f..c75efeb 100644
+index 236d243..5d407c3 100644
 --- a/window.c
 +++ b/window.c
-@@ -864,6 +864,7 @@ window_pane_spawn(struct window_pane *wp, int argc, char **argv,
- 		if (options_get_number(&wp->window->options, "utf8"))
- 			tio2.c_iflag |= IUTF8;
+@@ -868,6 +868,7 @@ window_pane_spawn(struct window_pane *wp, int argc, char **argv,
+ #ifdef IUTF8
+ 		tio2.c_iflag |= IUTF8;
  #endif
 +		tio2.c_iflag &= ~(IXON|IXOFF);
  		if (tcsetattr(STDIN_FILENO, TCSANOW, &tio2) != 0)

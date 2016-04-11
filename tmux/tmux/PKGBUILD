@@ -1,46 +1,48 @@
-# $Id$
-# Maintainer: Sergej Pupykin <pupykin.s+arch@gmail.com>
-# Maintainer:  TDY <tdy@gmx.com>
-# Contributor: Grigorios Bouzakis <grbzks[at]gmail[dot]com>
-
-pkgname=tmux
-pkgver=2.1
-pkgrel=1
-pkgdesc='A terminal multiplexer'
-url='http://tmux.github.io/'
+pkgname=('tmux')
+srcname='tmux'
+pkgdesc='Terminal multiplexer'
+pkgver='2.2'
+pkgrel='1'
 arch=('i686' 'x86_64')
-license=('BSD')
-depends=('ncurses' 'libevent' 'libutempter')
-source=(https://github.com/tmux/tmux/releases/download/$pkgver/tmux-$pkgver.tar.gz
-	ncurses6-xterm-standout.patch
-	ixon.patch
-	LICENSE)
-md5sums=('74a2855695bccb51b6e301383ad4818c'
-         '70347df93ed1922d6718d91491a7d9b4'
-         'SKIP'
-         '71601bc37fa44e4395580b321963018e')
+url="https://github.com/tmux/${srcname}"
+license=('ISC')
+
+depends=('ncurses' 'libevent')
+makedepends=('git')
+provides=("${pkgname[0]%-git}")
+conflicts=("${pkgname[0]%-git}")
+
+source=(
+    "${srcname}::git+${url}.git#tag=${pkgver}"
+    'git+https://github.com/przepompownia/tmux-bash-completion.git'
+    'ixon.patch'
+)
+sha512sums=(
+    'SKIP'
+    'SKIP'
+    'SKIP'
+)
 
 prepare() {
-	cd "$srcdir/$pkgname-${pkgver/_/}"
-#	patch -Np1 -i ../ncurses6-xterm-standout.patch
-	patch -Np1 -i ../ixon.patch
+    cd "${srcdir}/${srcname}"
+
+    git apply "${srcdir}/ixon.patch"
 }
 
 build() {
-	cd "$srcdir/$pkgname-${pkgver/_/}"
-	./configure --prefix=/usr
-	make
+    cd "${srcdir}/${srcname}"
+
+    ./autogen.sh
+    ./configure --prefix='/usr'
+
+    make
 }
 
 package() {
-	cd "$srcdir/$pkgname-${pkgver/_/}"
-	make install DESTDIR=$pkgdir
-	install -Dm644 ../LICENSE "$pkgdir/usr/share/licenses/tmux/LICENSE"
+    cd "${srcdir}/${srcname}"
 
-	install -dm755 "$pkgdir/usr/share/tmux/"
-	install -m644 examples/* "$pkgdir/usr/share/tmux/"
-	install -Dm644 examples/tmux.vim "$pkgdir/usr/share/vim/vimfiles/syntax/tmux.vim"
+    make DESTDIR="${pkgdir}" install
 
-	install -d $pkgdir/usr/share/bash-completion/completions/
-	mv $pkgdir/usr/share/tmux/bash_completion_tmux.sh $pkgdir/usr/share/bash-completion/completions/tmux
+    install -D --mode='644' "${srcdir}/tmux-bash-completion/completions/tmux" \
+        "${pkgdir}/usr/share/bash-completion/completions/tmux"
 }
