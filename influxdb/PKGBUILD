@@ -1,10 +1,10 @@
 pkgname=('influxdb')
 srcname='influxdb'
 pkgdesc='Scalable datastore for metrics, events, and real-time analytics'
-pkgver='0.10.1'
+pkgver='0.12.1'
 pkgrel='1'
 arch=('i686' 'x86_64')
-url="https://github.com/influxdb/${srcname}"
+url="https://github.com/influxdata/${srcname}"
 license=('MIT')
 
 makedepends=('git' 'go' 'python2')
@@ -27,7 +27,7 @@ prepare() {
     cd "${GOPATH}/src/${_url_go}"
     git remote set-url origin "${url}"
     git branch --move master tmp
-    git checkout -b master origin/0.10.0
+    git checkout -b master origin/0.12
     go get -v -u -d ./...
 }
 
