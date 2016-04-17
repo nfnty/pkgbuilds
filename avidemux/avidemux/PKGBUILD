@@ -29,7 +29,7 @@ makedepends=(
     'jack2'
     'libpulse'
 
-    'dcaenc'
+    # 'dcaenc'
     'faac'
     'lame'
     'libogg'
@@ -114,7 +114,7 @@ package_avidemux-cli() {
         'jack2'
         'libpulse'
 
-        'dcaenc'
+        # 'dcaenc'
         'faac'
         'lame'
         'libogg'
