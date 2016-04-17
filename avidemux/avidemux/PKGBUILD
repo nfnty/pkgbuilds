@@ -56,6 +56,7 @@ makedepends=(
     'qt5-tools'
 )
 
+# Version commits are tracked via `cmake/avidemuxVersion.cmake`
 source=("${srcname}::git+${url}.git#commit=856fc8ae1ec8ea03595c04153b42423fa783b55d")
 sha512sums=('SKIP')
 
