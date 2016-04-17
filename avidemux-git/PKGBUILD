@@ -26,7 +26,8 @@ makedepends=(
     'libx264'
     'libxv'
     'opencore-amr'
-    'qt4'
+    'qt5-base'
+    'qt5-tools'
     'sdl'
     'sqlite'
     'twolame'
@@ -47,17 +48,10 @@ pkgver() {
         "$( git rev-parse --short 'HEAD' )"
 }
 
-prepare() {
-    cd "${srcdir}"
-
-    # http://avidemux.org/smuf/index.php/topic,16302.msg71463.html#msg71463
-    # sed --in-place 's|hf_hflip|vf_hflip|g' "${srcdir}/${srcname}/avidemux_plugins/ADM_videoFilters6/horizontalFlip/CMakeLists.txt"
-}
-
 _make() {
     mkdir --parents "${1}"
     cd "${1}"
-    cmake ${@:4} "${2}"
+    cmake "${@:4}" "${2}"
     make
     make DESTDIR="${3}" install
 }
@@ -70,6 +64,7 @@ build() {
         '-DCMAKE_BUILD_TYPE=Release'
         '-DCMAKE_INSTALL_PREFIX=/usr'
         "-DFAKEROOT=${path_fakeroot}"
+        '-DENABLE_QT5=ON'
     )
     args_plugin=(
         "-DAVIDEMUX_SOURCE_DIR=${path_git}"
@@ -126,7 +121,7 @@ package_avidemux-qt-git() {
     pkgdesc="Simple video editor (QT)"
     provides=('avidemux-qt')
     conflicts=('avidemux-qt')
-    depends=('avidemux-cli-git' 'qt4' 'libxv' 'sdl' 'desktop-file-utils')
+    depends=('avidemux-cli-git' 'qt5-base' 'libxv' 'sdl' 'desktop-file-utils')
     install='avidemux.install'
 
     for target in 'qt' 'qt_plugins'; do
@@ -142,7 +137,7 @@ package_avidemux-qt-git() {
         "${pkgdir}/usr/share/pixmaps/avidemux-qt.png"
     sed --in-place \
         --expression='s/^Icon=avidemux$/Icon=avidemux-qt/' \
-        --expression='s/^Exec=avidemux2_gtk$/Exec=avidemux3_qt4/' \
+        --expression='s/^Exec=avidemux2_gtk$/Exec=avidemux3_qt5/' \
         --expression='s/^Name=avidemux2$/Name=Avidemux QT/' \
         "${pkgdir}/usr/share/applications/avidemux-qt.desktop"
 }
