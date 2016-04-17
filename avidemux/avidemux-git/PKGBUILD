@@ -119,10 +119,6 @@ package_avidemux-cli-git() {
         'opus'
         'libvorbis'
 
-        'alsa-lib'
-        'jack2'
-        'libpulse'
-
         # 'dcaenc'
         'faac'
         'lame'
@@ -140,12 +136,17 @@ package_avidemux-cli-git() {
         'fontconfig'
         'freetype2'
         'fribidi'
-
-        'glu'
-        'libva'
-        'libvdpau'
     )
-    optdepends=('avidemux-qt-git: QT GUI')
+    optdepends=(
+        'avidemux-qt-git: QT GUI'
+
+        'alsa-lib: Audio device plugin'
+        'jack2: Audio device plugin'
+        'libpulse: Audio device plugin'
+
+        'libva: Hardware acceleration'
+        'libvdpau: Hardware acceleration'
+    )
 
     for target in 'core' 'plugins_common' 'plugins_settings' 'cli' 'plugins_cli'; do
         cd "${srcdir}/build/${target}"
@@ -160,6 +161,7 @@ package_avidemux-qt-git() {
     depends=(
         'avidemux-cli-git'
 
+        'glu'
         'libxv'
         'qt5-base'
 
@@ -172,11 +174,9 @@ package_avidemux-qt-git() {
         make DESTDIR="${pkgdir}" install
     done
 
-    install -D --mode='644' \
-        "${srcdir}/${srcname}/avidemux2.desktop" \
+    install -D --mode='644' "${srcdir}/${srcname}/avidemux2.desktop" \
         "${pkgdir}/usr/share/applications/avidemux-qt.desktop"
-    install -D --mode='644' \
-        "${srcdir}/${srcname}/avidemux_icon.png" \
+    install -D --mode='644' "${srcdir}/${srcname}/avidemux_icon.png" \
         "${pkgdir}/usr/share/pixmaps/avidemux-qt.png"
     sed --in-place \
         --expression='s/^Icon=avidemux$/Icon=avidemux-qt/' \
