@@ -1,7 +1,7 @@
-pkgname=('avidemux-cli-git' 'avidemux-qt-git')
+pkgname=('avidemux-cli' 'avidemux-qt')
 srcname='avidemux2'
-pkgbase='avidemux-git'
-pkgver='r1'
+pkgbase='avidemux'
+pkgver='2.6.12'
 pkgrel='1'
 arch=('i686' 'x86_64')
 url="https://github.com/mean00/${srcname}"
@@ -56,17 +56,8 @@ makedepends=(
     'qt5-tools'
 )
 
-source=("${srcname}::git+${url}.git")
+source=("${srcname}::git+${url}.git#commit=856fc8ae1ec8ea03595c04153b42423fa783b55d")
 sha512sums=('SKIP')
-
-pkgver() {
-    cd "${srcdir}/${srcname}"
-
-    printf 'r%s.%s.%s\n' \
-        "$( git rev-list --count 'HEAD' )" \
-        "$( git log --max-count='1' --pretty='format:%ct' )" \
-        "$( git rev-parse --short 'HEAD' )"
-}
 
 _make() {
     mkdir --parents "${1}"
@@ -101,7 +92,7 @@ build() {
     _make "${path_build}/plugins_qt" "${path_git}/avidemux_plugins" "${args_plugin[@]}" -DPLUGIN_UI='QT4' -DENABLE_QT5='ON'
 }
 
-package_avidemux-cli-git() {
+package_avidemux-cli() {
     pkgdesc='Video editor designed for simple cutting, filtering and encoding tasks'
     provides=('avidemux-cli')
     conflicts=('avidemux-cli')
@@ -145,7 +136,7 @@ package_avidemux-cli-git() {
         'libva'
         'libvdpau'
     )
-    optdepends=('avidemux-qt-git: QT GUI')
+    optdepends=('avidemux-qt: QT GUI')
 
     for target in 'core' 'plugins_common' 'plugins_settings' 'cli' 'plugins_cli'; do
         cd "${srcdir}/build/${target}"
@@ -153,19 +144,19 @@ package_avidemux-cli-git() {
     done
 }
 
-package_avidemux-qt-git() {
+package_avidemux-qt() {
     pkgdesc='Video editor designed for simple cutting, filtering and encoding tasks - QT GUI'
     provides=('avidemux-qt')
     conflicts=('avidemux-qt')
     depends=(
-        'avidemux-cli-git'
+        'avidemux-cli'
 
         'libxv'
         'qt5-base'
 
         'desktop-file-utils'
     )
-    install='avidemux.install'
+    install='install.sh'
 
     for target in 'qt' 'plugins_qt'; do
         cd "${srcdir}/build/${target}"
