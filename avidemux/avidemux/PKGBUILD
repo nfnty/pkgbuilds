@@ -4,7 +4,7 @@ pkgbase='avidemux'
 pkgver='2.6.12'
 pkgrel='1'
 arch=('i686' 'x86_64')
-url="https://github.com/mean00/${srcname}"
+url='http://www.avidemux.org'
 license=('GPL2')
 
 makedepends=(
@@ -57,7 +57,7 @@ makedepends=(
 )
 
 # Version commits are tracked via `cmake/avidemuxVersion.cmake`
-source=("${srcname}::git+${url}.git#commit=856fc8ae1ec8ea03595c04153b42423fa783b55d")
+source=("${srcname}::git+https://github.com/mean00/${srcname}.git#commit=856fc8ae1ec8ea03595c04153b42423fa783b55d")
 sha512sums=('SKIP')
 
 _make() {
