@@ -35,7 +35,7 @@ makedepends=(
     'yasm'
 )
 
-source=("${srcname}::git+https://github.com/mean00/avidemux2.git")
+source=("${srcname}::git+${url}.git")
 sha512sums=('SKIP')
 
 pkgver() {
@@ -54,61 +54,41 @@ prepare() {
     # sed --in-place 's|hf_hflip|vf_hflip|g' "${srcdir}/${srcname}/avidemux_plugins/ADM_videoFilters6/horizontalFlip/CMakeLists.txt"
 }
 
+_make() {
+    mkdir --parents "${1}"
+    cd "${1}"
+    cmake ${@:4} "${2}"
+    make
+    make DESTDIR="${3}" install
+}
+
 build() {
-    gitdir="${srcdir}/${srcname}"
-    builddir="${srcdir}/build"
-    fakerootdir="${srcdir}/fakeroot"
-    cmake_base=(
+    path_git="${srcdir}/${srcname}"
+    path_build="${srcdir}/build"
+    path_fakeroot="${srcdir}/fakeroot"
+    args_base=(
         '-DCMAKE_BUILD_TYPE=Release'
         '-DCMAKE_INSTALL_PREFIX=/usr'
-        "-DFAKEROOT=${fakerootdir}"
+        "-DFAKEROOT=${path_fakeroot}"
     )
-    cmake_base_plugins=(
-        "-DAVIDEMUX_SOURCE_DIR=${gitdir}"
+    args_plugin=(
+        "-DAVIDEMUX_SOURCE_DIR=${path_git}"
     )
 
-    mkdir --parents "${builddir}/core"{,_plugins,_plugins_settings}
-    mkdir --parents "${builddir}/cli"{,_plugins}
-    mkdir --parents "${builddir}/qt"{,_plugins}
-
-    cd "${builddir}/core"
-    cmake "${gitdir}/avidemux_core" ${cmake_base[@]}
-    make
-    make DESTDIR="${fakerootdir}" install
-
-    cd "${builddir}/cli"
-    cmake "${gitdir}/avidemux/cli" ${cmake_base[@]}
-    make
-    make DESTDIR="${fakerootdir}" install
-
-    cd "${builddir}/qt"
-    cmake "${gitdir}/avidemux/qt4" ${cmake_base[@]}
-    make
-    make DESTDIR="${fakerootdir}" install
-
-    cd "${builddir}/core_plugins"
-    cmake "${gitdir}/avidemux_plugins" ${cmake_base[@]} ${cmake_base_plugins[@]} \
-        -DPLUGIN_UI=COMMON
-    make
-    make DESTDIR="${fakerootdir}" install
-
-    cd "${builddir}/cli_plugins"
-    cmake "${gitdir}/avidemux_plugins" ${cmake_base[@]} ${cmake_base_plugins[@]} \
-        -DPLUGIN_UI=CLI
-    make
-    make DESTDIR="${fakerootdir}" install
-
-    cd "${builddir}/qt_plugins"
-    cmake "${gitdir}/avidemux_plugins" ${cmake_base[@]} ${cmake_base_plugins[@]} \
-        -DPLUGIN_UI=QT4
-    make
-    make DESTDIR="${fakerootdir}" install
-
-    cd "${builddir}/core_plugins_settings"
-    cmake "${gitdir}/avidemux_plugins" ${cmake_base[@]} ${cmake_base_plugins[@]} \
-        -DPLUGIN_UI=SETTINGS
-    make
-    make DESTDIR="${fakerootdir}" install
+    _make "${path_build}/core" "${path_git}/avidemux_core" "${path_fakeroot}" \
+        "${args_base[@]}"
+    _make "${path_build}/core_plugins_common" "${path_git}/avidemux_plugins" "${path_fakeroot}" \
+        "${args_base[@]}" "${args_plugin[@]}" -DPLUGIN_UI='COMMON'
+    _make "${path_build}/core_plugins_settings" "${path_git}/avidemux_plugins" "${path_fakeroot}" \
+        "${args_base[@]}" "${args_plugin[@]}" -DPLUGIN_UI='SETTINGS'
+    _make "${path_build}/cli" "${path_git}/avidemux/cli" "${path_fakeroot}" \
+        "${args_base[@]}"
+    _make "${path_build}/cli_plugins" "${path_git}/avidemux_plugins" "${path_fakeroot}" \
+        "${args_base[@]}" "${args_plugin[@]}" -DPLUGIN_UI='CLI'
+    _make "${path_build}/qt" "${path_git}/avidemux/qt4" "${path_fakeroot}" \
+        "${args_base[@]}"
+    _make "${path_build}/qt_plugins" "${path_git}/avidemux_plugins" "${path_fakeroot}" \
+        "${args_base[@]}" "${args_plugin[@]}" -DPLUGIN_UI='QT4'
 }
 
 package_avidemux-cli-git() {
@@ -136,13 +116,10 @@ package_avidemux-cli-git() {
     )
     optdepends=('avidemux-qt-git: QT GUI')
 
-    cd "${srcdir}/build"
-
-    make DESTDIR="${pkgdir}" --directory='core' install
-    make DESTDIR="${pkgdir}" --directory='core_plugins' install
-    make DESTDIR="${pkgdir}" --directory='core_plugins_settings' install
-    make DESTDIR="${pkgdir}" --directory='cli' install
-    make DESTDIR="${pkgdir}" --directory='cli_plugins' install
+    for target in 'core' 'core_plugins_common' 'core_plugins_settings' 'cli' 'cli_plugins'; do
+        cd "${srcdir}/build/${target}"
+        make DESTDIR="${pkgdir}" install
+    done
 }
 
 package_avidemux-qt-git() {
@@ -152,20 +129,20 @@ package_avidemux-qt-git() {
     depends=('avidemux-cli-git' 'qt4' 'libxv' 'sdl' 'desktop-file-utils')
     install='avidemux.install'
 
-    cd "${srcdir}/build"
+    for target in 'qt' 'qt_plugins'; do
+        cd "${srcdir}/build/${target}"
+        make DESTDIR="${pkgdir}" install
+    done
 
-    make DESTDIR="${pkgdir}" --directory='qt' install
-    make DESTDIR="${pkgdir}" --directory='qt_plugins' install
-
-    install -D --mode=644 \
+    install -D --mode='644' \
         "${srcdir}/${srcname}/avidemux2.desktop" \
         "${pkgdir}/usr/share/applications/avidemux-qt.desktop"
-    install -D --mode=644 \
+    install -D --mode='644' \
         "${srcdir}/${srcname}/avidemux_icon.png" \
         "${pkgdir}/usr/share/pixmaps/avidemux-qt.png"
-    perl -p -i \
-        -e 's/^Icon=avidemux$/Icon=avidemux-qt/;' \
-        -e 's/^Exec=avidemux2_gtk$/Exec=avidemux3_qt4/;' \
-        -e 's/^Name=avidemux2$/Name=Avidemux QT/;' \
+    sed --in-place \
+        --expression='s/^Icon=avidemux$/Icon=avidemux-qt/' \
+        --expression='s/^Exec=avidemux2_gtk$/Exec=avidemux3_qt4/' \
+        --expression='s/^Name=avidemux2$/Name=Avidemux QT/' \
         "${pkgdir}/usr/share/applications/avidemux-qt.desktop"
 }
