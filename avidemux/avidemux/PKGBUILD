@@ -35,7 +35,7 @@ makedepends=(
     'libogg'
     'twolame'
 
-    'vapoursynth'
+    # 'vapoursynth'
 
     'libvpx'
 
@@ -120,7 +120,7 @@ package_avidemux-cli() {
         'libogg'
         'twolame'
 
-        'vapoursynth'
+        # 'vapoursynth'
 
         'libvpx'
 
