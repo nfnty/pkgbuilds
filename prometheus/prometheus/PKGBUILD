@@ -1,7 +1,7 @@
 pkgname=('prometheus')
 srcname='prometheus'
 pkgdesc='Monitoring system and time series database'
-pkgver='0.17.0'
+pkgver='0.18.0'
 pkgrel='1'
 arch=('i686' 'x86_64')
 url="https://github.com/prometheus/${srcname}"
@@ -27,7 +27,7 @@ prepare() {
     cd "${GOPATH}/src/${_url_go}"
     git remote set-url origin "${url}"
     git branch --move master tmp
-    git checkout -b master origin/release-0.17
+    git checkout -b master origin/release-0.18
     GO15VENDOREXPERIMENT=1 go get -v -u -d ./...
 }
 
