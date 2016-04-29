@@ -1,7 +1,7 @@
 pkgname=('rsyslog')
 srcname='rsyslog'
 pkgdesc='a Rocket-fast SYStem for LOG processing'
-pkgver='8.17.0'
+pkgver='8.18.0'
 pkgrel='1'
 arch=('i686' 'x86_64')
 url="https://github.com/rsyslog/${srcname}"
