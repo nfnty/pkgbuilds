@@ -1,7 +1,7 @@
 pkgname=('grafana')
 srcname='grafana'
 pkgdesc='Feature rich metrics dashboard and graph editor'
-pkgver='3.0_beta6'
+pkgver='3.0.1'
 pkgrel='1'
 arch=('i686' 'x86_64')
 url="https://github.com/grafana/${srcname}"
@@ -15,7 +15,6 @@ source=("${srcname}::git+${url}.git")
 sha512sums=('SKIP')
 
 _url_go="${url#*//}"
-_pkgver_go='3.0-beta3'
 
 prepare() {
     cd "${srcdir}"
@@ -28,7 +27,7 @@ prepare() {
     cd "${GOPATH}/src/${_url_go}"
     git remote set-url origin "${url}"
     go get -v -u -d ./...
-    git checkout --quiet "v${_pkgver_go}"
+    git checkout --quiet "v${pkgver}"
     godep restore
 
     npm install
