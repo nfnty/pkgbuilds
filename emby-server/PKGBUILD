@@ -1,7 +1,7 @@
 pkgname=('emby-server')
 srcname='Emby'
 pkgdesc='Emby Server is a home media server built on top of other popular open source technologies'
-pkgver='3.0.5934'
+pkgver='3.0.5970'
 pkgrel='1'
 arch=('i686' 'x86_64')
 url='https://github.com/MediaBrowser/Emby'
@@ -13,13 +13,15 @@ provides=('emby-server')
 conflicts=('emby-server')
 
 source=(
-    "${srcname}::git+https://github.com/nfnty/Emby.git"
+    "${srcname}::git+${url}#tag=${pkgver}"
     'emby-server'
     'emby-migrate-database'
     'emby-server.conf'
     'emby-server.service'
+    'register.patch'
 )
 sha512sums=(
+    'SKIP'
     'SKIP'
     'SKIP'
     'SKIP'
@@ -32,6 +34,8 @@ backup=('etc/conf.d/emby-server')
 
 prepare() {
     cd "${srcdir}/${srcname}"
+
+    git apply "${srcdir}/register.patch"
 
     sed 's/libMagickWand-6.Q8.so/libMagickWand-6.Q16HDRI.so/' -i MediaBrowser.Server.Mono/ImageMagickSharp.dll.config
 }

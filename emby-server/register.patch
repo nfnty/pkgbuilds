@@ -1,0 +1,52 @@
+diff --git a/MediaBrowser.Common.Implementations/Security/PluginSecurityManager.cs b/MediaBrowser.Common.Implementations/Security/PluginSecurityManager.cs
+index 4e01041..81bd339 100644
+--- a/MediaBrowser.Common.Implementations/Security/PluginSecurityManager.cs
++++ b/MediaBrowser.Common.Implementations/Security/PluginSecurityManager.cs
+@@ -244,35 +244,13 @@ namespace MediaBrowser.Common.Implementations.Security
+ 
+             if (!(lastChecked > DateTime.UtcNow.AddDays(-1)))
+             {
+-                var data = new Dictionary<string, string>
+-                {
+-                    { "feature", feature }, 
+-                    { "key", SupporterKey }, 
+-                    { "mac", _appHost.SystemId }, 
+-                    { "systemid", _appHost.SystemId }, 
+-                    { "mb2equiv", mb2Equivalent }, 
+-                    { "ver", version }, 
+-                    { "platform", _appHost.OperatingSystemDisplayName }, 
+-                    { "isservice", _appHost.IsRunningAsService.ToString().ToLower() }
+-                };
+-
+                 try
+                 {
+-                    var options = new HttpRequestOptions
+-                    {
+-                        Url = MBValidateUrl,
+-
+-                        // Seeing block length errors
+-                        EnableHttpCompression = false
+-                    };
+-
+-                    options.SetPostData(data);
+-
+-                    using (var json = (await _httpClient.Post(options).ConfigureAwait(false)).Content)
+-                    {
+-                        reg = _jsonSerializer.DeserializeFromStream<RegRecord>(json);
+-                        success = true;
+-                    }
++                    reg.featId = feature;
++                    reg.registered = true;
++                    reg.expDate = DateTime.UtcNow.AddDays(36500);
++                    reg.key = feature;
++                    success = true;
+ 
+                     if (reg.registered)
+                     {
+@@ -326,4 +304,4 @@ namespace MediaBrowser.Common.Implementations.Security
+             _isMbSupporterInitialized = false;
+         }
+     }
+-}
+\ No newline at end of file
++}
