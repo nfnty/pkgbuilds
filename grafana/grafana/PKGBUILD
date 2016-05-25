@@ -11,8 +11,14 @@ makedepends=('git' 'go' 'godep' 'nodejs' 'nodejs-grunt-cli' 'npm' 'phantomjs')
 provides=("${pkgname[0]%-git}")
 conflicts=("${pkgname[0]%-git}")
 
-source=("${srcname}::git+${url}.git")
-sha512sums=('SKIP')
+source=(
+    "${srcname}::git+${url}.git"
+    'grunt_compress.patch'
+)
+sha512sums=(
+    'SKIP'
+    'SKIP'
+)
 
 _url_go="${url#*//}"
 
@@ -28,6 +34,7 @@ prepare() {
     git remote set-url origin "${url}"
     go get -v -u -d ./...
     git checkout --quiet "v${pkgver}"
+    git apply "${srcdir}/grunt_compress.patch"
     godep restore
 
     npm install
