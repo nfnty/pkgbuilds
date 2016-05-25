@@ -1,7 +1,7 @@
 pkgname=('grafana')
 srcname='grafana'
 pkgdesc='Feature rich metrics dashboard and graph editor'
-pkgver='3.0.1'
+pkgver='3.0.4'
 pkgrel='1'
 arch=('i686' 'x86_64')
 url="https://github.com/grafana/${srcname}"
