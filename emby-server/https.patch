@@ -1,0 +1,116 @@
+diff --git a/MediaBrowser.Providers/Music/FanArtAlbumProvider.cs b/MediaBrowser.Providers/Music/FanArtAlbumProvider.cs
+index 5b3bd87..15ebb7e 100644
+--- a/MediaBrowser.Providers/Music/FanArtAlbumProvider.cs
++++ b/MediaBrowser.Providers/Music/FanArtAlbumProvider.cs
+@@ -12,6 +12,7 @@ using System.Collections.Generic;
+ using System.Globalization;
+ using System.IO;
+ using System.Linq;
++using System.Text.RegularExpressions;
+ using System.Threading;
+ using System.Threading.Tasks;
+ using CommonIO;
+@@ -151,6 +152,7 @@ namespace MediaBrowser.Providers.Music
+             }
+         }
+ 
++        private Regex _regex_http = new Regex("^http://");
+         private void PopulateImages(List<RemoteImageInfo> list,
+             List<FanartArtistProvider.FanartArtistImage> images,
+             ImageType type,
+@@ -178,7 +180,7 @@ namespace MediaBrowser.Providers.Music
+                         Width = width,
+                         Height = height,
+                         ProviderName = Name,
+-                        Url = url,
++                        Url = _regex_http.Replace(url, "https://", 1),
+                         Language = i.lang
+                     };
+ 
+diff --git a/MediaBrowser.Providers/Music/FanArtArtistProvider.cs b/MediaBrowser.Providers/Music/FanArtArtistProvider.cs
+index 37b51da..ce2c17d 100644
+--- a/MediaBrowser.Providers/Music/FanArtArtistProvider.cs
++++ b/MediaBrowser.Providers/Music/FanArtArtistProvider.cs
+@@ -14,6 +14,7 @@ using System.Globalization;
+ using System.IO;
+ using System.Linq;
+ using System.Net;
++using System.Text.RegularExpressions;
+ using System.Threading;
+ using System.Threading.Tasks;
+ using CommonIO;
+@@ -149,6 +150,7 @@ namespace MediaBrowser.Providers.Music
+             PopulateImages(list, obj.musicarts, ImageType.Art, 500, 281);
+         }
+ 
++        private Regex _regex_http = new Regex("^http://");
+         private void PopulateImages(List<RemoteImageInfo> list,
+             List<FanartArtistImage> images,
+             ImageType type,
+@@ -176,7 +178,7 @@ namespace MediaBrowser.Providers.Music
+                         Width = width,
+                         Height = height,
+                         ProviderName = Name,
+-                        Url = url,
++                        Url = _regex_http.Replace(url, "https://", 1),
+                         Language = i.lang
+                     };
+ 
+diff --git a/MediaBrowser.Providers/TV/FanArt/FanArtSeasonProvider.cs b/MediaBrowser.Providers/TV/FanArt/FanArtSeasonProvider.cs
+index 673663d..5d0e3f5 100644
+--- a/MediaBrowser.Providers/TV/FanArt/FanArtSeasonProvider.cs
++++ b/MediaBrowser.Providers/TV/FanArt/FanArtSeasonProvider.cs
+@@ -15,6 +15,7 @@ using System.Collections.Generic;
+ using System.Globalization;
+ using System.IO;
+ using System.Linq;
++using System.Text.RegularExpressions;
+ using System.Threading;
+ using System.Threading.Tasks;
+ using CommonIO;
+@@ -160,6 +161,7 @@ namespace MediaBrowser.Providers.TV
+             PopulateImages(list, obj.showbackground, ImageType.Backdrop, 1920, 1080, seasonNumber);
+         }
+ 
++        private Regex _regex_http = new Regex("^http://");
+         private void PopulateImages(List<RemoteImageInfo> list,
+             List<FanartSeriesProvider.Image> images,
+             ImageType type,
+@@ -194,7 +196,7 @@ namespace MediaBrowser.Providers.TV
+                         Width = width,
+                         Height = height,
+                         ProviderName = Name,
+-                        Url = url,
++                        Url = _regex_http.Replace(url, "https://", 1),
+                         Language = i.lang
+                     };
+ 
+diff --git a/MediaBrowser.Providers/TV/FanArt/FanartSeriesProvider.cs b/MediaBrowser.Providers/TV/FanArt/FanartSeriesProvider.cs
+index 3c831db..6f5a28e 100644
+--- a/MediaBrowser.Providers/TV/FanArt/FanartSeriesProvider.cs
++++ b/MediaBrowser.Providers/TV/FanArt/FanartSeriesProvider.cs
+@@ -17,6 +17,7 @@ using System.Globalization;
+ using System.IO;
+ using System.Linq;
+ using System.Net;
++using System.Text.RegularExpressions;
+ using System.Threading;
+ using System.Threading.Tasks;
+ using CommonIO;
+@@ -162,6 +163,7 @@ namespace MediaBrowser.Providers.TV
+             PopulateImages(list, obj.tvposter, ImageType.Primary, 1000, 1426);
+         }
+ 
++        private Regex _regex_http = new Regex("^http://");
+         private void PopulateImages(List<RemoteImageInfo> list,
+             List<Image> images,
+             ImageType type,
+@@ -194,7 +196,7 @@ namespace MediaBrowser.Providers.TV
+                         Width = width,
+                         Height = height,
+                         ProviderName = Name,
+-                        Url = url,
++                        Url = _regex_http.Replace(url, "https://", 1),
+                         Language = i.lang
+                     };
+ 
