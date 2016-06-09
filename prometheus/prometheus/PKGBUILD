@@ -1,7 +1,7 @@
 pkgname=('prometheus')
 srcname='prometheus'
 pkgdesc='Monitoring system and time series database'
-pkgver='0.19.0'
+pkgver='0.19.2'
 pkgrel='1'
 arch=('i686' 'x86_64')
 url="https://github.com/prometheus/${srcname}"
@@ -11,7 +11,7 @@ makedepends=('git' 'go')
 provides=("${pkgname[0]%-git}")
 conflicts=("${pkgname[0]%-git}")
 
-source=("${srcname}::git+${url}.git")
+source=("${srcname}::git+${url}.git#tag=${pkgver}")
 sha512sums=('SKIP')
 
 _url_go="${url#*//}"
@@ -23,12 +23,6 @@ prepare() {
     mkdir --parents "${GOPATH}/src/${_url_go}"
     rm --recursive "${GOPATH}/src/${_url_go}"
     mv "${srcname}" "${GOPATH}/src/${_url_go}"
-
-    cd "${GOPATH}/src/${_url_go}"
-    git remote set-url origin "${url}"
-    git branch --move master tmp
-    git checkout -b master origin/release-0.18
-    GO15VENDOREXPERIMENT=1 go get -v -u -d ./...
 }
 
 build() {
@@ -36,15 +30,15 @@ build() {
     export GOPATH="${srcdir}/gopath"
 
     cd "${GOPATH}/src/${_url_go}"
-    GO15VENDOREXPERIMENT=1 go install -v  ./...
+    make build
 }
 
 package() {
     cd "${srcdir}"
     export GOPATH="${srcdir}/gopath"
 
-    install --directory "${pkgdir}/"{"etc/${srcname}",usr,"var/lib/${srcname}"}
-    cp --recursive "${GOPATH}/bin" "${pkgdir}/usr/"
+    install --directory "${pkgdir}/"{"etc/${srcname}",usr/bin,"var/lib/${srcname}"}
+    cp "${GOPATH}/src/${_url_go}/"{prometheus,promtool} "${pkgdir}/usr/bin/"
 
     cd "${GOPATH}/src/${_url_go}"
     cp config/testdata/conf.good.yml "${pkgdir}/etc/${srcname}/config.yml"

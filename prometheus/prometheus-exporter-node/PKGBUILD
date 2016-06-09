@@ -12,7 +12,7 @@ provides=("${pkgname[0]%-git}")
 conflicts=("${pkgname[0]%-git}")
 
 source=(
-    "${srcname}::git+${url}.git"
+    "${srcname}::git+${url}.git#tag=${pkgver}"
     'prometheus-exporter-node.service'
 )
 sha512sums=(
@@ -31,10 +31,6 @@ prepare() {
     mkdir --parents "${GOPATH}/src/${_url_go}"
     rm --recursive "${GOPATH}/src/${_url_go}"
     mv "${srcname}" "${GOPATH}/src/${_url_go}"
-
-    cd "${GOPATH}/src/${_url_go}"
-    git remote set-url origin "${url}"
-    GO15VENDOREXPERIMENT=1 go get -v -u -d ./...
 }
 
 build() {
@@ -42,19 +38,14 @@ build() {
     export GOPATH="${srcdir}/gopath"
 
     cd "${GOPATH}/src/${_url_go}"
-    GO15VENDOREXPERIMENT=1 go install -v -ldflags="\
--X main.Version=${pkgver} \
--X ${_url_go}/collector.Version=${pkgver} \
--X ${_url_go}/collector.Revision=$( git rev-parse HEAD ) \
--X ${_url_go}/collector.Branch=$( git rev-parse --abbrev-ref HEAD )" \
-        ./...
+    make build
 }
 
 package() {
     cd "${srcdir}"
     export GOPATH="${srcdir}/gopath"
 
-    install -D "${GOPATH}/bin/${srcname}" "${pkgdir}/usr/bin/prometheus-exporter-node"
+    install -D "${GOPATH}/src/${_url_go}/node_exporter" "${pkgdir}/usr/bin/prometheus-exporter-node"
     install -D --mode='644' "${srcdir}/prometheus-exporter-node.service" \
         "${pkgdir}/usr/lib/systemd/system/prometheus-exporter-node.service"
 }

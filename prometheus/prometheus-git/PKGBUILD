@@ -32,12 +32,6 @@ prepare() {
     mkdir --parents "${GOPATH}/src/${_url_go}"
     rm --recursive "${GOPATH}/src/${_url_go}"
     mv "${srcname}" "${GOPATH}/src/${_url_go}"
-
-    cd "${GOPATH}/src/${_url_go}"
-    git remote set-url origin "${url}"
-    git branch --move master tmp
-    git checkout -b master origin/release-0.17
-    GO15VENDOREXPERIMENT=1 go get -v -u -d ./...
 }
 
 build() {
@@ -45,15 +39,15 @@ build() {
     export GOPATH="${srcdir}/gopath"
 
     cd "${GOPATH}/src/${_url_go}"
-    GO15VENDOREXPERIMENT=1 go install -v  ./...
+    make build
 }
 
 package() {
     cd "${srcdir}"
     export GOPATH="${srcdir}/gopath"
 
-    install --directory "${pkgdir}/"{"etc/${srcname}",usr,"var/lib/${srcname}"}
-    cp --recursive "${GOPATH}/bin" "${pkgdir}/usr/"
+    install --directory "${pkgdir}/"{"etc/${srcname}",usr/bin,"var/lib/${srcname}"}
+    cp "${GOPATH}/src/${_url_go}/"{prometheus,promtool} "${pkgdir}/usr/bin/"
 
     cd "${GOPATH}/src/${_url_go}"
     cp config/testdata/conf.good.yml "${pkgdir}/etc/${srcname}/config.yml"
