@@ -1,7 +1,7 @@
-pkgname=('qt5-qtstyleplugins-git')
+pkgname=('qt5-styleplugins')
 srcname='qtstyleplugins'
 pkgdesc='Additional style plugins for Qt5'
-pkgver='r1'
+pkgver='5.0.0'
 pkgrel='1'
 arch=('i686' 'x86_64')
 url="http://code.qt.io/cgit/qt/${srcname}"
@@ -12,17 +12,8 @@ makedepends=('git')
 provides=("${pkgname[0]%-git}")
 conflicts=("${pkgname[0]%-git}")
 
-source=("${srcname}::git+${url}.git")
+source=("${srcname}::git+${url}.git#commit=5f2549b016b8da89160d6e2184ea83627bff92d6")
 sha512sums=('SKIP')
-
-pkgver() {
-    cd "${srcdir}/${srcname}"
-
-    printf 'r%s.%s.%s\n' \
-        "$( git rev-list --count 'HEAD' )" \
-        "$( git log --max-count='1' --pretty='format:%ct' )" \
-        "$( git rev-parse --short 'HEAD' )"
-}
 
 build() {
     cd "${srcdir}/${srcname}"
