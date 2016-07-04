@@ -1,7 +1,7 @@
 pkgname=('emby-server')
 srcname='Emby'
 pkgdesc='Emby Server is a home media server built on top of other popular open source technologies'
-pkgver='3.0.5972'
+pkgver='3.0.5984'
 pkgrel='1'
 arch=('i686' 'x86_64')
 url='https://github.com/MediaBrowser/Emby'
@@ -19,10 +19,8 @@ source=(
     'emby-server.conf'
     'emby-server.service'
     'register.patch'
-    'https.patch'
 )
 sha512sums=(
-    'SKIP'
     'SKIP'
     'SKIP'
     'SKIP'
@@ -38,7 +36,6 @@ prepare() {
     cd "${srcdir}/${srcname}"
 
     git apply "${srcdir}/register.patch"
-    git apply "${srcdir}/https.patch"
 
     sed 's/libMagickWand-6.Q8.so/libMagickWand-6.Q16HDRI.so/' -i MediaBrowser.Server.Mono/ImageMagickSharp.dll.config
 }
