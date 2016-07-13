@@ -1,7 +1,7 @@
 pkgname=('grafana')
 srcname='grafana'
 pkgdesc='Feature rich metrics dashboard and graph editor'
-pkgver='3.0.4'
+pkgver='3.1.0'
 pkgrel='1'
 arch=('i686' 'x86_64')
 url="https://github.com/grafana/${srcname}"
@@ -13,10 +13,8 @@ conflicts=("${pkgname[0]%-git}")
 
 source=(
     "${srcname}::git+${url}.git"
-    'grunt_compress.patch'
 )
 sha512sums=(
-    'SKIP'
     'SKIP'
 )
 
@@ -34,7 +32,6 @@ prepare() {
     git remote set-url origin "${url}"
     go get -v -u -d ./...
     git checkout --quiet "v${pkgver}"
-    git apply "${srcdir}/grunt_compress.patch"
     godep restore
 
     npm install
