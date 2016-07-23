@@ -12,8 +12,14 @@ makedepends=('git' 'python2-setuptools' 'python2-pip' 'python2-virtualenv')
 provides=("${pkgname[0]%-git}")
 conflicts=("${pkgname[0]%-git}")
 
-source=("${srcname}::git+${url}.git")
-sha512sums=('SKIP')
+source=(
+    "${srcname}::git+${url}.git"
+    'libchromaprint.patch'
+)
+sha512sums=(
+    'SKIP'
+    'SKIP'
+)
 
 pkgver() {
     cd "${srcdir}/${srcname}"
@@ -34,4 +40,7 @@ package() {
     pip install --requirement requirements.txt
 
     chmod --recursive 'u=rwX,g=rX,o=rX' "${pkgdir}/opt/${srcname}"
+
+    cd e/lib/python2.7/site-packages
+    patch --input="${srcdir}/libchromaprint.patch"
 }
