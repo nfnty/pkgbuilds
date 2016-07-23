@@ -7,7 +7,7 @@ arch=('any')
 url="https://bitbucket.org/acoustid/${srcname}"
 license=('MIT')
 
-depends=('python2' 'postgresql-libs')
+depends=('python2' 'postgresql-libs' 'chromaprint')
 makedepends=('git' 'python2-setuptools' 'python2-pip' 'python2-virtualenv')
 provides=("${pkgname[0]%-git}")
 conflicts=("${pkgname[0]%-git}")
@@ -33,5 +33,5 @@ package() {
     source e/bin/activate
     pip install --requirement requirements.txt
 
-    chmod --recursive 'u=rwX,g=,o=' "${pkgdir}/opt/${srcname}"
+    chmod --recursive 'u=rwX,g=rX,o=rX' "${pkgdir}/opt/${srcname}"
 }
