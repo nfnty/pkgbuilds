@@ -1,7 +1,7 @@
 pkgname=('prometheus')
 srcname='prometheus'
 pkgdesc='Monitoring system and time series database'
-pkgver='0.20.0'
+pkgver='1.0.1'
 pkgrel='1'
 arch=('i686' 'x86_64')
 url="https://github.com/prometheus/${srcname}"
@@ -11,7 +11,7 @@ makedepends=('git' 'go')
 provides=("${pkgname[0]%-git}")
 conflicts=("${pkgname[0]%-git}")
 
-source=("${srcname}::git+${url}.git#tag=${pkgver}")
+source=("${srcname}::git+${url}.git#tag=v${pkgver}")
 sha512sums=('SKIP')
 
 _url_go="${url#*//}"
