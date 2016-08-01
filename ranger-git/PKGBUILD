@@ -27,7 +27,7 @@ makedepends=('git')
 provides=('ranger')
 conflicts=('ranger')
 
-source=("${srcname}::git+https://github.com/hut/ranger.git")
+source=("${srcname}::git+https://github.com/nfnty/ranger.git")
 sha256sums=('SKIP')
 
 pkgver() {
