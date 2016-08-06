@@ -1,0 +1,2215 @@
+diff --git a/avidemux/common/ADM_audioFilter/src/audiofilter_access.cpp b/avidemux/common/ADM_audioFilter/src/audiofilter_access.cpp
+index 254b18d..f1803e8 100644
+--- a/avidemux/common/ADM_audioFilter/src/audiofilter_access.cpp
++++ b/avidemux/common/ADM_audioFilter/src/audiofilter_access.cpp
+@@ -33,7 +33,7 @@ ADMAudioFilter_Access::ADMAudioFilter_Access(AUDMAudioFilter *incoming,ADM_Audio
+     startTimeUs=timeUs;
+     samplesSeen=0;
+     editable=ed;
+-    printf("[FilterAccess] Created, starting at %"PRIu32" ms\n",(uint32_t)(timeUs/1000));
++    printf("[FilterAccess] Created, starting at %" PRIu32" ms\n",(uint32_t)(timeUs/1000));
+ }
+ /**
+     \fn ~ADMAudioFilter_Access
+diff --git a/avidemux/common/ADM_audioFilter/src/audiofilter_bridge.cpp b/avidemux/common/ADM_audioFilter/src/audiofilter_bridge.cpp
+index 5791688..109a6b9 100644
+--- a/avidemux/common/ADM_audioFilter/src/audiofilter_bridge.cpp
++++ b/avidemux/common/ADM_audioFilter/src/audiofilter_bridge.cpp
+@@ -46,7 +46,7 @@ AUDMAudioFilter_Bridge::AUDMAudioFilter_Bridge(ADM_edAudioTrack *incoming,
+   _hold=0;
+   rewind();
+   
+-  ADM_info("[Bridge] Starting with time %"PRIu32" ms, shift %"PRIi32" ms\n",startInMs,-shiftMs);
++  ADM_info("[Bridge] Starting with time %" PRIu32" ms, shift %" PRIi32" ms\n",startInMs,-shiftMs);
+   // If shiftMS is > 0, it means we have to go in the future, just increse _startTime
+   if(shiftMs>0)
+   {
+diff --git a/avidemux/common/ADM_audiocodec/ADM_audiocodec.cpp b/avidemux/common/ADM_audiocodec/ADM_audiocodec.cpp
+index 40d88bb..2e7d22e 100644
+--- a/avidemux/common/ADM_audiocodec/ADM_audiocodec.cpp
++++ b/avidemux/common/ADM_audiocodec/ADM_audiocodec.cpp
+@@ -67,7 +67,7 @@ ADM_Audiocodec *out = NULL;
+ 
+ 	if (out == NULL)
+ 	{
+-		printf("[audioCodec] Unknown codec : %"PRIu32"\n",fourcc);
++		printf("[audioCodec] Unknown codec : %" PRIu32"\n",fourcc);
+ 		out = (ADM_Audiocodec *) new ADM_AudiocodecUnknown(fourcc,*info);
+ 	}
+ 	// For channel mapping, simple case we do it here so that the decoder does not have
+diff --git a/avidemux/common/ADM_editor/src/ADM_edRender.cpp b/avidemux/common/ADM_editor/src/ADM_edRender.cpp
+index f32213c..ec1c4e6 100644
+--- a/avidemux/common/ADM_editor/src/ADM_edRender.cpp
++++ b/avidemux/common/ADM_editor/src/ADM_edRender.cpp
+@@ -57,12 +57,12 @@ int64_t t=(int64_t)*time;
+         t-=seg->_refStartTimeUs;
+         if(t<0)
+         {
+-            ADM_warning("Segment time is negative time : %"PRIu64" ms, refStartTime:%"PRIu64" ms!\n",*time/1000,seg->_refStartTimeUs/1000);
++            ADM_warning("Segment time is negative time : %" PRIu64" ms, refStartTime:%" PRIu64" ms!\n",*time/1000,seg->_refStartTimeUs/1000);
+         }
+         t+=seg->_startTimeUs;
+         if(t<0)
+         {
+-            ADM_error("Absolute time is negative time : %"PRId64" ms, _startTime:%"PRIu64" ms!\n",t/1000,seg->_startTimeUs/1000);
++            ADM_error("Absolute time is negative time : %" PRId64" ms, _startTime:%" PRIu64" ms!\n",t/1000,seg->_startTimeUs/1000);
+             t=0;
+         }
+         *time=(uint64_t )t;
+@@ -104,7 +104,7 @@ bool        ADM_Composer::GoToIntraTime_noDecoding(uint64_t time,uint32_t *tofra
+     {
+         if(false==switchToSegment(s))
+         {
+-            ADM_warning("Cannot go to segment %"PRIu32"\n",s);
++            ADM_warning("Cannot go to segment %" PRIu32"\n",s);
+             return false;
+         }
+     }
+@@ -175,7 +175,7 @@ uint64_t segTime;
+ uint32_t seg;
+     if(false==_segments.convertLinearTimeToSeg(startTime,&seg,&segTime))
+     {
+-        ADM_warning("Cannot find segment for time %"PRIu64" ms\n",startTime/1000);
++        ADM_warning("Cannot find segment for time %" PRIu64" ms\n",startTime/1000);
+         return false;
+     }
+     
+@@ -185,17 +185,17 @@ uint32_t seg;
+     if(!s->_reference && !segTime && s->_refStartTimeUs<v->firstFramePts)
+     {
+         segTime=v->firstFramePts;
+-        ADM_warning("Fixating start time to %"PRIu64" ms\n",segTime/1000);
++        ADM_warning("Fixating start time to %" PRIu64" ms\n",segTime/1000);
+     }
+     uint64_t to=segTime+s->_refStartTimeUs;
+     if(false==seektoTime(s->_reference,to))
+     {
+-            ADM_warning("Cannot seek to beginning of segment %"PRIu32" at  %"PRIu64" ms\n",s,to/1000);
++            ADM_warning("Cannot seek to beginning of segment %" PRIu32" at  %" PRIu64" ms\n",s,to/1000);
+             return false;
+     }
+     _currentSegment=seg;
+     int64_t newTime=(int64_t)v->lastDecodedPts+(int64_t)s->_startTimeUs-(int64_t)s->_refStartTimeUs;
+-    ADM_info("Seek done, in reference, gone to %"PRIu64" with segment start at %"PRIu64"\n",v->lastDecodedPts,s->_refStartTimeUs);
++    ADM_info("Seek done, in reference, gone to %" PRIu64" with segment start at %" PRIu64"\n",v->lastDecodedPts,s->_refStartTimeUs);
+     SET_CURRENT_PTS(newTime);
+     return true;
+ 
+@@ -241,7 +241,7 @@ uint64_t tail;
+         tail=seg->_startTimeUs+seg->_durationUs;
+         if(pts>=tail)
+         {
+-                ADM_info("Got an image (%"PRIu32" ms, but is out of this segment (%"PRIu32"+%"PRIu32"=%"PRIu32" ms)\n",
++                ADM_info("Got an image (%" PRIu32" ms, but is out of this segment (%" PRIu32"+%" PRIu32"=%" PRIu32" ms)\n",
+                                                                     pts,seg->_startTimeUs,seg->_durationUs,tail);
+                 _segments.dump();
+                 goto np_nextSeg;
+@@ -297,13 +297,13 @@ bool ADM_Composer::decodeTillPictureAtPts(uint64_t targetPts,ADMImage *image)
+                 uint64_t previousKf;
+                 if(false==searchPreviousKeyFrameInRef(ref,refTime,&previousKf))
+                 {
+-                    ADM_warning("Cannot find previous keyframe in ref %d, time=%"PRIu64" \n",ref,refTime);
++                    ADM_warning("Cannot find previous keyframe in ref %d, time=%" PRIu64" \n",ref,refTime);
+                     return false;
+                 }
+                 // go to it...
+                 if(false==seektoTime(ref,previousKf,false))
+                 {
+-                    ADM_warning("Cannot seek to time=%"PRIu64" \n",previousKf);
++                    ADM_warning("Cannot seek to time=%" PRIu64" \n",previousKf);
+                     return false;            
+                 }
+                 // Now forward till we reach out frame
+@@ -321,7 +321,7 @@ bool ADM_Composer::decodeTillPictureAtPts(uint64_t targetPts,ADMImage *image)
+                 }
+                 if(image->Pts!=targetPts)
+                 {
+-                    ADM_error("Could not retrieve our own frame at PTS=%"PRIu64" ms\n",targetPts/1000);
++                    ADM_error("Could not retrieve our own frame at PTS=%" PRIu64" ms\n",targetPts/1000);
+                     return false;
+                 }
+                 return true;
+@@ -354,7 +354,7 @@ uint64_t targetPts=_currentPts;
+                 return true;
+             }
+         }
+-        ADM_info("while looking for frame %"PRIu64"\n",_currentPts);
++        ADM_info("while looking for frame %" PRIu64"\n",_currentPts);
+         vid->_videoCache->dump();
+         // The previous is not available
+         // either it is in the same segment but we have decoded later in that segment
+@@ -393,7 +393,7 @@ uint64_t targetPts=_currentPts;
+                     }
+                     ADM_warning("The image found is before refStartTime ???\n");
+                 }
+-                ADM_error("Find our frame and its predecessor (%"PRIu64"), but it is out of range\n",refPts);
++                ADM_error("Find our frame and its predecessor (%" PRIu64"), but it is out of range\n",refPts);
+                 vid->_videoCache->dump();
+                 return false;
+         }
+@@ -468,7 +468,7 @@ uint32_t segNo;
+             return true;
+       }
+       ADM_error("Cannot find same image in cache\n"); 
+-      ADM_info("Looking for PTS=%"PRIu64" ms\n",refPts/1000);
++      ADM_info("Looking for PTS=%" PRIu64" ms\n",refPts/1000);
+       ref->_videoCache->dump();
+       return false;
+ }
+@@ -546,7 +546,7 @@ bool        ADM_Composer::switchToNextSegment(bool dontdecode)
+ {
+     if(_currentSegment==_segments.getNbSegments()-1)
+     {
+-        ADM_warning("This is the last segment (%"PRIu32")\n",_currentSegment);
++        ADM_warning("This is the last segment (%" PRIu32")\n",_currentSegment);
+         return false;
+     }
+     if(true==switchToSegment(_currentSegment+1,dontdecode)) return true;
+@@ -561,12 +561,12 @@ bool        ADM_Composer::switchToSegment(uint32_t s,bool dontdecode)
+ {
+     if(s+1>_segments.getNbSegments())
+     {
+-        ADM_warning("Cannot switch to segment:%"PRIu32"\n",s);
++        ADM_warning("Cannot switch to segment:%" PRIu32"\n",s);
+         return false;
+     }
+     _SEGMENT *seg=_segments.getSegment(s);
+     ADM_assert(seg);
+-    ADM_info("Trying to switch to seg %"PRIu32" with startTime in reference pic= %"PRIu32" ms\n",s,seg->_refStartTimeUs/1000);
++    ADM_info("Trying to switch to seg %" PRIu32" with startTime in reference pic= %" PRIu32" ms\n",s,seg->_refStartTimeUs/1000);
+         // If the refStartTime is 0, it is the first image
+         // But the fist image might not be = 0
+       _VIDEOS *vid=_segments.getRefVideo(seg->_reference);
+@@ -580,11 +580,11 @@ bool        ADM_Composer::switchToSegment(uint32_t s,bool dontdecode)
+     
+     if(false==seektoTime(seg->_reference,from,dontdecode))
+     {
+-            ADM_warning("Cannot seek to beginning of segment %"PRIu32" at  %"PRIu64" ms\n",s,from/1000);
++            ADM_warning("Cannot seek to beginning of segment %" PRIu32" at  %" PRIu64" ms\n",s,from/1000);
+             return false;
+     }
+     _currentSegment=s;
+-    ADM_info("Switched ok to segment %"PRIu32" (dontdecode=%d)\n",s,dontdecode);
++    ADM_info("Switched ok to segment %" PRIu32" (dontdecode=%d)\n",s,dontdecode);
+     return true;
+ }
+ /**
+diff --git a/avidemux/common/ADM_editor/src/ADM_edRenderInternal.cpp b/avidemux/common/ADM_editor/src/ADM_edRenderInternal.cpp
+index 961ab14..8a6f66c 100644
+--- a/avidemux/common/ADM_editor/src/ADM_edRenderInternal.cpp
++++ b/avidemux/common/ADM_editor/src/ADM_edRenderInternal.cpp
+@@ -50,13 +50,13 @@ bool ADM_Composer::seektoTime(uint32_t ref,uint64_t timeToSeek,bool dontdecode)
+     if(_segments.isKeyFrameByTime(ref,timeToSeek))
+     {
+         seekTime=timeToSeek;
+-        ADM_info("First frame of the new segment is a keyframe at %"PRIu32"ms\n",seekTime/1000);
++        ADM_info("First frame of the new segment is a keyframe at %" PRIu32"ms\n",seekTime/1000);
+         found=true;
+     }else   
+     {
+         if(false==searchPreviousKeyFrameInRef(ref,timeToSeek,&seekTime))
+         {
+-            ADM_warning("Cannot identify the keyframe before %"PRIu64" ms\n",seekTime/1000);
++            ADM_warning("Cannot identify the keyframe before %" PRIu64" ms\n",seekTime/1000);
+             return false;
+         }
+     }
+@@ -71,7 +71,7 @@ bool ADM_Composer::seektoTime(uint32_t ref,uint64_t timeToSeek,bool dontdecode)
+     
+     if(false==DecodePictureUpToIntra(ref,frame))
+     {
+-        ADM_warning("Cannot decode up to intra %"PRIu64" at %"PRIu64" ms\n",frame,seekTime/1000);
++        ADM_warning("Cannot decode up to intra %" PRIu64" at %" PRIu64" ms\n",frame,seekTime/1000);
+         return false;
+     }
+     if(found==true) return true;
+@@ -87,16 +87,16 @@ bool ADM_Composer::seektoTime(uint32_t ref,uint64_t timeToSeek,bool dontdecode)
+         vid->lastReadPts=pts;
+         if(pts==timeToSeek)
+         {
+-            ADM_info("Image found, pts=%"PRIu64" ms\n",pts/1000);
++            ADM_info("Image found, pts=%" PRIu64" ms\n",pts/1000);
+             return true;
+         }
+         if(pts>timeToSeek)
+         {
+-            ADM_info("Image not found,searching %"PRIu64" ms, got  pts=%"PRIu64" ms\n",timeToSeek/1000,pts/1000);
++            ADM_info("Image not found,searching %" PRIu64" ms, got  pts=%" PRIu64" ms\n",timeToSeek/1000,pts/1000);
+             return false;
+         }
+     }
+-    ADM_warning("seekToFrame failed for frame at PTS= %"PRIu64" ms, next image failed\n",timeToSeek/1000);
++    ADM_warning("seekToFrame failed for frame at PTS= %" PRIu64" ms, next image failed\n",timeToSeek/1000);
+     return false;
+ }
+ /**
+@@ -117,7 +117,7 @@ bool ADM_Composer::samePictureInternal(uint32_t ref,ADMImage *out)
+   ADMImage *in=cache->getByPts(vid->lastDecodedPts);
+   if(!in)
+   {
+-    printf("[ADM_Composer::getSamePicture] Failed, while looking for Pts=%"PRIu64" ms\n",vid->lastDecodedPts);
++    printf("[ADM_Composer::getSamePicture] Failed, while looking for Pts=%" PRIu64" ms\n",vid->lastDecodedPts);
+     cache->dump();
+     return false;
+   }
+@@ -159,7 +159,7 @@ bool ADM_Composer::nextPictureInternal(uint32_t ref,ADMImage *out)
+             // Duplicate
+             if(out)
+             {
+-                aprintf("[getNextPicture] Looking for after> %"PRIu64", got %"PRIu64" delta=%"PRIi32" ms\n",vid->lastReadPts,img->Pts,(img->Pts-vid->lastReadPts)/1000);
++                aprintf("[getNextPicture] Looking for after> %" PRIu64", got %" PRIu64" delta=%" PRIi32" ms\n",vid->lastReadPts,img->Pts,(img->Pts-vid->lastReadPts)/1000);
+                 out->duplicate(img);
+                 vid->lastReadPts=img->Pts;
+                 currentFrame++;
+@@ -167,7 +167,7 @@ bool ADM_Composer::nextPictureInternal(uint32_t ref,ADMImage *out)
+             return true;
+         }else   
+         {
+-            aprintf("[getNextPic] Loop:%d, looking for pts> :%"PRIu64" ms %"PRIu64" us\n",loop,vid->lastReadPts/1000,vid->lastReadPts);
++            aprintf("[getNextPic] Loop:%d, looking for pts> :%" PRIu64" ms %" PRIu64" us\n",loop,vid->lastReadPts/1000,vid->lastReadPts);
+ #ifdef VERBOSE
+             cache->dump();
+ #endif
+@@ -175,7 +175,7 @@ bool ADM_Composer::nextPictureInternal(uint32_t ref,ADMImage *out)
+         }
+     }
+     ADM_warning("nextPictureInternal Failed\n");
+-    ADM_warning("while looking for %"PRIu64" us, %"PRIu64" ms\n",vid->lastReadPts,vid->lastReadPts/1000);
++    ADM_warning("while looking for %" PRIu64" us, %" PRIu64" ms\n",vid->lastReadPts,vid->lastReadPts/1000);
+     cache->dump();
+     return false;
+ }
+@@ -212,7 +212,7 @@ uint8_t ret = 0;
+      aprintf("[Editor] Decoding frame %u\n",frame);
+      if (!demuxer->getFrame (frame,&img))
+      {
+-            ADM_warning("getFrame failed for frame %"PRIu32"\n",vid->lastSentFrame);
++            ADM_warning("getFrame failed for frame %" PRIu32"\n",vid->lastSentFrame);
+             return false;
+      }
+ 
+@@ -220,17 +220,17 @@ uint8_t ret = 0;
+      result=cache->getFreeImage();
+      if(!result)
+      {
+-            ADM_warning(" Cache full for frame %"PRIu32"\n",vid->lastSentFrame);
++            ADM_warning(" Cache full for frame %" PRIu32"\n",vid->lastSentFrame);
+             return false;
+       }
+-        aprintf("Demuxed frame %"PRIu32" with pts=%"PRId64" us, %"PRId64" ms\n",
++        aprintf("Demuxed frame %" PRIu32" with pts=%" PRId64" us, %" PRId64" ms\n",
+             frame,
+             img.demuxerPts,
+             img.demuxerPts/1000);
+     
+       if(!decompressImage(result,&img,ref))
+       {
+-         ADM_info("Decoding error for frame %"PRIu32", not necessarily a problem\n",vid->lastSentFrame);
++         ADM_info("Decoding error for frame %" PRIu32", not necessarily a problem\n",vid->lastSentFrame);
+          stats.nbNoImage++;
+          cache->invalidate(result);
+          return true; // Not an error in itself
+@@ -259,7 +259,7 @@ uint8_t ret = 0;
+                 aprintf("[Editor] got PTS\n");
+                 vid->lastDecodedPts=pts;
+             }
+-    aprintf(">>Decoded frame %"PRIu32" with pts=%"PRId64" us, %"PRId64" ms, ptsdelta=%"PRId64" ms \n",
++    aprintf(">>Decoded frame %" PRIu32" with pts=%" PRId64" us, %" PRId64" ms, ptsdelta=%" PRId64" ms \n",
+         frame,
+         vid->lastDecodedPts,
+         vid->lastDecodedPts/1000,
+@@ -268,7 +268,7 @@ uint8_t ret = 0;
+     if(old>vid->lastDecodedPts) 
+     {
+         stats.nbPtsgoingBack++;
+-        ADM_warning(">>>>> PTS going backward by %"PRId64" ms\n",(old-vid->lastDecodedPts)/1000);
++        ADM_warning(">>>>> PTS going backward by %" PRId64" ms\n",(old-vid->lastDecodedPts)/1000);
+         ADM_warning("Dropping frame!\n");
+         cache->invalidate(result);
+         return false;
+@@ -332,7 +332,7 @@ bool ADM_Composer::decompressImage(ADMImage *out,ADMCompressedImage *in,uint32_t
+             // Fill in with black
+             return false;
+         }
+-        aprintf("[::Decompress] in:%"PRIu32" out:%"PRIu32" flags:%x\n",in->demuxerPts,out->Pts,out->flags);
++        aprintf("[::Decompress] in:%" PRIu32" out:%" PRIu32" flags:%x\n",in->demuxerPts,out->Pts,out->flags);
+ 	// If not quant and it is already YV12, we can stop here
+     // Also, if the image is decoded through hw, dont do post proc
+ 	if(tmpImage->refType!=ADM_HW_NONE || 
+@@ -433,7 +433,7 @@ bool ADM_Composer::DecodePictureUpToIntra(uint32_t ref,uint32_t frame)
+          
+          if (!demuxer->getFrame (vid->lastSentFrame,&img))
+          {
+-                ADM_warning(" getFrame failed for frame %"PRIu32"\n",vid->lastSentFrame);
++                ADM_warning(" getFrame failed for frame %" PRIu32"\n",vid->lastSentFrame);
+                 //cache->flush();
+                 return false;
+          }
+@@ -445,14 +445,14 @@ bool ADM_Composer::DecodePictureUpToIntra(uint32_t ref,uint32_t frame)
+          }
+          if(!result)
+          {
+-                ADM_warning(" Cache full for frame %"PRIu32"\n",vid->lastSentFrame);
++                ADM_warning(" Cache full for frame %" PRIu32"\n",vid->lastSentFrame);
+                 return false;
+           }
+-           aprintf("[Decoder] Demuxer Frame %"PRIu32" pts=%"PRIu64" ms, %"PRIu64" us\n",vid->lastSentFrame,img.demuxerPts/1000,
++           aprintf("[Decoder] Demuxer Frame %" PRIu32" pts=%" PRIu64" ms, %" PRIu64" us\n",vid->lastSentFrame,img.demuxerPts/1000,
+                                                                     img.demuxerPts);
+           if(!decompressImage(result,&img,ref))
+           {
+-             ADM_info(" decode error for frame %"PRIu32", not necessarily a problem\n",vid->lastSentFrame);
++             ADM_info(" decode error for frame %" PRIu32", not necessarily a problem\n",vid->lastSentFrame);
+              //cache->dump();
+              cache->invalidate(result);
+              //cache->dump();
+@@ -462,7 +462,7 @@ bool ADM_Composer::DecodePictureUpToIntra(uint32_t ref,uint32_t frame)
+             {
+                 
+                 uint64_t pts=result->Pts;
+-                aprintf("[Decoder] Decoder Frame %"PRIu32" pts=%"PRIu64" ms, %"PRIu64" us\n",vid->lastSentFrame,
++                aprintf("[Decoder] Decoder Frame %" PRIu32" pts=%" PRIu64" ms, %" PRIu64" us\n",vid->lastSentFrame,
+                                                         result->Pts/1000,result->Pts);
+                 if(pts==ADM_COMPRESSED_NO_PTS) // No PTS available ?
+                 {
+@@ -497,7 +497,7 @@ bool ADM_Composer::DecodePictureUpToIntra(uint32_t ref,uint32_t frame)
+     }
+     if(found==false)
+     {
+-        ADM_warning(" Could not find decoded frame, wanted PTS :%"PRIu32" PTS=%"PRIu64" ms, %"PRIu64" us\n",frame,wantedPts/1000,wantedPts);
++        ADM_warning(" Could not find decoded frame, wanted PTS :%" PRIu32" PTS=%" PRIu64" ms, %" PRIu64" us\n",frame,wantedPts/1000,wantedPts);
+         cache->dump();
+         return false;
+     }
+diff --git a/avidemux/common/ADM_editor/src/ADM_edSearch.cpp b/avidemux/common/ADM_editor/src/ADM_edSearch.cpp
+index b0cb48f..e4161fc 100644
+--- a/avidemux/common/ADM_editor/src/ADM_edSearch.cpp
++++ b/avidemux/common/ADM_editor/src/ADM_edSearch.cpp
+@@ -36,7 +36,7 @@ bool r;
+     // 1- Convert frameTime to segments
+     if(false== _segments.convertLinearTimeToSeg(  *frameTime, &seg, &segTime))
+     {
+-        ADM_warning(" Cannot find seg for time %"PRId64"\n",*frameTime);
++        ADM_warning(" Cannot find seg for time %" PRId64"\n",*frameTime);
+         return false;
+     }   
+     // 
+@@ -91,7 +91,7 @@ bool r;
+     // 1- Convert frameTime to segments
+     if(false== _segments.convertLinearTimeToSeg(  *frameTime, &seg, &segTime))
+     {
+-        ADM_warning(" Cannot find seg for time %"PRId64"\n",*frameTime);
++        ADM_warning(" Cannot find seg for time %" PRId64"\n",*frameTime);
+         return false;
+     }   
+     // Special case : The very first frame FIXME
+@@ -105,7 +105,7 @@ bool r;
+               uint64_t pts=vid->firstFramePts;
+               //
+               *frameTime+=pts;
+-              ADM_warning("This video does not start at 0 but at %"PRIu64" ms, compensating\n",pts/1000);
++              ADM_warning("This video does not start at 0 but at %" PRIu64" ms, compensating\n",pts/1000);
+               _segments.convertLinearTimeToSeg(  *frameTime, &seg, &segTime);
+            }
+       }
+@@ -132,7 +132,7 @@ again:
+     {
+         if(!seg)
+         {
+-            ADM_warning(" No previous previous keyfr for frameTime %"PRIu64" in ref %"PRIu32" seg:%"PRIu32" nkTime %"PRIu64" refTime:%"PRIu64" ms startTime=%"PRIu64" r=%d\n",
++            ADM_warning(" No previous previous keyfr for frameTime %" PRIu64" in ref %" PRIu32" seg:%" PRIu32" nkTime %" PRIu64" refTime:%" PRIu64" ms startTime=%" PRIu64" r=%d\n",
+                             *frameTime,ref,seg,nkTime/1000,refTime/1000,s->_refStartTimeUs/1000,r);
+             return false;
+         }
+@@ -158,7 +158,7 @@ bool r;
+     // 1- Convert frameTime to segments
+     if(false== _segments.convertLinearTimeToSeg(  *frameTime, &seg, &segTime))
+     {
+-        ADM_warning(" Cannot find seg for time %"PRId64"\n",*frameTime);
++        ADM_warning(" Cannot find seg for time %" PRId64"\n",*frameTime);
+         return false;
+     }   
+     // 
+@@ -177,7 +177,7 @@ bool r;
+     uint64_t dts;
+     if(false==_segments.dtsFromPts(ref,refTime,&dts))
+     {
+-        ADM_error("Cannot get dtsFromDts for time %"PRIu64"\n",refTime);
++        ADM_error("Cannot get dtsFromDts for time %" PRIu64"\n",refTime);
+         *frameTime=0;
+         return false;
+     }
+@@ -212,7 +212,7 @@ bool ADM_Composer::searchNextKeyFrameInRef(int ref,uint64_t refTime,uint64_t *nk
+             uint32_t hh,mm,ss,ms,ms2;
+             ms=pts/1000;
+             ms2time(ms,&hh,&mm,&ss,&ms2);
+-            ADM_info("Found nextkeyframe %"PRIu32" %u:%u:%u at frame %"PRIu32"\n",ms,hh,mm,ss,i);
++            ADM_info("Found nextkeyframe %" PRIu32" %u:%u:%u at frame %" PRIu32"\n",ms,hh,mm,ss,i);
+             *nkTime=pts;
+             return true;
+         }
+@@ -339,7 +339,7 @@ uint32_t seg;
+     // 1- Convert frameTime to segments
+     if(false== _segments.convertLinearTimeToSeg(  *time, &seg, &segTime))
+     {
+-        ADM_warning(" Cannot find seg for time %"PRId64"\n",*time);
++        ADM_warning(" Cannot find seg for time %" PRId64"\n",*time);
+         return false;
+     }  
+     _SEGMENT *s=_segments.getSegment(seg);
+@@ -349,7 +349,7 @@ uint32_t seg;
+     uint64_t dts;
+     if(false==_segments.dtsFromPts(s->_reference,pts,&dts))
+     {
+-        ADM_warning("Cannot get DTS from PTS=%"PRIu64"ms\n",pts/1000);
++        ADM_warning("Cannot get DTS from PTS=%" PRIu64"ms\n",pts/1000);
+         return false;
+     }
+     dts=dts+s->_startTimeUs;
+diff --git a/avidemux/common/ADM_editor/src/ADM_edStub.cpp b/avidemux/common/ADM_editor/src/ADM_edStub.cpp
+index 0479c11..73cc42f 100644
+--- a/avidemux/common/ADM_editor/src/ADM_edStub.cpp
++++ b/avidemux/common/ADM_editor/src/ADM_edStub.cpp
+@@ -27,7 +27,7 @@
+ uint32_t ref,refOffset;\
+     if(false== _segments.getRefFromFrame( frame,&ref,&refOffset))  \
+     { \
+-        ADM_warning(#func " cannot translate fame %"PRIi32"\n",frame); \
++        ADM_warning(#func " cannot translate fame %" PRIi32"\n",frame); \
+         return false; \
+     }
+ /**
+diff --git a/avidemux/common/ADM_editor/src/ADM_edVideoCopy.cpp b/avidemux/common/ADM_editor/src/ADM_edVideoCopy.cpp
+index b5e9854..3f23d6b 100644
+--- a/avidemux/common/ADM_editor/src/ADM_edVideoCopy.cpp
++++ b/avidemux/common/ADM_editor/src/ADM_edVideoCopy.cpp
+@@ -68,8 +68,8 @@ bool ADM_Composer::checkCutsAreOnIntra(void)
+         // After a seg switch we are at the keyframe before or equal to where we want to go
+         // if the dts do not match, it means we went back too much
+         // When re-encoding, it's not a problem, it is when copying.
+-        ADM_info("seg:%d refDTS=%"PRIu64"\n",seg->_reference,seg->_refStartDts);
+-        ADM_info("seg:%d imgDTS=%"PRIu64"\n",seg->_reference,img.demuxerDts);
++        ADM_info("seg:%d refDTS=%" PRIu64"\n",seg->_reference,seg->_refStartDts);
++        ADM_info("seg:%d imgDTS=%" PRIu64"\n",seg->_reference,img.demuxerDts);
+         if(!seg->_refStartDts && !seg->_reference)
+         {
+             ADM_info("Ignoring first seg (unreliable DTS)\n");
+@@ -129,7 +129,7 @@ againGet:
+     // Get next pic?
+     if(false==demuxer->getFrame (vid->lastSentFrame,img))
+     {
+-        ADM_info("Failed to get next frame for ref %"PRIu32"\n",seg->_reference);
++        ADM_info("Failed to get next frame for ref %" PRIu32"\n",seg->_reference);
+         goto nextSeg;
+     }
+     aprintf("Got frame %d, PTS=%s  ",img->demuxerFrameNo,ADM_us2plain(img->demuxerPts));
+@@ -145,7 +145,7 @@ againGet:
+         {
+             if(seg->_dropBframes==2) 
+             {
+-                ADM_warning("%"PRIu32" Dropping bframes\n",fn);
++                ADM_warning("%" PRIu32" Dropping bframes\n",fn);
+                 goto againGet;
+             }
+         }else
+@@ -236,7 +236,7 @@ againGet:
+                 if(signedPts != ADM_NO_PTS && signedDts>signedPts)
+ 		{
+ 			// not sure it is correct. We may want to do it the other way around, i.e. bumping pts
+-			ADM_warning("Compensating for rounding error with PTS=%"PRId64"ms DTS=%"PRId64"ms \n",signedPts,signedDts);
++			ADM_warning("Compensating for rounding error with PTS=%" PRId64"ms DTS=%" PRId64"ms \n",signedPts,signedDts);
+                         signedPts=signedDts;
+ 		}
+ 	}
+@@ -248,7 +248,7 @@ againGet:
+         {
+             if(_nextFrameDts>(signedDts+vid->timeIncrementInUs/10))
+             {
+-                ADM_error("Frame %"PRIu32" DTS is going back in time : expected : %"PRId64" ms got : %"PRId64" ms\n",
++                ADM_error("Frame %" PRIu32" DTS is going back in time : expected : %" PRId64" ms got : %" PRId64" ms\n",
+                                                 fn,_nextFrameDts/1000,signedDts/1000);
+             }
+         }
+@@ -264,13 +264,13 @@ againGet:
+         int64_t nextDts=nextSeg->_startTimeUs+nextSeg->_refStartDts;
+         if(nextDts<nextSeg->_refStartTimeUs)
+         {
+-            ADM_warning("%"PRIu32" next DTS is negative %"PRIu64" %"PRIu64" ms\n",fn,nextDts,nextSeg->_refStartTimeUs);
++            ADM_warning("%" PRIu32" next DTS is negative %" PRIu64" %" PRIu64" ms\n",fn,nextDts,nextSeg->_refStartTimeUs);
+         }else       
+         {
+             nextDts-=nextSeg->_refStartTimeUs;
+             if(signedDts>=nextDts)
+             {
+-                ADM_warning("%"PRIu32" have to switch segment, DTS limit reached %"PRIu64" %"PRIu64"\n",fn,img->demuxerDts/1000,nextDts/1000);
++                ADM_warning("%" PRIu32" have to switch segment, DTS limit reached %" PRIu64" %" PRIu64"\n",fn,img->demuxerDts/1000,nextDts/1000);
+                 goto nextSeg;
+             }
+         }
+@@ -327,7 +327,7 @@ bool        ADM_Composer::getDirectImageForDebug(uint32_t frameNum,ADMCompressed
+     // Get next pic?
+     if(false==demuxer->getFrame (frameNum,img))
+     {
+-        ADM_info("Failed to get next frame for ref %"PRIu32"\n",seg->_reference);
++        ADM_info("Failed to get next frame for ref %" PRIu32"\n",seg->_reference);
+         return false;
+     }
+    return true;
+diff --git a/avidemux/common/ADM_editor/src/ADM_edit.cpp b/avidemux/common/ADM_editor/src/ADM_edit.cpp
+index 16350f0..e55c344 100644
+--- a/avidemux/common/ADM_editor/src/ADM_edit.cpp
++++ b/avidemux/common/ADM_editor/src/ADM_edit.cpp
+@@ -206,7 +206,7 @@ bool ADM_Composer::addFile (const char *name)
+ 				prefs->set(AVISYNTH_AVISYNTH_LOCALPORT, localPort);
+ 			}
+ 		}
+-		uint8_t dummy[] = { portValue , portValue >> 8};
++		uint8_t dummy[] = { (uint8_t)portValue ,(uint8_t)( portValue >> 8)};
+ 		ret = video._aviheader->open((char *)dummy);
+ 	}
+ 	else
+@@ -476,7 +476,7 @@ uint32_t ref;
+   {
+     if(false==_segments.getRefFromTime(time,&ref))
+     {
+-        ADM_warning("Cannot get ref from time %"PRId64" ms\n",time/1000);
++        ADM_warning("Cannot get ref from time %" PRId64" ms\n",time/1000);
+         return false;
+     }
+     _segments.getRefVideo(ref)->decoder->setParam ();
+@@ -525,7 +525,7 @@ uint32_t ref;
+ 
+     if(false==_segments.getRefFromTime(xtime,&ref))
+     {
+-        ADM_warning("[Editor] getAudioStreamsInfo failed for time %"PRId64" ms\n",xtime);
++        ADM_warning("[Editor] getAudioStreamsInfo failed for time %" PRId64" ms\n",xtime);
+         return false;
+     }
+ 
+@@ -564,7 +564,7 @@ uint32_t ref;
+ 
+         if(false==_segments.getRefFromTime(xtime,&ref))
+         {
+-            ADM_warning("[Editor::getCurrentAudioStreamNumber] Cannot get ref video for time %"PRId64" ms\n",xtime/1000);
++            ADM_warning("[Editor::getCurrentAudioStreamNumber] Cannot get ref video for time %" PRId64" ms\n",xtime/1000);
+             return 0;
+         }
+ 
+@@ -720,7 +720,7 @@ bool               ADM_Composer::dumpTiming(void)
+ 
+             v->_aviheader->getFlags(i,&flags);
+             v->_aviheader->getPtsDts(i,&pts,&dts);
+-            printf("%"PRIu32" flags:%04"PRIx32" ",i,flags);
++            printf("%" PRIu32" flags:%04" PRIx32" ",i,flags);
+             printf("pts :%s ",ADM_us2plain(pts));
+             printf("dts :%s \n",ADM_us2plain(dts));
+     }
+diff --git a/avidemux/common/ADM_editor/src/ADM_segment.cpp b/avidemux/common/ADM_editor/src/ADM_segment.cpp
+index 576709d..3ee24fa 100644
+--- a/avidemux/common/ADM_editor/src/ADM_segment.cpp
++++ b/avidemux/common/ADM_editor/src/ADM_segment.cpp
+@@ -69,7 +69,7 @@ bool        ADM_EditorSegment::updateRefVideo(void)
+         demuxer->getPtsDts(0,&pts,&dts);
+         if(pts!=ADM_NO_PTS && pts >0)
+         {
+-            ADM_warning("Updating firstFramePTS, The first frame has a PTS >0, adjusting to %"PRIu64" ms\n",pts/1000);
++            ADM_warning("Updating firstFramePTS, The first frame has a PTS >0, adjusting to %" PRIu64" ms\n",pts/1000);
+             ref->firstFramePts=pts;
+         }else
+         {
+@@ -83,7 +83,7 @@ bool        ADM_EditorSegment::updateRefVideo(void)
+     {
+     _SEGMENT *seg=getSegment(n-1);
+     uint64_t dur=ref->_aviheader->getVideoDuration();
+-    printf("Current duration %"PRIu64" ms real one %"PRIu64" ms\n",dur/1000,seg->_durationUs/1000);
++    printf("Current duration %" PRIu64" ms real one %" PRIu64" ms\n",dur/1000,seg->_durationUs/1000);
+     }
+ 
+     return true;
+@@ -142,7 +142,7 @@ bool        ADM_EditorSegment::addReferenceVideo(_VIDEOS *ref)
+               //ref->timeIncrementInUs=minDelta;
+ 
+   
+-  ADM_info("[Editor] About %"PRIu64" microseconds per frame\n",ref->timeIncrementInUs);
++  ADM_info("[Editor] About %" PRIu64" microseconds per frame\n",ref->timeIncrementInUs);
+   ref->_nb_video_frames = info.nb_frames;
+   //
+   //  And automatically create the segment
+@@ -166,7 +166,7 @@ bool        ADM_EditorSegment::addReferenceVideo(_VIDEOS *ref)
+         if(pts==ADM_NO_PTS) ADM_warning("First frame has unknown PTS\n");
+         if(pts!=ADM_NO_PTS &&pts)
+         {
+-            ADM_warning("The first frame has a PTS >0, adjusting to %"PRIu64" ms\n",pts/1000);
++            ADM_warning("The first frame has a PTS >0, adjusting to %" PRIu64" ms\n",pts/1000);
+             ref->firstFramePts=pts;
+         }
+ 
+@@ -419,7 +419,7 @@ bool        ADM_EditorSegment::getRefFromTime(uint64_t xtime,uint32_t *refVideo)
+     uint64_t segTime;
+     if(false== convertLinearTimeToSeg(  xtime, &seg, &segTime))
+     {
+-        ADM_warning("Cannot identify segment for time %"PRIu64" ms\n",xtime/1000);
++        ADM_warning("Cannot identify segment for time %" PRIu64" ms\n",xtime/1000);
+         return false;
+     }
+     _SEGMENT *s=getSegment(seg);
+@@ -475,7 +475,7 @@ bool        ADM_EditorSegment::convertLinearTimeToSeg(  uint64_t frameTime, uint
+             return true;
+         }
+     }
+-    ADM_warning("Cannot find segment matching time %"PRIu64"ms \n",frameTime/1000);
++    ADM_warning("Cannot find segment matching time %" PRIu64"ms \n",frameTime/1000);
+     dump();
+     return false;
+ }
+@@ -510,7 +510,7 @@ static bool TimeToFrame(_VIDEOS *v,uint64_t time,uint32_t *frame,uint32_t *oflag
+             {
+                 if(dts>time)
+                 {
+-                    ADM_error("We reached frame %d with a PTS of %"PRIu64" when looking for PTS %"PRIu64"\n",
++                    ADM_error("We reached frame %d with a PTS of %" PRIu64" when looking for PTS %" PRIu64"\n",
+                                             i,dts,time);
+                     warn=true;
+                 }
+@@ -530,7 +530,7 @@ uint32_t    ADM_EditorSegment::intraTimeToFrame(uint32_t refVideo,uint64_t seekT
+         ADM_assert(v);
+         if(false==TimeToFrame(v,seekTime,&frame,&flags))
+         {
+-            ADM_error("Cannot find frame with time %"PRIu64"ms\n",seekTime/1000);
++            ADM_error("Cannot find frame with time %" PRIu64"ms\n",seekTime/1000);
+             ADM_assert(0);
+         }
+         uint32_t next;
+@@ -565,21 +565,21 @@ bool        ADM_EditorSegment::removeChunk(uint64_t from, uint64_t to)
+     uint32_t startSeg,endSeg;
+     uint64_t startOffset,endOffset;
+ 
+-    ADM_info("Cutting from %"PRIu64" to %"PRIu64" ms\n",from/1000,to/1000);
++    ADM_info("Cutting from %" PRIu64" to %" PRIu64" ms\n",from/1000,to/1000);
+     dump();
+     if(false==convertLinearTimeToSeg( from,&startSeg,&startOffset))
+     {
+-        ADM_warning("Cannot get starting point (%"PRIu64" ms\n",from/1000);
++        ADM_warning("Cannot get starting point (%" PRIu64" ms\n",from/1000);
+         return false;
+     }
+     if(false==convertLinearTimeToSeg( to,&endSeg,&endOffset))
+     {
+-        ADM_warning("Cannot get starting point (%"PRIu64" ms\n",from/1000);
++        ADM_warning("Cannot get starting point (%" PRIu64" ms\n",from/1000);
+         return false;
+     }
+ 
+-    ADM_info("Start, seg %"PRIu32" Offset :%"PRIu64" ms\n",startSeg,startOffset);
+-    ADM_info("End  , seg %"PRIu32" Offset :%"PRIu64" ms\n",endSeg,endOffset);
++    ADM_info("Start, seg %" PRIu32" Offset :%" PRIu64" ms\n",startSeg,startOffset);
++    ADM_info("End  , seg %" PRIu32" Offset :%" PRIu64" ms\n",endSeg,endOffset);
+     ListOfSegments tmp=segments;
+     
+ 
+@@ -638,11 +638,11 @@ void ADM_EditorSegment::dumpSegmentsInternal(ListOfSegments &l)
+         _SEGMENT s=l.at(i);
+ 
+         printf("Segment :%d/%d\n",i,n);
+-        printf("\tReference    :%"PRIu32"    %s\n",s._reference,ADM_us2plain(s._reference));
+-        printf("\tstartLinear  :%08"PRIu64" %s\n",s._startTimeUs,ADM_us2plain(s._startTimeUs));
+-        printf("\tduration     :%08"PRIu64" %s\n",s._durationUs,ADM_us2plain(s._durationUs));
+-        printf("\trefStartPts  :%08"PRIu64" %s\n",s._refStartTimeUs,ADM_us2plain(s._refStartTimeUs));
+-        printf("\trefStartDts  :%08"PRIu64" %s\n",s._refStartDts,ADM_us2plain(s._refStartDts));
++        printf("\tReference    :%" PRIu32"    %s\n",s._reference,ADM_us2plain(s._reference));
++        printf("\tstartLinear  :%08" PRIu64" %s\n",s._startTimeUs,ADM_us2plain(s._startTimeUs));
++        printf("\tduration     :%08" PRIu64" %s\n",s._durationUs,ADM_us2plain(s._durationUs));
++        printf("\trefStartPts  :%08" PRIu64" %s\n",s._refStartTimeUs,ADM_us2plain(s._refStartTimeUs));
++        printf("\trefStartDts  :%08" PRIu64" %s\n",s._refStartDts,ADM_us2plain(s._refStartDts));
+     }
+ }
+ 
+@@ -657,11 +657,11 @@ void       ADM_EditorSegment::dumpSegment(int i)
+         _SEGMENT *s=getSegment(i);
+ 
+         printf("Segment :%d/%d\n",i,n);
+-        printf("\tReference    :%"PRIu32"    %s\n",s->_reference,ADM_us2plain(s->_reference));
+-        printf("\tstartLinear  :%08"PRIu64" %s\n",s->_startTimeUs,ADM_us2plain(s->_startTimeUs));
+-        printf("\tduration     :%08"PRIu64" %s\n",s->_durationUs,ADM_us2plain(s->_durationUs));
+-        printf("\trefStartPts  :%08"PRIu64" %s\n",s->_refStartTimeUs,ADM_us2plain(s->_refStartTimeUs));
+-        printf("\trefStartDts  :%08"PRIu64" %s\n",s->_refStartDts,ADM_us2plain(s->_refStartDts));
++        printf("\tReference    :%" PRIu32"    %s\n",s->_reference,ADM_us2plain(s->_reference));
++        printf("\tstartLinear  :%08" PRIu64" %s\n",s->_startTimeUs,ADM_us2plain(s->_startTimeUs));
++        printf("\tduration     :%08" PRIu64" %s\n",s->_durationUs,ADM_us2plain(s->_durationUs));
++        printf("\trefStartPts  :%08" PRIu64" %s\n",s->_refStartTimeUs,ADM_us2plain(s->_refStartTimeUs));
++        printf("\trefStartDts  :%08" PRIu64" %s\n",s->_refStartDts,ADM_us2plain(s->_refStartDts));
+ }
+ /**
+     \fn dumpRefVideos
+@@ -677,9 +677,9 @@ void ADM_EditorSegment::dumpRefVideos(void)
+         _VIDEOS *s=getRefVideo(i);
+ 
+         printf("Videos :%d/%d\n",i,n);
+-        printf("\tfirstFramePts      :%08"PRIu64" %s\n",s->firstFramePts,ADM_us2plain(s->firstFramePts));
+-        printf("\ttimeIncrementInUs  :%08"PRIu64" %s\n",s->timeIncrementInUs,ADM_us2plain(s->timeIncrementInUs));
+-        printf("\tnb frames    :%04"PRIu32"\n",s->_nb_video_frames);
++        printf("\tfirstFramePts      :%08" PRIu64" %s\n",s->firstFramePts,ADM_us2plain(s->firstFramePts));
++        printf("\ttimeIncrementInUs  :%08" PRIu64" %s\n",s->timeIncrementInUs,ADM_us2plain(s->timeIncrementInUs));
++        printf("\tnb frames    :%04" PRIu32"\n",s->_nb_video_frames);
+     }
+ 
+ }
+@@ -697,7 +697,7 @@ void ADM_EditorSegment::dumpRefVideos(void)
+     vidHeader *demuxer=vid->_aviheader;
+     if(false==TimeToFrame(vid,pts,&frame,&flags))
+     {
+-            ADM_warning("Cannot get frame with pts=%"PRIu64" ms\n",pts/1000);
++            ADM_warning("Cannot get frame with pts=%" PRIu64" ms\n",pts/1000);
+             return false;
+     }
+     // Now get DTS..
+@@ -726,7 +726,7 @@ void ADM_EditorSegment::dumpRefVideos(void)
+     }
+     if(deltaFrame<0)
+     {
+-        ADM_warning("Cannot find a valid DTS for pts=%"PRIu64"ms\n",pts/1000);
++        ADM_warning("Cannot find a valid DTS for pts=%" PRIu64"ms\n",pts/1000);
+         *dts=pts;
+         return false;
+     }
+@@ -777,12 +777,12 @@ bool        ADM_EditorSegment::LinearToRefTime(int segNo,uint64_t linear,uint64_
+     ADM_assert(seg);
+     if(linear<seg->_startTimeUs)
+     {
+-        ADM_warning("This given time is not in the segment: Given time %"PRIu64", seg start at %"PRIu64"\n",
++        ADM_warning("This given time is not in the segment: Given time %" PRIu64", seg start at %" PRIu64"\n",
+                         linear, seg->_startTimeUs);
+     }
+     if(linear>=seg->_startTimeUs+seg->_durationUs)
+     {
+-        ADM_warning("This given time is not in the segment: Given time %"PRIu64", seg end at %"PRIu64"\n",
++        ADM_warning("This given time is not in the segment: Given time %" PRIu64", seg end at %" PRIu64"\n",
+                         linear, seg->_startTimeUs+seg->_durationUs);
+ 
+     }
+diff --git a/avidemux/common/ADM_editor/src/audio/ADM_edAudioPacket.cpp b/avidemux/common/ADM_editor/src/audio/ADM_edAudioPacket.cpp
+index 70faebf..acacd9e 100644
+--- a/avidemux/common/ADM_editor/src/audio/ADM_edAudioPacket.cpp
++++ b/avidemux/common/ADM_editor/src/audio/ADM_edAudioPacket.cpp
+@@ -60,7 +60,7 @@ bool ADM_edAudioTrackFromVideo::switchToNextAudioSegment(void)
+         // Try to switch segment
+         if(_audioSeg+1>=parent->_segments.getNbSegments()) return false;
+ 
+-        ADM_warning("Switching to segment %"PRIu32"\n",_audioSeg+1);
++        ADM_warning("Switching to segment %" PRIu32"\n",_audioSeg+1);
+         _audioSeg++;
+         _SEGMENT *seg=parent->_segments.getSegment(_audioSeg);
+         ADM_audioStreamTrack *trk=getTrackAtVideoNumber(seg->_reference);
+@@ -76,10 +76,10 @@ bool ADM_edAudioTrackFromVideo::switchToNextAudioSegment(void)
+         // Go to beginning of the stream
+         if(false==trk->stream->goToTime(seg->_refStartTimeUs))
+           {
+-            ADM_warning("Fail to seek audio to %"PRIu64"ms\n",seg->_refStartTimeUs/1000);
++            ADM_warning("Fail to seek audio to %" PRIu64"ms\n",seg->_refStartTimeUs/1000);
+             return false;
+           }
+-        ADM_info("Switched ok to audio segment %"PRIu32", with a ref time=%s\n",
++        ADM_info("Switched ok to audio segment %" PRIu32", with a ref time=%s\n",
+             _audioSeg,ADM_us2plain(seg->_refStartTimeUs));
+         return true;
+ 
+@@ -154,7 +154,7 @@ zgain:
+     {
+         if(*odts<seg->_refStartTimeUs)
+         {
+-            ADM_warning("Audio packet is too early %"PRIu64" ms, this segment starts at %"PRIu64"ms\n",*odts,seg->_refStartTimeUs);
++            ADM_warning("Audio packet is too early %" PRIu64" ms, this segment starts at %" PRIu64"ms\n",*odts,seg->_refStartTimeUs);
+             goto zgain;
+         }
+ #if 0
+@@ -192,7 +192,7 @@ bool ADM_edAudioTrackFromVideo::goToTime (uint64_t ustime)
+     ADM_info(" go to time %02.2f secs\n",((float)ustime)/1000000.);
+     if(false==parent->_segments.convertLinearTimeToSeg(ustime,&seg,&segTime))
+       {
+-        ADM_warning("Cannot convert %"PRIu64" to linear time\n",ustime/1000);
++        ADM_warning("Cannot convert %" PRIu64" to linear time\n",ustime/1000);
+         return false;
+       }
+     ADM_info("=> seg %d, rel time %02.2f secs\n",(int)seg,((float)segTime)/1000000.);
+@@ -200,7 +200,7 @@ bool ADM_edAudioTrackFromVideo::goToTime (uint64_t ustime)
+     ADM_audioStreamTrack *trk=getTrackAtVideoNumber(s->_reference);
+     if(!trk)
+       {
+-        ADM_warning("No audio for segment %"PRIu32"\n",seg);
++        ADM_warning("No audio for segment %" PRIu32"\n",seg);
+         return false;
+       }
+     uint64_t seekTime;
+diff --git a/avidemux/common/ADM_editor/src/audio/ADM_edAudioPcm.cpp b/avidemux/common/ADM_editor/src/audio/ADM_edAudioPcm.cpp
+index cbb5b73..940ba3a 100644
+--- a/avidemux/common/ADM_editor/src/audio/ADM_edAudioPcm.cpp
++++ b/avidemux/common/ADM_editor/src/audio/ADM_edAudioPcm.cpp
+@@ -105,12 +105,12 @@ again:
+     {
+         if(labs((int64_t)lastDts-(int64_t)packetBufferDts)>ADM_ALLOWED_DRIFT_US)
+         {
+-            ADM_info("[Composer::getPCMPacket] Track %d,%"PRIx64" : drift %d, computed :%s",
++            ADM_info("[Composer::getPCMPacket] Track %d,%" PRIx64" : drift %d, computed :%s",
+                         (int)myTrackNumber,(uint64_t)trk,(int)(lastDts-packetBufferDts),ADM_us2plain(lastDts));
+             ADM_info(" got %s\n", ADM_us2plain(packetBufferDts));
+             if(packetBufferDts<lastDts)
+             {
+-                printf("[Composer::getPCMPacket] Track %d:%"PRIx64" : Dropping packet %"PRIu32" last =%"PRIu32"\n",myTrackNumber,(uint64_t)trk,(uint32_t)(lastDts/1000),(uint32_t)(packetBufferDts/1000));
++                printf("[Composer::getPCMPacket] Track %d:%" PRIx64" : Dropping packet %" PRIu32" last =%" PRIu32"\n",myTrackNumber,(uint64_t)trk,(uint32_t)(lastDts/1000),(uint32_t)(packetBufferDts/1000));
+                 drop=true;
+             }else 
+             {
+diff --git a/avidemux/common/ADM_editor/src/audio/ADM_edAudioTrackFromVideo.cpp b/avidemux/common/ADM_editor/src/audio/ADM_edAudioTrackFromVideo.cpp
+index 6dea94b..cb7d8cf 100644
+--- a/avidemux/common/ADM_editor/src/audio/ADM_edAudioTrackFromVideo.cpp
++++ b/avidemux/common/ADM_editor/src/audio/ADM_edAudioTrackFromVideo.cpp
+@@ -28,7 +28,7 @@
+ ADM_edAudioTrackFromVideo::ADM_edAudioTrackFromVideo(ADM_audioStreamTrack *track,int trackNumber, ADM_Composer *parent)
+ :  ADM_edAudioTrack(ADM_EDAUDIO_FROM_VIDEO,NULL)
+ {
+-    ADM_info("Creating edAudio from video track %d at %"PRIx32"\n",trackNumber,this);
++    ADM_info("Creating edAudio from video track %d at %" PRIx32"\n",trackNumber,this);
+     myTrackNumber=trackNumber;
+     this->parent=parent;
+     _audioSeg=0;
+@@ -54,7 +54,7 @@ bool ADM_edAudioTrackFromVideo::isCBR()
+ */
+ ADM_edAudioTrackFromVideo::~ADM_edAudioTrackFromVideo()
+ {
+-    ADM_info("Destroying edAudio from video track %d at %"PRIx32"\n",myTrackNumber,this);
++    ADM_info("Destroying edAudio from video track %d at %" PRIx32"\n",myTrackNumber,this);
+     // No need to destroy, we are just a wrapper
+ }
+ /**
+diff --git a/avidemux/common/ADM_editor/src/utils/ADM_edCache.cpp b/avidemux/common/ADM_editor/src/utils/ADM_edCache.cpp
+index d3e3b72..1a23c6b 100644
+--- a/avidemux/common/ADM_editor/src/utils/ADM_edCache.cpp
++++ b/avidemux/common/ADM_editor/src/utils/ADM_edCache.cpp
+@@ -88,7 +88,7 @@ ADMImage	*EditorCache::getFreeImage(void)
+     int r,w;
+     r=readIndex%_nbImage;
+     w=(writeIndex)%_nbImage;
+-    aprintf("Read: %"PRIu32" write :%"PRIu32"\n",readIndex,writeIndex);
++    aprintf("Read: %" PRIu32" write :%" PRIu32"\n",readIndex,writeIndex);
+     if(r==w && readIndex!=writeIndex) //full
+     {
+         readIndex++; // free older
+@@ -131,7 +131,7 @@ void        EditorCache::invalidate(ADMImage *image)
+                 uint32_t prev=(writeIndex+_nbImage-1)%_nbImage;
+                  ADM_assert(i==prev);
+                  ADM_assert(_elem[i].pts==ADM_NO_PTS);
+-                 aprintf("Invalidate writeIndex %"PRIu32"\n",writeIndex);
++                 aprintf("Invalidate writeIndex %" PRIu32"\n",writeIndex);
+                  writeIndex--;
+                  return;
+             }
+@@ -152,7 +152,7 @@ bool		EditorCache::validate(ADMImage *image)
+ 		{
+             ADM_assert(_elem[i].pts==ADM_NO_PTS);
+ 			_elem[i].pts=image->Pts;
+-            aprintf("validate Index %"PRIu32" with pts=%"PRIu64"ms\n",i,image->Pts);
++            aprintf("validate Index %" PRIu32" with pts=%" PRIu64"ms\n",i,image->Pts);
+ 			return true;
+ 		}
+ 
+@@ -166,7 +166,7 @@ bool		EditorCache::validate(ADMImage *image)
+ */
+ void EditorCache::dump( void)
+ {
+-    printf("ReadIndex:%"PRIu32", WriteIndex:%"PRIu32"\n",readIndex,writeIndex);
++    printf("ReadIndex:%" PRIu32", WriteIndex:%" PRIu32"\n",readIndex,writeIndex);
+     for(int i=0;i<_nbImage;i++)
+     {
+       cacheElem *e=&(_elem[i]);
+@@ -174,7 +174,7 @@ void EditorCache::dump( void)
+         {
+             case ADM_NO_PTS:  printf("Not used %d\n",i);break;
+             default:
+-                printf("Edcache content[%d]: PTS : %s %"PRIu64" ms\n",i,
++                printf("Edcache content[%d]: PTS : %s %" PRIu64" ms\n",i,
+                                                                     ADM_us2plain(e->image->Pts),e->image->Pts/1000);
+                 break;
+         }
+@@ -216,7 +216,7 @@ ADMImage    *EditorCache::getAfter(uint64_t pts)
+                 return candidate;
+         }
+     }
+-    aADM_warning("Cannot find image after %"PRIu64" ms in cache\n",pts/1000);
++    aADM_warning("Cannot find image after %" PRIu64" ms in cache\n",pts/1000);
+     return NULL;
+ }
+ /**
+@@ -234,11 +234,11 @@ ADMImage    *EditorCache::getBefore(uint64_t pts)
+         {
+             index+=_nbImage-1;
+             index%=_nbImage;
+-            printf("GetBefore : Looking for %"PRIu64" ms get %"PRIu64" ms\n",pts/1000,_elem[index].image->Pts/1000);
++            printf("GetBefore : Looking for %" PRIu64" ms get %" PRIu64" ms\n",pts/1000,_elem[index].image->Pts/1000);
+             return _elem[index].image;
+         }
+     }
+-    aADM_warning("Cannot find image before %"PRIu64" ms in cache\n",pts/1000);
++    aADM_warning("Cannot find image before %" PRIu64" ms in cache\n",pts/1000);
+     return NULL;
+ }
+ 
+diff --git a/avidemux/common/ADM_editor/src/utils/ADM_edPtsDts.cpp b/avidemux/common/ADM_editor/src/utils/ADM_edPtsDts.cpp
+index 439c9b4..c196025 100644
+--- a/avidemux/common/ADM_editor/src/utils/ADM_edPtsDts.cpp
++++ b/avidemux/common/ADM_editor/src/utils/ADM_edPtsDts.cpp
+@@ -69,9 +69,9 @@ bool ADM_verifyDts(vidHeader *hdr,uint64_t timeIncrementUs)
+             {
+                 if(dts3>got_dts &&dts2>got_dts && dts2>dts3)
+                 {
+-                    ADM_warning("Out of order dts at frame %d %"PRIu64",%"PRIu64",%"PRIu64"\n",i,got_dts,dts2,dts3);
++                    ADM_warning("Out of order dts at frame %d %" PRIu64",%" PRIu64",%" PRIu64"\n",i,got_dts,dts2,dts3);
+                     dts2=got_dts+timeIncrementUs;
+-                    ADM_info("Setting to %"PRIu64"\n",dts2);
++                    ADM_info("Setting to %" PRIu64"\n",dts2);
+                     hdr->setPtsDts(i,pts2,dts2);
+                 }
+             }
+@@ -95,9 +95,9 @@ bool ADM_verifyDts(vidHeader *hdr,uint64_t timeIncrementUs)
+                 //ADM_info("%d %"PRIu64" %"PRIu64" %"PRIu64"\n",i,got_dts,dts2,dts3);
+                 if(dts3>got_dts &&dts2<got_dts )
+                 {
+-                    ADM_warning("Low dts : Out of order dts at frame %d %"PRIu64",%"PRIu64",%"PRIu64"\n",i,got_dts,dts2,dts3);
++                    ADM_warning("Low dts : Out of order dts at frame %d %" PRIu64",%" PRIu64",%" PRIu64"\n",i,got_dts,dts2,dts3);
+                     dts2=got_dts+timeIncrementUs;
+-                    ADM_info("Setting to %"PRIu64"\n",dts2);
++                    ADM_info("Setting to %" PRIu64"\n",dts2);
+                     hdr->setPtsDts(i,pts2,dts2);
+                 }
+             }
+@@ -210,13 +210,13 @@ bool guessH264(vidHeader *hdr,uint64_t timeIncrementUs,int missingIndex)
+         }
+         if(maxDelta>=2*timeIncrementUs)
+         {
+-            ADM_info("Our best guess is at %"PRIu64"\n",neighbour[maxIndex]);
++            ADM_info("Our best guess is at %" PRIu64"\n",neighbour[maxIndex]);
+             uint64_t pts,dts,pts2;
+             pts2=neighbour[maxIndex]+timeIncrementUs;
+             hdr->getPtsDts(missingIndex,&pts,&dts); 
+             if(pts2>dts)
+             {
+-                ADM_error("Our guessed PTS is too early, aborting (%"PRIu64"/%"PRIu64")\n",pts2,dts);
++                ADM_error("Our guessed PTS is too early, aborting (%" PRIu64"/%" PRIu64")\n",pts2,dts);
+             }else
+                 hdr->setPtsDts(missingIndex,pts2,dts);   
+         }else   
+@@ -270,7 +270,7 @@ bool ADM_setH264MissingPts(vidHeader *hdr,uint64_t timeIncrementUs,uint64_t *del
+             continue;
+         }
+     }
+-    ADM_info("H264 AVC scheme: %"PRIu32"/%"PRIu32" failures.\n",fail,nbFrames/2);
++    ADM_info("H264 AVC scheme: %" PRIu32"/%" PRIu32" failures.\n",fail,nbFrames/2);
+     if(fail) goto nextScheme;
+     {
+     ADM_info("Filling 2nd field PTS\n");
+@@ -366,9 +366,9 @@ bool ADM_computeMP124MissingPtsDts(vidHeader *hdr,uint64_t timeIncrementUs,uint6
+             nDts++;
+     }
+ next:
+-        ADM_info("Out of %"PRIi32" frames, we have %"PRIi32" valid DTS and %"PRIi32" valid PTS\n",info.nb_frames,nDts,nPts);
+-        ADM_info("We also have %"PRIi32" bframes\n",nbB);
+-        ADM_info("We have %"PRIu32" fields and %"PRIu32" frames\n",nbFields,nbFrames);
++        ADM_info("Out of %" PRIi32" frames, we have %" PRIi32" valid DTS and %" PRIi32" valid PTS\n",info.nb_frames,nDts,nPts);
++        ADM_info("We also have %" PRIi32" bframes\n",nbB);
++        ADM_info("We have %" PRIu32" fields and %" PRIu32" frames\n",nbFields,nbFrames);
+         if(nbFields>2)
+         {
+             ADM_info("Cannot recompute PTS/DTS for field encoded picture.\n");
+@@ -421,7 +421,7 @@ bool setPtsEqualDts(vidHeader *hdr,uint64_t timeIncrementUs)
+         uint64_t pts,dts;
+         if(true!=hdr->getPtsDts(i,&pts,&dts))
+         {
+-            printf("[Editor] GetPtsDts failed for frame %"PRIu32"\n",i);
++            printf("[Editor] GetPtsDts failed for frame %" PRIu32"\n",i);
+             return false;
+         }
+         int k=0;
+@@ -432,7 +432,7 @@ bool setPtsEqualDts(vidHeader *hdr,uint64_t timeIncrementUs)
+             case GOT_BOTH : // Got both
+                 if(pts!=dts)
+                             {
+-                                    printf("[Editor] Pts!=Dts for frame %"PRIu32"\n",i);
++                                    printf("[Editor] Pts!=Dts for frame %" PRIu32"\n",i);
+                             }
+                 first=pts; // do nothing since we already have both...
+                 continue;            
+@@ -460,7 +460,7 @@ bool setPtsEqualDts(vidHeader *hdr,uint64_t timeIncrementUs)
+         // update
+         if(true!=hdr->setPtsDts(i,pts,dts))
+         {
+-            printf("[Editor] SetPtsDts failed for frame %"PRIu32"\n",i);
++            printf("[Editor] SetPtsDts failed for frame %" PRIu32"\n",i);
+             return false;
+         }
+     }
+diff --git a/avidemux/common/ADM_editor/src/utils/ADM_editIface.cpp b/avidemux/common/ADM_editor/src/utils/ADM_editIface.cpp
+index 97ec9f2..49c6a97 100644
+--- a/avidemux/common/ADM_editor/src/utils/ADM_editIface.cpp
++++ b/avidemux/common/ADM_editor/src/utils/ADM_editIface.cpp
+@@ -157,7 +157,7 @@ int ADM_Composer::addVideoFilter(const char *filter, CONFcouple *c)
+ {
+ 	uint32_t filterTag = ADM_vf_getTagFromInternalName(filter);
+ 
+-	printf("Adding Filter %s -> %"PRIu32"... \n", filter, filterTag);
++	printf("Adding Filter %s -> %" PRIu32"... \n", filter, filterTag);
+ 
+ 	bool r = (ADM_vf_addFilterFromTag(this, filterTag, c, false) != NULL);
+ 
+diff --git a/avidemux/common/ADM_muxerGate/src/ADM_videoCopy.cpp b/avidemux/common/ADM_muxerGate/src/ADM_videoCopy.cpp
+index f1ceb6e..4ea2db7 100644
+--- a/avidemux/common/ADM_muxerGate/src/ADM_videoCopy.cpp
++++ b/avidemux/common/ADM_muxerGate/src/ADM_videoCopy.cpp
+@@ -53,13 +53,13 @@ ADM_videoStreamCopy::ADM_videoStreamCopy(uint64_t startTime,uint64_t endTime)
+         uint64_t delta=ptsStart;
+         video_body->getPtsDtsDelta(&delta);
+ 
+-        ADM_info("PTS/DTS delta=%"PRIu64" us\n",delta);
++        ADM_info("PTS/DTS delta=%" PRIu64" us\n",delta);
+         //videoDelay
+         if(delta>ptsStart)
+         {
+             videoDelay=delta-ptsStart;
+             dtsStart=0;
+-            ADM_info("Dts is too early, delaying everything by %"PRIu64" ms\n",videoDelay/1000);
++            ADM_info("Dts is too early, delaying everything by %" PRIu64" ms\n",videoDelay/1000);
+         }else
+         {
+             dtsStart=ptsStart-delta;
+@@ -75,7 +75,7 @@ ADM_videoStreamCopy::ADM_videoStreamCopy(uint64_t startTime,uint64_t endTime)
+     rewind();
+     
+     ADM_info(" Fixating start time by %d\n",abs((int)(startTime-startTimeDts)));
+-    ADM_info(" Starting DTS=%"PRIu64", PTS=%"PRIu64" ms\n",startTimeDts/1000,startTimePts/1000);
++    ADM_info(" Starting DTS=%" PRIu64", PTS=%" PRIu64" ms\n",startTimeDts/1000,startTimePts/1000);
+ }
+ /**
+ 
+@@ -107,8 +107,8 @@ uint64_t  ADM_videoStreamCopy::rescaleTs(uint64_t in)
+     if(in==ADM_NO_PTS) return in;
+     if(in>=startTimeDts) return in-startTimeDts;
+     ADM_warning("Negative time!\n");
+-    ADM_warning("Current time = %"PRIu64"\n",in);
+-    ADM_warning("start time = %"PRIu64"\n",startTimeDts);
++    ADM_warning("Current time = %" PRIu64"\n",in);
++    ADM_warning("start time = %" PRIu64"\n",startTimeDts);
+     return 0;
+ }
+ /**
+@@ -152,7 +152,7 @@ again:
+           {
+             if(image.demuxerPts<image.demuxerDts)
+               {
+-                ADM_warning("PTS<DTS : PTS=%"PRIu64" ms , DTS=%"PRIu64"ms\n",image.demuxerPts/1000,image.demuxerDts/1000);
++                ADM_warning("PTS<DTS : PTS=%" PRIu64" ms , DTS=%" PRIu64"ms\n",image.demuxerPts/1000,image.demuxerDts/1000);
+ 
+               }
+ 
+diff --git a/avidemux/common/ADM_muxerGate/src/ADM_videoProcess.cpp b/avidemux/common/ADM_muxerGate/src/ADM_videoProcess.cpp
+index 621fe3a..c4fccdc 100644
+--- a/avidemux/common/ADM_muxerGate/src/ADM_videoProcess.cpp
++++ b/avidemux/common/ADM_muxerGate/src/ADM_videoProcess.cpp
+@@ -28,17 +28,17 @@ ADM_videoStreamProcess::ADM_videoStreamProcess(ADM_coreVideoEncoder *encoder)
+     width=encoder->getWidth();
+     height=encoder->getHeight();
+     fcc=encoder->getFourcc();
+-    ADM_info("[StreamProcess] Stream %"PRIu32"x%"PRIu32", codec : %s\n",width,height,fcc);
++    ADM_info("[StreamProcess] Stream %" PRIu32"x%" PRIu32", codec : %s\n",width,height,fcc);
+     fourCC=fourCC::get((uint8_t *)fcc);
+     frameIncrement=encoder->getFrameIncrement();
+     float f=encoder->getFrameIncrement();
+     if(f) f=1000000000./f;
+         else f=25000;
+     averageFps1000=(uint32_t)f;
+-    printf("[StreamProcess] Average FPS1000=%"PRIu32"\n",averageFps1000);
++    printf("[StreamProcess] Average FPS1000=%" PRIu32"\n",averageFps1000);
+     isCFR=false;
+     videoDelay=encoder->getEncoderDelay();
+-    printf("[StreamProcess] Video Encoder Delay=%"PRIu64"ms\n",videoDelay/1000);
++    printf("[StreamProcess] Video Encoder Delay=%" PRIu64"ms\n",videoDelay/1000);
+ }
+ /**
+     \fn ADM_videoStreamProcess
+diff --git a/avidemux/common/ADM_osSupport/ADM_misc.cpp b/avidemux/common/ADM_osSupport/ADM_misc.cpp
+index 5e692c1..6e99b47 100644
+--- a/avidemux/common/ADM_osSupport/ADM_misc.cpp
++++ b/avidemux/common/ADM_osSupport/ADM_misc.cpp
+@@ -12,11 +12,11 @@ char* ms2timedisplay(uint32_t ms)
+ 	
+ 	if (mm > 1)
+ 	{
+-		snprintf(string, ADM_MAX_STRING,QT_TRANSLATE_NOOP("adm","%"PRIu32" minutes"), mm);
++		snprintf(string, ADM_MAX_STRING,QT_TRANSLATE_NOOP("adm","%" PRIu32" minutes"), mm);
+ 	}
+ 	else if (mm == 1)
+ 	{
+-		snprintf(string,ADM_MAX_STRING, QT_TRANSLATE_NOOP("adm","%"PRIu32" minute"), mm);
++		snprintf(string,ADM_MAX_STRING, QT_TRANSLATE_NOOP("adm","%" PRIu32" minute"), mm);
+ 	}
+ 	else
+ 	{
+@@ -24,11 +24,11 @@ char* ms2timedisplay(uint32_t ms)
+ 
+ 		if (ss == 1)
+ 		{
+-			snprintf(string,ADM_MAX_STRING, QT_TRANSLATE_NOOP("adm","%"PRIu32" second"), ss);
++			snprintf(string,ADM_MAX_STRING, QT_TRANSLATE_NOOP("adm","%" PRIu32" second"), ss);
+ 		}
+ 		else
+ 		{
+-			snprintf(string,ADM_MAX_STRING, QT_TRANSLATE_NOOP("adm","%"PRIu32" seconds"), ss);
++			snprintf(string,ADM_MAX_STRING, QT_TRANSLATE_NOOP("adm","%" PRIu32" seconds"), ss);
+ 		}
+ 	}
+     string[ADM_MAX_STRING]=0;
+diff --git a/avidemux/common/ADM_previewNavigate.cpp b/avidemux/common/ADM_previewNavigate.cpp
+index 9e8102e..d8055f5 100644
+--- a/avidemux/common/ADM_previewNavigate.cpp
++++ b/avidemux/common/ADM_previewNavigate.cpp
+@@ -69,7 +69,7 @@ bool admPreview::seekToTime(uint64_t timeframe)
+ {
+     if(!video_body->goToTimeVideo(timeframe)) 
+     {
+-        ADM_warning(" seeking for frame at %"PRIu64" ms failed\n",timeframe/1000LL);
++        ADM_warning(" seeking for frame at %" PRIu64" ms failed\n",timeframe/1000LL);
+         return false;
+     }
+     return samePicture();
+@@ -85,7 +85,7 @@ bool admPreview::seekToIntraPts(uint64_t timeframe)
+ {
+     if(!video_body->goToIntraTimeVideo(timeframe)) 
+     {
+-        ADM_warning(" seeking for frame at %"PRIu64" ms failed\n",timeframe/1000LL);
++        ADM_warning(" seeking for frame at %" PRIu64" ms failed\n",timeframe/1000LL);
+         return false;
+     }
+     return samePicture();
+@@ -131,13 +131,13 @@ uint8_t admPreview::previousPicture(void)
+ bool admPreview::nextKeyFrame(void)
+ {
+     uint64_t pts=getCurrentPts();
+-    ADM_info("Current PTS :%"PRId64" ms\n",pts/1000LL);
++    ADM_info("Current PTS :%" PRId64" ms\n",pts/1000LL);
+     if(false==video_body->getNKFramePTS(&pts))
+     {
+         ADM_warning("Cannot find next keyframe\n");
+         return false;
+     }
+-    ADM_info("next kf PTS :%"PRId64" ms\n",pts/1000LL);
++    ADM_info("next kf PTS :%" PRId64" ms\n",pts/1000LL);
+     return seekToIntraPts(pts);
+ }
+ /**
+@@ -147,13 +147,13 @@ bool admPreview::nextKeyFrame(void)
+ bool admPreview::previousKeyFrame(void)
+ {
+     uint64_t pts=getCurrentPts();
+-    ADM_info("Current PTS :%"PRId64" ms\n",pts/1000LL);
++    ADM_info("Current PTS :%" PRId64" ms\n",pts/1000LL);
+     if(false==video_body->getPKFramePTS(&pts))
+     {
+         ADM_warning("Cannot find previous keyframe\n");
+         return false;
+     }
+-    ADM_info("next kf PTS :%"PRId64" ms\n",pts/1000LL);
++    ADM_info("next kf PTS :%" PRId64" ms\n",pts/1000LL);
+     return seekToIntraPts(pts);
+ }
+ // EOF
+diff --git a/avidemux/common/ADM_render/GUI_render.cpp b/avidemux/common/ADM_render/GUI_render.cpp
+index d5d696f..8d6abee 100644
+--- a/avidemux/common/ADM_render/GUI_render.cpp
++++ b/avidemux/common/ADM_render/GUI_render.cpp
+@@ -177,7 +177,7 @@ uint8_t renderDisplayResize(uint32_t w, uint32_t h,renderZoom zoom)
+ {
+         bool create=false;
+         enableDraw=false;
+-        ADM_info("Render to %"PRIu32"x%"PRIu32" zoom=%d\n",w,h,zoom);
++        ADM_info("Render to %" PRIu32"x%" PRIu32" zoom=%d\n",w,h,zoom);
+         if(!renderer) create=true;
+         else
+         {
+diff --git a/avidemux/common/ADM_render/GUI_xvRender.cpp b/avidemux/common/ADM_render/GUI_xvRender.cpp
+index b53c715..f20d13b 100644
+--- a/avidemux/common/ADM_render/GUI_xvRender.cpp
++++ b/avidemux/common/ADM_render/GUI_xvRender.cpp
+@@ -273,9 +273,9 @@ unsigned long num_adaptors;
+ 	  goto failed;
+       }
+ #ifdef 	COLORSPACE_YV12
+-    printf("[Xvideo] Xv YV12 found at port :%d, format : %"PRIi32"\n", port, xv_format);
++    printf("[Xvideo] Xv YV12 found at port :%d, format : %" PRIi32"\n", port, xv_format);
+ #else
+-    printf("[Xvideo] Xv YUY2 found at port :%d, format : %"PRIi32"\n", port, xv_format);
++    printf("[Xvideo] Xv YUY2 found at port :%d, format : %" PRIi32"\n", port, xv_format);
+ #endif
+ 
+     if (Success != XvGrabPort(WDN, port, 0))
+@@ -368,7 +368,7 @@ uint8_t GUI_XvList(Display * dis, uint32_t port, uint32_t * fmt)
+ 	for (k = 0; !f && (k < imgfmt); k++)
+ 	  {
+ #ifdef VERBOSE_XV
+-	      printf("[Xvideo]%d/%d: %"PRIx32" %d --> %s\n", k,imgfmt,port, formatValues[k].id,  formatValues[k].guid);
++	      printf("[Xvideo]%d/%d: %" PRIx32" %d --> %s\n", k,imgfmt,port, formatValues[k].id,  formatValues[k].guid);
+ #endif
+ 
+ 	      if (!strcmp(formatValues[k].guid, "YV12"))
+diff --git a/avidemux/common/ADM_toolkit/automation.cpp b/avidemux/common/ADM_toolkit/automation.cpp
+index 5be351a..42fd06b 100644
+--- a/avidemux/common/ADM_toolkit/automation.cpp
++++ b/avidemux/common/ADM_toolkit/automation.cpp
+@@ -139,7 +139,7 @@ static two_arg_type two;
+ 			      runParaSearch += 1;
+ 		  }
+ 
+-          printf("\n *** Automated : %"PRIu32" entries*************\n",(uint32_t)NB_AUTO);
++          printf("\n *** Automated : %" PRIu32" entries*************\n",(uint32_t)NB_AUTO);
+           // we need to process
+           argc-=1;
+           cur=1;
+@@ -300,8 +300,8 @@ void call_videocodec(char *p)
+ void call_slave(char *p)
+ {
+     uint32_t i;
+-    sscanf(p,"%"PRIu32,&i);
+-    printf("Slace on port  %"PRIu32"\n",i);
++    sscanf(p,"%" PRIu32,&i);
++    printf("Slace on port  %" PRIu32"\n",i);
+     if(!ADM_slaveConnect(i))
+     {
+             ADM_error("Cannot connect to master\n");
+diff --git a/avidemux/common/gui_navigate.cpp b/avidemux/common/gui_navigate.cpp
+index 9e67dd0..3290cc7 100644
+--- a/avidemux/common/gui_navigate.cpp
++++ b/avidemux/common/gui_navigate.cpp
+@@ -57,23 +57,23 @@ static int ignore_change=0;
+           uint32_t nf;
+           ignore_change++;
+           nf = GUI_GetScale ();
+-          ADM_info("Scale :%"PRIu32"\n",nf);
++          ADM_info("Scale :%" PRIu32"\n",nf);
+           double tme=nf;
+           tme*=video_body->getVideoDuration();
+           tme/=ADM_SCALE_SIZE;
+           uint64_t pts=(uint64_t)tme;
+-          ADM_info("Scale Time:%"PRIu64" ms (total=%"PRIu64" ms)\n",pts/1000,video_body->getVideoDuration()/1000);
++          ADM_info("Scale Time:%" PRIu64" ms (total=%" PRIu64" ms)\n",pts/1000,video_body->getVideoDuration()/1000);
+           ADM_info("Scale Time:%s ms \n",ADM_us2plain(pts));
+            if(false==video_body->getPKFramePTS(&pts))
+             {
+-                ADM_warning("Cannot seek to %"PRIu64" ms\n",pts/1000);
++                ADM_warning("Cannot seek to %" PRIu64" ms\n",pts/1000);
+                 ignore_change--;
+                 break;
+             }
+              ADM_info("Seeking to  Time:%s ms \n",ADM_us2plain(pts));
+             if(true!=admPreview::seekToIntraPts(pts))
+             {
+-                ADM_warning("Scale: Seeking to intra at %"PRIu64" ms failed\n",pts/1000);
++                ADM_warning("Scale: Seeking to intra at %" PRIu64" ms failed\n",pts/1000);
+             }
+             GUI_setCurrentFrameAndTime();
+             ignore_change--;
+@@ -459,7 +459,7 @@ bool GUI_GoToTime(uint64_t time)
+     // We have to call the editor as the frames needed to decode the target frame may be hidden
+     if(false==video_body->goToTimeVideo(time))
+     {
+-        GUI_Error_HIG("Seek", "Error seekting to %"PRIu64" ms",time/1000);
++        GUI_Error_HIG("Seek", "Error seekting to %" PRIu64" ms",time/1000);
+     }
+     admPreview::samePicture();
+     GUI_setCurrentFrameAndTime();
+diff --git a/avidemux/common/gui_save.cpp b/avidemux/common/gui_save.cpp
+index fa021ed..8839c19 100644
+--- a/avidemux/common/gui_save.cpp
++++ b/avidemux/common/gui_save.cpp
+@@ -187,7 +187,7 @@ static bool A_saveAudioCommon (const char *name,ADM_audioStream *stream,double d
+    duration/=1000000; // in seconds to have samples
+    tgt_sample=(uint64_t)floor(duration);
+    printf("[saveAudio]Duration:%f ms\n",duration/1000);
+-   printf("[saveAudio]Samples:%"PRIu64" ms\n",tgt_sample);
++   printf("[saveAudio]Samples:%" PRIu64" ms\n",tgt_sample);
+ 
+    cur_sample=0;
+    written = 0;
+@@ -220,7 +220,7 @@ static bool A_saveAudioCommon (const char *name,ADM_audioStream *stream,double d
+   delete saver;
+   delete work;
+   delete[] buffer;
+-  ADM_info ("\n wanted %"PRIu64" samples, goto %"PRIu64" samples, written %"PRIu32" bytes\n", tgt_sample,cur_sample, written);
++  ADM_info ("\n wanted %" PRIu64" samples, goto %" PRIu64" samples, written %" PRIu32" bytes\n", tgt_sample,cur_sample, written);
+   return true;
+ }
+ 
+diff --git a/avidemux/qt4/ADM_jobs/src/ADM_jobControl.cpp b/avidemux/qt4/ADM_jobs/src/ADM_jobControl.cpp
+index e5652cd..95403e4 100644
+--- a/avidemux/qt4/ADM_jobs/src/ADM_jobControl.cpp
++++ b/avidemux/qt4/ADM_jobs/src/ADM_jobControl.cpp
+@@ -112,7 +112,7 @@ void jobWindow::refreshList(void)
+         QTableWidgetItem *endItem=fromText (end,i);
+         QTableWidgetItem *durItem=fromText (dur,i);
+ 
+-#define MX(x,y) case ADM_JOB_##x:  status->setIcon(QIcon(":/jobs/"y));break;
++#define MX(x,y) case ADM_JOB_##x:  status->setIcon(QIcon(":/jobs/" y));break;
+         switch(listOfJob[i].status)
+         {
+             MX(KO,"gtk-no.png");
+diff --git a/avidemux/qt4/ADM_openGL/src/ADM_openGlDownloadTexture.cpp b/avidemux/qt4/ADM_openGL/src/ADM_openGlDownloadTexture.cpp
+index 7717999..1255904 100644
+--- a/avidemux/qt4/ADM_openGL/src/ADM_openGlDownloadTexture.cpp
++++ b/avidemux/qt4/ADM_openGL/src/ADM_openGlDownloadTexture.cpp
+@@ -54,7 +54,7 @@ static inline void glYUV444_MMXInit(void)
+ {
+    static uint64_t __attribute__((used)) FUNNY_MANGLE(mask) = 0x00ff000000ff0000LL;
+ 
+-    __asm__(" movq "Mangle(mask)", %%mm7\n" ::);
++    __asm__(" movq " Mangle(mask)", %%mm7\n" ::);
+ }
+ static inline void glYUV444_MMX(const uint8_t *src, uint8_t *dst, const int width)
+ {
+diff --git a/avidemux/qt4/ADM_userInterfaces/ADM_dialog/Q_encoding.cpp b/avidemux/qt4/ADM_userInterfaces/ADM_dialog/Q_encoding.cpp
+index d83082d..ec0dac1 100644
+--- a/avidemux/qt4/ADM_userInterfaces/ADM_dialog/Q_encoding.cpp
++++ b/avidemux/qt4/ADM_userInterfaces/ADM_dialog/Q_encoding.cpp
+@@ -140,7 +140,7 @@ DIA_encodingQt4::DIA_encodingQt4( uint64_t duration,bool systray) : DIA_encoding
+ 
+ void DIA_encodingQt4::setFps(uint32_t fps)
+ {
+-      snprintf(stringMe,79,"%"PRIu32" fps",fps);
++      snprintf(stringMe,79,"%" PRIu32" fps",fps);
+       WRITE(labelFps);
+ }
+ 
+@@ -186,7 +186,7 @@ void DIA_encodingQt4::setPhasis(const char *n)
+ void DIA_encodingQt4::setFrameCount(uint32_t nb)
+ {
+           ADM_assert(ui);
+-          snprintf(stringMe,79,"%"PRIu32,nb);
++          snprintf(stringMe,79,"%" PRIu32,nb);
+           WRITE(labelFrame);
+ 
+ }
+@@ -234,7 +234,7 @@ void DIA_encodingQt4::setVideoCodec(const char *n)
+ void DIA_encodingQt4::setBitrate(uint32_t br,uint32_t globalbr)
+ {
+           ADM_assert(ui);
+-          snprintf(stringMe,79,"%"PRIu32" kB/s",br);
++          snprintf(stringMe,79,"%" PRIu32" kB/s",br);
+           WRITE(labelVidBitrate);
+ 
+ }
+@@ -257,7 +257,7 @@ void DIA_encodingQt4::setContainer(const char *container)
+ void DIA_encodingQt4::setQuantIn(int size)
+ {
+           ADM_assert(ui);
+-          sprintf(stringMe,"%"PRIu32,size);
++          sprintf(stringMe,"%" PRIu32,size);
+           WRITE(labelQz);
+ 
+ }
+@@ -270,7 +270,7 @@ void DIA_encodingQt4::setTotalSize(uint64_t size)
+ {
+           ADM_assert(ui);
+           uint64_t mb=size>>20;
+-          sprintf(stringMe,"%"PRIu32" MB",(int)mb);
++          sprintf(stringMe,"%" PRIu32" MB",(int)mb);
+           WRITE(labelTotalSize);
+ 
+ }
+@@ -284,7 +284,7 @@ void DIA_encodingQt4::setVideoSize(uint64_t size)
+ {
+           ADM_assert(ui);
+           uint64_t mb=size>>20;
+-          sprintf(stringMe,"%"PRIu32" MB",(int)mb);
++          sprintf(stringMe,"%" PRIu32" MB",(int)mb);
+           WRITE(labelVideoSize);
+ 
+ }
+@@ -297,7 +297,7 @@ void DIA_encodingQt4::setAudioSize(uint64_t size)
+ {
+           ADM_assert(ui);
+           uint64_t mb=size>>20;
+-          sprintf(stringMe,"%"PRIu32" MB",(int)mb);
++          sprintf(stringMe,"%" PRIu32" MB",(int)mb);
+           WRITE(labelAudioSize);
+ 
+ }
+@@ -322,7 +322,7 @@ void DIA_encodingQt4::setElapsedTimeMs(uint32_t nb)
+ void DIA_encodingQt4::setAverageQz(uint32_t nb)
+ {
+           ADM_assert(ui);
+-          snprintf(stringMe,79,"%"PRIu32,nb);
++          snprintf(stringMe,79,"%" PRIu32,nb);
+           WRITE(labelQz);
+ }
+ /**
+@@ -333,7 +333,7 @@ void DIA_encodingQt4::setAverageQz(uint32_t nb)
+ void DIA_encodingQt4::setAverageBitrateKbits(uint32_t kb)
+ {
+           ADM_assert(ui);
+-          snprintf(stringMe,79,"%"PRIu32" kbits/s",kb);
++          snprintf(stringMe,79,"%" PRIu32" kbits/s",kb);
+           WRITE(labelVidBitrate);
+ }
+ 
+diff --git a/avidemux/qt4/ADM_userInterfaces/ADM_dialog/Q_props.cpp b/avidemux/qt4/ADM_userInterfaces/ADM_dialog/Q_props.cpp
+index a6ff55e..7db1386 100644
+--- a/avidemux/qt4/ADM_userInterfaces/ADM_dialog/Q_props.cpp
++++ b/avidemux/qt4/ADM_userInterfaces/ADM_dialog/Q_props.cpp
+@@ -45,7 +45,7 @@ propWindow::propWindow(QWidget *parent) : QDialog(parent)
+     
+         //------------------------------------
+     
+-        FILLTEXT4(labeImageSize,QT_TRANSLATE_NOOP("qprops","%"PRIu32" x %"PRIu32), avifileinfo->width,avifileinfo->height);
++        FILLTEXT4(labeImageSize,QT_TRANSLATE_NOOP("qprops","%" PRIu32" x %" PRIu32), avifileinfo->width,avifileinfo->height);
+         FILLTEXT(labelFrameRate, QT_TRANSLATE_NOOP("qprops","%2.3f fps"), (float) avifileinfo->fps1000 / 1000.F);
+         FILLTEXT(label4CC, "%s",      fourCC::tostring(avifileinfo->fcc));
+         uint64_t duration=video_body->getVideoDuration();
+@@ -100,8 +100,8 @@ propWindow::propWindow(QWidget *parent) : QDialog(parent)
+                 }
+ 
+                 FILLQT_TRANSLATE_NOOP("qprops",labelChannels);
+-                FILLTEXT(labelFrequency, QT_TRANSLATE_NOOP("qprops","%"PRIu32" Hz"), wavinfo->frequency);
+-                FILLTEXT4(labelBitrate, QT_TRANSLATE_NOOP("qprops","%"PRIu32" Bps / %"PRIu32" kbps"), wavinfo->byterate,wavinfo->byterate * 8 / 1000);
++                FILLTEXT(labelFrequency, QT_TRANSLATE_NOOP("qprops","%" PRIu32" Hz"), wavinfo->frequency);
++                FILLTEXT4(labelBitrate, QT_TRANSLATE_NOOP("qprops","%" PRIu32" Bps / %" PRIu32" kbps"), wavinfo->byterate,wavinfo->byterate * 8 / 1000);
+                 
+                 sprintf(text, "%s", getStrFromAudioCodec(wavinfo->encoding));
+                 FILLQT_TRANSLATE_NOOP("qprops",labelACodec);
+diff --git a/avidemux/qt4/ADM_userInterfaces/ADM_dialog/T_index_pg.cpp b/avidemux/qt4/ADM_userInterfaces/ADM_dialog/T_index_pg.cpp
+index da7975a..b76653c 100644
+--- a/avidemux/qt4/ADM_userInterfaces/ADM_dialog/T_index_pg.cpp
++++ b/avidemux/qt4/ADM_userInterfaces/ADM_dialog/T_index_pg.cpp
+@@ -137,7 +137,7 @@ uint8_t       DIA_progressIndexing::update(uint32_t done,uint32_t total, uint32_
+         dialog->setTime(string);
+         
+ 
+-        sprintf(string,QT_TRANSLATE_NOOP("indexing","# Images :%0"PRIu32),nbImage);
++        sprintf(string,QT_TRANSLATE_NOOP("indexing","# Images :%0" PRIu32),nbImage);
+         dialog->setImage(string);
+ 
+         f=done;
+diff --git a/avidemux/qt4/ADM_userInterfaces/ADM_filters/Q_seekablePreview.cpp b/avidemux/qt4/ADM_userInterfaces/ADM_filters/Q_seekablePreview.cpp
+index 52b35e2..8dadc5a 100644
+--- a/avidemux/qt4/ADM_userInterfaces/ADM_filters/Q_seekablePreview.cpp
++++ b/avidemux/qt4/ADM_userInterfaces/ADM_filters/Q_seekablePreview.cpp
+@@ -80,7 +80,7 @@ bool Ui_seekablePreviewWindow::setCurrentPtsCallback(void *cookie,uint64_t pts)
+     {
+         return ((Ui_seekablePreviewWindow *)cookie)->setTime(pts);
+     }
+-    printf("No cookie, New PTS :%"PRId64" us\n",pts);
++    printf("No cookie, New PTS :%" PRId64" us\n",pts);
+     return true;
+ }
+ /**
+diff --git a/avidemux/qt4/ADM_userInterfaces/ADM_gui/ADM_qslider.cpp b/avidemux/qt4/ADM_userInterfaces/ADM_gui/ADM_qslider.cpp
+index 17f397c..dbf47f1 100644
+--- a/avidemux/qt4/ADM_userInterfaces/ADM_gui/ADM_qslider.cpp
++++ b/avidemux/qt4/ADM_userInterfaces/ADM_gui/ADM_qslider.cpp
+@@ -75,9 +75,9 @@ void ADM_QSlider::setMarkerB(uint64_t frameIndex)
+ void ADM_QSlider::setMarkers(uint64_t frameIndexA, uint64_t frameIndexB)
+ {
+ 	if (frameIndexA > totalDuration)
+-		printf("[ADM_QSlider] Marker A is out of bounds (%"PRIu64", %"PRIu64")\n", markerATime, totalDuration);
++		printf("[ADM_QSlider] Marker A is out of bounds (%" PRIu64", %" PRIu64")\n", markerATime, totalDuration);
+ 	else if (frameIndexB > totalDuration)
+-		printf("[ADM_QSlider] Marker B is out of bounds (%"PRIu64", %"PRIu64")\n", markerBTime, totalDuration);
++		printf("[ADM_QSlider] Marker B is out of bounds (%" PRIu64", %" PRIu64")\n", markerBTime, totalDuration);
+ 	else
+ 	{
+ 		markerATime = frameIndexA;
+diff --git a/avidemux/qt4/ADM_userInterfaces/ADM_gui/Q_gui2.cpp b/avidemux/qt4/ADM_userInterfaces/ADM_gui/Q_gui2.cpp
+index 70d8227..9515749 100644
+--- a/avidemux/qt4/ADM_userInterfaces/ADM_gui/Q_gui2.cpp
++++ b/avidemux/qt4/ADM_userInterfaces/ADM_gui/Q_gui2.cpp
+@@ -1245,12 +1245,12 @@ void UI_setMarkers(uint64_t a, uint64_t b)
+ 
+     timems=(uint32_t)(a);
+     ms2time(timems,&hh,&mm,&ss,&ms);
+-	snprintf(text,79,"%02"PRIu32":%02"PRIu32":%02"PRIu32".%02"PRIu32,hh,mm,ss,ms);
++	snprintf(text,79,"%02" PRIu32":%02" PRIu32":%02" PRIu32".%02" PRIu32,hh,mm,ss,ms);
+ 	WIDGET(pushButtonJumpToMarkerA)->setText(text);
+ 
+ 	timems=(uint32_t)(b);
+     ms2time(timems,&hh,&mm,&ss,&ms);
+-	snprintf(text,79,"%02"PRIu32":%02"PRIu32":%02"PRIu32".%02"PRIu32,hh,mm,ss,ms);
++	snprintf(text,79,"%02" PRIu32":%02" PRIu32":%02" PRIu32".%02" PRIu32,hh,mm,ss,ms);
+ 	WIDGET(pushButtonJumpToMarkerB)->setText(text);
+ 
+ 	slider->setMarkers(absoluteA, absoluteB);
+diff --git a/avidemux_core/ADM_core/src/ADM_cpuCap.cpp b/avidemux_core/ADM_core/src/ADM_cpuCap.cpp
+index 0aafcce..84bf898 100644
+--- a/avidemux_core/ADM_core/src/ADM_cpuCap.cpp
++++ b/avidemux_core/ADM_core/src/ADM_cpuCap.cpp
+@@ -38,9 +38,9 @@ extern "C"{
+ 
+ #define cpuid(index,eax,ebx,ecx,edx)\
+     __asm __volatile\
+-        ("mov %%"REG_b", %%"REG_S"\n\t"\
++        ("mov %%" REG_b", %%" REG_S"\n\t"\
+          "cpuid\n\t"\
+-         "xchg %%"REG_b", %%"REG_S\
++         "xchg %%" REG_b", %%" REG_S\
+          : "=a" (eax), "=S" (ebx),\
+            "=c" (ecx), "=d" (edx)\
+          : "0" (index));
+diff --git a/avidemux_core/ADM_core/src/ADM_misc.cpp b/avidemux_core/ADM_core/src/ADM_misc.cpp
+index f6f9666..3036156 100644
+--- a/avidemux_core/ADM_core/src/ADM_misc.cpp
++++ b/avidemux_core/ADM_core/src/ADM_misc.cpp
+@@ -218,7 +218,7 @@ uint32_t ms=(uint32_t)(ams/1000);
+     else    
+     {
+         ms2time(ms,&hh,&mm,&ss,&mms);
+-        sprintf(buffer,"%02"PRIu32":%02"PRIu32":%02"PRIu32",%03"PRIu32,hh,mm,ss,mms);
++        sprintf(buffer,"%02" PRIu32":%02" PRIu32":%02" PRIu32",%03" PRIu32,hh,mm,ss,mms);
+     }
+     return buffer;
+ 
+diff --git a/avidemux_core/ADM_coreAudio/src/ADM_audioClock.cpp b/avidemux_core/ADM_coreAudio/src/ADM_audioClock.cpp
+index cd8c382..b52c4b9 100644
+--- a/avidemux_core/ADM_coreAudio/src/ADM_audioClock.cpp
++++ b/avidemux_core/ADM_coreAudio/src/ADM_audioClock.cpp
+@@ -51,7 +51,7 @@ bool           audioClock::setTimeUs(uint64_t clk)
+                 uint64_t curTime=getTimeUs();
+                 int64_t delta=(int64_t)clk-(int64_t)curTime;
+                 if(labs((long int)delta)<2000) return true;
+-                printf("[audioClock] Drift detected :%"PRIu64" vs %"PRIu64", delta=%"PRId64"\n",curTime,clk,delta);
++                printf("[audioClock] Drift detected :%" PRIu64" vs %" PRIu64", delta=%" PRId64"\n",curTime,clk,delta);
+                 _nbSamples=0;
+                 _baseClock=clk;
+                 return true; 
+diff --git a/avidemux_core/ADM_coreAudio/src/ADM_audioStreamBuffered.cpp b/avidemux_core/ADM_coreAudio/src/ADM_audioStreamBuffered.cpp
+index 3ebd0f8..84ebda2 100644
+--- a/avidemux_core/ADM_coreAudio/src/ADM_audioStreamBuffered.cpp
++++ b/avidemux_core/ADM_coreAudio/src/ADM_audioStreamBuffered.cpp
+@@ -48,7 +48,7 @@ bool ADM_audioStreamBuffered::refill(void)
+         {
+             if( labs((int64_t)newDts-(int64_t)lastDts)>ADM_MAX_SKEW)
+             {
+-                printf("[AudioStream] Warning skew in dts =%"PRId64", \n",(int64_t)newDts-(uint64_t)lastDts);
++                printf("[AudioStream] Warning skew in dts =%" PRId64", \n",(int64_t)newDts-(uint64_t)lastDts);
+                 printf("[AudioStream] Warning skew lastDts=%s \n",ADM_us2plain(lastDts));
+                 printf("[AudioStream] Warning skew newDts=%s  \n",ADM_us2plain(newDts));
+                 setDts(newDts);
+diff --git a/avidemux_core/ADM_coreAudio/src/ADM_audioStreamConstantChunk.cpp b/avidemux_core/ADM_coreAudio/src/ADM_audioStreamConstantChunk.cpp
+index b1143fa..118d234 100644
+--- a/avidemux_core/ADM_coreAudio/src/ADM_audioStreamConstantChunk.cpp
++++ b/avidemux_core/ADM_coreAudio/src/ADM_audioStreamConstantChunk.cpp
+@@ -23,15 +23,15 @@ ADM_audioStreamConstantChunk::ADM_audioStreamConstantChunk(WAVHeader *header,ADM
+         ADM_warning("[ADM_audioStreamConstantChunk] Blockalign is null expect problems\n");
+         chunkSize=8192; // dummy value
+     }
+-    ADM_info("[ADM_audioStreamConstantChunk] Chunk size %"PRIu32"\n",chunkSize);
+-    ADM_info("[ADM_audioStreamConstantChunk] Byterate   %"PRIu32"\n",header->byterate);
++    ADM_info("[ADM_audioStreamConstantChunk] Chunk size %" PRIu32"\n",chunkSize);
++    ADM_info("[ADM_audioStreamConstantChunk] Byterate   %" PRIu32"\n",header->byterate);
+     // Compute sample per chunk from wavHeader...
+     float f;
+     f=chunkSize;
+     f/=header->byterate; // F is in seconds
+     f*=header->frequency; // in sample
+     samplesPerChunk=(uint32_t)f;
+-    ADM_info("[ADM_audioStreamConstantChunk] About %"PRIu32" samples per chunk\n",samplesPerChunk);
++    ADM_info("[ADM_audioStreamConstantChunk] About %" PRIu32" samples per chunk\n",samplesPerChunk);
+     //samplesPerChunk=16;
+     // If hinted..., compute the duration ourselves
+     if(access->isCBR()==true && access->canSeekOffset()==true)
+diff --git a/avidemux_core/ADM_coreAudio/src/ADM_audioUtils.cpp b/avidemux_core/ADM_coreAudio/src/ADM_audioUtils.cpp
+index c191d95..f3b8f3e 100644
+--- a/avidemux_core/ADM_coreAudio/src/ADM_audioUtils.cpp
++++ b/avidemux_core/ADM_coreAudio/src/ADM_audioUtils.cpp
+@@ -100,7 +100,7 @@ bool   ADM_audioReorderChannels(uint32_t channels,float *data, uint32_t nb,CHANN
+ void printWavHeader(WAVHeader *hdr)
+ {
+ #undef X_DUMP
+-#define X_DUMP(x) printf(#x":\t\t:%"PRIu32"\n",hdr->x);
++#define X_DUMP(x) printf(#x":\t\t:%" PRIu32"\n",hdr->x);
+ 
+           X_DUMP(encoding);
+           X_DUMP(channels);	/* 1 = mono, 2 = stereo */
+diff --git a/avidemux_core/ADM_coreAudioDevice/src/ADM_audioDeviceThreaded.cpp b/avidemux_core/ADM_coreAudioDevice/src/ADM_audioDeviceThreaded.cpp
+index 0884198..9ebe3a6 100644
+--- a/avidemux_core/ADM_coreAudioDevice/src/ADM_audioDeviceThreaded.cpp
++++ b/avidemux_core/ADM_coreAudioDevice/src/ADM_audioDeviceThreaded.cpp
+@@ -153,7 +153,7 @@ bool        audioDeviceThreaded::writeData(uint8_t *data,uint32_t lenInByte)
+     }
+     if(wrIndex+lenInByte>ADM_THREAD_BUFFER_SIZE)
+     {
+-        printf("[AudioDevice] Overflow rd:%"PRIu32"  start(wr):%u len%u limit%u\n",rdIndex,wrIndex,lenInByte,ADM_THREAD_BUFFER_SIZE);
++        printf("[AudioDevice] Overflow rd:%" PRIu32"  start(wr):%u len%u limit%u\n",rdIndex,wrIndex,lenInByte,ADM_THREAD_BUFFER_SIZE);
+         mutex.unlock();
+         return false;
+     }
+diff --git a/avidemux_core/ADM_coreAudioParser/src/ADM_a52info.cpp b/avidemux_core/ADM_coreAudioParser/src/ADM_a52info.cpp
+index fd8d131..650015c 100644
+--- a/avidemux_core/ADM_coreAudioParser/src/ADM_a52info.cpp
++++ b/avidemux_core/ADM_coreAudioParser/src/ADM_a52info.cpp
+@@ -120,7 +120,7 @@ uint32_t of=0;
+ 			printf("Sync failed..continuing\n");
+ 			continue;
+ 		}
+-		printf("Sync found at offset %"PRIu32"\n",of);
++		printf("Sync found at offset %" PRIu32"\n",of);
+ 		*syncoff=of;
+ 		*fq=(uint32_t)ifq;
+ 		*br=(uint32_t)ibr>>3;
+diff --git a/avidemux_core/ADM_coreAudioParser/src/ADM_mp3info.cpp b/avidemux_core/ADM_coreAudioParser/src/ADM_mp3info.cpp
+index 9838c60..6043245 100644
+--- a/avidemux_core/ADM_coreAudioParser/src/ADM_mp3info.cpp
++++ b/avidemux_core/ADM_coreAudioParser/src/ADM_mp3info.cpp
+@@ -192,7 +192,7 @@ uint32_t nfq,fqindex,brindex,index;
+ 			}
+ 			if(*offset)
+ 				{
+-					printf("MP3: Skipped %"PRIu32" bytes\n",*offset);
++					printf("MP3: Skipped %" PRIu32" bytes\n",*offset);
+ 
+ 				}
+ #if 0
+diff --git a/avidemux_core/ADM_coreDemuxerMpeg/src/ADM_indexFile.cpp b/avidemux_core/ADM_coreDemuxerMpeg/src/ADM_indexFile.cpp
+index 94f0a5c..b72a26b 100644
+--- a/avidemux_core/ADM_coreDemuxerMpeg/src/ADM_indexFile.cpp
++++ b/avidemux_core/ADM_coreDemuxerMpeg/src/ADM_indexFile.cpp
+@@ -65,7 +65,7 @@ uint32_t v;
+ uint64_t dmxToken::getAsNumber64(void)
+ {
+ uint64_t v;
+-    sscanf(value,"%"PRId64,&v);
++    sscanf(value,"%" PRId64,&v);
+     return v;
+ }
+ 
+diff --git a/avidemux_core/ADM_coreDemuxerMpeg/src/dmxPSPacket.cpp b/avidemux_core/ADM_coreDemuxerMpeg/src/dmxPSPacket.cpp
+index 0810f7b..7cc2b69 100644
+--- a/avidemux_core/ADM_coreDemuxerMpeg/src/dmxPSPacket.cpp
++++ b/avidemux_core/ADM_coreDemuxerMpeg/src/dmxPSPacket.cpp
+@@ -92,7 +92,7 @@ bool    psPacket::setPos(uint64_t pos)
+ {
+     if(!_file->setpos(pos))
+     {
+-        printf("[psPacket] Cannot seek to %"PRIx64"\n", pos);
++        printf("[psPacket] Cannot seek to %" PRIx64"\n", pos);
+         return false;
+     }
+     return true;
+@@ -113,7 +113,7 @@ _again2:
+         {
+                 uint64_t pos;
+                 _file->getpos(&pos);
+-                printf("[DmxPS] cannot sync  at %"PRIu64"/%"PRIu64"\n",pos,_size);
++                printf("[DmxPS] cannot sync  at %" PRIu64"/%" PRIu64"\n",pos,_size);
+                 return false;
+         }
+ // Position of this packet just before startcode
+@@ -574,12 +574,12 @@ bool    psPacketLinear::seek(uint64_t packetStart, uint32_t offset)
+ {
+     if(!_file->setpos(packetStart))
+     {
+-        printf("[psPacket] Cannot seek to %"PRIx64"\n",packetStart);
++        printf("[psPacket] Cannot seek to %" PRIx64"\n",packetStart);
+         return 0;
+     }
+     if(!refill())
+     {
+-        printf("[PsPacketLinear] Seek to %"PRIx64":%"PRIx32" failed\n",packetStart,offset);
++        printf("[PsPacketLinear] Seek to %" PRIx64":%" PRIx32" failed\n",packetStart,offset);
+         return false;
+     }
+     ADM_assert(offset<bufferLen);
+diff --git a/avidemux_core/ADM_coreDemuxerMpeg/src/dmx_io.cpp b/avidemux_core/ADM_coreDemuxerMpeg/src/dmx_io.cpp
+index 0b8d948..6256478 100644
+--- a/avidemux_core/ADM_coreDemuxerMpeg/src/dmx_io.cpp
++++ b/avidemux_core/ADM_coreDemuxerMpeg/src/dmx_io.cpp
+@@ -78,7 +78,7 @@ uint8_t fileParser::open( const char *filename,FP_TYPE *multi )
+             splitFile=ADM_splitSequencedFile(filename, &left, &right,&decimals,&base);
+             if(splitFile)
+             {   
+-                aprintf("left:<%s>, right=<%s>,base=%"PRIu32",digit=%"PRIu32"\n",left,right,base,decimals);
++                aprintf("left:<%s>, right=<%s>,base=%" PRIu32",digit=%" PRIu32"\n",left,right,base,decimals);
+             }else       
+             {
+                 aprintf("No.\n");
+@@ -104,7 +104,7 @@ uint8_t fileParser::open( const char *filename,FP_TYPE *multi )
+                  newFd.fileSizeCumul=0;
+                 _size=newFd.fileSize;
+                 listOfFd.append(newFd);
+-                aprintf( " file: %s, size: %"PRIu64"\n", filename, newFd.fileSize );
++                aprintf( " file: %s, size: %" PRIu64"\n", filename, newFd.fileSize );
+                 aprintf( " found 1 files \n" );
+                 aprintf( "Done \n" );
+                 return 1;
+@@ -162,7 +162,7 @@ uint8_t fileParser::open( const char *filename,FP_TYPE *multi )
+                 myFd.fileSizeCumul = total;
+                 total+=  myFd.fileSize;
+ 
+-                aprintf( " file %d: %s, size: %"PRIu64"\n", (count + 1), outName.c_str(),
++                aprintf( " file %d: %s, size: %" PRIu64"\n", (count + 1), outName.c_str(),
+                                             myFd.fileSize );
+ 
+                 listOfFd.append(myFd);
+@@ -247,7 +247,7 @@ uint8_t fileParser::setpos(uint64_t o)
+                                                   return 1;
+                                         }
+                         }
+-                        printf("\n cannot seek to %"PRIu64"\n",o);
++                        printf("\n cannot seek to %" PRIu64"\n",o);
+                         return 0;
+ }
+ //
+@@ -262,7 +262,7 @@ uint32_t val,hnt;
+         // preload
+         if((4+_off)>=_size)
+         {
+-                printf("Dmx IO: End of file met (%"PRIu64" / %"PRIu64" seg:%u)\n",_off,_size,(unsigned int)listOfFd.size());
++                printf("Dmx IO: End of file met (%" PRIu64" / %" PRIu64" seg:%u)\n",_off,_size,(unsigned int)listOfFd.size());
+                 return 0;
+         }
+         hnt=(read8i()<<16) + (read8i()<<8) +read8i();
+@@ -295,7 +295,7 @@ uint32_t val,hnt;
+         // preload
+         if((5+_off)>=_size)
+         {
+-                printf("Dmx IO: End of file met (%"PRIu64" / %"PRIu64" seg:%u)\n",_off,_size,(unsigned int)listOfFd.size());
++                printf("Dmx IO: End of file met (%" PRIu64" / %" PRIu64" seg:%u)\n",_off,_size,(unsigned int)listOfFd.size());
+                 return 0;
+         }
+         hnt=(read8i()<<24)+(read8i()<<16) + (read8i()<<8) +read8i();
+diff --git a/avidemux_core/ADM_coreImage/src/ADM_colorspace.cpp b/avidemux_core/ADM_coreImage/src/ADM_colorspace.cpp
+index bd27240..26a0b00 100644
+--- a/avidemux_core/ADM_coreImage/src/ADM_colorspace.cpp
++++ b/avidemux_core/ADM_coreImage/src/ADM_colorspace.cpp
+@@ -215,8 +215,8 @@ bool ADMColorScalerFull::convert(uint8_t  *from, uint8_t *to)
+ bool            ADMColorScalerFull::convertPlanes(uint32_t  sourceStride[3],uint32_t destStride[3],     
+                                   uint8_t   *sourceData[3], uint8_t *destData[3])
+ {
+-    int xs[4]={sourceStride[0],sourceStride[1],sourceStride[2],0};
+-    int xd[4]={destStride[0],destStride[1],destStride[2],0};
++    int xs[4]={(int)sourceStride[0],(int)sourceStride[1],(int)sourceStride[2],0};
++    int xd[4]={(int)destStride[0],(int)destStride[1],(int)destStride[2],0};
+     uint8_t *src[4]={NULL,NULL,NULL,NULL};
+     uint8_t *dst[4]={NULL,NULL,NULL,NULL};
+      for(int i=0;i<3;i++)
+diff --git a/avidemux_core/ADM_coreImage/src/ADM_image.cpp b/avidemux_core/ADM_coreImage/src/ADM_image.cpp
+index b071f1c..6dd0b19 100644
+--- a/avidemux_core/ADM_coreImage/src/ADM_image.cpp
++++ b/avidemux_core/ADM_coreImage/src/ADM_image.cpp
+@@ -23,10 +23,10 @@ void ADMImage_stat( void )
+ {
+ 	printf("\nImages stat:\n");
+ 	printf("___________\n");
+-	printf("Max memory consumed (MB)     : %"PRIu32"\n",imgMaxMem>>20);
+-	printf("Current memory consumed (MB) : %"PRIu32"\n",imgCurMem>>20);
+-	printf("Max image used               : %"PRIu32"\n",imgMaxNb);
+-	printf("Cur image used               : %"PRIu32"\n",imgCurNb);
++	printf("Max memory consumed (MB)     : %" PRIu32"\n",imgMaxMem>>20);
++	printf("Current memory consumed (MB) : %" PRIu32"\n",imgCurMem>>20);
++	printf("Max image used               : %" PRIu32"\n",imgMaxNb);
++	printf("Cur image used               : %" PRIu32"\n",imgCurNb);
+ 
+ }
+ /**
+diff --git a/avidemux_core/ADM_coreImage/src/ADM_imageUtils.cpp b/avidemux_core/ADM_coreImage/src/ADM_imageUtils.cpp
+index b0e457f..47b4a6b 100644
+--- a/avidemux_core/ADM_coreImage/src/ADM_imageUtils.cpp
++++ b/avidemux_core/ADM_coreImage/src/ADM_imageUtils.cpp
+@@ -307,7 +307,7 @@ uint32_t result=0;
+          __asm__ volatile(
+                          "pxor %%mm7,%%mm7\n"
+                          "pxor %%mm3,%%mm3\n"
+-                         "movq "Mangle(noise64)", %%mm6\n"
++                         "movq " Mangle(noise64)", %%mm6\n"
+                 :::  "memory"
+                  );
+ 
+@@ -559,7 +559,7 @@ static inline void yuv444_MMX(uint8_t *src,uint8_t *dst,int w,int h,int s)
+ {
+ static uint64_t __attribute__((used)) FUNNY_MANGLE(mask) = 0x00ff000000ff0000LL;
+ 
+-    __asm__ volatile(" movq "Mangle(mask)", %%mm7\n" ::);
++    __asm__ volatile(" movq " Mangle(mask)", %%mm7\n" ::);
+     __asm__ volatile(" pxor %%mm6,%%mm6\n" ::);
+     
+     int step=w/8;
+diff --git a/avidemux_core/ADM_coreImageLoader/src/ADM_imageLoader.cpp b/avidemux_core/ADM_coreImageLoader/src/ADM_imageLoader.cpp
+index a94ca0d..c7e1c0b 100644
+--- a/avidemux_core/ADM_coreImageLoader/src/ADM_imageLoader.cpp
++++ b/avidemux_core/ADM_coreImageLoader/src/ADM_imageLoader.cpp
+@@ -140,7 +140,7 @@ ADMImage *createImageFromFile_jpeg(const char *filename)
+ 				fclose(fd);
+ 				return NULL;
+ 		    }
+-		    ADM_info("[imageLoader] %"PRIu32" x %"PRIu32".., total Size : %u, offset %u\n", w, h,_imgSize,off);
++		    ADM_info("[imageLoader] %" PRIu32" x %" PRIu32".., total Size : %u, offset %u\n", w, h,_imgSize,off);
+ 
+ 		// Load the binary coded image
+                     ADM_byteBuffer buffer(_imgSize);
+@@ -285,7 +285,7 @@ ADMImage *createImageFromFile_Bmp2(const char *filename)
+         }
+         w = bmph.biWidth;
+         h = bmph.biHeight;
+-        ADM_info("[imageLoader] BMP2 W: %"PRIu32" H: %"PRIu32" offset : %"PRIu32"\n", w, h, offset);
++        ADM_info("[imageLoader] BMP2 W: %" PRIu32" H: %" PRIu32" offset : %" PRIu32"\n", w, h, offset);
+ // Load the binary coded image
+  	fseek(fd,offset,SEEK_SET);
+         
+diff --git a/avidemux_core/ADM_coreJobs/src/ADM_coreJobs.cpp b/avidemux_core/ADM_coreJobs/src/ADM_coreJobs.cpp
+index ea6560e..78508cd 100644
+--- a/avidemux_core/ADM_coreJobs/src/ADM_coreJobs.cpp
++++ b/avidemux_core/ADM_coreJobs/src/ADM_coreJobs.cpp
+@@ -189,8 +189,8 @@ bool ADMJob::jobDump(const ADMJob &job)
+     printf("Script   :%s\n",job.scriptName.c_str());
+     printf("Output   :%s\n",job.outputFileName.c_str());
+     printf("Status   :%d\n",job.status);
+-    printf("Start    :%"PRId64"\n",job.startTime);
+-    printf("End      :%"PRId64"\n",job.endTime);
++    printf("Start    :%" PRId64"\n",job.startTime);
++    printf("End      :%" PRId64"\n",job.endTime);
+     return true;
+ }
+ 
+diff --git a/avidemux_core/ADM_coreMuxer/src/ADM_coreMuxerFfmpeg.cpp b/avidemux_core/ADM_coreMuxer/src/ADM_coreMuxerFfmpeg.cpp
+index ad589d3..ee9e864 100644
+--- a/avidemux_core/ADM_coreMuxer/src/ADM_coreMuxerFfmpeg.cpp
++++ b/avidemux_core/ADM_coreMuxer/src/ADM_coreMuxerFfmpeg.cpp
+@@ -446,9 +446,9 @@ bool muxerFFmpeg::saveLoop(const char *title)
+             int64_t xdts=(int64_t)out.dts;
+             if(out.pts==ADM_NO_PTS) xpts=-1;
+             if(out.dts==ADM_NO_PTS) xdts=-1;
+-            aprintf("[FF:V] Pts: %"PRId64" DTS:%"PRId64" ms\n",xpts/1000,xdts/1000);
++            aprintf("[FF:V] Pts: %" PRId64" DTS:%" PRId64" ms\n",xpts/1000,xdts/1000);
+ 
+-            aprintf("[FF:V] LastDts:%08"PRIu64" Dts:%08"PRIu64" (%04"PRIu64") Delta : %"PRIu64"\n",
++            aprintf("[FF:V] LastDts:%08" PRIu64" Dts:%08" PRIu64" (%04" PRIu64") Delta : %" PRIu64"\n",
+                         lastVideoDts,out.dts,out.dts/1000000,out.dts-lastVideoDts);
+             rawDts=out.dts;
+             if(rawDts==ADM_NO_PTS)
+@@ -460,7 +460,7 @@ bool muxerFFmpeg::saveLoop(const char *title)
+             }
+             if(out.pts==ADM_NO_PTS)
+             {
+-                ADM_warning("No PTS information for frame %"PRIu32"\n",written);
++                ADM_warning("No PTS information for frame %" PRIu32"\n",written);
+                 missingPts++;
+                 out.pts=lastVideoDts;
+             }
+@@ -470,7 +470,7 @@ bool muxerFFmpeg::saveLoop(const char *title)
+             muxerRescaleVideoTimeDts(&(out.dts),lastVideoDts);
+             muxerRescaleVideoTime(&(out.pts));
+             aprintf("[FF:V] RawDts:%lu Scaled Dts:%lu\n",rawDts,out.dts);
+-            aprintf("[FF:V] Rescaled: Len : %d flags:%x Pts:%"PRIu64" Dts:%"PRIu64"\n",out.len,out.flags,out.pts,out.dts);
++            aprintf("[FF:V] Rescaled: Len : %d flags:%x Pts:%" PRIu64" Dts:%" PRIu64"\n",out.len,out.flags,out.pts,out.dts);
+ 
+             av_init_packet(&pkt);
+             pkt.dts=out.dts;
+diff --git a/avidemux_core/ADM_coreSubtitles/src/ADM_subConvert.cpp b/avidemux_core/ADM_coreSubtitles/src/ADM_subConvert.cpp
+index ca4b1ff..eac7a38 100644
+--- a/avidemux_core/ADM_coreSubtitles/src/ADM_subConvert.cpp
++++ b/avidemux_core/ADM_coreSubtitles/src/ADM_subConvert.cpp
+@@ -30,7 +30,7 @@ uint32_t ms=(uint32_t)(ams/1000);
+     else    
+     {
+         ms2time(ms,&hh,&mm,&ss,&mms);
+-        sprintf(buffer,"%01"PRIu32":%02"PRIu32":%02"PRIu32".%03"PRIu32,hh,mm,ss,mms);
++        sprintf(buffer,"%01" PRIu32":%02" PRIu32":%02" PRIu32".%03" PRIu32,hh,mm,ss,mms);
+     }
+     return buffer;
+ 
+diff --git a/avidemux_core/ADM_coreUtils/src/ADM_confCouple.cpp b/avidemux_core/ADM_coreUtils/src/ADM_confCouple.cpp
+index 3a606d8..10fe431 100644
+--- a/avidemux_core/ADM_coreUtils/src/ADM_confCouple.cpp
++++ b/avidemux_core/ADM_coreUtils/src/ADM_confCouple.cpp
+@@ -74,7 +74,7 @@ bool CONFcouple::writeAsUint32(const char *myname,uint32_t val)
+ 	ADM_assert(cur<nb);
+ 
+ 	name[cur]=strupDupeAsNew(myname);
+-	sprintf(tmpstring,"%"PRIu32,val);
++	sprintf(tmpstring,"%" PRIu32,val);
+ 	value[cur]=strupDupeAsNew(tmpstring);
+ 	cur++;
+ 	return 1;
+@@ -118,7 +118,7 @@ bool CONFcouple::writeAsInt32(const char *myname,int32_t val)
+ 	ADM_assert(cur<nb);
+ 
+ 	name[cur]=strupDupeAsNew(myname);
+-	sprintf(tmpstring,"%"PRIi32,val);
++	sprintf(tmpstring,"%" PRIi32,val);
+ 	value[cur]=strupDupeAsNew(tmpstring);
+ 	cur++;
+ 	return 1;
+diff --git a/avidemux_core/ADM_coreUtils/src/ADM_frameType.cpp b/avidemux_core/ADM_coreUtils/src/ADM_frameType.cpp
+index 8c5118b..24f4ae9 100644
+--- a/avidemux_core/ADM_coreUtils/src/ADM_frameType.cpp
++++ b/avidemux_core/ADM_coreUtils/src/ADM_frameType.cpp
+@@ -42,7 +42,7 @@ static int mpeg12FrameIdentifier(uint32_t len,uint8_t *data)
+         type=7 & (val>>3);
+         if( type<1 ||  type>3)
+           {
+-                  printf("[mpeg12FrameType]Met illegal pic at offset %"PRIx32"\n",(uint32_t)(start-data));
++                  printf("[mpeg12FrameType]Met illegal pic at offset %" PRIx32"\n",(uint32_t)(start-data));
+                   continue;
+           }
+         switch(type)
+diff --git a/avidemux_core/ADM_coreUtils/src/ADM_paramList.cpp b/avidemux_core/ADM_coreUtils/src/ADM_paramList.cpp
+index 46460f6..80d2b4e 100644
+--- a/avidemux_core/ADM_coreUtils/src/ADM_paramList.cpp
++++ b/avidemux_core/ADM_coreUtils/src/ADM_paramList.cpp
+@@ -193,12 +193,12 @@ bool ADM_compressWriteToString(COMPRES_PARAMS *params,  char **str)
+     char tmp[256];
+     switch(params->mode)
+     {
+-        case COMPRESS_CQ:    sprintf(tmp,"CQ=%"PRIu32,params->qz);break;
+-        case COMPRESS_CBR:   sprintf(tmp,"CBR=%"PRIu32,params->bitrate);break;
+-        case COMPRESS_2PASS: sprintf(tmp,"2PASS=%"PRIu32,params->finalsize);break;
++        case COMPRESS_CQ:    sprintf(tmp,"CQ=%" PRIu32,params->qz);break;
++        case COMPRESS_CBR:   sprintf(tmp,"CBR=%" PRIu32,params->bitrate);break;
++        case COMPRESS_2PASS: sprintf(tmp,"2PASS=%" PRIu32,params->finalsize);break;
+         case COMPRESS_SAME:  sprintf(tmp,"SAME");break;
+-        case COMPRESS_2PASS_BITRATE: sprintf(tmp,"2PASSBITRATE=%"PRIu32,params->avg_bitrate);break;
+-        case COMPRESS_AQ:    sprintf(tmp,"AQ=%"PRIu32,params->qz);break;
++        case COMPRESS_2PASS_BITRATE: sprintf(tmp,"2PASSBITRATE=%" PRIu32,params->avg_bitrate);break;
++        case COMPRESS_AQ:    sprintf(tmp,"AQ=%" PRIu32,params->qz);break;
+         default:
+             ADM_error("Unknown compressin mode \n");
+             return false;
+diff --git a/avidemux_core/ADM_coreUtils/src/avidemutils.cpp b/avidemux_core/ADM_coreUtils/src/avidemutils.cpp
+index d8e9551..152253d 100644
+--- a/avidemux_core/ADM_coreUtils/src/avidemutils.cpp
++++ b/avidemux_core/ADM_coreUtils/src/avidemutils.cpp
+@@ -71,7 +71,7 @@ void mixDump(uint8_t * ptr, uint32_t len)
+ 
+ 		  if ((i % 16) == 15)
+ 		    {
+-					printf("\n %04"PRIx32" : %s %s", (i >> 4) << 4, str, str2);
++					printf("\n %04" PRIx32" : %s %s", (i >> 4) << 4, str, str2);
+ 					*str = 0;
+ 					*str2 = 0;
+ 		    }
+@@ -79,7 +79,7 @@ void mixDump(uint8_t * ptr, uint32_t len)
+ 	// left over
+ 	if(len%16!=0)
+ 	{
+-		 printf("\n %04"PRIx32" : %s %s", (len >> 4) << 4, str, str2);
++		 printf("\n %04" PRIx32" : %s %s", (len >> 4) << 4, str, str2);
+ 	}
+ }
+ /*
+diff --git a/avidemux_core/ADM_coreUtils/src/prefs2_pref.h b/avidemux_core/ADM_coreUtils/src/prefs2_pref.h
+index d381132..caf03dc 100644
+--- a/avidemux_core/ADM_coreUtils/src/prefs2_pref.h
++++ b/avidemux_core/ADM_coreUtils/src/prefs2_pref.h
+@@ -19,7 +19,7 @@ static optionDesc myOptions[]={
+ { FEATURES_REUSE_2PASS_LOG,"features.reuse_2pass_log"                 ,ADM_param_bool    	,"0",	0,	1},
+ { FEATURES_AUDIOBAR_USES_MASTER,"features.audiobar_uses_master"       ,ADM_param_bool    	,"0",	0,	1},
+ { FEATURES_THREADING_LAVC,"features.threading_lavc"                   ,ADM_param_uint32_t	,"0",	0,	32},
+-{ FEATURES_CPU_CAPS,"features.cpu_caps"                               ,ADM_param_uint32_t	,"4294967295",	0,	4294967295},
++{ FEATURES_CPU_CAPS,"features.cpu_caps"                               ,ADM_param_uint32_t	,"2147483647",	0,	2147483647},
+ { FEATURES_MPEG_NO_LIMIT,"features.mpeg_no_limit"                     ,ADM_param_bool    	,"0",	0,	1},
+ { FEATURES_ALTERNATE_MP3_TAG,"features.alternate_mp3_tag"             ,ADM_param_bool    	,"1",	0,	1},
+ { FEATURES_VDPAU,"features.vdpau"                                     ,ADM_param_bool    	,"0",	0,	1},
+diff --git a/avidemux_core/ADM_coreVideoCodec/include/ADM_ffmp43.h b/avidemux_core/ADM_coreVideoCodec/include/ADM_ffmp43.h
+index e39282a..9011551 100644
+--- a/avidemux_core/ADM_coreVideoCodec/include/ADM_ffmp43.h
++++ b/avidemux_core/ADM_coreVideoCodec/include/ADM_ffmp43.h
+@@ -182,7 +182,7 @@ ADM_COREVIDEOCODEC6_EXPORT void ADM_lavDestroy(void);
+ #define WRAP_Open_Template(funcz,argz,display,codecid,extra) \
+ {\
+ AVCodec *codec=funcz(argz);\
+-if(!codec) {GUI_Error_HIG("Codec",QT_TR_NOOP("Internal error finding codec"display));ADM_assert(0);} \
++if(!codec) {GUI_Error_HIG("Codec",QT_TR_NOOP("Internal error finding codec" display));ADM_assert(0);} \
+   codecId=codecid; \
+   _context = avcodec_alloc_context3 (codec);\
+   ADM_assert (_context);\
+@@ -212,13 +212,13 @@ if(!codec) {GUI_Error_HIG("Codec",QT_TR_NOOP("Internal error finding codec"displ
+   \
+   if (avcodec_open2(_context, codec, NULL) < 0)  \
+                       { \
+-                                        printf("[lavc] Decoder init: "display" video decoder failed!\n"); \
+-                                        GUI_Error_HIG("Codec","Internal error opening "display); \
++                                        printf("[lavc] Decoder init: " display" video decoder failed!\n"); \
++                                        GUI_Error_HIG("Codec","Internal error opening " display); \
+                                         ADM_assert(0); \
+                                 } \
+                                 else \
+                                 { \
+-                                        printf("[lavc] Decoder init: "display" video decoder initialized! (%s)\n",codec->long_name); \
++                                        printf("[lavc] Decoder init: " display" video decoder initialized! (%s)\n",codec->long_name); \
+                                 } \
+ }
+ 
+diff --git a/avidemux_core/ADM_coreVideoEncoder/src/ADM_coreVideoEncoder.cpp b/avidemux_core/ADM_coreVideoEncoder/src/ADM_coreVideoEncoder.cpp
+index 296de4a..50aa557 100644
+--- a/avidemux_core/ADM_coreVideoEncoder/src/ADM_coreVideoEncoder.cpp
++++ b/avidemux_core/ADM_coreVideoEncoder/src/ADM_coreVideoEncoder.cpp
+@@ -93,7 +93,7 @@ bool usSecondsToFrac(uint64_t useconds, int *n,int *d)
+     }
+     int nn,dd;
+     av_reduce(&nn,&dd, useconds, 1000000, 0xFFF0); // mpeg4 allows a maximum of 1<<16-1 as time base, should be enough for most case
+-    ADM_info("%"PRIu64" us -> %d / %d (old)\n",useconds,nn,dd);
++    ADM_info("%" PRIu64" us -> %d / %d (old)\n",useconds,nn,dd);
+     *n=nn;
+     *d=dd;
+ 
+@@ -127,7 +127,7 @@ bool ADM_coreVideoEncoder::getRealPtsFromInternal(uint64_t val,uint64_t *dts,uin
+                     uint64_t newDts=lastDts+getFrameIncrement();
+                     if(newDts<=*pts)
+                     {
+-                            ADM_warning("Using newDts=%"PRIu64"\n",newDts);
++                            ADM_warning("Using newDts=%" PRIu64"\n",newDts);
+                             *dts=newDts;
+                             return true;
+                     }
+@@ -138,8 +138,8 @@ bool ADM_coreVideoEncoder::getRealPtsFromInternal(uint64_t val,uint64_t *dts,uin
+             return true;
+         }
+     }
+-    ADM_warning("Cannot find PTS : %"PRIu64"\n",val);
+-    for(int i=0;i<n;i++) ADM_warning("%d : %"PRIu64"\n",i,mapper[i].internalTS);
++    ADM_warning("Cannot find PTS : %" PRIu64"\n",val);
++    for(int i=0;i<n;i++) ADM_warning("%d : %" PRIu64"\n",i,mapper[i].internalTS);
+     ADM_assert(0);
+     return false;
+ 
+diff --git a/avidemux_core/ADM_coreVideoEncoder/src/ADM_coreVideoEncoderFFmpeg.cpp b/avidemux_core/ADM_coreVideoEncoder/src/ADM_coreVideoEncoderFFmpeg.cpp
+index ebfb0f5..408c79b 100644
+--- a/avidemux_core/ADM_coreVideoEncoder/src/ADM_coreVideoEncoderFFmpeg.cpp
++++ b/avidemux_core/ADM_coreVideoEncoder/src/ADM_coreVideoEncoderFFmpeg.cpp
+@@ -206,7 +206,7 @@ bool             ADM_coreVideoEncoderFFmpeg::preEncode(void)
+ 
+     uint64_t p=image->Pts;
+     queueOfDts.push_back(p);
+-    aprintf("Incoming frame PTS=%"PRIu64", delay=%"PRIu64"\n",p,getEncoderDelay());
++    aprintf("Incoming frame PTS=%" PRIu64", delay=%" PRIu64"\n",p,getEncoderDelay());
+     p+=getEncoderDelay();
+     _frame->pts= timingToLav(p);    //
+     if(!_frame->pts) _frame->pts=AV_NOPTS_VALUE;
+@@ -216,7 +216,7 @@ bool             ADM_coreVideoEncoderFFmpeg::preEncode(void)
+     map.internalTS=_frame->pts;
+     mapper.push_back(map);
+ 
+-    aprintf("Codec> incoming pts=%"PRIu64"\n",image->Pts);
++    aprintf("Codec> incoming pts=%" PRIu64"\n",image->Pts);
+     //printf("--->>[PTS] :%"PRIu64", raw %"PRIu64" num:%"PRIu32" den:%"PRIu32"\n",_frame->pts,image->Pts,_context->time_base.num,_context->time_base.den);
+     //
+     switch(targetColorSpace)
+@@ -431,7 +431,7 @@ bool ADM_coreVideoEncoderFFmpeg::postEncode(ADMBitstream *out, uint32_t size)
+     // update lastDts
+     lastDts=out->dts;
+ 
+-    aprintf("Codec>Out pts=%"PRIu64" us, out Dts=%"PRIu64"\n",out->pts,out->dts);
++    aprintf("Codec>Out pts=%" PRIu64" us, out Dts=%" PRIu64"\n",out->pts,out->dts);
+ 
+     // Update quant
+     if(!_context->coded_frame->quality)
+@@ -580,7 +580,7 @@ bool ADM_coreVideoEncoderFFmpeg::setupPass(void)
+                 averageBitrate=(uint32_t)avg*1000; // convert from kb/s to b/s
+             }
+ 
+-        printf("[ffmpeg4] Average bitrate =%"PRIu32" kb/s\n",averageBitrate/1000);
++        printf("[ffmpeg4] Average bitrate =%" PRIu32" kb/s\n",averageBitrate/1000);
+         _context->bit_rate=averageBitrate;
+         switch(pass)
+         {
+diff --git a/avidemux_core/ADM_coreVideoFilter/src/ADM_coreVideoFilterFunc.cpp b/avidemux_core/ADM_coreVideoFilter/src/ADM_coreVideoFilterFunc.cpp
+index f278935..13b226e 100644
+--- a/avidemux_core/ADM_coreVideoFilter/src/ADM_coreVideoFilterFunc.cpp
++++ b/avidemux_core/ADM_coreVideoFilter/src/ADM_coreVideoFilterFunc.cpp
+@@ -51,7 +51,7 @@ ADM_vf_plugin *ADM_vf_getPluginFromTag(uint32_t tag)
+         }
+     }
+ 
+-    ADM_error("Cannot get video filter from tag %"PRIu32"\n", tag);
++    ADM_error("Cannot get video filter from tag %" PRIu32"\n", tag);
+     ADM_assert(0);
+ 
+     return NULL;
+@@ -136,7 +136,7 @@ ADM_coreVideoFilter *ADM_vf_createFromTag(uint32_t tag, ADM_coreVideoFilter *las
+ */
+ ADM_VideoFilterElement* ADM_vf_addFilterFromTag(IEditor *editor, uint32_t tag, CONFcouple *c, bool configure)
+ {
+-    ADM_info("Creating video filter using tag %"PRIu32" \n", tag);
++    ADM_info("Creating video filter using tag %" PRIu32" \n", tag);
+     // Fetch the descriptor...
+ 
+     ADM_coreVideoFilter *last = ADM_vf_getLastVideoFilter(editor);
+@@ -159,7 +159,7 @@ ADM_VideoFilterElement* ADM_vf_addFilterFromTag(IEditor *editor, uint32_t tag, C
+ 
+ ADM_VideoFilterElement* ADM_vf_insertFilterFromTag(IEditor *editor, uint32_t tag, CONFcouple *c, int index)
+ {
+-    ADM_info("Creating video filter using tag %"PRIu32" \n", tag);
++    ADM_info("Creating video filter using tag %" PRIu32" \n", tag);
+     // Fetch the descriptor...
+ 
+     ADM_coreVideoFilter *last = ADM_vf_getLastVideoFilter(editor);
+diff --git a/avidemux_core/ADM_coreVideoFilter/src/ADM_videoFilterBridge.cpp b/avidemux_core/ADM_coreVideoFilter/src/ADM_videoFilterBridge.cpp
+index d26de31..95c3b85 100644
+--- a/avidemux_core/ADM_coreVideoFilter/src/ADM_videoFilterBridge.cpp
++++ b/avidemux_core/ADM_coreVideoFilter/src/ADM_videoFilterBridge.cpp
+@@ -26,7 +26,7 @@
+ */
+ ADM_videoFilterBridge::ADM_videoFilterBridge(IEditor *editor, uint64_t startTime, uint64_t endTime) : ADM_coreVideoFilter(NULL, NULL)
+ {
+-    printf("[VideoFilterBridge] Creating bridge from %"PRIu32" s to %"PRIu32" s\n", (uint32_t)(startTime / 1000000LL), (uint32_t)(endTime / 1000000LL));
++    printf("[VideoFilterBridge] Creating bridge from %" PRIu32" s to %" PRIu32" s\n", (uint32_t)(startTime / 1000000LL), (uint32_t)(endTime / 1000000LL));
+     this->startTime = startTime;
+     this->editor = editor;
+ 
+@@ -82,13 +82,13 @@ again:
+ 
+     if (pts > endTime)
+     {
+-        ADM_warning("[VideoBridge] This frame is too late (%"PRId64" vs %"PRIu64")\n", pts, endTime);
++        ADM_warning("[VideoBridge] This frame is too late (%" PRId64" vs %" PRIu64")\n", pts, endTime);
+         return false;
+     }
+ 
+     if (pts < startTime)
+     {
+-        ADM_warning("[VideoBridge] This frame is too early (%"PRId64" vs %"PRIu64")\n", pts, startTime);
++        ADM_warning("[VideoBridge] This frame is too early (%" PRId64" vs %" PRIu64")\n", pts, startTime);
+         goto again;
+     }
+ 
+diff --git a/avidemux_core/ADM_coreVideoFilter/src/ADM_videoFilterCache.cpp b/avidemux_core/ADM_coreVideoFilter/src/ADM_videoFilterCache.cpp
+index 025bc4e..289625d 100644
+--- a/avidemux_core/ADM_coreVideoFilter/src/ADM_videoFilterCache.cpp
++++ b/avidemux_core/ADM_coreVideoFilter/src/ADM_videoFilterCache.cpp
+@@ -157,7 +157,7 @@ uint32_t len,flags;
+     if((i=searchFrame(frame))>=0)
+     {
+             ADMImage *img=entry[i].image;
+-            aprintf("[cache]  old image  frame %d with PTS=%"PRIu64"\n",(int)frame,img->Pts);
++            aprintf("[cache]  old image  frame %d with PTS=%" PRIu64"\n",(int)frame,img->Pts);
+             entry[i].frameLock++;
+             entry[i].lastUse=counter;
+             counter++;
+@@ -176,7 +176,7 @@ uint32_t len,flags;
+         ADM_assert(0);
+     }
+     ADM_assert(nb==frame);
+-    aprintf(">>>>>>>>>>>>>>>>>>>>>>>>>>[cache] New image Got frame %d with PTS=%"PRIu64"\n",(int)nb,img->Pts);
++    aprintf(">>>>>>>>>>>>>>>>>>>>>>>>>>[cache] New image Got frame %d with PTS=%" PRIu64"\n",(int)nb,img->Pts);
+     // Update LRU info
+     entry[target].frameLock++;
+     entry[target].frameNum=nb;
+diff --git a/cmake/admMainChecks.cmake b/cmake/admMainChecks.cmake
+index f898812..42d305f 100644
+--- a/cmake/admMainChecks.cmake
++++ b/cmake/admMainChecks.cmake
+@@ -58,11 +58,12 @@ INCLUDE(admDetermineSystem)
+ IF(${CMAKE_CXX_COMPILER} MATCHES ".*[cC]lang.*")
+         IF (ASAN)
+                 MESSAGE(STATUS "Address Sanitizer activated")
+-	        SET(CMAKE_C_FLAGS   "${CMAKE_C_FLAGS} -fsanitize=address -fno-omit-frame-pointer")
++	        SET(CMAKE_C_FLAGS   "${CMAKE_C_FLAGS} -std=c++11 -fsanitize=address -fno-omit-frame-pointer")
+ 	        SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=address -fno-omit-frame-pointer")
+                 SET(CMAKE_LD_FLAGS  "${CMAKE_LD_FLAGS}  -fsanitize=address ")
+         ELSE (ASAN)
+                 MESSAGE(STATUS "Address Sanitizer not activated")
++	        SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+         ENDIF (ASAN)
+ ENDIF(${CMAKE_CXX_COMPILER} MATCHES ".*[cC]lang.*")
+ 

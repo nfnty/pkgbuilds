@@ -57,8 +57,25 @@ makedepends=(
 )
 
 # Version commits are tracked via `cmake/avidemuxVersion.cmake`
-source=("${srcname}::git+https://github.com/mean00/${srcname}.git#commit=856fc8ae1ec8ea03595c04153b42423fa783b55d")
-sha512sums=('SKIP')
+source=(
+    "${srcname}::git+https://github.com/mean00/${srcname}.git#commit=856fc8ae1ec8ea03595c04153b42423fa783b55d"
+    'cxx-11.patch'
+)
+sha512sums=(
+    'SKIP'
+    'SKIP'
+)
+
+prepare() {
+    cd "${srcdir}/${srcname}"
+
+    git cherry-pick --no-commit \
+        'b54303bc9b9310e288a1dde9c923f48e854bd55f' \
+        '68df30b902540e6f299dc63ea3ae53b3d353cbe4' \
+        '6ad028d9f9caf929819c1afcb693611aade0af0b' \
+        '7dee579d3ac16d731898305d24bb771834ae0ce0'
+    git apply "${srcdir}/cxx-11.patch"
+}
 
 _make() {
     mkdir --parents "${1}"
