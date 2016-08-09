@@ -16,8 +16,10 @@ source=(
     "${srcname}::git+${url}.git#tag=${pkgver}"
     'git+https://github.com/przepompownia/tmux-bash-completion.git'
     'ixon.patch'
+    'pane_is_dead.patch'
 )
 sha512sums=(
+    'SKIP'
     'SKIP'
     'SKIP'
     'SKIP'
@@ -27,6 +29,7 @@ prepare() {
     cd "${srcdir}/${srcname}"
 
     git apply "${srcdir}/ixon.patch"
+    git apply "${srcdir}/pane_is_dead.patch"
 }
 
 build() {
