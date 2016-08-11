@@ -7,7 +7,7 @@ arch=('i686' 'x86_64')
 url='https://github.com/nfnty/bspwm'
 license=('custom:BSD')
 
-depends=('libxcb' 'xcb-util' 'xcb-util-wm')
+depends=('libxcb' 'xcb-util' 'xcb-util-wm' 'xcb-util-keysyms')
 optdepends=('jansson')
 makedepends=('git' 'jansson')
 provides=('bspwm')
