@@ -16,8 +16,6 @@ conflicts=('bspwm')
 source=("${srcname}::git+https://github.com/nfnty/bspwm.git#branch=json_rebase")
 sha512sums=('SKIP')
 
-options=('!strip' 'debug')
-
 pkgver() {
     cd "${srcdir}/${srcname}"
 
