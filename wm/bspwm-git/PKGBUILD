@@ -13,7 +13,7 @@ makedepends=('git' 'jansson')
 provides=('bspwm')
 conflicts=('bspwm')
 
-source=("${srcname}::git+https://github.com/nfnty/bspwm.git#branch=json_rebase")
+source=("${srcname}::git+https://github.com/nfnty/bspwm.git#branch=json")
 sha512sums=('SKIP')
 
 pkgver() {
