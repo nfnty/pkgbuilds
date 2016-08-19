@@ -26,7 +26,7 @@ validpgpkeys=('B76CD4671C0968BAA87DE61C5E50715BF2FFE1A7') # Pieter Lexis <pieter
 build() {
   cd "pdns-recursor-$pkgver"
 
-  ./configure --exec-prefix=/usr --sysconfdir=/etc/powerdns-recursor
+  ./configure --prefix=/usr --exec-prefix=/usr --sbindir=/usr/bin --sysconfdir=/etc/powerdns
   make -j1 LUA=1 \
     LUA_CPPFLAGS_CONFIG="$(pkg-config --cflags lua)" \
     LUA_LIBS_CONFIG="$(pkg-config --libs lua)"
@@ -35,10 +35,9 @@ build() {
 package() {
   cd "pdns-recursor-$pkgver"
 
-  make SBINDIR="/usr/bin" DESTDIR="$pkgdir" install
+  make DESTDIR="$pkgdir" install
   mv "$pkgdir/etc/powerdns/recursor.conf-dist" \
     "$pkgdir/etc/powerdns/recursor.conf"
-  rm -r "$pkgdir/etc/init.d"
   install -Dm644 "$srcdir/pdns-recursor.service" \
     "$pkgdir/usr/lib/systemd/system/pdns-recursor.service"
 }
