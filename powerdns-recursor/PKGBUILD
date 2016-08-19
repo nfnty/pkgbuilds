@@ -16,12 +16,12 @@ replaces=('pdns-recursor')
 provides=('pdns-recursor')
 conflicts=('pdns-recursor')
 backup=('etc/powerdns/recursor.conf')
-source=(http://downloads.powerdns.com/releases/pdns-recursor-$pkgver.tar.bz2{,.asc}
+source=(https://downloads.powerdns.com/releases/pdns-recursor-$pkgver.tar.bz2{,.asc}
         'pdns-recursor.service')
 sha256sums=('472db541307c8ca83a846d260ecfc854fd8e879c1bb2ce5683a8df5d21e860b0'
             'SKIP'
             'd4f545e85dffa86bf23c89ff0f352c74ec3524dfc53871f129656299222e4fba')
-validpgpkeys=('FBAE0323821C7706A5CA151BDCF513FA7EED19F3') # Peter van Dijk <peter.van.dijk@powerdns.com>
+validpgpkeys=('B76CD4671C0968BAA87DE61C5E50715BF2FFE1A7') # Pieter Lexis <pieter.lexis@powerdns.com>
 
 build() {
   cd "pdns-recursor-$pkgver"
