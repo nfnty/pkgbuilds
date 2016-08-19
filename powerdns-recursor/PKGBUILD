@@ -26,7 +26,7 @@ validpgpkeys=('B76CD4671C0968BAA87DE61C5E50715BF2FFE1A7') # Pieter Lexis <pieter
 build() {
   cd "pdns-recursor-$pkgver"
 
-  ./configure --prefix=/usr
+  ./configure --exec-prefix=/usr --sysconfdir=/etc/powerdns-recursor
   make -j1 LUA=1 \
     LUA_CPPFLAGS_CONFIG="$(pkg-config --cflags lua)" \
     LUA_LIBS_CONFIG="$(pkg-config --libs lua)"
