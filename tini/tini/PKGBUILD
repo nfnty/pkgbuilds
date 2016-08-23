@@ -1,29 +1,28 @@
+# Maintainer: nfnty <docker@nfnty.se>
 pkgname=('tini')
-srcname='tini'
+_srcname='tini'
 pkgdesc='A tiny but valid `init` for containers'
-pkgver='0.9.0'
+pkgver='0.10.0'
 pkgrel='1'
 arch=('i686' 'x86_64')
 url="https://github.com/krallin/${srcname}"
 license=('MIT')
-
 depends=('glibc')
 makedepends=('git' 'cmake' 'gcc')
 provides=("${pkgname[0]%-git}")
 conflicts=("${pkgname[0]%-git}")
-
-source=("${srcname}::git+https://github.com/krallin/${srcname}.git#tag=v${pkgver}")
-sha512sums=('SKIP')
+source=(https://github.com/krallin/${_srcname}/archive/v${pkgver}.tar.gz)
+sha512sums=('1ca4ede9116656c39b07216934b21e2b5e0cde154b80987b5d9209400ccae9f14c283de2bfffcae51e674e074560d2d60ced30f9d05e940ce422ac3f083a1dcf')
 
 build() {
-    cd "${srcdir}/${srcname}"
+    cd "${srcdir}/${srcname}/${_srcname}-${pkgver}"
 
     cmake -DCMAKE_INSTALL_PREFIX='/usr' .
     make
 }
 
 package() {
-    cd "${srcdir}/${srcname}"
+    cd "${srcdir}/${srcname}/${_srcname}-${pkgver}"
 
     make DESTDIR="${pkgdir}" install
     rm "${pkgdir}/usr/bin/tini-static"
