@@ -4,7 +4,7 @@ pkgver='r1'
 pkgrel='1'
 pkgdesc='An improved Python library to control i3wm'
 arch=('any')
-url='https://github.com/acrisci/i3ipc-python'
+url="https://github.com/acrisci/${_srcname}"
 license=('custom:BSD')
 
 depends=('python')
@@ -12,7 +12,7 @@ makedepends=('git' 'python-setuptools')
 provides=('i3ipc-python')
 conflicts=('i3ipc-python')
 
-source=("${_srcname}::git+https://github.com/acrisci/i3ipc-python.git")
+source=("${_srcname}::git+${url}.git")
 sha512sums=('SKIP')
 
 pkgver() {

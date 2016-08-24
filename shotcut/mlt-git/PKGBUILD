@@ -40,7 +40,7 @@ makedepends=(
 provides=("${pkgname[0]%-git}")
 conflicts=("${pkgname[0]%-git}")
 
-source=("${_srcname}::git+https://github.com/mltframework/${_srcname}.git")
+source=("${_srcname}::git+${url}.git")
 sha512sums=('SKIP')
 
 pkgver() {

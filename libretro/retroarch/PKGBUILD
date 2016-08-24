@@ -1,10 +1,10 @@
 pkgname=('retroarch')
-_srcname='retroarch'
+_srcname='RetroArch'
 pkgdesc='Reference frontend for the libretro API'
 pkgver='1.2.2'
 pkgrel='1'
 arch=('i686' 'x86_64')
-url='https://github.com/libretro/RetroArch'
+url="https://github.com/libretro/${_srcname}"
 license=('GPL3')
 
 depends=('libgl' 'alsa-lib' 'freetype2' 'libxml2' 'nvidia-cg-toolkit')
@@ -12,7 +12,7 @@ makedepends=('git')
 provides=('retroarch')
 conflicts=('retroarch')
 
-source=("${_srcname}::git+https://github.com/libretro/RetroArch.git#tag=v${pkgver}")
+source=("${_srcname}::git+${url}.git#tag=v${pkgver}")
 sha512sums=('SKIP')
 
 build() {

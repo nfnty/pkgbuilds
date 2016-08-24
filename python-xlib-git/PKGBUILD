@@ -4,7 +4,7 @@ pkgdesc='X11 interface for Python3'
 pkgver='r1'
 pkgrel='1'
 arch=('any')
-url='https://github.com/LiuLang/python3-xlib'
+url="https://github.com/LiuLang/${_srcname}"
 license=('GPL2')
 
 depends=('python')
@@ -12,7 +12,7 @@ makedepends=('git' 'python-setuptools')
 provides=('python-xlib')
 conflicts=('python-xlib')
 
-source=("${_srcname}::git+https://github.com/LiuLang/python3-xlib.git")
+source=("${_srcname}::git+${url}.git")
 sha512sums=('SKIP')
 
 pkgver() {

@@ -19,7 +19,7 @@ makedepends=('git' 'python-setuptools')
 provides=("${pkgname[0]%-git}")
 conflicts=("${pkgname[0]%-git}")
 
-source=("${_srcname}::git+https://github.com/qtile/${_srcname}.git")
+source=("${_srcname}::git+${url}.git")
 sha512sums=('SKIP')
 
 pkgver() {

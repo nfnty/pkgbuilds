@@ -4,7 +4,7 @@ pkgdesc='libretro: PCSX-ReARMed'
 pkgver='r1'
 pkgrel='1'
 arch=('i686' 'x86_64')
-url='https://github.com/libretro/pcsx_rearmed'
+url="https://github.com/libretro/${srcname}"
 license=('GPL2')
 
 makedepends=('git')
@@ -12,7 +12,7 @@ provides=('pcsx_rearmed')
 conflicts=('pcsx_rearmed')
 
 source=(
-    "${_srcname}::git+https://github.com/libretro/pcsx_rearmed.git"
+    "${_srcname}::git+${url}.git"
     "https://raw.githubusercontent.com/libretro/libretro-super/master/dist/info/${_srcname}_libretro.info"
 )
 sha512sums=(

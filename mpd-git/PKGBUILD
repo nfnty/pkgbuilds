@@ -1,10 +1,10 @@
 pkgname=('mpd-git')
-_srcname='mpd'
+_srcname='MPD'
 pkgver='r1'
 pkgrel='1'
 pkgdesc='Daemon for playing music of various formats.'
 arch=('i686' 'x86_64')
-url='https://github.com/MaxKellermann/MPD'
+url="https://github.com/MaxKellermann/${_srcname}"
 license=('GPL2')
 
 depends=('libsamplerate' 'sqlite' 'libpulse' 'libvorbis' 'yajl' 'libmpdclient' 'icu')
@@ -12,7 +12,7 @@ makedepends=('git' 'boost' 'doxygen')
 provides=('mpd')
 conflicts=('mpd')
 
-source=("${_srcname}::git+https://github.com/MaxKellermann/MPD.git")
+source=("${_srcname}::git+${url}.git")
 sha512sums=('SKIP')
 
 pkgver() {

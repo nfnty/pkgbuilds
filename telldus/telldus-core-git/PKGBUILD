@@ -4,7 +4,7 @@ pkgver='r1'
 pkgrel='1'
 pkgdesc='Driver and tools for controlling a Telldus Technologies TellStick'
 arch=('i686' 'x86_64')
-url='https://github.com/telldus/telldus'
+url="https://github.com/telldus/${_srcname}"
 license=('LGPL2')
 
 depends=('libftdi-compat' 'confuse')
@@ -13,7 +13,7 @@ provides=('telldus-core')
 conflicts=('telldus-core')
 
 source=(
-    "${_srcname}::git+https://github.com/telldus/telldus.git"
+    "${_srcname}::git+${url}.git"
     'telldusd.service'
     'pthread.patch'
     'uucp.patch'

@@ -4,7 +4,7 @@ pkgver='r1'
 pkgrel='1'
 pkgdesc='Pseudo-tty handler for docker Python client'
 arch=('any')
-url='https://github.com/d11wtq/dockerpty'
+url="https://github.com/d11wtq/${_srcname}"
 license=('Apache')
 
 depends=('python' 'python-six')
@@ -12,7 +12,7 @@ makedepends=('git' 'python-setuptools')
 provides=('python-dockerpty')
 conflicts=('python-dockerpty')
 
-source=("${_srcname}::git+https://github.com/d11wtq/dockerpty.git")
+source=("${_srcname}::git+${url}.git")
 sha512sums=('SKIP')
 
 pkgver() {

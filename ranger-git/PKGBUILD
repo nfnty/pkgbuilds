@@ -4,7 +4,7 @@ pkgver='r1'
 pkgrel='1'
 pkgdesc='A simple, vim-like file manager'
 arch=('any')
-url='https://github.com/hut/ranger'
+url="https://github.com/nfnty/${_srcname}"
 license=('GPL3')
 
 depends=('python')
@@ -27,7 +27,7 @@ makedepends=('git')
 provides=('ranger')
 conflicts=('ranger')
 
-source=("${_srcname}::git+https://github.com/nfnty/ranger.git")
+source=("${_srcname}::git+${url}.git")
 sha256sums=('SKIP')
 
 pkgver() {

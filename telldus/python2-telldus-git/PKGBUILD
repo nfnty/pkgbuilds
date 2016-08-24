@@ -4,7 +4,7 @@ pkgver='r1'
 pkgrel='1'
 pkgdesc='Python 2 bindings for Telldus Technologies TellStick'
 arch=('any')
-url='https://github.com/telldus/telldus'
+url="https://github.com/telldus/${_srcname}"
 license=('LGPL2')
 
 depends=('python2' 'telldus-core')
@@ -13,7 +13,7 @@ provides=('python2-telldus')
 conflicts=('python2-telldus')
 
 source=(
-    "${_srcname}::git+https://github.com/telldus/telldus.git"
+    "${_srcname}::git+${url}.git"
 )
 sha512sums=(
     'SKIP'

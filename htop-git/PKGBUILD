@@ -4,7 +4,7 @@ pkgver='r1'
 pkgrel='1'
 pkgdesc='Interactive text-mode process viewer'
 arch=('i686' 'x86_64')
-url='https://github.com/hishamhm/htop'
+url="https://github.com/hishamhm/${_srcname}"
 license=('GPL2')
 
 depends=('ncurses')
@@ -17,7 +17,7 @@ provides=('htop')
 conflicts=('htop')
 
 source=(
-    "${_srcname}::git+https://github.com/hishamhm/htop.git"
+    "${_srcname}::git+${url}.git"
     'vim.patch'
     'starttime.patch'
 )

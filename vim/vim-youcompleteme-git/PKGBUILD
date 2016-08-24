@@ -28,7 +28,7 @@ makedepends=(
 provides=("${pkgname[0]%-git}")
 conflicts=("${pkgname[0]%-git}")
 
-source=("${_srcname}::git+https://github.com/Valloric/${_srcname}.git")
+source=("${_srcname}::git+${url}.git")
 sha512sums=('SKIP')
 
 _path_ycmd="third_party/ycmd"

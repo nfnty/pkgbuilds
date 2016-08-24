@@ -4,7 +4,7 @@ pkgver='r1'
 pkgrel='1'
 pkgdesc='Simple X hotkey daemon'
 arch=('i686' 'x86_64')
-url='https://github.com/baskerville/sxhkd'
+url="https://github.com/baskerville/${_srcname}"
 license=('custom:BSD')
 
 depends=('libxcb' 'xcb-util-keysyms')
@@ -12,7 +12,7 @@ makedepends=('git' 'xcb-util')
 provides=('sxhkd')
 conflicts=('sxhkd')
 
-source=("${_srcname}::git+https://github.com/baskerville/sxhkd.git")
+source=("${_srcname}::git+${url}.git")
 sha512sums=('SKIP')
 
 pkgver() {

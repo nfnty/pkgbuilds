@@ -1,10 +1,10 @@
 pkgname=('kodi-git')
-_srcname='kodi'
+_srcname='xbmc'
 pkgver='r1'
 pkgrel='1'
 pkgdesc='Software media player and entertainment hub for digital media'
 arch=('i686' 'x86_64')
-url='https://github.com/xbmc/xbmc'
+url="https://github.com/xbmc/${_srcname}"
 license=('GPL2')
 
 depends=(
@@ -41,7 +41,7 @@ provides=('kodi')
 conflicts=('kodi')
 replaces=('xbmc')
 
-source=("${_srcname}::git+https://github.com/xbmc/xbmc.git#branch=Helix")
+source=("${_srcname}::git+${url}.git#branch=Helix")
 sha256sums=('SKIP')
 
 install='kodi.install'

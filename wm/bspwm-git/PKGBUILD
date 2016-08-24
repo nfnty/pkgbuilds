@@ -4,7 +4,7 @@ pkgver='r1'
 pkgrel='1'
 pkgdesc='A tiling window manager based on binary space partitioning'
 arch=('i686' 'x86_64')
-url='https://github.com/nfnty/bspwm'
+url="https://github.com/nfnty/${_srcname}"
 license=('custom:BSD')
 
 depends=('libxcb' 'xcb-util' 'xcb-util-wm' 'xcb-util-keysyms')
@@ -13,7 +13,7 @@ makedepends=('git' 'jansson')
 provides=('bspwm')
 conflicts=('bspwm')
 
-source=("${_srcname}::git+https://github.com/nfnty/bspwm.git#branch=json")
+source=("${_srcname}::git+${url}.git#branch=json")
 sha512sums=('SKIP')
 
 pkgver() {

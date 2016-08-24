@@ -4,7 +4,7 @@ pkgdesc='Python wrapper for Telldus home automation library Telldus Core'
 pkgver='r1'
 pkgrel='1'
 arch=('any')
-url='https://github.com/erijo/tellcore-py'
+url="https://github.com/erijo/${_srcname}"
 license=('GPL3')
 
 depends=('python' 'telldus-core')
@@ -12,7 +12,7 @@ makedepends=('git' 'python-setuptools')
 provides=('tellcore-py')
 conflicts=('tellcore-py')
 
-source=("${_srcname}::git+https://github.com/erijo/tellcore-py.git")
+source=("${_srcname}::git+${url}.git")
 sha512sums=('SKIP')
 
 pkgver() {

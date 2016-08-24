@@ -13,7 +13,7 @@ provides=('vimperator')
 conflicts=('vimperator' 'vimperator-hg')
 
 source=(
-    "${_srcname}::git+https://github.com/vimperator/vimperator-labs.git"
+    "${_srcname}::git+${url}.git"
     'no_zip.patch'
 )
 sha512sums=(

@@ -4,14 +4,14 @@ pkgdesc='Breeze snow cursor theme'
 pkgver='2.0'
 pkgrel='1'
 arch=('any')
-url="https://github.com/nfnty/${_srcname}.git"
+url="https://github.com/nfnty/${_srcname}"
 license=('GPL2' 'LGPL3')
 
 makedepends=('git' 'inkscape' 'xorg-xcursorgen')
 provides=("${pkgname[0]%-git}")
 conflicts=("${pkgname[0]%-git}")
 
-source=("${_srcname}::git+https://github.com/nfnty/${_srcname}.git")
+source=("${_srcname}::git+${url}.git")
 sha512sums=('SKIP')
 
 build() {

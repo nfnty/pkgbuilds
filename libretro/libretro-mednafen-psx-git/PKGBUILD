@@ -13,7 +13,7 @@ conflicts=("${pkgname[0]%-git}")
 
 _corename="${_srcname//-/_}"
 source=(
-    "${_srcname}::git+https://github.com/libretro/${_srcname}.git"
+    "${_srcname}::git+${url}.git"
     "https://raw.githubusercontent.com/libretro/libretro-super/master/dist/info/${_corename}.info"
 )
 sha512sums=(

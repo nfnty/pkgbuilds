@@ -4,7 +4,7 @@ pkgver='r1'
 pkgrel='1'
 pkgdesc='Window Tiling For The Win. A tiling window manager written in Rust'
 arch=('i686' 'x86_64')
-url='https://github.com/Kintaro/wtftw'
+url="https://github.com/Kintaro/${_srcname}"
 license=('custom:BSD')
 
 depends=('rust' 'libxinerama')
@@ -12,7 +12,7 @@ makedepends=('git' 'cargo')
 provides=('wtftw')
 conflicts=('wtftw')
 
-source=("${_srcname}::git+https://github.com/Kintaro/wtftw.git")
+source=("${_srcname}::git+${url}.git")
 sha512sums=('SKIP')
 
 pkgver() {

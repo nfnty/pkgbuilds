@@ -22,7 +22,7 @@ provides=("${pkgname[0]%-git}")
 conflicts=("${pkgname[0]%-git}")
 
 source=(
-    "${_srcname}::git+https://github.com/mozilla-services/${_srcname}.git#tag=v${pkgver}"
+    "${_srcname}::git+${url}.git#tag=v${pkgver}"
     'heka.service'
     'cmake.patch'
 )

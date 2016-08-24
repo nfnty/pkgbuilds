@@ -4,7 +4,7 @@ pkgver='r1'
 pkgrel='1'
 pkgdesc='Define and run complex applications using Docker'
 arch=('any')
-url='https://github.com/docker/compose'
+url="https://github.com/docker/${_srcname}"
 license=('Apache')
 
 depends=(
@@ -24,7 +24,7 @@ makedepends=('git')
 provides=('docker-compose')
 conflicts=('docker-compose')
 
-source=("${_srcname}::git+https://github.com/docker/compose.git")
+source=("${_srcname}::git+${url}.git")
 sha512sums=('SKIP')
 
 pkgver() {

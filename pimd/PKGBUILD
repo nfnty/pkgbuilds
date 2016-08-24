@@ -13,7 +13,7 @@ provides=("${pkgname[0]%-git}")
 conflicts=("${pkgname[0]%-git}")
 
 source=(
-    "${_srcname}::git+https://github.com/troglobit/${_srcname}.git#tag=${pkgver}"
+    "${_srcname}::git+${url}.git#tag=${pkgver}"
     'pimd.service'
     'noroot.patch'
 )

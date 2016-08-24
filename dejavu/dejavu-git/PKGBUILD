@@ -21,7 +21,7 @@ makedepends=('git' 'python2-setuptools')
 provides=("${pkgname[0]%-git}")
 conflicts=("${pkgname[0]%-git}")
 
-source=("${_srcname}::git+https://github.com/worldveil/${_srcname}.git")
+source=("${_srcname}::git+${url}.git")
 sha512sums=('SKIP')
 
 pkgver() {

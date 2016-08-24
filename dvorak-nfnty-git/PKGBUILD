@@ -11,7 +11,7 @@ makedepends=('git' 'gzip')
 provides=('dvorak-nfnty')
 conflicts=('dvorak-nfnty')
 
-source=("${_srcname}::git+https://github.com/nfnty/dvorak-nfnty.git")
+source=("${_srcname}::git+${url}.git")
 sha512sums=('SKIP')
 
 pkgver() {
