@@ -1,10 +1,10 @@
 pkgname=('avidemux-cli-git' 'avidemux-qt-git')
-srcname='avidemux2'
+_srcname='avidemux2'
 pkgbase='avidemux-git'
 pkgver='r1'
 pkgrel='1'
 arch=('i686' 'x86_64')
-url="https://github.com/mean00/${srcname}"
+url="https://github.com/mean00/${_srcname}"
 license=('GPL2')
 
 makedepends=(
@@ -56,11 +56,11 @@ makedepends=(
     'qt5-tools'
 )
 
-source=("${srcname}::git+${url}.git")
+source=("${_srcname}::git+${url}.git")
 sha512sums=('SKIP')
 
 pkgver() {
-    cd "${srcdir}/${srcname}"
+    cd "${srcdir}/${_srcname}"
 
     printf 'r%s.%s.%s\n' \
         "$( git rev-list --count 'HEAD' )" \
@@ -77,7 +77,7 @@ _make() {
 }
 
 build() {
-    local path_git="${srcdir}/${srcname}"
+    local path_git="${srcdir}/${_srcname}"
     local path_build="${srcdir}/build"
     path_fakeroot="${srcdir}/fakeroot"
     args_base=(
@@ -174,9 +174,9 @@ package_avidemux-qt-git() {
         make DESTDIR="${pkgdir}" install
     done
 
-    install -D --mode='644' "${srcdir}/${srcname}/avidemux2.desktop" \
+    install -D --mode='644' "${srcdir}/${_srcname}/avidemux2.desktop" \
         "${pkgdir}/usr/share/applications/avidemux-qt.desktop"
-    install -D --mode='644' "${srcdir}/${srcname}/avidemux_icon.png" \
+    install -D --mode='644' "${srcdir}/${_srcname}/avidemux_icon.png" \
         "${pkgdir}/usr/share/pixmaps/avidemux-qt.png"
     sed --in-place \
         --expression='s/^Icon=avidemux$/Icon=avidemux-qt/' \

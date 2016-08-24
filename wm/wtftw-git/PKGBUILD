@@ -1,5 +1,5 @@
 pkgname=('wtftw-git')
-srcname='wtftw'
+_srcname='wtftw'
 pkgver='r1'
 pkgrel='1'
 pkgdesc='Window Tiling For The Win. A tiling window manager written in Rust'
@@ -12,11 +12,11 @@ makedepends=('git' 'cargo')
 provides=('wtftw')
 conflicts=('wtftw')
 
-source=("${srcname}::git+https://github.com/Kintaro/wtftw.git")
+source=("${_srcname}::git+https://github.com/Kintaro/wtftw.git")
 sha512sums=('SKIP')
 
 pkgver() {
-    cd "${srcdir}/${srcname}"
+    cd "${srcdir}/${_srcname}"
 
     printf 'r%s.%s.%s\n' \
         "$( git rev-list --count 'HEAD' )" \
@@ -25,14 +25,14 @@ pkgver() {
 }
 
 build() {
-    cd "${srcdir}/${srcname}"
+    cd "${srcdir}/${_srcname}"
 
     export CARGO_HOME="${srcdir}/cargo"
     cargo build --release
 }
 
 package() {
-    cd "${srcdir}/${srcname}"
+    cd "${srcdir}/${_srcname}"
 
     install -D --mode=755 target/release/wtftw "${pkgdir}/usr/bin/wtftw"
     install -D --mode=644 config/config.rs "${pkgdir}/usr/share/wtftw/config.rs"

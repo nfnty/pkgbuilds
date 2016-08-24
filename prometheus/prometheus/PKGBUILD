@@ -1,17 +1,17 @@
 pkgname=('prometheus')
-srcname='prometheus'
+_srcname='prometheus'
 pkgdesc='Monitoring system and time series database'
 pkgver='1.0.1'
 pkgrel='1'
 arch=('i686' 'x86_64')
-url="https://github.com/prometheus/${srcname}"
+url="https://github.com/prometheus/${_srcname}"
 license=('Apache')
 
 makedepends=('git' 'go')
 provides=("${pkgname[0]%-git}")
 conflicts=("${pkgname[0]%-git}")
 
-source=("${srcname}::git+${url}.git#tag=v${pkgver}")
+source=("${_srcname}::git+${url}.git#tag=v${pkgver}")
 sha512sums=('SKIP')
 
 _url_go="${url#*//}"
@@ -22,7 +22,7 @@ prepare() {
 
     mkdir --parents "${GOPATH}/src/${_url_go}"
     rm --recursive "${GOPATH}/src/${_url_go}"
-    mv "${srcname}" "${GOPATH}/src/${_url_go}"
+    mv "${_srcname}" "${GOPATH}/src/${_url_go}"
 }
 
 build() {
@@ -37,11 +37,11 @@ package() {
     cd "${srcdir}"
     export GOPATH="${srcdir}/gopath"
 
-    install --directory "${pkgdir}/"{"etc/${srcname}",usr/bin,"var/lib/${srcname}"}
+    install --directory "${pkgdir}/"{"etc/${_srcname}",usr/bin,"var/lib/${_srcname}"}
     cp "${GOPATH}/src/${_url_go}/"{prometheus,promtool} "${pkgdir}/usr/bin/"
 
     cd "${GOPATH}/src/${_url_go}"
-    cp config/testdata/conf.good.yml "${pkgdir}/etc/${srcname}/config.yml"
+    cp config/testdata/conf.good.yml "${pkgdir}/etc/${_srcname}/config.yml"
 
     chmod --recursive 'u=rwX,g=rX,o=rX' "${pkgdir}"
 }

@@ -1,17 +1,17 @@
 pkgname=('grafana-git')
-srcname='grafana'
+_srcname='grafana'
 pkgdesc='Feature rich metrics dashboard and graph editor'
 pkgver='r1'
 pkgrel='1'
 arch=('i686' 'x86_64')
-url="https://github.com/grafana/${srcname}"
+url="https://github.com/grafana/${_srcname}"
 license=('Apache')
 
 makedepends=('git' 'go' 'godep' 'nodejs' 'nodejs-grunt-cli' 'npm' 'phantomjs')
 provides=("${pkgname[0]%-git}")
 conflicts=("${pkgname[0]%-git}")
 
-source=("${srcname}::git+${url}.git")
+source=("${_srcname}::git+${url}.git")
 sha512sums=('SKIP')
 
 _url_go="${url#*//}"
@@ -32,7 +32,7 @@ prepare() {
 
     mkdir --parents "${GOPATH}/src/${_url_go}"
     rm --recursive "${GOPATH}/src/${_url_go}"
-    mv "${srcname}" "${GOPATH}/src/${_url_go}"
+    mv "${_srcname}" "${GOPATH}/src/${_url_go}"
 
     cd "${GOPATH}/src/${_url_go}"
     git remote set-url origin "${url}"
@@ -60,13 +60,13 @@ package() {
     cd "${srcdir}"
     export GOPATH="${srcdir}/gopath"
 
-    install --directory "${pkgdir}/"{"etc/${srcname}",usr,usr/share,"var/lib/${srcname}"}
+    install --directory "${pkgdir}/"{"etc/${_srcname}",usr,usr/share,"var/lib/${_srcname}"}
     cp --recursive "${GOPATH}/bin" "${pkgdir}/usr/"
 
     cd "${GOPATH}/src/${_url_go}"
-    cp --recursive tmp "${pkgdir}/usr/share/${srcname}"
-    cp conf/ldap.toml "${pkgdir}/etc/${srcname}/"
-    cp conf/sample.ini "${pkgdir}/etc/${srcname}/grafana.ini"
+    cp --recursive tmp "${pkgdir}/usr/share/${_srcname}"
+    cp conf/ldap.toml "${pkgdir}/etc/${_srcname}/"
+    cp conf/sample.ini "${pkgdir}/etc/${_srcname}/grafana.ini"
 
     chmod --recursive 'u=rwX,g=rX,o=rX' "${pkgdir}"
 }

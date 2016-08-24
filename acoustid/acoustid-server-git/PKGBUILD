@@ -1,10 +1,10 @@
 pkgname=('acoustid-server-git')
-srcname='acoustid-server'
+_srcname='acoustid-server'
 pkgdesc='AcoustID Server'
 pkgver='r1'
 pkgrel='1'
 arch=('any')
-url="https://bitbucket.org/acoustid/${srcname}"
+url="https://bitbucket.org/acoustid/${_srcname}"
 license=('MIT')
 
 depends=('python2' 'postgresql-libs' 'chromaprint')
@@ -13,7 +13,7 @@ provides=("${pkgname[0]%-git}")
 conflicts=("${pkgname[0]%-git}")
 
 source=(
-    "${srcname}::git+${url}.git"
+    "${_srcname}::git+${url}.git"
     'libchromaprint.patch'
     'admin.patch'
 )
@@ -24,7 +24,7 @@ sha512sums=(
 )
 
 pkgver() {
-    cd "${srcdir}/${srcname}"
+    cd "${srcdir}/${_srcname}"
 
     printf 'r%s.%s.%s\n' \
         "$( git rev-list --count 'HEAD' )" \
@@ -33,21 +33,21 @@ pkgver() {
 }
 
 prepare() {
-    cd "${srcdir}/${srcname}"
+    cd "${srcdir}/${_srcname}"
 
     git apply "${srcdir}/admin.patch"
 }
 
 package() {
-    install --directory --mode='755' "${pkgdir}/opt/${srcname}"
-    cp --recursive "${srcdir}/${srcname}/"* "${pkgdir}/opt/${srcname}/"
+    install --directory --mode='755' "${pkgdir}/opt/${_srcname}"
+    cp --recursive "${srcdir}/${_srcname}/"* "${pkgdir}/opt/${_srcname}/"
 
-    cd "${pkgdir}/opt/${srcname}"
+    cd "${pkgdir}/opt/${_srcname}"
     virtualenv2 e
     source e/bin/activate
     pip install --requirement requirements.txt
 
-    chmod --recursive 'u=rwX,g=rX,o=rX' "${pkgdir}/opt/${srcname}"
+    chmod --recursive 'u=rwX,g=rX,o=rX' "${pkgdir}/opt/${_srcname}"
 
     cd e/lib/python2.7/site-packages
     patch --input="${srcdir}/libchromaprint.patch"

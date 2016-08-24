@@ -1,10 +1,10 @@
 pkgname=('luacheck')
-srcname='luacheck'
+_srcname='luacheck'
 pkgdesc='A tool for linting and static analysis of Lua code'
 pkgver='0.15.1'
 pkgrel='1'
 arch=('i686' 'x86_64')
-url="https://github.com/mpeterv/${srcname}"
+url="https://github.com/mpeterv/${_srcname}"
 license=('MIT')
 
 depends=('lua' 'lua-filesystem')
@@ -13,7 +13,7 @@ provides=("${pkgname[0]%-git}")
 conflicts=("${pkgname[0]%-git}")
 
 source=(
-    "${srcname}::git+${url}.git#tag=${pkgver}"
+    "${_srcname}::git+${url}.git#tag=${pkgver}"
     'bin.sh'
 )
 sha512sums=(
@@ -22,9 +22,9 @@ sha512sums=(
 )
 
 package() {
-    cd "${srcdir}/${srcname}"
+    cd "${srcdir}/${_srcname}"
 
-    lua install.lua "${pkgdir}/usr/share/lua/5.3/${srcname}"
+    lua install.lua "${pkgdir}/usr/share/lua/5.3/${_srcname}"
 
-    install -D --mode='755' "${srcdir}/bin.sh" "${pkgdir}/usr/bin/${srcname}"
+    install -D --mode='755' "${srcdir}/bin.sh" "${pkgdir}/usr/bin/${_srcname}"
 }

@@ -1,5 +1,5 @@
 pkgname=('ranger-git')
-srcname='ranger'
+_srcname='ranger'
 pkgver='r1'
 pkgrel='1'
 pkgdesc='A simple, vim-like file manager'
@@ -27,11 +27,11 @@ makedepends=('git')
 provides=('ranger')
 conflicts=('ranger')
 
-source=("${srcname}::git+https://github.com/nfnty/ranger.git")
+source=("${_srcname}::git+https://github.com/nfnty/ranger.git")
 sha256sums=('SKIP')
 
 pkgver() {
-    cd "${srcdir}/${srcname}"
+    cd "${srcdir}/${_srcname}"
 
     printf 'r%s.%s.%s\n' \
         "$( git rev-list --count 'HEAD' )" \
@@ -40,7 +40,7 @@ pkgver() {
 }
 
 package() {
-    cd "${srcdir}/${srcname}"
+    cd "${srcdir}/${_srcname}"
 
     python setup.py install --root="${pkgdir}" --optimize=1
 }

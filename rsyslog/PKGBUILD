@@ -1,10 +1,10 @@
 pkgname=('rsyslog')
-srcname='rsyslog'
+_srcname='rsyslog'
 pkgdesc='a Rocket-fast SYStem for LOG processing'
 pkgver='8.18.0'
 pkgrel='1'
 arch=('i686' 'x86_64')
-url="https://github.com/rsyslog/${srcname}"
+url="https://github.com/rsyslog/${_srcname}"
 license=('GPL3')
 depends=(
     'zlib'
@@ -28,7 +28,7 @@ provides=("${pkgname[0]%-git}")
 conflicts=("${pkgname[0]%-git}")
 
 source=(
-    "${srcname}::git+${url}.git#tag=v${pkgver}"
+    "${_srcname}::git+${url}.git#tag=v${pkgver}"
     'tmpfiles.conf'
 )
 sha512sums=(
@@ -39,7 +39,7 @@ sha512sums=(
 install='install.sh'
 
 build() {
-    cd "${srcdir}/${srcname}"
+    cd "${srcdir}/${_srcname}"
 
     autoreconf --install --force --warnings='all'
     ./configure --prefix='/usr' --sbindir='/usr/bin'
@@ -48,7 +48,7 @@ build() {
 }
 
 package() {
-    cd "${srcdir}/${srcname}"
+    cd "${srcdir}/${_srcname}"
 
     make DESTDIR="${pkgdir}" install
 

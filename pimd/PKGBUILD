@@ -1,10 +1,10 @@
 pkgname=('pimd')
-srcname='pimd'
+_srcname='pimd'
 pkgdesc='PIM-SM multicast routing daemon'
 pkgver='2.3.2'
 pkgrel='1'
 arch=('i686' 'x86_64')
-url="https://github.com/troglobit/${srcname}"
+url="https://github.com/troglobit/${_srcname}"
 license=('BSD')
 
 depends=('')
@@ -13,7 +13,7 @@ provides=("${pkgname[0]%-git}")
 conflicts=("${pkgname[0]%-git}")
 
 source=(
-    "${srcname}::git+https://github.com/troglobit/${srcname}.git#tag=${pkgver}"
+    "${_srcname}::git+https://github.com/troglobit/${_srcname}.git#tag=${pkgver}"
     'pimd.service'
     'noroot.patch'
 )
@@ -26,7 +26,7 @@ sha512sums=(
 backup=('etc/pimd.conf')
 
 prepare() {
-    cd "${srcdir}/${srcname}"
+    cd "${srcdir}/${_srcname}"
 
     git submodule update --init
 
@@ -35,7 +35,7 @@ prepare() {
 }
 
 build() {
-    cd "${srcdir}/${srcname}"
+    cd "${srcdir}/${_srcname}"
 
     ./configure --prefix='/usr' --sysconfdir='/etc'
 
@@ -43,7 +43,7 @@ build() {
 }
 
 package() {
-    cd "${srcdir}/${srcname}"
+    cd "${srcdir}/${_srcname}"
 
     make DESTDIR="${pkgdir}" install
 

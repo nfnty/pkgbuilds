@@ -1,10 +1,10 @@
 pkgname=('prometheus-exporter-node')
-srcname='node_exporter'
+_srcname='node_exporter'
 pkgdesc='Prometheus exporter for machine metrics'
 pkgver='0.12.0'
 pkgrel='1'
 arch=('i686' 'x86_64')
-url="https://github.com/prometheus/${srcname}"
+url="https://github.com/prometheus/${_srcname}"
 license=('Apache')
 
 makedepends=('git' 'go')
@@ -12,7 +12,7 @@ provides=("${pkgname[0]%-git}")
 conflicts=("${pkgname[0]%-git}")
 
 source=(
-    "${srcname}::git+${url}.git#tag=${pkgver}"
+    "${_srcname}::git+${url}.git#tag=${pkgver}"
     'prometheus-exporter-node.service'
 )
 sha512sums=(
@@ -30,7 +30,7 @@ prepare() {
 
     mkdir --parents "${GOPATH}/src/${_url_go}"
     rm --recursive "${GOPATH}/src/${_url_go}"
-    mv "${srcname}" "${GOPATH}/src/${_url_go}"
+    mv "${_srcname}" "${GOPATH}/src/${_url_go}"
 }
 
 build() {

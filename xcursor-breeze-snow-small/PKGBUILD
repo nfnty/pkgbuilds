@@ -1,27 +1,27 @@
 pkgname=('xcursor-breeze-snow-small')
-srcname='breeze-snow-small'
+_srcname='breeze-snow-small'
 pkgdesc='Breeze snow cursor theme'
 pkgver='2.0'
 pkgrel='1'
 arch=('any')
-url="https://github.com/nfnty/${srcname}.git"
+url="https://github.com/nfnty/${_srcname}.git"
 license=('GPL2' 'LGPL3')
 
 makedepends=('git' 'inkscape' 'xorg-xcursorgen')
 provides=("${pkgname[0]%-git}")
 conflicts=("${pkgname[0]%-git}")
 
-source=("${srcname}::git+https://github.com/nfnty/${srcname}.git")
+source=("${_srcname}::git+https://github.com/nfnty/${_srcname}.git")
 sha512sums=('SKIP')
 
 build() {
-    cd "${srcdir}/${srcname}"
+    cd "${srcdir}/${_srcname}"
 
     ./build.sh
 }
 
 package() {
-    cd "${srcdir}/${srcname}"
+    cd "${srcdir}/${_srcname}"
 
     install --directory --mode=755 "${pkgdir}/usr/share/icons"
     cp --recursive "Breeze_Snow_Small" "${pkgdir}/usr/share/icons/"

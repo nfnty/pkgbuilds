@@ -1,5 +1,5 @@
 pkgname=('retroarch')
-srcname='retroarch'
+_srcname='retroarch'
 pkgdesc='Reference frontend for the libretro API'
 pkgver='1.2.2'
 pkgrel='1'
@@ -12,11 +12,11 @@ makedepends=('git')
 provides=('retroarch')
 conflicts=('retroarch')
 
-source=("${srcname}::git+https://github.com/libretro/RetroArch.git#tag=v${pkgver}")
+source=("${_srcname}::git+https://github.com/libretro/RetroArch.git#tag=v${pkgver}")
 sha512sums=('SKIP')
 
 build() {
-    cd "${srcdir}/${srcname}"
+    cd "${srcdir}/${_srcname}"
 
     ./configure --prefix='/usr'
 
@@ -24,7 +24,7 @@ build() {
 }
 
 package() {
-    cd "${srcdir}/${srcname}"
+    cd "${srcdir}/${_srcname}"
 
     make DESTDIR="${pkgdir}" install
 

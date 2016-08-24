@@ -1,10 +1,10 @@
 pkgname=('vim-youcompleteme-git')
-srcname='YouCompleteMe'
+_srcname='YouCompleteMe'
 pkgdesc='A code-completion engine for Vim'
 pkgver='r1'
 pkgrel='1'
 arch=('i686' 'x86_64')
-url="https://github.com/Valloric/${srcname}"
+url="https://github.com/Valloric/${_srcname}"
 license=('GPL3')
 
 depends=(
@@ -28,7 +28,7 @@ makedepends=(
 provides=("${pkgname[0]%-git}")
 conflicts=("${pkgname[0]%-git}")
 
-source=("${srcname}::git+https://github.com/Valloric/${srcname}.git")
+source=("${_srcname}::git+https://github.com/Valloric/${_srcname}.git")
 sha512sums=('SKIP')
 
 _path_ycmd="third_party/ycmd"
@@ -39,7 +39,7 @@ _path_js="${_path_ycmd}/third_party/tern_runtime"
 _path_rust="${_path_ycmd}/third_party/racerd"
 
 pkgver() {
-    cd "${srcdir}/${srcname}"
+    cd "${srcdir}/${_srcname}"
 
     printf 'r%s.%s.%s\n' \
         "$( git rev-list --count 'HEAD' )" \
@@ -48,35 +48,35 @@ pkgver() {
 }
 
 prepare() {
-    cd "${srcdir}/${srcname}"
+    cd "${srcdir}/${_srcname}"
 
     git submodule update --init --recursive
 }
 
 build() {
-    cd "${srcdir}/${srcname}"
+    cd "${srcdir}/${_srcname}"
 
     mkdir ycmd_build
     cd ycmd_build
-    cmake -G 'Unix Makefiles' -DUSE_SYSTEM_LIBCLANG=ON -DUSE_SYSTEM_BOOST=ON . "${srcdir}/${srcname}/${_path_cpp}"
+    cmake -G 'Unix Makefiles' -DUSE_SYSTEM_LIBCLANG=ON -DUSE_SYSTEM_BOOST=ON . "${srcdir}/${_srcname}/${_path_cpp}"
     cmake --build . --target 'ycm_support_libs' --config 'Release'
 
-    # cd "${srcdir}/${srcname}/${_path_csharp}"
+    # cd "${srcdir}/${_srcname}/${_path_csharp}"
     # xbuild /property:Configuration=Release
 
-    cd "${srcdir}/${srcname}/${_path_go}"
+    cd "${srcdir}/${_srcname}/${_path_go}"
     go build
 
-    # cd "${srcdir}/${srcname}/${_path_js}"
+    # cd "${srcdir}/${_srcname}/${_path_js}"
     # npm install --production --python=python2
 
-    cd "${srcdir}/${srcname}/${_path_rust}"
+    cd "${srcdir}/${_srcname}/${_path_rust}"
     export CARGO_HOME="${srcdir}/cargo"
     cargo build --release
 }
 
 package() {
-    cd "${srcdir}/${srcname}"
+    cd "${srcdir}/${_srcname}"
 
     path_vim="${pkgdir}/usr/share/vim/vimfiles"
 

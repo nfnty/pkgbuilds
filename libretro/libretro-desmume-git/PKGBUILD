@@ -1,10 +1,10 @@
 pkgname=('libretro-desmume-git')
-srcname='desmume'
+_srcname='desmume'
 pkgdesc='libretro: Desmume'
 pkgver='r1'
 pkgrel='1'
 arch=('i686' 'x86_64')
-url="https://github.com/libretro/${srcname}"
+url="https://github.com/libretro/${_srcname}"
 license=('GPL2')
 
 makedepends=('git')
@@ -12,8 +12,8 @@ provides=("${pkgname[0]%-git}")
 conflicts=("${pkgname[0]%-git}")
 
 source=(
-    "${srcname}::git+https://github.com/libretro/${srcname}.git"
-    "https://raw.githubusercontent.com/libretro/libretro-super/master/dist/info/${srcname}_libretro.info"
+    "${_srcname}::git+https://github.com/libretro/${_srcname}.git"
+    "https://raw.githubusercontent.com/libretro/libretro-super/master/dist/info/${_srcname}_libretro.info"
 )
 sha512sums=(
     'SKIP'
@@ -21,7 +21,7 @@ sha512sums=(
 )
 
 pkgver() {
-    cd "${srcdir}/${srcname}"
+    cd "${srcdir}/${_srcname}"
 
     printf 'r%s.%s.%s\n' \
         "$( git rev-list --count 'HEAD' )" \
@@ -30,14 +30,14 @@ pkgver() {
 }
 
 build() {
-    cd "${srcdir}/${srcname}/desmume"
+    cd "${srcdir}/${_srcname}/desmume"
 
     make -f Makefile.libretro
 }
 
 package() {
-    cd "${srcdir}/${srcname}/desmume"
+    cd "${srcdir}/${_srcname}/desmume"
 
-    install -D --mode='644' "${srcname}_libretro.so" "${pkgdir}/usr/lib/libretro/${srcname}_libretro.so"
-    install -D --mode='644' "${srcdir}/${srcname}_libretro.info" "${pkgdir}/usr/lib/libretro/${srcname}_libretro.info"
+    install -D --mode='644' "${_srcname}_libretro.so" "${pkgdir}/usr/lib/libretro/${_srcname}_libretro.so"
+    install -D --mode='644' "${srcdir}/${_srcname}_libretro.info" "${pkgdir}/usr/lib/libretro/${_srcname}_libretro.info"
 }

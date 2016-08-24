@@ -1,5 +1,5 @@
 pkgname=('python-tellcore-py-git')
-srcname='tellcore-py'
+_srcname='tellcore-py'
 pkgdesc='Python wrapper for Telldus home automation library Telldus Core'
 pkgver='r1'
 pkgrel='1'
@@ -12,11 +12,11 @@ makedepends=('git' 'python-setuptools')
 provides=('tellcore-py')
 conflicts=('tellcore-py')
 
-source=("${srcname}::git+https://github.com/erijo/tellcore-py.git")
+source=("${_srcname}::git+https://github.com/erijo/tellcore-py.git")
 sha512sums=('SKIP')
 
 pkgver() {
-    cd "${srcdir}/${srcname}"
+    cd "${srcdir}/${_srcname}"
 
     printf 'r%s.%s.%s\n' \
         "$( git rev-list --count 'HEAD' )" \
@@ -25,7 +25,7 @@ pkgver() {
 }
 
 package() {
-    cd "${srcdir}/${srcname}"
+    cd "${srcdir}/${_srcname}"
 
     python setup.py install --root="${pkgdir}" --optimize=1
 }

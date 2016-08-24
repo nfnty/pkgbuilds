@@ -1,5 +1,5 @@
 pkgname=('avidemux-cli' 'avidemux-qt')
-srcname='avidemux2'
+_srcname='avidemux2'
 pkgbase='avidemux'
 pkgver='2.6.12'
 pkgrel='1'
@@ -58,7 +58,7 @@ makedepends=(
 
 # Version commits are tracked via `cmake/avidemuxVersion.cmake`
 source=(
-    "${srcname}::git+https://github.com/mean00/${srcname}.git#commit=856fc8ae1ec8ea03595c04153b42423fa783b55d"
+    "${_srcname}::git+https://github.com/mean00/${_srcname}.git#commit=856fc8ae1ec8ea03595c04153b42423fa783b55d"
     'cxx-11.patch'
 )
 sha512sums=(
@@ -67,7 +67,7 @@ sha512sums=(
 )
 
 prepare() {
-    cd "${srcdir}/${srcname}"
+    cd "${srcdir}/${_srcname}"
 
     git cherry-pick --no-commit \
         'b54303bc9b9310e288a1dde9c923f48e854bd55f' \
@@ -86,7 +86,7 @@ _make() {
 }
 
 build() {
-    local path_git="${srcdir}/${srcname}"
+    local path_git="${srcdir}/${_srcname}"
     local path_build="${srcdir}/build"
     path_fakeroot="${srcdir}/fakeroot"
     args_base=(
@@ -183,9 +183,9 @@ package_avidemux-qt() {
         make DESTDIR="${pkgdir}" install
     done
 
-    install -D --mode='644' "${srcdir}/${srcname}/avidemux2.desktop" \
+    install -D --mode='644' "${srcdir}/${_srcname}/avidemux2.desktop" \
         "${pkgdir}/usr/share/applications/avidemux-qt.desktop"
-    install -D --mode='644' "${srcdir}/${srcname}/avidemux_icon.png" \
+    install -D --mode='644' "${srcdir}/${_srcname}/avidemux_icon.png" \
         "${pkgdir}/usr/share/pixmaps/avidemux-qt.png"
     sed --in-place \
         --expression='s/^Icon=avidemux$/Icon=avidemux-qt/' \

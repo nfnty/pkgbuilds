@@ -1,17 +1,17 @@
 pkgname=('cadvisor')
-srcname='cadvisor'
+_srcname='cadvisor'
 pkgdesc='Analyzes resource usage and performance characteristics of running containers'
 pkgver='0.23.8'
 pkgrel='1'
 arch=('i686' 'x86_64')
-url="https://github.com/google/${srcname}"
+url="https://github.com/google/${_srcname}"
 license=('Apache')
 
 makedepends=('git' 'make' 'go' 'godep')
 provides=("${pkgname[0]%-git}")
 conflicts=("${pkgname[0]%-git}")
 
-source=("${srcname}::git+${url}.git#tag=v${pkgver}")
+source=("${_srcname}::git+${url}.git#tag=v${pkgver}")
 sha512sums=('SKIP')
 
 _url_go="${url#*//}"
@@ -22,7 +22,7 @@ prepare() {
 
     mkdir --parents "${GOPATH}/src/${_url_go}"
     rm --recursive "${GOPATH}/src/${_url_go}"
-    mv "${srcname}" "${GOPATH}/src/${_url_go}"
+    mv "${_srcname}" "${GOPATH}/src/${_url_go}"
 
     cd "${GOPATH}/src/${_url_go}"
     git remote set-url origin "${url}"

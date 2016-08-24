@@ -1,17 +1,17 @@
 pkgname=('influxdb')
-srcname='influxdb'
+_srcname='influxdb'
 pkgdesc='Scalable datastore for metrics, events, and real-time analytics'
 pkgver='0.13.0'
 pkgrel='1'
 arch=('i686' 'x86_64')
-url="https://github.com/influxdata/${srcname}"
+url="https://github.com/influxdata/${_srcname}"
 license=('MIT')
 
 makedepends=('git' 'go' 'python2')
 provides=("${pkgname[0]%-git}")
 conflicts=("${pkgname[0]%-git}")
 
-source=("${srcname}::git+${url}.git")
+source=("${_srcname}::git+${url}.git")
 sha512sums=('SKIP')
 
 _url_go="${url#*//}"
@@ -22,7 +22,7 @@ prepare() {
 
     mkdir --parents "${GOPATH}/src/${_url_go}"
     rm --recursive "${GOPATH}/src/${_url_go}"
-    mv "${srcname}" "${GOPATH}/src/${_url_go}"
+    mv "${_srcname}" "${GOPATH}/src/${_url_go}"
 
     cd "${GOPATH}/src/${_url_go}"
     git remote set-url origin "${url}"
@@ -48,11 +48,11 @@ package() {
     cd "${srcdir}"
     export GOPATH="${srcdir}/gopath"
 
-    install --directory "${pkgdir}/"{"etc/${srcname}",usr,"var/lib/${srcname}"}
+    install --directory "${pkgdir}/"{"etc/${_srcname}",usr,"var/lib/${_srcname}"}
     cp --recursive "${GOPATH}/bin" "${pkgdir}/usr/"
 
     cd "${GOPATH}/src/${_url_go}"
-    cp etc/config.sample.toml "${pkgdir}/etc/${srcname}/config.toml"
+    cp etc/config.sample.toml "${pkgdir}/etc/${_srcname}/config.toml"
 
     chmod --recursive 'u=rwX,g=rX,o=rX' "${pkgdir}"
 }

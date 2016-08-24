@@ -1,5 +1,5 @@
 pkgname=('beignet-git')
-srcname='beignet'
+_srcname='beignet'
 pkgdesc='OpenCL Library for Intel Ivy Bridge and newer GPUs'
 pkgver='r1'
 pkgrel='1'
@@ -12,11 +12,11 @@ makedepends=('git' 'clang' 'cmake' 'python2')
 provides=("${pkgname[0]%-git}" 'opencl-intel' 'opencl-headers' 'opencl-headers12')
 conflicts=("${pkgname[0]%-git}" 'opencl-intel' 'opencl-headers' 'opencl-headers12')
 
-source=("${srcname}::git+git://anongit.freedesktop.org/beignet")
+source=("${_srcname}::git+git://anongit.freedesktop.org/beignet")
 sha512sums=('SKIP')
 
 pkgver() {
-    cd "${srcdir}/${srcname}"
+    cd "${srcdir}/${_srcname}"
 
     printf 'r%s.%s.%s\n' \
         "$( git rev-list --count 'HEAD' )" \
@@ -25,7 +25,7 @@ pkgver() {
 }
 
 build() {
-    cd "${srcdir}/${srcname}"
+    cd "${srcdir}/${_srcname}"
 
     cmake \
         -DCMAKE_INSTALL_PREFIX='/usr' \
@@ -37,7 +37,7 @@ build() {
 }
 
 package() {
-    cd "${srcdir}/${srcname}"
+    cd "${srcdir}/${_srcname}"
 
     make DESTDIR="${pkgdir}" install
 }

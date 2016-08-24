@@ -1,5 +1,5 @@
 pkgname=('emby-server')
-srcname='Emby'
+_srcname='Emby'
 pkgdesc='Emby Server is a home media server built on top of other popular open source technologies'
 pkgver='3.0.6070'
 pkgrel='1'
@@ -13,7 +13,7 @@ provides=('emby-server')
 conflicts=('emby-server')
 
 source=(
-    "${srcname}::git+${url}#tag=${pkgver}"
+    "${_srcname}::git+${url}#tag=${pkgver}"
     'emby-server'
     'emby-migrate-database'
     'emby-server.conf'
@@ -33,7 +33,7 @@ install='emby-server.install'
 backup=('etc/conf.d/emby-server')
 
 prepare() {
-    cd "${srcdir}/${srcname}"
+    cd "${srcdir}/${_srcname}"
 
     git apply "${srcdir}/register.patch"
 
@@ -41,7 +41,7 @@ prepare() {
 }
 
 build() {
-    cd "${srcdir}/${srcname}"
+    cd "${srcdir}/${_srcname}"
 
     xbuild \
     /p:Configuration='Release Mono' \

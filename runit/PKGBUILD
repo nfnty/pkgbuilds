@@ -1,5 +1,5 @@
 pkgname=('runit')
-srcname='runit'
+_srcname='runit'
 pkgdesc='A UNIX init scheme with service supervision'
 pkgver='2.1.2'
 pkgrel='1'
@@ -34,23 +34,23 @@ noextract=("runit-${pkgver}.tar.gz")
 prepare() {
     cd "${srcdir}"
 
-    mkdir "${srcname}"
-    tar --extract --file="runit-${pkgver}.tar.gz" --gzip --strip-components='2' --directory="${srcname}"
+    mkdir "${_srcname}"
+    tar --extract --file="runit-${pkgver}.tar.gz" --gzip --strip-components='2' --directory="${_srcname}"
 
-    cd "${srcname}"
+    cd "${_srcname}"
     cat "${srcdir}/"*.diff | patch --strip=2 --input=-
     echo "${CC:-gcc} ${CFLAGS}" > src/conf-cc
     echo "${CC:-gcc -s} ${LDFLAGS}" > src/conf-ld
 }
 
 build() {
-    cd "${srcdir}/${srcname}/src"
+    cd "${srcdir}/${_srcname}/src"
 
     make
 }
 
 package() {
-    cd "${srcdir}/${srcname}"
+    cd "${srcdir}/${_srcname}"
 
     install --directory "${pkgdir}/etc/runit" "${pkgdir}/usr/bin" "${pkgdir}/usr/share/man/man8"
 

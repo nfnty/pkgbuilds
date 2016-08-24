@@ -1,5 +1,5 @@
 pkgname=('hostapd')
-srcname='hostapd'
+_srcname='hostapd'
 pkgver='2.5'
 pkgrel='2'
 pkgdesc='IEEE 802.11 AP, IEEE 802.1X/WPA/WPA2/EAP/RADIUS Authenticator'
@@ -13,7 +13,7 @@ provides=('hostapd')
 conflicts=('hostapd')
 
 source=(
-    "${srcname}::git+git://w1.fi/hostap.git#tag=hostap_${pkgver//./_}"
+    "${_srcname}::git+git://w1.fi/hostap.git#tag=hostap_${pkgver//./_}"
     'config'
     'hostapd.service'
     '40mhz.patch'
@@ -26,7 +26,7 @@ sha256sums=(
 )
 
 prepare() {
-    cd "${srcdir}/${srcname}"
+    cd "${srcdir}/${_srcname}"
 
     git apply "${srcdir}/40mhz.patch"
 
@@ -36,14 +36,14 @@ prepare() {
 }
 
 build() {
-    cd "${srcdir}/${srcname}/hostapd"
+    cd "${srcdir}/${_srcname}/hostapd"
 
     export CFLAGS="${CFLAGS} $( pkg-config --cflags libnl-3.0 )"
     make
 }
 
 package() {
-    cd "${srcdir}/${srcname}"
+    cd "${srcdir}/${_srcname}"
 
     # Systemd unit
     install -D --mode=644 "${srcdir}/hostapd.service" "${pkgdir}/usr/lib/systemd/system/hostapd.service"

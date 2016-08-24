@@ -16,7 +16,7 @@ source=("git://github.com/enkore/j4-dmenu-desktop")
 md5sums=('SKIP')
 
 pkgver() {
-    cd "${srcdir}/${srcname}"
+    cd "${srcdir}/${_srcname}"
 
     printf 'r%s.%s.%s\n' \
         "$( git rev-list --count 'HEAD' )" \

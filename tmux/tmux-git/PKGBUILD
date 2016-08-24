@@ -1,10 +1,10 @@
 pkgname=('tmux-git')
-srcname='tmux'
+_srcname='tmux'
 pkgdesc='Terminal multiplexer'
 pkgver='r1'
 pkgrel='1'
 arch=('i686' 'x86_64')
-url="https://github.com/tmux/${srcname}"
+url="https://github.com/tmux/${_srcname}"
 license=('ISC')
 
 depends=('ncurses' 'libevent')
@@ -13,7 +13,7 @@ provides=("${pkgname[0]%-git}")
 conflicts=("${pkgname[0]%-git}")
 
 source=(
-    "${srcname}::git+${url}.git"
+    "${_srcname}::git+${url}.git"
     'git+https://github.com/przepompownia/tmux-bash-completion.git'
     'ixon.patch'
 )
@@ -24,7 +24,7 @@ sha512sums=(
 )
 
 pkgver() {
-    cd "${srcdir}/${srcname}"
+    cd "${srcdir}/${_srcname}"
 
     printf 'r%s.%s.%s\n' \
         "$( git rev-list --count 'HEAD' )" \
@@ -33,13 +33,13 @@ pkgver() {
 }
 
 prepare() {
-    cd "${srcdir}/${srcname}"
+    cd "${srcdir}/${_srcname}"
 
     git apply "${srcdir}/ixon.patch"
 }
 
 build() {
-    cd "${srcdir}/${srcname}"
+    cd "${srcdir}/${_srcname}"
 
     ./autogen.sh
     ./configure --prefix='/usr'
@@ -48,7 +48,7 @@ build() {
 }
 
 package() {
-    cd "${srcdir}/${srcname}"
+    cd "${srcdir}/${_srcname}"
 
     make DESTDIR="${pkgdir}" install
 

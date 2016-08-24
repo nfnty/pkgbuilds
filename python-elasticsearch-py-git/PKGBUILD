@@ -1,10 +1,10 @@
 pkgname=('python-elasticsearch-py-git')
-srcname='elasticsearch-py'
+_srcname='elasticsearch-py'
 pkgdesc='Official Python low-level client for Elasticsearch'
 pkgver='r1'
 pkgrel='1'
 arch=('any')
-url="https://github.com/elastic/${srcname}"
+url="https://github.com/elastic/${_srcname}"
 license=('Apache')
 
 depends=('python' 'python-urllib3')
@@ -12,11 +12,11 @@ makedepends=('git' 'python-setuptools')
 provides=("${pkgname[0]%-git}")
 conflicts=("${pkgname[0]%-git}")
 
-source=("${srcname}::git+https://github.com/elastic/${srcname}.git")
+source=("${_srcname}::git+https://github.com/elastic/${_srcname}.git")
 sha512sums=('SKIP')
 
 pkgver() {
-    cd "${srcdir}/${srcname}"
+    cd "${srcdir}/${_srcname}"
 
     printf 'r%s.%s.%s\n' \
         "$( git rev-list --count 'HEAD' )" \
@@ -25,7 +25,7 @@ pkgver() {
 }
 
 package() {
-    cd "${srcdir}/${srcname}"
+    cd "${srcdir}/${_srcname}"
 
     python setup.py install --root="${pkgdir}" --optimize=1
 }

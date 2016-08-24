@@ -1,5 +1,5 @@
 pkgname=('reddit-enhancement-suite-firefox-git')
-srcname='reddit-enhancement-suite-firefox'
+_srcname='reddit-enhancement-suite-firefox'
 pkgver=r4237.v4.5.1.opera.566.gdae0812
 pkgrel=1
 pkgdesc='A firefox extension that enhances your Reddit browsing experience'
@@ -13,7 +13,7 @@ provides=('reddit-enhancement-suite-firefox')
 conflicts=('reddit-enhancement-suite-firefox')
 
 source=(
-    "$srcname::git+${url}.git"
+    "$_srcname::git+${url}.git"
     'https://ftp.mozilla.org/pub/mozilla.org/labs/jetpack/jetpack-sdk-latest.tar.gz'
     'python2.patch'
 )
@@ -28,7 +28,7 @@ XPI_NAME='reddit_res.xpi'
 ADDON_SDK_VER='1.17'
 
 pkgver() {
-    cd "${srcdir}/${srcname}"
+    cd "${srcdir}/${_srcname}"
 
     printf 'r%s.%s.%s\n' \
         "$( git rev-list --count 'HEAD' )" \
@@ -42,14 +42,14 @@ prepare() {
 }
 
 build() {
-    cd "$srcdir/$srcname"
+    cd "$srcdir/$_srcname"
     bash 'makelinks.sh'
-    cd "$srcdir/$srcname/XPI"
+    cd "$srcdir/$_srcname/XPI"
     "$srcdir/addon-sdk-${ADDON_SDK_VER}/bin/cfx" xpi
 }
 
 package() {
     local destdir="${pkgdir}/usr/lib/firefox/browser/extensions/$EXTENSION_ID"
     install -d "$destdir"
-    unzip -d "$destdir" "$srcdir/$srcname/XPI/$XPI_NAME"
+    unzip -d "$destdir" "$srcdir/$_srcname/XPI/$XPI_NAME"
 }

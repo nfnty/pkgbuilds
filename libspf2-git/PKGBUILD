@@ -1,22 +1,22 @@
 pkgname=('libspf2-git')
-srcname='libspf2'
+_srcname='libspf2'
 pkgbase='libspf2-git'
 pkgdesc='Implementation of the Sender Policy Framework for SMTP authorization'
 pkgver='r1'
 pkgrel='1'
 arch=('i686' 'x86_64')
-url="https://github.com/shevek/${srcname}"
+url="https://github.com/shevek/${_srcname}"
 license=('custom:libspf2')
 
 makedepends=('git')
 provides=("${pkgname[0]%-git}")
 conflicts=("${pkgname[0]%-git}")
 
-source=("${srcname}::git+https://github.com/shevek/${srcname}.git")
+source=("${_srcname}::git+https://github.com/shevek/${_srcname}.git")
 sha512sums=('SKIP')
 
 pkgver() {
-    cd "${srcdir}/${srcname}"
+    cd "${srcdir}/${_srcname}"
 
     printf 'r%s.%s.%s\n' \
         "$( git rev-list --count 'HEAD' )" \
@@ -25,7 +25,7 @@ pkgver() {
 }
 
 build() {
-    cd "${srcdir}/${srcname}"
+    cd "${srcdir}/${_srcname}"
 
     ./configure --prefix='/usr'
 
@@ -33,7 +33,7 @@ build() {
 }
 
 package() {
-    cd "${srcdir}/${srcname}"
+    cd "${srcdir}/${_srcname}"
 
     make DESTDIR="${pkgdir}" install
 }

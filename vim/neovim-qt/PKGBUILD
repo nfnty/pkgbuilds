@@ -1,11 +1,11 @@
 pkgname=('neovim-qt')
-srcname='neovim-qt'
+_srcname='neovim-qt'
 pkgbase='neovim-qt'
 pkgdesc='Neovim client library and GUI, in Qt5'
 pkgver='0.1.1'
 pkgrel='1'
 arch=('i686' 'x86_64')
-url="https://github.com/equalsraf/${srcname}"
+url="https://github.com/equalsraf/${_srcname}"
 license=('ISC')
 
 depends=('neovim' 'qt5-base' 'msgpack-c' 'libxkbcommon-x11')
@@ -13,7 +13,7 @@ makedepends=('git' 'cmake')
 provides=("${pkgname[0]%-git}")
 conflicts=("${pkgname[0]%-git}")
 
-source=("${srcname}::git+${url}.git#tag=v${pkgver}")
+source=("${_srcname}::git+${url}.git#tag=v${pkgver}")
 sha512sums=('SKIP')
 
 build() {
@@ -25,13 +25,13 @@ build() {
         -DCMAKE_INSTALL_PREFIX='/usr' \
         -DCMAKE_BUILD_TYPE='Release' \
         -DUSE_SYSTEM_MSGPACK='ON' \
-        "${srcdir}/${srcname}"
+        "${srcdir}/${_srcname}"
 
     make
 }
 
 package() {
-    cd "${srcdir}/${srcname}"
+    cd "${srcdir}/${_srcname}"
 
     install --directory "${pkgdir}/usr/"{,bin}
     install "${srcdir}/build/bin/nvim-qt" "${pkgdir}/usr/bin/nvim-qt"

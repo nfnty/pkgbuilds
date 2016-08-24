@@ -1,5 +1,5 @@
 pkgname=('sxhkd-git')
-srcname='sxhkd'
+_srcname='sxhkd'
 pkgver='r1'
 pkgrel='1'
 pkgdesc='Simple X hotkey daemon'
@@ -12,11 +12,11 @@ makedepends=('git' 'xcb-util')
 provides=('sxhkd')
 conflicts=('sxhkd')
 
-source=("${srcname}::git+https://github.com/baskerville/sxhkd.git")
+source=("${_srcname}::git+https://github.com/baskerville/sxhkd.git")
 sha512sums=('SKIP')
 
 pkgver() {
-    cd "${srcdir}/${srcname}"
+    cd "${srcdir}/${_srcname}"
 
     printf 'r%s.%s.%s\n' \
         "$( git rev-list --count 'HEAD' )" \
@@ -25,13 +25,13 @@ pkgver() {
 }
 
 build() {
-    cd "${srcdir}/${srcname}"
+    cd "${srcdir}/${_srcname}"
 
     make PREFIX='/usr'
 }
 
 package() {
-    cd "${srcdir}/${srcname}"
+    cd "${srcdir}/${_srcname}"
 
     make PREFIX='/usr' DESTDIR="${pkgdir}" install
     install -D --mode=644 LICENSE "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"

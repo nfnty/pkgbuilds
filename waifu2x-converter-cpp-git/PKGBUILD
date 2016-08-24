@@ -1,10 +1,10 @@
 pkgname=('waifu2x-converter-cpp-git')
-srcname='waifu2x-converter-cpp'
+_srcname='waifu2x-converter-cpp'
 pkgdesc='Image Super-Resolution for Anime-Style Art'
 pkgver='r1'
 pkgrel='1'
 arch=('i386' 'x86_64')
-url="https://github.com/tanakamura/${srcname}"
+url="https://github.com/tanakamura/${_srcname}"
 license=('MIT')
 
 depends=('opencv' 'opencl-headers')
@@ -12,11 +12,11 @@ makedepends=('git' 'cmake')
 provides=("${pkgname[0]%-git}")
 conflicts=("${pkgname[0]%-git}")
 
-source=("${srcname}::git+https://github.com/tanakamura/${srcname}.git")
+source=("${_srcname}::git+https://github.com/tanakamura/${_srcname}.git")
 sha512sums=('SKIP')
 
 pkgver() {
-    cd "${srcdir}/${srcname}"
+    cd "${srcdir}/${_srcname}"
 
     printf 'r%s.%s.%s\n' \
         "$( git rev-list --count 'HEAD' )" \
@@ -25,7 +25,7 @@ pkgver() {
 }
 
 build() {
-    cd "${srcdir}/${srcname}"
+    cd "${srcdir}/${_srcname}"
 
     cmake \
         -DCMAKE_INSTALL_PREFIX='/usr' \
@@ -36,7 +36,7 @@ build() {
 }
 
 package() {
-    cd "${srcdir}/${srcname}"
+    cd "${srcdir}/${_srcname}"
 
     make DESTDIR="${pkgdir}" install
 }

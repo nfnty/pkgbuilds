@@ -1,5 +1,5 @@
 pkgname=('vimpager-nfnty-git')
-srcname='vimpager'
+_srcname='vimpager'
 pkgver='r1'
 pkgrel='1'
 pkgdesc='Vim as pager with escape sequences stripped'
@@ -11,11 +11,11 @@ makedepends=('git')
 provides=('vimpager')
 conflicts=('vimpager')
 
-source=("${srcname}::git+${url}.git")
+source=("${_srcname}::git+${url}.git")
 sha512sums=('SKIP')
 
 pkgver() {
-    cd "${srcdir}/${srcname}"
+    cd "${srcdir}/${_srcname}"
 
     printf 'r%s.%s.%s\n' \
         "$( git rev-list --count 'HEAD' )" \
@@ -24,7 +24,7 @@ pkgver() {
 }
 
 package() {
-    cd "${srcdir}/${srcname}"
+    cd "${srcdir}/${_srcname}"
     install -D default.sh "${pkgdir}/usr/bin/pager"
     install -D man.sh "${pkgdir}/usr/bin/pager-man"
     install -D diff.sh "${pkgdir}/usr/bin/pager-diff"

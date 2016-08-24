@@ -1,5 +1,5 @@
 pkgname=('dvorak-nfnty-git')
-srcname='dvorak-nfnty'
+_srcname='dvorak-nfnty'
 pkgver='r1'
 pkgrel='1'
 pkgdesc='Customized dvorak layout for console and Xorg'
@@ -11,11 +11,11 @@ makedepends=('git' 'gzip')
 provides=('dvorak-nfnty')
 conflicts=('dvorak-nfnty')
 
-source=("${srcname}::git+https://github.com/nfnty/dvorak-nfnty.git")
+source=("${_srcname}::git+https://github.com/nfnty/dvorak-nfnty.git")
 sha512sums=('SKIP')
 
 pkgver() {
-    cd "${srcdir}/${srcname}"
+    cd "${srcdir}/${_srcname}"
 
     printf 'r%s.%s.%s\n' \
         "$( git rev-list --count 'HEAD' )" \
@@ -24,13 +24,13 @@ pkgver() {
 }
 
 build() {
-    cd "${srcdir}/${srcname}"
+    cd "${srcdir}/${_srcname}"
 
     gzip --stdout 'kbd/nfnty_desk.map' > 'kbd/nfnty_desk.map.gz'
 }
 
 package() {
-    cd "${srcdir}/${srcname}"
+    cd "${srcdir}/${_srcname}"
 
     install -D --mode=644 'xkb/nfnty_desk' "$pkgdir/usr/share/X11/xkb/symbols/nfnty_desk"
     install -D --mode=644 'xkb/nfnty_lap' "$pkgdir/usr/share/X11/xkb/symbols/nfnty_lap"

@@ -1,5 +1,5 @@
 pkgname=('namebench2')
-srcname='namebench'
+_srcname='namebench'
 pkgver=r1060.7217712
 pkgrel=1
 pkgdesc='Provides personalized DNS server recommendations based on your browsing history'
@@ -12,11 +12,11 @@ makedepends=('git' 'go')
 provides=('namebench')
 conflicts=('namebench')
 
-source=("$srcname::git+https://github.com/google/namebench.git")
+source=("$_srcname::git+https://github.com/google/namebench.git")
 sha256sums=('SKIP')
 
 pkgver() {
-    cd "${srcdir}/${srcname}"
+    cd "${srcdir}/${_srcname}"
 
     printf 'r%s.%s.%s\n' \
         "$( git rev-list --count 'HEAD' )" \
@@ -32,12 +32,12 @@ prepare() {
 }
 
 build() {
-    cd "$srcdir/$srcname"
+    cd "$srcdir/$_srcname"
     export GOPATH="$srcdir/gopath"
     go build namebench.go
 }
 
 package() {
-    cd "$srcdir/$srcname"
+    cd "$srcdir/$_srcname"
     install -D namebench "$pkgdir/usr/bin/namebench"
 }

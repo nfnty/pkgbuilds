@@ -8,7 +8,7 @@ provides=("${pkgname[0]%-git}")
 conflicts=("${pkgname[0]%-git}")
 
 package() {
-    cd "${srcdir}/${srcname}"
+    cd "${srcdir}/${_srcname}"
 
     install --directory "${pkgdir}/usr/bin"
     ln --symbolic /usr/bin/nvim "${pkgdir}/usr/bin/vim"
