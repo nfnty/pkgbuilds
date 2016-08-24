@@ -1,6 +1,5 @@
 pkgname=('bitcoin-classic')
 _srcname='bitcoinclassic'
-pkgbase='bitcoin-classic'
 pkgdesc='Bitcoin Classic'
 pkgver='1.1.0'
 pkgrel='1'

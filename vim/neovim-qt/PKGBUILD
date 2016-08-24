@@ -1,6 +1,5 @@
 pkgname=('neovim-qt')
 _srcname='neovim-qt'
-pkgbase='neovim-qt'
 pkgdesc='Neovim client library and GUI, in Qt5'
 pkgver='0.1.1'
 pkgrel='1'

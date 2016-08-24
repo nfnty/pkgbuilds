@@ -1,6 +1,5 @@
 pkgname=('ulogd-git')
 _srcname='ulogd'
-pkgbase='ulogd-git'
 pkgdesc='Userspace logging daemon for netfilter/iptables related logging'
 pkgver='r1'
 pkgrel='1'
