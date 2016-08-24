@@ -32,7 +32,7 @@ build() {
 package() {
     cd "${srcdir}/${_srcname}"
 
-    install -D --mode=644 'xkb/nfnty_desk' "$pkgdir/usr/share/X11/xkb/symbols/nfnty_desk"
-    install -D --mode=644 'xkb/nfnty_lap' "$pkgdir/usr/share/X11/xkb/symbols/nfnty_lap"
-    install -D --mode=644 'kbd/nfnty_desk.map.gz' "$pkgdir/usr/share/kbd/keymaps/nfnty_desk.map.gz"
+    install -D --mode=644 'xkb/nfnty_desk' "${pkgdir}/usr/share/X11/xkb/symbols/nfnty_desk"
+    install -D --mode=644 'xkb/nfnty_lap' "${pkgdir}/usr/share/X11/xkb/symbols/nfnty_lap"
+    install -D --mode=644 'kbd/nfnty_desk.map.gz' "${pkgdir}/usr/share/kbd/keymaps/nfnty_desk.map.gz"
 }

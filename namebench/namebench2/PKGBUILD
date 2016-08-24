@@ -1,7 +1,7 @@
 pkgname=('namebench2')
 _srcname='namebench'
-pkgver=r1060.7217712
-pkgrel=1
+pkgver='r1'
+pkgrel='1'
 pkgdesc='Provides personalized DNS server recommendations based on your browsing history'
 arch=('any')
 url='https://github.com/google/namebench'
@@ -12,7 +12,7 @@ makedepends=('git' 'go')
 provides=('namebench')
 conflicts=('namebench')
 
-source=("$_srcname::git+https://github.com/google/namebench.git")
+source=("${_srcname}::git+https://github.com/google/namebench.git")
 sha256sums=('SKIP')
 
 pkgver() {
@@ -25,19 +25,19 @@ pkgver() {
 }
 
 prepare() {
-    export GOPATH="$srcdir/gopath"
+    export GOPATH="${srcdir}/gopath"
     go get -v "github.com/mattn/go-sqlite3"
     go get -v "code.google.com/p/go.net/publicsuffix"
     go get -v "github.com/miekg/dns"
 }
 
 build() {
-    cd "$srcdir/$_srcname"
-    export GOPATH="$srcdir/gopath"
+    cd "${srcdir}/${_srcname}"
+    export GOPATH="${srcdir}/gopath"
     go build namebench.go
 }
 
 package() {
-    cd "$srcdir/$_srcname"
-    install -D namebench "$pkgdir/usr/bin/namebench"
+    cd "${srcdir}/${_srcname}"
+    install -D namebench "${pkgdir}/usr/bin/namebench"
 }

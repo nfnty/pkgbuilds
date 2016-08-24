@@ -1,7 +1,7 @@
 pkgname=('reddit-enhancement-suite-firefox-git')
 _srcname='reddit-enhancement-suite-firefox'
-pkgver=r4237.v4.5.1.opera.566.gdae0812
-pkgrel=1
+pkgver='r1'
+pkgrel='1'
 pkgdesc='A firefox extension that enhances your Reddit browsing experience'
 arch=('any')
 url='https://github.com/honestbleeps/Reddit-Enhancement-Suite'
@@ -13,7 +13,7 @@ provides=('reddit-enhancement-suite-firefox')
 conflicts=('reddit-enhancement-suite-firefox')
 
 source=(
-    "$_srcname::git+${url}.git"
+    "${_srcname}::git+${url}.git"
     'https://ftp.mozilla.org/pub/mozilla.org/labs/jetpack/jetpack-sdk-latest.tar.gz'
     'python2.patch'
 )
@@ -23,9 +23,9 @@ sha256sums=(
     'bb7bfe1906ac7bdfb64db21f836eabb5457511ba46cfc207f93cf862a94e363f'
 )
 
-EXTENSION_ID='jid1-xUfzOsOFlzSOXg@jetpack'
-XPI_NAME='reddit_res.xpi'
-ADDON_SDK_VER='1.17'
+_extension_id='jid1-xUfzOsOFlzSOXg@jetpack'
+_xpi_name='reddit_res.xpi'
+_addon_sdk_ver='1.17'
 
 pkgver() {
     cd "${srcdir}/${_srcname}"
@@ -37,19 +37,19 @@ pkgver() {
 }
 
 prepare() {
-    cd "$srcdir/addon-sdk-${ADDON_SDK_VER}"
-    patch --strip=1 --input="$srcdir/python2.patch"
+    cd "${srcdir}/addon-sdk-${_addon_sdk_ver}"
+    patch --strip=1 --input="${srcdir}/python2.patch"
 }
 
 build() {
-    cd "$srcdir/$_srcname"
+    cd "${srcdir}/${_srcname}"
     bash 'makelinks.sh'
-    cd "$srcdir/$_srcname/XPI"
-    "$srcdir/addon-sdk-${ADDON_SDK_VER}/bin/cfx" xpi
+    cd "${srcdir}/${_srcname}/XPI"
+    "${srcdir}/addon-sdk-${_addon_sdk_ver}/bin/cfx" xpi
 }
 
 package() {
-    local destdir="${pkgdir}/usr/lib/firefox/browser/extensions/$EXTENSION_ID"
-    install -d "$destdir"
-    unzip -d "$destdir" "$srcdir/$_srcname/XPI/$XPI_NAME"
+    local destdir="${pkgdir}/usr/lib/firefox/browser/extensions/${_extension_id}"
+    install -d "${destdir}"
+    unzip -d "${destdir}" "${srcdir}/${_srcname}/XPI/${_xpi_name}"
 }

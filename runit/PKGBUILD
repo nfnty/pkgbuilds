@@ -58,5 +58,5 @@ package() {
         install --mode='755' "src/${file}" "${pkgdir}/usr/bin/"
     done
 
-    install --mode='644' man/* "$pkgdir/usr/share/man/man8/"
+    install --mode='644' man/* "${pkgdir}/usr/share/man/man8/"
 }
