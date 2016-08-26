@@ -11,7 +11,7 @@ makedepends=('git' 'go')
 provides=("${pkgname[0]%-git}")
 conflicts=("${pkgname[0]%-git}")
 
-source=("${_srcname}::git+${url}.git#tag=${pkgver}")
+source=("${_srcname}::git+${url}.git")
 sha512sums=('SKIP')
 
 _url_go="${url#*//}"
