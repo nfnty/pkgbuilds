@@ -1,0 +1,37 @@
+pkgname=('rspamd')
+_srcname='rspamd'
+pkgdesc='Rapid spam filtering system'
+pkgver='1.3.4'
+pkgrel='1'
+arch=('i686' 'x86_64')
+url="https://github.com/vstakhov/${_srcname}"
+license=('Apache')
+
+depends=('openssl' 'libevent' 'glib2' 'gmime' 'luajit' 'sqlite' 'hiredis' 'file')
+makedepends=('git' 'cmake' 'pkgconfig' 'ragel')
+provides=("${pkgname[0]%-git}")
+conflicts=("${pkgname[0]%-git}")
+
+source=("${_srcname}::git+${url}.git#tag=${pkgver}")
+sha512sums=('SKIP')
+
+build() {
+    cd "${srcdir}/${_srcname}"
+
+    cmake \
+        -DCMAKE_INSTALL_PREFIX='/usr' \
+        -DCONFDIR='/etc/rspamd' \
+        -DRUNDIR='/run/rspamd' \
+        -DDBDIR='/var/lib/rspamd' \
+        -DLOGDIR='/var/log/rspamd' \
+        -DWANT_SYSTEMD_UNITS='ON' \
+        .
+
+    make
+}
+
+package() {
+    cd "${srcdir}/${_srcname}"
+
+    make DESTDIR="${pkgdir}" install
+}
