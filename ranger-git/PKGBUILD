@@ -24,8 +24,8 @@ optdepends=(
     'perl-image-exiftool: for viewing information about media files'
 )
 makedepends=('git')
-provides=('ranger')
-conflicts=('ranger')
+provides=("${pkgname[0]%-git}")
+conflicts=("${pkgname[0]%-git}")
 
 source=("${_srcname}::git+${url}.git")
 sha256sums=('SKIP')

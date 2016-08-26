@@ -13,8 +13,8 @@ optdepends=(
     'lsof: List open files for running process'
     'strace: Attach to running process'
 )
-provides=('htop')
-conflicts=('htop')
+provides=("${pkgname[0]%-git}")
+conflicts=("${pkgname[0]%-git}")
 
 source=(
     "${_srcname}::git+${url}.git"

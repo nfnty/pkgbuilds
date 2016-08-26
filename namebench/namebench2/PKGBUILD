@@ -9,8 +9,8 @@ license=('Apache')
 
 depends=('')
 makedepends=('git' 'go')
-provides=('namebench')
-conflicts=('namebench')
+provides=("${pkgname[0]%-git}")
+conflicts=("${pkgname[0]%-git}")
 
 source=("${_srcname}::git+${url}.git")
 sha256sums=('SKIP')

@@ -8,8 +8,8 @@ url='https://github.com/nfnty/vimpager'
 license=('MIT')
 
 makedepends=('git')
-provides=('vimpager')
-conflicts=('vimpager')
+provides=("${pkgname[0]%-git}")
+conflicts=("${pkgname[0]%-git}")
 
 source=("${_srcname}::git+${url}.git")
 sha512sums=('SKIP')

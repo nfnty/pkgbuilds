@@ -9,8 +9,8 @@ license=('custom:BSD')
 
 depends=('openssl' 'libnl')
 makedepends=('git')
-provides=('hostapd')
-conflicts=('hostapd')
+provides=("${pkgname[0]%-git}")
+conflicts=("${pkgname[0]%-git}")
 
 source=(
     "${_srcname}::git+git://w1.fi/hostap.git#tag=hostap_${pkgver//./_}"

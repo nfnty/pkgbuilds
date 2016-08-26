@@ -8,8 +8,8 @@ url='https://github.com/nfnty/dvorak-nfnty'
 license=('MIT')
 
 makedepends=('git' 'gzip')
-provides=('dvorak-nfnty')
-conflicts=('dvorak-nfnty')
+provides=("${pkgname[0]%-git}")
+conflicts=("${pkgname[0]%-git}")
 
 source=("${_srcname}::git+${url}.git")
 sha512sums=('SKIP')

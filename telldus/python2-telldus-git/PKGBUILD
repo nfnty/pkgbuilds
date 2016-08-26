@@ -9,8 +9,8 @@ license=('LGPL2')
 
 depends=('python2' 'telldus-core')
 makedepends=('git' 'python2-setuptools')
-provides=('python2-telldus')
-conflicts=('python2-telldus')
+provides=("${pkgname[0]%-git}")
+conflicts=("${pkgname[0]%-git}")
 
 source=(
     "${_srcname}::git+${url}.git"

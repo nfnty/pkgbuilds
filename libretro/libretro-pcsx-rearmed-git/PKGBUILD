@@ -8,8 +8,8 @@ url="https://github.com/libretro/${srcname}"
 license=('GPL2')
 
 makedepends=('git')
-provides=('pcsx_rearmed')
-conflicts=('pcsx_rearmed')
+provides=("${pkgname[0]%-git}")
+conflicts=("${pkgname[0]%-git}")
 
 source=(
     "${_srcname}::git+${url}.git"

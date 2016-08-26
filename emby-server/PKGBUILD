@@ -9,8 +9,8 @@ license=('GPL2')
 
 depends=('ffmpeg' 'imagemagick' 'mono' 'sqlite')
 makedepends=('git')
-provides=('emby-server')
-conflicts=('emby-server')
+provides=("${pkgname[0]%-git}")
+conflicts=("${pkgname[0]%-git}")
 
 source=(
     "${_srcname}::git+${url}#tag=${pkgver}"

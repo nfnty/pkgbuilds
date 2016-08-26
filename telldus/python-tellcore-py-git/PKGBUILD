@@ -9,8 +9,8 @@ license=('GPL3')
 
 depends=('python' 'telldus-core')
 makedepends=('git' 'python-setuptools')
-provides=('tellcore-py')
-conflicts=('tellcore-py')
+provides=("${pkgname[0]%-git}")
+conflicts=("${pkgname[0]%-git}")
 
 source=("${_srcname}::git+${url}.git")
 sha512sums=('SKIP')

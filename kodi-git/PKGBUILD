@@ -37,8 +37,8 @@ makedepends=(
     'python2-simplejson' 'rtmpdump' 'sdl2' 'sdl_image'
     'shairplay' 'smbclient' 'swig' 'taglib' 'tinyxml' 'unzip' 'upower' 'yajl' 'zip'
 )
-provides=('kodi')
-conflicts=('kodi')
+provides=("${pkgname[0]%-git}")
+conflicts=("${pkgname[0]%-git}")
 replaces=('xbmc')
 
 source=("${_srcname}::git+${url}.git#branch=Helix")

@@ -9,8 +9,8 @@ license=('custom:BSD')
 
 depends=('libxcb' 'xcb-util-keysyms')
 makedepends=('git' 'xcb-util')
-provides=('sxhkd')
-conflicts=('sxhkd')
+provides=("${pkgname[0]%-git}")
+conflicts=("${pkgname[0]%-git}")
 
 source=("${_srcname}::git+${url}.git")
 sha512sums=('SKIP')

@@ -9,8 +9,8 @@ license=('GPL2')
 
 depends=('libsamplerate' 'sqlite' 'libpulse' 'libvorbis' 'yajl' 'libmpdclient' 'icu')
 makedepends=('git' 'boost' 'doxygen')
-provides=('mpd')
-conflicts=('mpd')
+provides=("${pkgname[0]%-git}")
+conflicts=("${pkgname[0]%-git}")
 
 source=("${_srcname}::git+${url}.git")
 sha512sums=('SKIP')
