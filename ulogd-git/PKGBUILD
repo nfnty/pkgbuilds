@@ -46,6 +46,8 @@ sha512sums=(
     'SKIP'
 )
 
+backup=('etc/ulogd.conf')
+
 pkgver() {
     cd "${srcdir}/${_srcname}"
 
