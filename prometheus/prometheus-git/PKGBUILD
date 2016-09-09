@@ -32,6 +32,9 @@ prepare() {
     mkdir --parents "${GOPATH}/src/${_url_go}"
     rm --recursive "${GOPATH}/src/${_url_go}"
     mv "${_srcname}" "${GOPATH}/src/${_url_go}"
+
+    cd "${GOPATH}/src/${_url_go}"
+    git remote set-url origin "${url}"
 }
 
 build() {
