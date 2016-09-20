@@ -1,0 +1,35 @@
+pkgname=('rocksdb')
+_srcname='rocksdb'
+pkgdesc='A library that provides an embeddable, persistent key-value store for fast storage'
+pkgver='4.9'
+pkgrel='1'
+arch=('i686' 'x86_64')
+url="https://github.com/facebook/${_srcname}"
+license=('custom:BSD')
+
+depends=('zlib' 'bzip2' 'snappy' 'gcc-libs')
+makedepends=('git' 'make' 'gcc')
+provides=("${pkgname[0]%-git}")
+conflicts=("${pkgname[0]%-git}")
+
+source=("${_srcname}::git+${url}.git#tag=v${pkgver}")
+sha512sums=('SKIP')
+
+prepare() {
+    cd "${srcdir}/${_srcname}"
+
+    perl -p -i -e 's/\bpython\b/python2/g' Makefile
+}
+
+build() {
+    cd "${srcdir}/${_srcname}"
+
+    make shared_lib
+}
+
+package() {
+    cd "${srcdir}/${_srcname}"
+
+    install --directory "${pkgdir}/usr"
+    make INSTALL_PATH="${pkgdir}/usr" install-shared
+}
