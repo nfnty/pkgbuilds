@@ -28,7 +28,7 @@ build() {
     cd "${srcdir}/${_srcname}"
 
     export CARGO_HOME="${srcdir}/cargo"
-    cargo build --release
+    cargo build --verbose --release
 }
 
 package() {

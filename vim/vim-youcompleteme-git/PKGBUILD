@@ -72,7 +72,7 @@ build() {
 
     cd "${srcdir}/${_srcname}/${_path_rust}"
     export CARGO_HOME="${srcdir}/cargo"
-    cargo build --release
+    cargo build --verbose --release
 }
 
 package() {
