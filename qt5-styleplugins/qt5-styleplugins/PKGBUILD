@@ -12,8 +12,20 @@ makedepends=('git')
 provides=("${pkgname[0]%-git}")
 conflicts=("${pkgname[0]%-git}")
 
-source=("${_srcname}::git+${url}.git#commit=7b11d50ac5eb0f9f069d0c73ada5796eac584217")
-sha512sums=('SKIP')
+source=(
+    "${_srcname}::git+${url}.git#commit=7b11d50ac5eb0f9f069d0c73ada5796eac584217"
+    'gconf.patch'
+)
+sha512sums=(
+    'SKIP'
+    'SKIP'
+)
+
+prepare() {
+    cd "${srcdir}/${_srcname}"
+
+    git apply "${srcdir}/gconf.patch"
+}
 
 build() {
     cd "${srcdir}/${_srcname}"
