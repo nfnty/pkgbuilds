@@ -1,3 +1,4 @@
+# shellcheck disable=SC2034,SC2154,SC2164
 pkgname=('python-mpd2-git')
 _srcname='python-mpd2'
 pkgdesc='Client interface for the Music Player Daemon'

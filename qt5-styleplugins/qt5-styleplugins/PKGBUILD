@@ -1,3 +1,4 @@
+# shellcheck disable=SC2034,SC2154,SC2164
 pkgname=('qt5-styleplugins')
 _srcname='qtstyleplugins'
 pkgdesc='Additional style plugins for Qt5'

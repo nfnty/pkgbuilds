@@ -1,3 +1,4 @@
+# shellcheck disable=SC2034,SC2154,SC2164
 pkgname=('python-elasticsearch-py-git')
 _srcname='elasticsearch-py'
 pkgdesc='Official Python low-level client for Elasticsearch'

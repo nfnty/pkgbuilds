@@ -1,3 +1,4 @@
+# shellcheck disable=SC2034,SC2154,SC2164
 # $Id$
 # Maintainer: Felix Yan <felixonmars@archlinux.org>
 # Contributor: Bartłomiej Piotrowski <bpiotrowski@archlinux.org>

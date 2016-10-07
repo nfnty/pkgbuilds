@@ -1,3 +1,4 @@
+# shellcheck disable=SC2034,SC2154,SC2164
 pkgname=('hostapd')
 _srcname='hostapd'
 pkgver='2.5'
@@ -38,7 +39,8 @@ prepare() {
 build() {
     cd "${srcdir}/${_srcname}/hostapd"
 
-    export CFLAGS="${CFLAGS} $( pkg-config --cflags libnl-3.0 )"
+    CFLAGS="${CFLAGS} $( pkg-config --cflags libnl-3.0 )"
+    export CFLAGS
     make
 }
 
@@ -49,7 +51,7 @@ package() {
     install -D --mode=644 "${srcdir}/hostapd.service" "${pkgdir}/usr/lib/systemd/system/hostapd.service"
 
     # License
-    install -D --mode=644 COPYING "${pkgdir}/usr/share/licenses/${pkgname}/COPYING"
+    install -D --mode=644 COPYING "${pkgdir}/usr/share/licenses/${pkgname[0]}/COPYING"
 
     cd hostapd
 

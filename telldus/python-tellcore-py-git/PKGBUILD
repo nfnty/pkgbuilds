@@ -1,3 +1,4 @@
+# shellcheck disable=SC2034,SC2154,SC2164
 pkgname=('python-tellcore-py-git')
 _srcname='tellcore-py'
 pkgdesc='Python wrapper for Telldus home automation library Telldus Core'

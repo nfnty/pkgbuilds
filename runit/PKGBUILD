@@ -1,3 +1,4 @@
+# shellcheck disable=SC2034,SC2154,SC2164
 pkgname=('runit')
 _srcname='runit'
 pkgdesc='A UNIX init scheme with service supervision'
@@ -54,9 +55,10 @@ package() {
 
     install --directory "${pkgdir}/etc/runit" "${pkgdir}/usr/bin" "${pkgdir}/usr/share/man/man8"
 
-    for file in $( cat package/commands ); do
-        install --mode='755' "src/${file}" "${pkgdir}/usr/bin/"
-    done
+    local line
+    while IFS='' read -r line || [[ -n "${line}" ]]; do
+        install --mode='755' "src/${line}" "${pkgdir}/usr/bin/"
+    done < package/commands
 
     install --mode='644' man/* "${pkgdir}/usr/share/man/man8/"
 }

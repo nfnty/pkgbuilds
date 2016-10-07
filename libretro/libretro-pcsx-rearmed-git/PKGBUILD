@@ -1,3 +1,4 @@
+# shellcheck disable=SC2034,SC2154,SC2164
 pkgname=('libretro-pcsx-rearmed-git')
 _srcname='pcsx_rearmed'
 pkgdesc='libretro: PCSX-ReARMed'

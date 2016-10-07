@@ -1,3 +1,4 @@
+# shellcheck disable=SC2034,SC2154,SC2164
 # Maintainer: Daniel Micay <danielmicay@gmail.com>
 # Contributor: Marti Raudsepp <marti@juffo.org>
 
@@ -11,7 +12,7 @@ license=('Apache')
 depends=('python2-dnspython' 'python2-httplib2' 'python2-simplejson' 'python2-jinja'
          'python2-graphy')
 optdepends=('tk: GUI')
-source=("https://namebench.googlecode.com/files/$pkgname-$pkgver-source.tgz")
+source=("https://namebench.googlecode.com/files/${pkgname[0]}-$pkgver-source.tgz")
 md5sums=('34e74eac37d6747592f8d5085f03ee4f')
 
 package() {

@@ -1,3 +1,4 @@
+# shellcheck disable=SC2034,SC2154,SC2164
 pkgname=('emby-server')
 _srcname='Emby'
 pkgdesc='Emby Server is a home media server built on top of other popular open source technologies'
@@ -56,7 +57,7 @@ package() {
 
     install -dm 755 "${pkgdir}"/{etc/conf.d,usr/{bin,lib/systemd/system}}
     cp -dr --no-preserve='ownership' build "${pkgdir}"/usr/lib/emby-server
-    find "${pkgdir}" -type f -name *.dylib -delete
+    find "${pkgdir}" -type f -name '*.dylib' -delete
     install -m 755 emby-server "${pkgdir}"/usr/bin/
     install -m 755 emby-migrate-database "${pkgdir}"/usr/bin/
     install -m 644 emby-server.service "${pkgdir}"/usr/lib/systemd/system/

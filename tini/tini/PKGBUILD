@@ -1,5 +1,7 @@
+# shellcheck disable=SC2034,SC2154,SC2164
 pkgname=('tini')
 _srcname='tini'
+# shellcheck disable=SC2016
 pkgdesc='A tiny but valid `init` for containers'
 pkgver='0.10.0'
 pkgrel='1'

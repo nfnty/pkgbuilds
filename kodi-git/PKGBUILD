@@ -1,3 +1,4 @@
+# shellcheck disable=SC2034,SC2154,SC2164
 pkgname=('kodi-git')
 _srcname='xbmc'
 pkgver='r1'
@@ -142,9 +143,9 @@ package() {
     make DESTDIR="${pkgdir}" install
 
     # Licenses
-    install --directory --mode=755 "${pkgdir}/usr/share/licenses/${pkgname}"
+    install --directory --mode=755 "${pkgdir}/usr/share/licenses/${pkgname[0]}"
     for licensef in LICENSE.GPL copying.txt; do
         mv "${pkgdir}/usr/share/doc/kodi/${licensef}" \
-            "${pkgdir}/usr/share/licenses/${pkgname}"
+            "${pkgdir}/usr/share/licenses/${pkgname[0]}"
     done
 }

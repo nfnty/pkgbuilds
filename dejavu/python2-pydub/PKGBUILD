@@ -1,3 +1,4 @@
+# shellcheck disable=SC2034,SC2154,SC2164
 pkgname=('python2-pydub')
 _srcname='pydub'
 pkgdesc='Manipulate audio with a simple and easy high level interface'

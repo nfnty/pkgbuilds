@@ -1,3 +1,4 @@
+# shellcheck disable=SC2034,SC2154,SC2164
 # $Id: PKGBUILD 100035 2013-10-31 11:20:48Z arodseth $
 # Maintainer: Alexander Rødseth <rodseth@gmail.com>
 # Contributor: Jan de Groot <jgc@archlinux.org>

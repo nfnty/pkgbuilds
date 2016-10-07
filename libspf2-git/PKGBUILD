@@ -1,3 +1,4 @@
+# shellcheck disable=SC2034,SC2154,SC2164
 pkgname=('libspf2-git')
 _srcname='libspf2'
 pkgdesc='Implementation of the Sender Policy Framework for SMTP authorization'
