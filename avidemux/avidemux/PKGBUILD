@@ -2,7 +2,7 @@
 pkgname=('avidemux-cli' 'avidemux-qt')
 _srcname='avidemux2'
 pkgbase='avidemux'
-pkgver='2.6.12'
+pkgver='2.6.14'
 pkgrel='1'
 arch=('i686' 'x86_64')
 url='http://www.avidemux.org'
@@ -30,7 +30,7 @@ makedepends=(
     'jack2'
     'libpulse'
 
-    # 'dcaenc'
+    'dcaenc'
     'faac'
     'lame'
     'libogg'
@@ -58,25 +58,8 @@ makedepends=(
 )
 
 # Version commits are tracked via `cmake/avidemuxVersion.cmake`
-source=(
-    "${_srcname}::git+https://github.com/mean00/${_srcname}.git#commit=856fc8ae1ec8ea03595c04153b42423fa783b55d"
-    'cxx-11.patch'
-)
-sha512sums=(
-    'SKIP'
-    'SKIP'
-)
-
-prepare() {
-    cd "${srcdir}/${_srcname}"
-
-    git cherry-pick --no-commit \
-        'b54303bc9b9310e288a1dde9c923f48e854bd55f' \
-        '68df30b902540e6f299dc63ea3ae53b3d353cbe4' \
-        '6ad028d9f9caf929819c1afcb693611aade0af0b' \
-        '7dee579d3ac16d731898305d24bb771834ae0ce0'
-    git apply "${srcdir}/cxx-11.patch"
-}
+source=("${_srcname}::git+https://github.com/mean00/${_srcname}.git#commit=eba13905b861d70d733f8c7c42c77503e5dfff3d")
+sha512sums=('SKIP')
 
 _make() {
     mkdir --parents "${1}"
@@ -129,7 +112,7 @@ package_avidemux-cli() {
         'opus'
         'libvorbis'
 
-        # 'dcaenc'
+        'dcaenc'
         'faac'
         'lame'
         'libogg'
@@ -168,16 +151,7 @@ package_avidemux-qt() {
     pkgdesc='Video editor designed for simple cutting, filtering and encoding tasks - QT GUI'
     provides=('avidemux-qt')
     conflicts=('avidemux-qt')
-    depends=(
-        'avidemux-cli'
-
-        'glu'
-        'libxv'
-        'qt5-base'
-
-        'desktop-file-utils'
-    )
-    install='install.sh'
+    depends=('avidemux-cli' 'glu' 'libxv' 'qt5-base')
 
     for target in 'qt' 'plugins_qt'; do
         cd "${srcdir}/build/${target}"

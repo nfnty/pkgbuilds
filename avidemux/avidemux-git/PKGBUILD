@@ -30,7 +30,7 @@ makedepends=(
     'jack2'
     'libpulse'
 
-    # 'dcaenc'
+    'dcaenc'
     'faac'
     'lame'
     'libogg'
@@ -120,7 +120,7 @@ package_avidemux-cli-git() {
         'opus'
         'libvorbis'
 
-        # 'dcaenc'
+        'dcaenc'
         'faac'
         'lame'
         'libogg'
@@ -159,16 +159,7 @@ package_avidemux-qt-git() {
     pkgdesc='Video editor designed for simple cutting, filtering and encoding tasks - QT GUI'
     provides=('avidemux-qt')
     conflicts=('avidemux-qt')
-    depends=(
-        'avidemux-cli-git'
-
-        'glu'
-        'libxv'
-        'qt5-base'
-
-        'desktop-file-utils'
-    )
-    install='install.sh'
+    depends=('avidemux-cli-git' 'glu' 'libxv' 'qt5-base')
 
     for target in 'qt' 'plugins_qt'; do
         cd "${srcdir}/build/${target}"
