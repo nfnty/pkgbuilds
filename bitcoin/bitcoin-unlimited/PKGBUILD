@@ -13,7 +13,7 @@ makedepends=('boost')
 provides=("${pkgname[0]%-git}")
 conflicts=("${pkgname[0]%-git}")
 
-source=("${_srcname}::git+${url}.git#tag=bu${pkgver}")
+source=("${_srcname}::git+${url}.git#commit=f1bb2eb1fad60bb7b3147c8f9153078375c021b0")
 sha512sums=('SKIP')
 
 build() {
