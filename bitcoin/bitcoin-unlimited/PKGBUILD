@@ -1,0 +1,32 @@
+# shellcheck disable=SC2034,SC2154,SC2164
+pkgname=('bitcoin-unlimited')
+_srcname='BitcoinUnlimited'
+pkgdesc='Bitcoin Unlimited'
+pkgver='0.12.1c'
+pkgrel='1'
+arch=('i686' 'x86_64')
+url="https://github.com/BitcoinUnlimited/${_srcname}"
+license=('MIT')
+
+depends=('boost-libs' 'openssl' 'libevent')
+makedepends=('boost')
+provides=("${pkgname[0]%-git}")
+conflicts=("${pkgname[0]%-git}")
+
+source=("${_srcname}::git+${url}.git#tag=bu${pkgver}")
+sha512sums=('SKIP')
+
+build() {
+    cd "${srcdir}/${_srcname}"
+
+    autoreconf --install --force --warnings='all'
+    ./configure --prefix='/usr' --with-incompatible-bdb --disable-wallet
+
+    make
+}
+
+package() {
+    cd "${srcdir}/${_srcname}"
+
+    make DESTDIR="${pkgdir}" install
+}
