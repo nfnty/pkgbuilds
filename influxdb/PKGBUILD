@@ -2,7 +2,7 @@
 pkgname=('influxdb')
 _srcname='influxdb'
 pkgdesc='Scalable datastore for metrics, events, and real-time analytics'
-pkgver='1.0.0'
+pkgver='1.0.2'
 pkgrel='1'
 arch=('i686' 'x86_64')
 url="https://github.com/influxdata/${_srcname}"

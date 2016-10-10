@@ -1,72 +1,69 @@
 # shellcheck disable=SC2034,SC2154,SC2164
-pkgname=('hostapd')
-_srcname='hostapd'
-pkgver='2.5'
-pkgrel='2'
-pkgdesc='IEEE 802.11 AP, IEEE 802.1X/WPA/WPA2/EAP/RADIUS Authenticator'
+# $Id$
+# Maintainer: Sergej Pupykin <pupykin.s+arch@gmail.com>
+
+pkgname=hostapd
+pkgver=2.6
+pkgrel=3
+pkgdesc="IEEE 802.11 AP, IEEE 802.1X/WPA/WPA2/EAP/RADIUS Authenticator"
 arch=('i686' 'x86_64')
-url='http://w1.fi/hostapd/'
-license=('custom:BSD')
-
+url="http://w1.fi/hostapd/"
+license=('custom')
 depends=('openssl' 'libnl')
-makedepends=('git')
-provides=("${pkgname[0]%-git}")
-conflicts=("${pkgname[0]%-git}")
-
-source=(
-    "${_srcname}::git+git://w1.fi/hostap.git#tag=hostap_${pkgver//./_}"
-    'config'
-    'hostapd.service'
-    '40mhz.patch'
-)
-sha256sums=(
-    'SKIP'
-    'SKIP'
-    'SKIP'
-    'SKIP'
-)
+install=hostapd.install
+options=(emptydirs)
+source=(http://w1.fi/releases/$pkgname-$pkgver.tar.gz
+	config
+	hostapd.service
+	40mhz.patch
+	hostapd-2.3-noscan.patch
+	openvswitch.patch)
+md5sums=('eaa56dce9bd8f1d195eb62596eab34c7'
+         '43c0ec1d8b4d4e46f468bc161bb05c4b'
+         '380042b9cf4950e34ed34b3093ab9e7f'
+         '3991992daa6b5b96bec8c1ae260fbd85'
+         'f40f2652f2cd22d4bf1cfd76e02b9225'
+         'a0802a604ed957078da0e14863df74f0')
 
 prepare() {
-    cd "${srcdir}/${_srcname}"
-
-    git apply "${srcdir}/40mhz.patch"
-
-    cd hostapd
-    cp "${srcdir}/config" .config
-    sed --in-place 's#/etc/hostapd#/etc/hostapd/hostapd#' hostapd.conf
+  cd $pkgname-$pkgver
+  patch -p1 <"$srcdir/40mhz.patch"
+  patch -p1 <"$srcdir/hostapd-2.3-noscan.patch"
+  patch -p1 <"$srcdir/openvswitch.patch"
 }
 
 build() {
-    cd "${srcdir}/${_srcname}/hostapd"
-
-    CFLAGS="${CFLAGS} $( pkg-config --cflags libnl-3.0 )"
-    export CFLAGS
-    make
+  cd $pkgname-$pkgver/hostapd
+  cp ../../config .config
+  sed -i 's#/etc/hostapd#/etc/hostapd/hostapd#' hostapd.conf
+  CFLAGS="$CFLAGS $(pkg-config --cflags libnl-3.0)"
+  export CFLAGS
+  make
 }
 
 package() {
-    cd "${srcdir}/${_srcname}"
+  # Systemd unit
+  install -Dm644 hostapd.service "$pkgdir/usr/lib/systemd/system/hostapd.service"
 
-    # Systemd unit
-    install -D --mode=644 "${srcdir}/hostapd.service" "${pkgdir}/usr/lib/systemd/system/hostapd.service"
+  cd $pkgname-$pkgver
 
-    # License
-    install -D --mode=644 COPYING "${pkgdir}/usr/share/licenses/${pkgname[0]}/COPYING"
+  # License
+  install -Dm644 COPYING "$pkgdir/usr/share/licenses/$pkgname/COPYING"
 
-    cd hostapd
+  cd hostapd
 
-    # Binaries
-    install --directory "${pkgdir}/usr/bin"
-    install --target-directory="${pkgdir}/usr/bin" hostapd hostapd_cli
+  # Binaries
+  install -d "$pkgdir/usr/bin"
+  install -t "$pkgdir/usr/bin" hostapd hostapd_cli
 
-    # Configuration
-    install --directory "${pkgdir}/etc/hostapd"
-    install --directory "${pkgdir}/usr/share/doc/hostapd"
-    install --mode=644 --target-directory="${pkgdir}/usr/share/doc/hostapd" \
-        hostapd.{accept,conf,deny,eap_user,eap_user_sqlite,radius_clients,sim_db,vlan,wpa_psk} \
-        wired.conf hlr_auc_gw.milenage_db
+  # Configuration
+  install -d "$pkgdir/etc/hostapd"
+  install -d "$pkgdir/usr/share/doc/hostapd"
+  install -m644 -t "$pkgdir/usr/share/doc/hostapd" \
+    hostapd.{accept,conf,deny,eap_user,radius_clients,sim_db,vlan,wpa_psk} \
+    wired.conf hlr_auc_gw.milenage_db
 
-    # Man pages
-    install -D --mode=644 hostapd.8 "${pkgdir}/usr/share/man/man8/hostapd.8"
-    install -D --mode=644 hostapd_cli.1 "${pkgdir}/usr/share/man/man1/hostapd_cli.1"
+  # Man pages
+  install -Dm644 hostapd.8 "$pkgdir/usr/share/man/man8/hostapd.8"
+  install -Dm644 hostapd_cli.1 "$pkgdir/usr/share/man/man1/hostapd_cli.1"
 }
