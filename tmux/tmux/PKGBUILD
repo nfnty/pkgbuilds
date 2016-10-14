@@ -2,7 +2,7 @@
 pkgname=('tmux')
 _srcname='tmux'
 pkgdesc='Terminal multiplexer'
-pkgver='2.2'
+pkgver='2.3'
 pkgrel='1'
 arch=('i686' 'x86_64')
 url="https://github.com/tmux/${_srcname}"
