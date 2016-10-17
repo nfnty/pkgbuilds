@@ -1,0 +1,48 @@
+# shellcheck disable=SC2034,SC2154,SC2164
+pkgname=('lego')
+_srcname='lego'
+pkgdesc='Let'"'"'s Encrypt client and ACME library written in Go'
+pkgver='0.3.1'
+pkgrel='1'
+arch=('i686' 'x86_64')
+url="https://github.com/xenolf/${_srcname}"
+license=('MIT')
+
+makedepends=('git' 'go')
+provides=("${pkgname[0]%-git}")
+conflicts=("${pkgname[0]%-git}")
+
+source=("${_srcname}::git+${url}.git#tag=v${pkgver}")
+sha512sums=('SKIP')
+
+_url_go="${url#*//}"
+
+prepare() {
+    cd "${srcdir}"
+    export GOPATH="${srcdir}/gopath"
+
+    rm --recursive "${GOPATH}" &> /dev/null || true
+    mkdir --parents "${GOPATH}/src/${_url_go}"
+    rmdir "${GOPATH}/src/${_url_go}"
+    mv "${_srcname}" "${GOPATH}/src/${_url_go}"
+
+    cd "${GOPATH}/src/${_url_go}"
+    go get -v -d ./...
+}
+
+build() {
+    cd "${srcdir}"
+    export GOPATH="${srcdir}/gopath"
+
+    cd "${GOPATH}/src/${_url_go}"
+    go install -v ./...
+}
+
+package() {
+    cd "${srcdir}"
+    export GOPATH="${srcdir}/gopath"
+
+    install --directory "${pkgdir}/usr"
+    cp --recursive "${GOPATH}/bin" "${pkgdir}/usr/"
+    chmod --recursive 'u=rwX,g=rX,o=rX' "${pkgdir}"
+}
