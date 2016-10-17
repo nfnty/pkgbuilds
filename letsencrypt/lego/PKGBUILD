@@ -12,7 +12,7 @@ makedepends=('git' 'go')
 provides=("${pkgname[0]%-git}")
 conflicts=("${pkgname[0]%-git}")
 
-source=("${_srcname}::git+${url}.git#tag=v${pkgver}")
+source=("${_srcname}::git+${url}.git#commit=85eddfa3473e8fcfe1fe892f2a2b2467a9969854")
 sha512sums=('SKIP')
 
 _url_go="${url#*//}"
@@ -42,7 +42,5 @@ package() {
     cd "${srcdir}"
     export GOPATH="${srcdir}/gopath"
 
-    install --directory "${pkgdir}/usr"
-    cp --recursive "${GOPATH}/bin" "${pkgdir}/usr/"
-    chmod --recursive 'u=rwX,g=rX,o=rX' "${pkgdir}"
+    install -D --mode='755' "${GOPATH}/bin/lego" "${pkgdir}/usr/bin/lego"
 }
