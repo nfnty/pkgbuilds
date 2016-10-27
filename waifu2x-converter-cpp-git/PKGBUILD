@@ -4,7 +4,7 @@ _srcname='waifu2x-converter-cpp'
 pkgdesc='Image Super-Resolution for Anime-Style Art'
 pkgver='r1'
 pkgrel='1'
-arch=('i386' 'x86_64')
+arch=('i686' 'x86_64')
 url="https://github.com/tanakamura/${_srcname}"
 license=('MIT')
 
