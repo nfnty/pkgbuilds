@@ -2,7 +2,7 @@
 pkgname=('parity')
 _srcname='parity'
 pkgdesc='Fast, light, robust Ethereum implementation'
-pkgver='1.4.2'
+pkgver='1.4.3'
 pkgrel='1'
 arch=('i686' 'x86_64')
 url="https://github.com/ethcore/${_srcname}"
