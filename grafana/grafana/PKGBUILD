@@ -1,68 +1,63 @@
 # shellcheck disable=SC2034,SC2154,SC2164
 pkgname=('grafana')
 _srcname='grafana'
+_pkgbasename="${pkgname[0]%-git}"
 pkgdesc='Feature rich metrics dashboard and graph editor'
-pkgver='3.1.1'
+pkgver='4.0.0'
 pkgrel='1'
 arch=('i686' 'x86_64')
 url="https://github.com/grafana/${_srcname}"
 license=('Apache')
 
-makedepends=('git' 'go' 'godep' 'nodejs' 'nodejs-grunt-cli' 'npm' 'phantomjs')
+makedepends=('git' 'go' 'npm')
 provides=("${pkgname[0]%-git}")
 conflicts=("${pkgname[0]%-git}")
 
-source=(
-    "${_srcname}::git+${url}.git"
-)
-sha512sums=(
-    'SKIP'
-)
+source=("${_srcname}::git+${url}.git")
+sha512sums=('SKIP')
 
 _url_go="${url#*//}"
 
 prepare() {
-    cd "${srcdir}"
+    cd "${srcdir}/${_srcname}"
     export GOPATH="${srcdir}/gopath"
 
     mkdir --parents "${GOPATH}/src/${_url_go}"
     rm --recursive "${GOPATH}/src/${_url_go}"
-    mv "${_srcname}" "${GOPATH}/src/${_url_go}"
+    ln --symbolic --relative --force "${srcdir}/${_srcname}" "${GOPATH}/src/${_url_go}"
 
     cd "${GOPATH}/src/${_url_go}"
     git remote set-url origin "${url}"
-    go get -v -u -d ./...
+    go run build.go setup
     git checkout --quiet "v${pkgver}"
-    godep restore
+    "${GOPATH}/bin/govendor" sync
 
     npm install
 }
 
 build() {
-    cd "${srcdir}"
+    cd "${srcdir}/${_srcname}"
     export GOPATH="${srcdir}/gopath"
 
     cd "${GOPATH}/src/${_url_go}"
-    go install -v -ldflags="\
--X main.version=${pkgver} \
--X main.commit=$( git rev-parse HEAD ) \
--X main.buildstamp=$( date --utc '+%s' )" \
-        ./...
+    go run build.go build
 
-    grunt --force release
+    npm run build
 }
 
 package() {
-    cd "${srcdir}"
+    cd "${srcdir}/${_srcname}"
     export GOPATH="${srcdir}/gopath"
 
-    install --directory "${pkgdir}/"{"etc/${_srcname}",usr,usr/share,"var/lib/${_srcname}"}
-    cp --recursive "${GOPATH}/bin" "${pkgdir}/usr/"
+    install --directory "${pkgdir}/"{"etc/${_pkgbasename}",usr/bin,"usr/share/${_pkgbasename}","var/lib/${_pkgbasename}"}
+    install --target-directory="${pkgdir}/usr/bin" bin/grafana-cli bin/grafana-server
 
-    cd "${GOPATH}/src/${_url_go}"
-    cp --recursive tmp "${pkgdir}/usr/share/${_srcname}"
-    cp conf/ldap.toml "${pkgdir}/etc/${_srcname}/"
-    cp conf/sample.ini "${pkgdir}/etc/${_srcname}/grafana.ini"
+    install -D --mode='644' conf/defaults.ini "${pkgdir}/usr/share/${_pkgbasename}/conf/defaults.ini"
+    install -D --mode='644' conf/sample.ini "${pkgdir}/etc/${_pkgbasename}/grafana.ini"
+
+    install --directory "${pkgdir}/usr/share/${_pkgbasename}/vendor"
+    cp --recursive vendor/phantomjs "${pkgdir}/usr/share/${_pkgbasename}/vendor/"
+    cp --recursive public_gen "${pkgdir}/usr/share/${_pkgbasename}/public"
 
     chmod --recursive 'u=rwX,g=rX,o=rX' "${pkgdir}"
 }

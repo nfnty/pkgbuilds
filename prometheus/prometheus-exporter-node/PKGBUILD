@@ -2,7 +2,7 @@
 pkgname=('prometheus-exporter-node')
 _srcname='node_exporter'
 pkgdesc='Prometheus exporter for machine metrics'
-pkgver='0.12.0'
+pkgver='0.13.0'
 pkgrel='1'
 arch=('i686' 'x86_64')
 url="https://github.com/prometheus/${_srcname}"
@@ -13,7 +13,7 @@ provides=("${pkgname[0]%-git}")
 conflicts=("${pkgname[0]%-git}")
 
 source=(
-    "${_srcname}::git+${url}.git#tag=${pkgver}"
+    "${_srcname}::git+${url}.git#tag=v${pkgver}"
     'prometheus-exporter-node.service'
 )
 sha512sums=(
