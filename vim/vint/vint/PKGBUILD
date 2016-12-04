@@ -1,0 +1,24 @@
+# shellcheck disable=SC2034,SC2154,SC2164
+pkgname=('vint')
+_srcname='vint'
+pkgdesc='Fast and Highly Extensible Vim script Language Lint implemented by Python'
+pkgver='0.3.10'
+_pkgver_commit='51ce7d3b96a79ce62296e5b86407816ce005bdf6'
+pkgrel='1'
+arch=('any')
+url="https://github.com/Kuniwak/${_srcname}"
+license=('MIT')
+
+depends=('python' 'python-yaml' 'python-chardet' 'python-ansicolor')
+makedepends=('git' 'python-setuptools')
+provides=("${pkgname[0]%-git}")
+conflicts=("${pkgname[0]%-git}")
+
+source=("${_srcname}::git+${url}.git#commit=${_pkgver_commit}")
+sha512sums=('SKIP')
+
+package() {
+    cd "${srcdir}/${_srcname}"
+
+    python setup.py install --root="${pkgdir}" --optimize=1
+}
