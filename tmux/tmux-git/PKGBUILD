@@ -8,7 +8,7 @@ arch=('i686' 'x86_64')
 url="https://github.com/tmux/${_srcname}"
 license=('ISC')
 
-depends=('ncurses' 'libevent')
+depends=('ncurses' 'libevent' 'libutempter')
 makedepends=('git')
 provides=("${pkgname[0]%-git}")
 conflicts=("${pkgname[0]%-git}")
