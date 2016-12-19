@@ -1,11 +1,11 @@
 diff --git a/server-fn.c b/server-fn.c
-index 53d6a7c..31979d2 100644
+index 83b3fe86..11b444ea 100644
 --- a/server-fn.c
 +++ b/server-fn.c
-@@ -312,18 +312,15 @@ server_destroy_pane(struct window_pane *wp, int hooks)
- 	if (options_get_number(w->options, "remain-on-exit")) {
- 		if (old_fd == -1)
- 			return;
+@@ -317,15 +317,11 @@ server_destroy_pane(struct window_pane *wp, int notify)
+ 		if (notify)
+ 			notify_pane("pane-died", wp);
+ 
 -		screen_write_start(&ctx, wp, &wp->base);
 -		screen_write_scrollregion(&ctx, 0, screen_size_y(ctx.s) - 1);
 -		screen_write_cursormove(&ctx, 0, screen_size_y(ctx.s) - 1);
@@ -15,15 +15,11 @@ index 53d6a7c..31979d2 100644
 -		screen_write_puts(&ctx, &gc, "Pane is dead");
 -		screen_write_stop(&ctx);
 -		wp->flags |= PANE_REDRAW;
- 
- 		if (hooks && cmd_find_from_pane(&fs, wp) == 0)
- 			hooks_run(hooks_get(fs.s), NULL, &fs, "pane-died");
-+
 +		if (wp->mode != &window_copy_mode) {
 +			if (window_pane_set_mode(wp, &window_copy_mode) != 0)
 +				return;
 +			window_copy_init_from_pane(wp, 0);
 +		}
+ 
  		return;
  	}
- 

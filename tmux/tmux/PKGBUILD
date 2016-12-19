@@ -3,6 +3,7 @@ pkgname=('tmux')
 _srcname='tmux'
 pkgdesc='Terminal multiplexer'
 pkgver='2.3'
+_commit_tmux='00445ebadd505922a9c9dc455fa33244f4c4fb6b'
 pkgrel='1'
 arch=('i686' 'x86_64')
 url="https://github.com/tmux/${_srcname}"
@@ -14,7 +15,7 @@ provides=("${pkgname[0]%-git}")
 conflicts=("${pkgname[0]%-git}")
 
 source=(
-    "${_srcname}::git+${url}.git#tag=${pkgver}"
+    "${_srcname}::git+${url}.git#commit=${_commit_tmux}"
     'git+https://github.com/przepompownia/tmux-bash-completion.git'
     'ixon.patch'
     'pane_is_dead.patch'
