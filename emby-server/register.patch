@@ -1,10 +1,10 @@
-diff --git a/MediaBrowser.Common.Implementations/Security/PluginSecurityManager.cs b/MediaBrowser.Common.Implementations/Security/PluginSecurityManager.cs
-index 5d44060..f1fc1f6 100644
---- a/MediaBrowser.Common.Implementations/Security/PluginSecurityManager.cs
-+++ b/MediaBrowser.Common.Implementations/Security/PluginSecurityManager.cs
-@@ -251,36 +251,13 @@ namespace MediaBrowser.Common.Implementations.Security
+diff --git a/Emby.Server.Implementations/Security/PluginSecurityManager.cs b/Emby.Server.Implementations/Security/PluginSecurityManager.cs
+index f21259137..a0bbac6f4 100644
+--- a/Emby.Server.Implementations/Security/PluginSecurityManager.cs
++++ b/Emby.Server.Implementations/Security/PluginSecurityManager.cs
+@@ -269,36 +269,13 @@ namespace Emby.Server.Implementations.Security
  
-             if (!(lastChecked > DateTime.UtcNow.AddDays(-1)))
+             if (!(lastChecked > DateTime.UtcNow.AddDays(-1)) || !reg.registered)
              {
 -                var data = new Dictionary<string, string>
 -                {
@@ -44,7 +44,7 @@ index 5d44060..f1fc1f6 100644
  
                      if (reg.registered)
                      {
-@@ -334,4 +311,4 @@ namespace MediaBrowser.Common.Implementations.Security
+@@ -352,4 +329,4 @@ namespace Emby.Server.Implementations.Security
              _isMbSupporterInitialized = false;
          }
      }
