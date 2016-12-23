@@ -2,13 +2,13 @@
 pkgname=('emby-server')
 _srcname='Emby'
 pkgdesc='Emby Server is a home media server built on top of other popular open source technologies'
-pkgver='3.1.0'
+pkgver='3.1.1'
 pkgrel='1'
 arch=('i686' 'x86_64')
 url='https://github.com/MediaBrowser/Emby'
 license=('GPL2')
 
-depends=('ffmpeg' 'imagemagick' 'mono' 'sqlite')
+depends=('ffmpeg' 'imagemagick' 'mono' 'sqlite' 'referenceassemblies-pcl')
 makedepends=('git')
 provides=("${pkgname[0]%-git}")
 conflicts=("${pkgname[0]%-git}")
