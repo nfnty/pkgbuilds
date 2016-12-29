@@ -1,0 +1,23 @@
+# shellcheck disable=SC2034,SC2154,SC2164
+pkgname=('python-elasticsearch')
+_srcname='elasticsearch-py'
+pkgdesc='Official Python low-level client for Elasticsearch'
+pkgver='5.0.1'
+pkgrel='1'
+arch=('any')
+url="https://github.com/elastic/${_srcname}"
+license=('Apache')
+
+depends=('python' 'python-urllib3')
+makedepends=('git' 'python-setuptools')
+provides=("${pkgname[0]%-git}")
+conflicts=("${pkgname[0]%-git}")
+
+source=("${_srcname}::git+${url}.git#tag=${pkgver}")
+sha512sums=('SKIP')
+
+package() {
+    cd "${srcdir}/${_srcname}"
+
+    python setup.py install --root="${pkgdir}" --optimize=1
+}
