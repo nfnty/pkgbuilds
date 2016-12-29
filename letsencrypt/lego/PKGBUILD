@@ -13,8 +13,8 @@ makedepends=('git' 'go')
 provides=("${pkgname[0]%-git}")
 conflicts=("${pkgname[0]%-git}")
 
-source=("${_srcname}::git+${url}.git#commit=${_commit_lego}" 'debug.patch')
-sha512sums=('SKIP' 'SKIP')
+source=("${_srcname}::git+${url}.git#commit=${_commit_lego}")
+sha512sums=('SKIP')
 
 _url_go="${url#*//}"
 
@@ -29,8 +29,6 @@ prepare() {
 
     cd "${GOPATH}/src/${_url_go}"
     go get -v -d ./...
-
-    git apply "${srcdir}/debug.patch"
 }
 
 build() {
