@@ -1,3 +1,4 @@
+# shellcheck disable=SC2034,SC2154,SC2164
 # Maintainer: Remi Gacogne <rgacogne-arch at coredump dot fr>
 pkgname=dnsdist
 pkgver=1.1.0
@@ -13,7 +14,7 @@ sha512sums=('91da716997c2440e153944f510a39dd86c9cf8ba8093a7f51a9a5d58ab0a1c230bd
             'SKIP')
 validpgpkeys=('D6300CABCBF469BBE392E503A208ED4F8AF58446') # Remi Gacogne <remi.gacogne@powerdns.com>
 makedepends=('boost' 'git' 'pandoc' 'ragel')
-depends=('libedit' 'libsodium' 'libsystemd' 'lua' 'protobuf' 're2')
+depends=('libedit' 'libsodium' 'lua' 'protobuf' 're2')
 provides=('dnsdist')
 conflicts=('dnsdist')
 
@@ -31,7 +32,6 @@ build() {
 
 package() {
   cd "${srcdir}/${pkgname}-${pkgver}"
-  sed -i 's,ExecStart=/usr/bin/dnsdist --supervised --disable-syslog,ExecStart=/usr/bin/dnsdist --supervised --disable-syslog -u nobody -g nobody,' dnsdist.service
   make DESTDIR="${pkgdir}" install
   install -D -m644 COPYING "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
 }
