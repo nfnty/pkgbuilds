@@ -3,19 +3,35 @@ pkgname=('powerdns-recursor')
 _srcname='pdns'
 pkgdesc='Resolving DNS server'
 pkgver='4.0.3'
-_commit='1746e9bbd0f2f24a58dc755fbb118704b67b0408'
+_commit='1824fd19a34c9e91e90e10181ab09e10edb9b1bb'
 pkgrel='6'
 arch=('i686' 'x86_64')
 url="https://github.com/PowerDNS/${_srcname}"
 license=('GPL2')
 
 depends=('gcc-libs' 'boost-libs' 'libsystemd' 'lua' 'openssl' 'protobuf' 'libboost_context.so')
-makedepends=('git' 'boost' 'inetutils' 'systemd')
+makedepends=('git' 'boost' 'inetutils' 'systemd' 'ragel')
 provides=("${pkgname[0]%-git}")
 conflicts=("${pkgname[0]%-git}")
 
-source=("${_srcname}::git+${url}.git#commit=${_commit}")
-sha512sums=('SKIP')
+source=(
+    "${_srcname}::git+${url}.git#commit=${_commit}"
+    'pdns-recursor-4.0.3-boost-context.patch'
+)
+sha512sums=(
+    'SKIP'
+    'SKIP'
+)
+
+
+prepare() {
+    cd "${srcdir}/${_srcname}"
+
+    git cherry-pick --no-commit d8cd67be324881403d99733d5efd3c83410a9fc8
+
+    cd pdns
+    patch --strip=1 --input="${srcdir}/pdns-recursor-4.0.3-boost-context.patch"
+}
 
 build() {
     cd "${srcdir}/${_srcname}/pdns/recursordist"
