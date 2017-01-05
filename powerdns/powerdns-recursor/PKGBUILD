@@ -1,0 +1,39 @@
+# shellcheck disable=SC2034,SC2154,SC2164
+pkgname=('powerdns-recursor')
+_srcname='pdns'
+pkgdesc='Resolving DNS server'
+pkgver='4.0.3'
+_commit='1746e9bbd0f2f24a58dc755fbb118704b67b0408'
+pkgrel='6'
+arch=('i686' 'x86_64')
+url="https://github.com/PowerDNS/${_srcname}"
+license=('GPL2')
+
+depends=('gcc-libs' 'boost-libs' 'libsystemd' 'lua' 'openssl' 'protobuf' 'libboost_context.so')
+makedepends=('git' 'boost' 'inetutils' 'systemd')
+provides=("${pkgname[0]%-git}")
+conflicts=("${pkgname[0]%-git}")
+
+source=("${_srcname}::git+${url}.git#commit=${_commit}")
+sha512sums=('SKIP')
+
+build() {
+    cd "${srcdir}/${_srcname}/pdns/recursordist"
+
+    ./bootstrap
+    ./configure \
+        --prefix=/usr \
+        --sbindir=/usr/bin \
+        --sysconfdir=/etc/powerdns \
+        --disable-silent-rules \
+        --enable-reproducible \
+        --enable-systemd
+
+    make
+}
+
+package() {
+    cd "${srcdir}/${_srcname}/pdns/recursordist"
+
+    make DESTDIR="${pkgdir}" install
+}
