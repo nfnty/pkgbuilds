@@ -2,7 +2,8 @@
 pkgname=('emby-server')
 _srcname='Emby'
 pkgdesc='Emby Server is a home media server built on top of other popular open source technologies'
-pkgver='3.1.1'
+pkgver='3.1.2'
+_commit='785b541a2930f077d85c0a494e25e5f15c59098c'
 pkgrel='1'
 arch=('i686' 'x86_64')
 url='https://github.com/MediaBrowser/Emby'
@@ -14,7 +15,7 @@ provides=("${pkgname[0]%-git}")
 conflicts=("${pkgname[0]%-git}")
 
 source=(
-    "${_srcname}::git+${url}#tag=${pkgver}"
+    "${_srcname}::git+${url}#commit=${_commit}"
     'emby-server'
     'emby-migrate-database'
     'emby-server.conf'

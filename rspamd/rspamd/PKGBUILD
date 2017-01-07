@@ -2,7 +2,8 @@
 pkgname=('rspamd')
 _srcname='rspamd'
 pkgdesc='Rapid spam filtering system'
-pkgver='1.4.1'
+pkgver='1.4.2'
+_commit='69c3600f737936b5162952aee75292fa26ff7922'
 pkgrel='1'
 arch=('i686' 'x86_64')
 url="https://github.com/vstakhov/${_srcname}"
@@ -13,7 +14,7 @@ makedepends=('git' 'cmake' 'pkgconfig' 'ragel')
 provides=("${pkgname[0]%-git}")
 conflicts=("${pkgname[0]%-git}")
 
-source=("${_srcname}::git+${url}.git#tag=${pkgver}")
+source=("${_srcname}::git+${url}.git#commit=${_commit}")
 sha512sums=('SKIP')
 
 build() {
