@@ -1,0 +1,24 @@
+# shellcheck disable=SC2034,SC2154,SC2164
+pkgname=('python-google-api')
+_srcname='google-api-python-client'
+pkgdesc='Python client library for Google'"'"'s discovery based APIs'
+pkgver='1.6.0'
+_commit='692617a6eea5e47e71e221c9e73f5f2d5534e3bf'
+pkgrel='1'
+arch=('any')
+url="https://github.com/google/${_srcname}"
+license=('Apache')
+
+depends=('python')
+makedepends=('git' 'python-setuptools')
+provides=("${pkgname[0]%-git}")
+conflicts=("${pkgname[0]%-git}")
+
+source=("${_srcname}::git+${url}.git#commit=${_commit}")
+sha512sums=('SKIP')
+
+package() {
+    cd "${srcdir}/${_srcname}"
+
+    python setup.py install --root="${pkgdir}" --optimize=1
+}
