@@ -2,7 +2,8 @@
 pkgname=('bitcoin-unlimited')
 _srcname='BitcoinUnlimited'
 pkgdesc='Bitcoin Unlimited'
-pkgver='0.12.1c'
+pkgver='1.0.0'
+_commit='ac26645daa591d8284a9f8bb07609b00360c403e'
 pkgrel='1'
 arch=('i686' 'x86_64')
 url="https://github.com/BitcoinUnlimited/${_srcname}"
@@ -13,7 +14,7 @@ makedepends=('boost')
 provides=("${pkgname[0]%-git}")
 conflicts=("${pkgname[0]%-git}")
 
-source=("${_srcname}::git+${url}.git#commit=f1bb2eb1fad60bb7b3147c8f9153078375c021b0")
+source=("${_srcname}::git+${url}.git#commit=${_commit}")
 sha512sums=('SKIP')
 
 build() {
