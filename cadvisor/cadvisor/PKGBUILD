@@ -3,6 +3,7 @@ pkgname=('cadvisor')
 _srcname='cadvisor'
 pkgdesc='Analyzes resource usage and performance characteristics of running containers'
 pkgver='0.24.1'
+_commit='ae6934c92fca1304ae55c9fe42e511b34a7016d1'
 pkgrel='1'
 arch=('i686' 'x86_64')
 url="https://github.com/google/${_srcname}"
@@ -12,7 +13,7 @@ makedepends=('git' 'make' 'go' 'godep')
 provides=("${pkgname[0]%-git}")
 conflicts=("${pkgname[0]%-git}")
 
-source=("${_srcname}::git+${url}.git#tag=v${pkgver}")
+source=("${_srcname}::git+${url}.git#commit=${_commit}")
 sha512sums=('SKIP')
 
 _url_go="${url#*//}"
@@ -34,7 +35,7 @@ build() {
     export GOPATH="${srcdir}/gopath"
 
     cd "${GOPATH}/src/${_url_go}"
-    make build
+    make CGO_ENABLED=1 GO_FLAGS='-tags netgo' build
 }
 
 package() {
