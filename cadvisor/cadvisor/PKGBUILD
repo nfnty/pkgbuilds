@@ -35,7 +35,7 @@ build() {
     export GOPATH="${srcdir}/gopath"
 
     cd "${GOPATH}/src/${_url_go}"
-    make CGO_ENABLED=1 GO_FLAGS='-tags netgo' build
+    make build
 }
 
 package() {
