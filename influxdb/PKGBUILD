@@ -2,7 +2,8 @@
 pkgname=('influxdb')
 _srcname='influxdb'
 pkgdesc='Scalable datastore for metrics, events, and real-time analytics'
-pkgver='1.1.1'
+pkgver='1.2.0'
+_commit='b7bb7e8359642b6e071735b50ae41f5eb343fd42'
 pkgrel='1'
 arch=('i686' 'x86_64')
 url="https://github.com/influxdata/${_srcname}"
@@ -12,7 +13,7 @@ makedepends=('git' 'go')
 provides=("${pkgname[0]%-git}")
 conflicts=("${pkgname[0]%-git}")
 
-source=("${_srcname}::git+${url}.git#tag=v${pkgver}")
+source=("${_srcname}::git+${url}.git#commit=${_commit}")
 sha512sums=('SKIP')
 
 _url_go="${url#*//}"

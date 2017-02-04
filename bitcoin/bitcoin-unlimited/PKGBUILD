@@ -2,8 +2,8 @@
 pkgname=('bitcoin-unlimited')
 _srcname='BitcoinUnlimited'
 pkgdesc='Bitcoin Unlimited'
-pkgver='1.0.0'
-_commit='ac26645daa591d8284a9f8bb07609b00360c403e'
+pkgver='1.0.0.1'
+_commit='b4716204e102eb465326610f759558e4e0fcae70'
 pkgrel='1'
 arch=('i686' 'x86_64')
 url="https://github.com/BitcoinUnlimited/${_srcname}"
