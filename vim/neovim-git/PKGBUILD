@@ -22,7 +22,7 @@ conflicts=("${pkgname[0]%-git}")
 source=("${_srcname}::git+${url}.git")
 sha512sums=('SKIP')
 
-options=('!strip' 'debug')
+options=('strip' '!debug')
 
 pkgver() {
     cd "${srcdir}/${_srcname}"
@@ -43,11 +43,11 @@ build() {
     export CXX='/usr/bin/clang++'
     export CFLAGS='-march=x86-64'
     export CXXFLAGS='-march=x86-64'
-    export DEBUG_CFLAGS='-g'
-    export DEBUG_CXXFLAGS='-g'
+    # export DEBUG_CFLAGS='-g'
+    # export DEBUG_CXXFLAGS='-g'
     cmake \
         -G 'Unix Makefiles' \
-        -DCMAKE_BUILD_TYPE='Debug' \
+        -DCMAKE_BUILD_TYPE='Release' \
         -DCMAKE_INSTALL_PREFIX='/usr' \
         ..
 
