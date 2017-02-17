@@ -2,8 +2,8 @@
 pkgname=('rspamd')
 _srcname='rspamd'
 pkgdesc='Rapid spam filtering system'
-pkgver='1.4.3'
-_commit='8c00cdbaf23f16ebf60d8ad9c1695e7ffb83df8a'
+pkgver='1.4.4'
+_commit='d3a816200ae9e0d07f91bbdc1c84f9b9f77ed382'
 pkgrel='1'
 arch=('i686' 'x86_64')
 url="https://github.com/vstakhov/${_srcname}"
