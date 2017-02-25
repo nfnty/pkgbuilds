@@ -1,8 +1,8 @@
 diff --git a/Emby.Server.Implementations/Security/PluginSecurityManager.cs b/Emby.Server.Implementations/Security/PluginSecurityManager.cs
-index f21259137..a0bbac6f4 100644
+index a26df7625..f045a1abd 100644
 --- a/Emby.Server.Implementations/Security/PluginSecurityManager.cs
 +++ b/Emby.Server.Implementations/Security/PluginSecurityManager.cs
-@@ -269,36 +269,13 @@ namespace Emby.Server.Implementations.Security
+@@ -269,36 +269,14 @@ namespace Emby.Server.Implementations.Security
  
              if (!(lastChecked > DateTime.UtcNow.AddDays(-1)) || !reg.registered)
              {
@@ -14,10 +14,14 @@ index f21259137..a0bbac6f4 100644
 -                    { "systemid", _appHost.SystemId }, 
 -                    { "mb2equiv", mb2Equivalent }, 
 -                    { "ver", version }, 
--                    { "platform", _appHost.OperatingSystemDisplayName }, 
--                    { "isservice", _appHost.IsRunningAsService.ToString().ToLower() }
+-                    { "platform", _appHost.OperatingSystemDisplayName }
 -                };
--
++                reg.featId = feature;
++                reg.registered = true;
++                reg.expDate = DateTime.UtcNow.AddDays(36500);
++                reg.key = feature;
++                success = true;
+ 
                  try
                  {
 -                    var options = new HttpRequestOptions
@@ -36,15 +40,11 @@ index f21259137..a0bbac6f4 100644
 -                        reg = _jsonSerializer.DeserializeFromStream<RegRecord>(json);
 -                        success = true;
 -                    }
-+                    reg.featId = feature;
-+                    reg.registered = true;
-+                    reg.expDate = DateTime.UtcNow.AddDays(36500);
-+                    reg.key = feature;
-+                    success = true;
- 
+-
                      if (reg.registered)
                      {
-@@ -352,4 +329,4 @@ namespace Emby.Server.Implementations.Security
+                         LicenseFile.AddRegCheck(feature, reg.expDate);
+@@ -351,4 +329,4 @@ namespace Emby.Server.Implementations.Security
              _isMbSupporterInitialized = false;
          }
      }
