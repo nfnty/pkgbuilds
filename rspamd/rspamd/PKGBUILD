@@ -2,14 +2,14 @@
 pkgname=('rspamd')
 _srcname='rspamd'
 pkgdesc='Rapid spam filtering system'
-pkgver='1.4.4'
-_commit='d3a816200ae9e0d07f91bbdc1c84f9b9f77ed382'
+pkgver='1.5.1'
+_commit='f6c7e98b74e08074670eaa8515bc63f222e7760a'
 pkgrel='1'
 arch=('i686' 'x86_64')
 url="https://github.com/vstakhov/${_srcname}"
 license=('Apache')
 
-depends=('openssl' 'libevent' 'glib2' 'gmime' 'luajit' 'sqlite' 'hiredis' 'file')
+depends=('openssl' 'libevent' 'glib2' 'gmime' 'luajit' 'sqlite' 'hiredis' 'file' 'libfann' 'gd')
 makedepends=('git' 'cmake' 'pkgconfig' 'ragel')
 provides=("${pkgname[0]%-git}")
 conflicts=("${pkgname[0]%-git}")
