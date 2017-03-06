@@ -21,8 +21,10 @@ source=(
     'emby-server.conf'
     'emby-server.service'
     'register.patch'
+    'subtitles.patch'
 )
 sha512sums=(
+    'SKIP'
     'SKIP'
     'SKIP'
     'SKIP'
@@ -38,6 +40,7 @@ prepare() {
     cd "${srcdir}/${_srcname}"
 
     git apply "${srcdir}/register.patch"
+    git apply "${srcdir}/subtitles.patch"
 
     sed 's/libMagickWand-6.Q8.so/libMagickWand-6.Q16HDRI.so/' -i MediaBrowser.Server.Mono/ImageMagickSharp.dll.config
 }

@@ -1,0 +1,13 @@
+diff --git a/OpenSubtitlesHandler/Utilities.cs b/OpenSubtitlesHandler/Utilities.cs
+index f8cfa5c4f..88eb24ac3 100644
+--- a/OpenSubtitlesHandler/Utilities.cs
++++ b/OpenSubtitlesHandler/Utilities.cs
+@@ -37,7 +37,7 @@ namespace OpenSubtitlesHandler
+         public static IHttpClient HttpClient { get; set; }
+         public static ITextEncoding EncodingHelper { get; set; }
+ 
+-        private static string XML_RPC_SERVER = "https://api.opensubtitles.org/xml-rpc";
++        private static string XML_RPC_SERVER = "http://api.opensubtitles.org/xml-rpc";
+         //private static string XML_RPC_SERVER = "https://92.240.234.122/xml-rpc";
+         private static string HostHeader = "api.opensubtitles.org:443";
+ 
