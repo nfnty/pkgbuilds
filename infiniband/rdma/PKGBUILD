@@ -1,0 +1,38 @@
+# shellcheck disable=SC2034,SC2154,SC2164
+pkgname=('rdma')
+_srcname='rdma'
+pkgdesc='User space initialization scripts for the kernel InfiniBand/iWARP drivers'
+pkgver='2.0_24'
+pkgrel='1'
+_srcver='2.0'
+_srcrel='24.fc26'
+arch=('any')
+url="https://apps.fedoraproject.org/packages/${_srcname}"
+license=('GPL2')
+
+depends=('bash')
+provides=("${pkgname[0]%-git}")
+conflicts=("${pkgname[0]%-git}")
+
+source=("${_srcname}-${_srcver}-${_srcrel}.rpm::https://kojipkgs.fedoraproject.org/packages/${_srcname}/${_srcver}/${_srcrel}/noarch/${_srcname}-${_srcver}-${_srcrel}.noarch.rpm")
+sha512sums=('f8ffa043093c1ce745181aa90a74b8d411326531cfe0bd9dff97e95602f1a782d2963445328a8ec517b9285ebeeb9bea3fde68ed6df0e395b140d47f18258324')
+
+noextract=("${_srcname}-${_srcver}-${_srcrel}.rpm")
+
+prepare() {
+    mkdir "${srcdir}/${_srcname}"
+    bsdtar --extract --file "${srcdir}/${_srcname}-${_srcver}-${_srcrel}.rpm" --directory "${srcdir}/${_srcname}"
+    cd "${srcdir}/${_srcname}"
+
+    find . -type f -exec sed --in-place --expression='s|/usr/libexec|/usr/lib/rdma|g' '{}' '+'
+}
+
+package() {
+    cd "${srcdir}/${_srcname}"
+
+    cp --recursive ./* "${pkgdir}/"
+    mv "${pkgdir}/usr/libexec" "${pkgdir}/usr/lib/rdma"
+    rm --recursive "${pkgdir}/etc/sysconfig"
+
+    chmod --recursive 'u=rwX,g=rX,o=rX' "${pkgdir}"
+}
