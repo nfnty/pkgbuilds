@@ -2,8 +2,8 @@
 pkgname=('cadvisor')
 _srcname='cadvisor'
 pkgdesc='Analyzes resource usage and performance characteristics of running containers'
-pkgver='0.24.1'
-_commit='ae6934c92fca1304ae55c9fe42e511b34a7016d1'
+pkgver='0.25.0'
+_commit='17543becf9053e7e80806a57b05002a88c79ec8a'
 pkgrel='1'
 arch=('i686' 'x86_64')
 url="https://github.com/google/${_srcname}"
