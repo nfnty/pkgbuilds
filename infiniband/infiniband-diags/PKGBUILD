@@ -11,7 +11,7 @@ url='https://www.openfabrics.org/index.php/overview.html'
 license=('GPL2' 'custom:"Open Fabrics Alliance BSD"')
 depends=('libibmad' 'opensm' 'systemd' 'glib2')
 source=("https://www.openfabrics.org/downloads/management/${pkgname}-${pkgver}.tar.gz")
-md5sums=('e100bb49f4227a70e0831152b2e4d61e')
+sha512sums=('e9e4cf97d24dc667c9145e95ad530cf7288b819b2ae16a5dce98729836d61669a2ab3a248491b44c18bc636bd9a010b10363248b022ca84467c43192dedf24a0')
 
 build() {
   cd "${srcdir}/${pkgname}-${pkgver}"
