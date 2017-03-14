@@ -13,11 +13,9 @@ url='https://www.openfabrics.org/index.php/overview.html'
 license=('GPL2' 'custom:"Open Fabrics Alliance BSD"')
 depends=('libibumad' 'rdma')
 source=("https://www.openfabrics.org/downloads/management/${pkgname}-${pkgver}.tar.gz"
-        'opensm.service'
-        'opensm.launch')
+        'opensm.service')
 sha512sums=('ea76ae8088c949d6d0d7524920cb333d0981af34bdbe2fa2bde30f13b58dcaeb842989621990a09dfd02db56c180a70109a00e5a45aba800d593b7ee95e4b9b7'
-         'SKIP'
-         'SKIP')
+            'SKIP')
 
 build() {
   cd "${srcdir}/${pkgname}-${pkgver}"
@@ -36,12 +34,11 @@ package() {
   install -Dm644 COPYING "${pkgdir}/usr/share/licenses/${pkgname}/COPYING"
 
   # Convert from init.d to systemd
-  rm -rf ${pkgdir}/etc/init.d
+  rm -rf "${pkgdir}/etc/init.d"
   # If ${pkgdir}/etc is empty (it should be, since /etc/init.d/ was removed) remove it
-  if ! [ "$(ls -A ${pkgdir}/etc)" ]; then
-     rm -rf ${pkgdir}/etc/
+  if ! [ "$(ls -A "${pkgdir}/etc")" ]; then
+     rm -rf "${pkgdir}/etc/"
   fi
 
   install -Dm644 "${srcdir}/opensm.service" "${pkgdir}/usr/lib/systemd/system/opensm.service"
-  install -Dm755 "${srcdir}/opensm.launch" "${pkgdir}/usr/bin/opensm.launch"
 }

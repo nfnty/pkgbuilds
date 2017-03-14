@@ -1,6 +1,3 @@
-# Copied from Fedora's opensm-3.3.17-4.fc22.x86_64.rpm
-# Modified to follow Arch layout
-                                                     
 [Unit]
 Description=Starts the OpenSM InfiniBand fabric Subnet Manager
 Documentation=man:opensm
@@ -10,10 +7,10 @@ Requires=rdma.service
 After=rdma.service
 
 [Service]
-Type=forking
-# There is a timing bug that intermittently causes signal 15 failures on start
-# Fedora's workaround is to use a separate script
-ExecStart=/usr/bin/opensm.launch
+Restart=always
+RestartSec=30s
+
+ExecStart=/usr/bin/opensm -f stdout
 
 [Install]
 WantedBy=network.target
