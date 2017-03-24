@@ -2,18 +2,19 @@
 pkgname=('parity')
 _srcname='parity'
 pkgdesc='Fast, light, robust Ethereum implementation'
-pkgver='1.4.5'
+pkgver='1.6.4'
+_commit='1164193019243b76ca4a90e6feff83367bee311e'
 pkgrel='1'
 arch=('i686' 'x86_64')
 url="https://github.com/ethcore/${_srcname}"
 license=('GPL3')
 
-depends=('rocksdb')
-makedepends=('git' 'rust' 'cargo')
+depends=('openssl' 'libsystemd')
+makedepends=('git' 'rust' 'cargo' 'systemd' 'gcc' 'pkg-config')
 provides=("${pkgname[0]%-git}")
 conflicts=("${pkgname[0]%-git}")
 
-source=("${_srcname}::git+${url}.git#tag=v${pkgver}")
+source=("${_srcname}::git+${url}.git#commit=${_commit}")
 sha512sums=('SKIP')
 
 build() {
