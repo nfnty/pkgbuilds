@@ -2,8 +2,8 @@
 pkgname=('emby-server')
 _srcname='Emby'
 pkgdesc='Emby Server is a home media server built on top of other popular open source technologies'
-pkgver='3.2.7'
-_commit='b3fc9b9fd6e893e86651f316054bb6a4918a4a3d'
+pkgver='3.2.8'
+_commit='daa564decf5fc2ff166da5cbb155eff2d115ac87'
 pkgrel='1'
 arch=('i686' 'x86_64')
 url='https://github.com/MediaBrowser/Emby'
