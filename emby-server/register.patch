@@ -1,5 +1,5 @@
 diff --git a/Emby.Server.Implementations/Security/PluginSecurityManager.cs b/Emby.Server.Implementations/Security/PluginSecurityManager.cs
-index a26df7625..f045a1abd 100644
+index d42fae3ad..d0b275007 100644
 --- a/Emby.Server.Implementations/Security/PluginSecurityManager.cs
 +++ b/Emby.Server.Implementations/Security/PluginSecurityManager.cs
 @@ -269,36 +269,14 @@ namespace Emby.Server.Implementations.Security
@@ -43,11 +43,4 @@ index a26df7625..f045a1abd 100644
 -
                      if (reg.registered)
                      {
-                         LicenseFile.AddRegCheck(feature, reg.expDate);
-@@ -351,4 +329,4 @@ namespace Emby.Server.Implementations.Security
-             _isMbSupporterInitialized = false;
-         }
-     }
--}
-\ No newline at end of file
-+}
+                         _logger.Info("Registered for feature {0}", feature);

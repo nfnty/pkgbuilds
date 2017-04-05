@@ -2,11 +2,11 @@
 pkgname=('parity')
 _srcname='parity'
 pkgdesc='Fast, light, robust Ethereum implementation'
-pkgver='1.6.4'
-_commit='1164193019243b76ca4a90e6feff83367bee311e'
+pkgver='1.6.5'
+_commit='987390fb7d9f42a97c34aba254a8b9d8efd461d7'
 pkgrel='1'
 arch=('i686' 'x86_64')
-url="https://github.com/ethcore/${_srcname}"
+url="https://github.com/paritytech/${_srcname}"
 license=('GPL3')
 
 depends=('openssl' 'libsystemd')
