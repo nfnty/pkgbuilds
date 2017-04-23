@@ -10,6 +10,7 @@ license=('LGPL2')
 
 depends=('libftdi-compat' 'confuse')
 makedepends=('gcc' 'cmake' 'make' 'git' 'doxygen')
+options=('!makeflags')
 provides=("${pkgname[0]%-git}")
 conflicts=("${pkgname[0]%-git}")
 
