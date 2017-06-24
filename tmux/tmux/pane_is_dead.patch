@@ -1,8 +1,8 @@
 diff --git a/server-fn.c b/server-fn.c
-index 83b3fe86..11b444ea 100644
+index 0be7f70d..10651632 100644
 --- a/server-fn.c
 +++ b/server-fn.c
-@@ -317,15 +317,11 @@ server_destroy_pane(struct window_pane *wp, int notify)
+@@ -297,15 +297,11 @@ server_destroy_pane(struct window_pane *wp, int notify)
  		if (notify)
  			notify_pane("pane-died", wp);
  

@@ -2,8 +2,8 @@
 pkgname=('tmux')
 _srcname='tmux'
 pkgdesc='Terminal multiplexer'
-pkgver='2.3'
-_commit_tmux='00445ebadd505922a9c9dc455fa33244f4c4fb6b'
+pkgver='2.5'
+_commit_tmux='caa90735cf0b20a7110d25596140f553e2d05bff'
 pkgrel='1'
 arch=('i686' 'x86_64')
 url="https://github.com/tmux/${_srcname}"
