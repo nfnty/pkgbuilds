@@ -3,14 +3,14 @@ pkgname=('grafana')
 _srcname='grafana'
 _pkgbasename="${pkgname[0]%-git}"
 pkgdesc='Feature rich metrics dashboard and graph editor'
-pkgver='4.3.2'
-_commit='ed4d170bcce8697bda28a65a33c630a2628d989e'
+pkgver='4.4.1'
+_commit='9341412acc53dc5b274a703baa11f7c40fa49e43'
 pkgrel='1'
 arch=('i686' 'x86_64')
 url="https://github.com/grafana/${_srcname}"
 license=('Apache')
 
-makedepends=('git' 'go' 'npm')
+makedepends=('git' 'go' 'npm' 'python2')
 provides=("${pkgname[0]%-git}")
 conflicts=("${pkgname[0]%-git}")
 
@@ -31,7 +31,6 @@ prepare() {
     git remote set-url origin "${url}"
     go run build.go setup
     git checkout --quiet "${_commit}"
-    "${GOPATH}/bin/govendor" sync
 
     npm install
 }

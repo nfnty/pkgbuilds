@@ -9,7 +9,7 @@ arch=('i686' 'x86_64')
 url="https://github.com/grafana/${_srcname}"
 license=('Apache')
 
-makedepends=('git' 'go' 'npm')
+makedepends=('git' 'go' 'npm' 'python2')
 provides=("${pkgname[0]%-git}")
 conflicts=("${pkgname[0]%-git}")
 
