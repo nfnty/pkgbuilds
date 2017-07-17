@@ -3,14 +3,14 @@ pkgname=('tini-git')
 _srcname='tini'
 # shellcheck disable=SC2016
 pkgdesc='A tiny but valid `init` for containers'
-pkgver='r1'
+pkgver='r192'
 pkgrel='1'
 arch=('i686' 'x86_64')
 url="https://github.com/krallin/${_srcname}"
 license=('MIT')
 
 depends=('glibc')
-makedepends=('git' 'cmake' 'gcc' 'vim')
+makedepends=('git' 'cmake' 'gcc')
 provides=("${pkgname[0]%-git}")
 conflicts=("${pkgname[0]%-git}")
 
