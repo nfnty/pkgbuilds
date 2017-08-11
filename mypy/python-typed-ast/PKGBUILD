@@ -1,0 +1,24 @@
+# shellcheck disable=SC2034,SC2154,SC2164
+pkgname=('python-typed-ast')
+_srcname='typed_ast'
+pkgdesc='Python Typed AST'
+pkgver='1.0.4'
+_commit='d4322a8bc2f6d3d9b0845a1890bb0c7b5174fda3'
+pkgrel='1'
+arch=('any')
+url="https://github.com/python/${_srcname}"
+license=('Apache')
+
+depends=('python')
+makedepends=('git' 'python-setuptools')
+provides=("${pkgname[0]%-git}")
+conflicts=("${pkgname[0]%-git}")
+
+source=("${_srcname}::git+${url}.git#commit=${_commit}")
+sha512sums=('SKIP')
+
+package() {
+    cd "${srcdir}/${_srcname}"
+
+    python setup.py install --root="${pkgdir}" --optimize=1
+}

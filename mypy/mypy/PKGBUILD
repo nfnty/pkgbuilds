@@ -2,9 +2,9 @@
 pkgname=('mypy')
 _srcname='mypy'
 pkgdesc='Optional static typing for Python 2 and 3 (PEP484)'
-pkgver='0.4.6'
-_commit_mypy='29b7675e6d21de8c81b170cc1e28213aa874a2fe'
-_commit_typeshed='6fc57a419bf2559e9d4a38ca7591897e19f856dc'
+pkgver='0.521'
+_commit_mypy='858f7512cf3b4e39c0f4e8de5a13eee0e1e138fb'
+_commit_typeshed='056dbbbe4388b790a1e7ee4137b5040ed3066eb6'
 pkgrel='1'
 arch=('any')
 url="https://github.com/python/${_srcname}"
