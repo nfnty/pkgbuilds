@@ -10,7 +10,7 @@ arch=('any')
 url="https://github.com/python/${_srcname}"
 license=('custom:mypy')
 
-depends=('python')
+depends=('python' 'python-typed-ast')
 makedepends=('git' 'python-setuptools')
 provides=("${pkgname[0]%-git}")
 conflicts=("${pkgname[0]%-git}")
