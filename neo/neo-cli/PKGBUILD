@@ -1,0 +1,37 @@
+# shellcheck disable=SC2034,SC2154,SC2164
+pkgname=('neo-cli')
+_srcname='neo-cli'
+pkgdesc='NEO CLI'
+pkgver='2.1.0.1'
+_commit='f2b5cd31e191c7415c8220c731e5cbe92719096a'
+pkgrel='1'
+arch=('x86_64')
+url="https://github.com/neo-project/${_srcname}"
+license=('MIT')
+
+depends=('dotnet-runtime-1.1')
+makedepends=('git' 'dotnet-sdk-1.1')
+provides=("${pkgname[0]%-git}")
+conflicts=("${pkgname[0]%-git}")
+
+source=("${_srcname}::git+${url}.git#commit=${_commit}")
+sha512sums=('SKIP')
+
+prepare() {
+    cd "${srcdir}/${_srcname}"
+
+    dotnet restore
+}
+
+build() {
+    cd "${srcdir}/${_srcname}"
+
+    dotnet publish --runtime linux-x64 --configuration Release --output "${srcdir}/${_srcname}/build"
+}
+
+package() {
+    cd "${srcdir}/${_srcname}"
+
+    install --directory "${pkgdir}/usr/lib"
+    cp -d --recursive --no-preserve='ownership' build "${pkgdir}/usr/lib/neo-cli"
+}
