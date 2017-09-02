@@ -2,8 +2,8 @@
 pkgname=('emby-server')
 _srcname='Emby'
 pkgdesc='Emby Server is a home media server built on top of other popular open source technologies'
-pkgver='3.2.26.0'
-_commit='ff076640a0bb424f56c7bd2a54f54cebee6f6acc'
+pkgver='3.2.30.0'
+_commit='a90b7f98f73c8f71b6b016eb089f7f8be9553d36'
 pkgrel='1'
 arch=('i686' 'x86_64')
 url='https://github.com/MediaBrowser/Emby'
@@ -46,10 +46,10 @@ build() {
     cd "${srcdir}/${_srcname}"
 
     xbuild \
-    /p:Configuration='Release Mono' \
-    /p:Platform='Any CPU' \
-    /p:OutputPath="${srcdir}/build" \
-    /t:build MediaBrowser.Mono.sln
+        /p:Configuration='Release Mono' \
+        /p:Platform='Any CPU' \
+        /p:OutputPath="${srcdir}/build" \
+        /t:build MediaBrowser.sln
     mono --aot='full' -O='all' ../build/MediaBrowser.Server.Mono.exe
 }
 
