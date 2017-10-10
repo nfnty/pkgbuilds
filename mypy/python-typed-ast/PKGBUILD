@@ -2,8 +2,8 @@
 pkgname=('python-typed-ast')
 _srcname='typed_ast'
 pkgdesc='Python Typed AST'
-pkgver='1.0.4'
-_commit='d4322a8bc2f6d3d9b0845a1890bb0c7b5174fda3'
+pkgver='1.1.0'
+_commit='e17cd31da796de0bb5edea90a048d628e1bb985b'
 pkgrel='1'
 arch=('any')
 url="https://github.com/python/${_srcname}"

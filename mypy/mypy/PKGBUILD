@@ -2,9 +2,8 @@
 pkgname=('mypy')
 _srcname='mypy'
 pkgdesc='Optional static typing for Python 2 and 3 (PEP484)'
-pkgver='0.521'
-_commit_mypy='858f7512cf3b4e39c0f4e8de5a13eee0e1e138fb'
-_commit_typeshed='056dbbbe4388b790a1e7ee4137b5040ed3066eb6'
+pkgver='0.530'
+_commit='f0c941f41bea326d9c8d4e12e0ee13532cb19c42'
 pkgrel='1'
 arch=('any')
 url="https://github.com/python/${_srcname}"
@@ -15,21 +14,13 @@ makedepends=('git' 'python-setuptools')
 provides=("${pkgname[0]%-git}")
 conflicts=("${pkgname[0]%-git}")
 
-source=(
-    "${_srcname}::git+${url}.git#commit=${_commit_mypy}"
-    "typeshed::git+https://github.com/python/typeshed.git#commit=${_commit_typeshed}"
-)
-sha512sums=(
-    'SKIP'
-    'SKIP'
-)
+source=("${_srcname}::git+${url}.git#commit=${_commit}")
+sha512sums=('SKIP')
 
 prepare() {
     cd "${srcdir}/${_srcname}"
 
-    git submodule init typeshed
-    git config submodule.typeshed.url "${srcdir}/typeshed"
-    git submodule update typeshed
+    git submodule update --init --recursive
 }
 
 package() {
