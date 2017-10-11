@@ -5,7 +5,7 @@ pkgdesc='A module for cross-platform control of the mouse and keyboard in python
 pkgver='r1'
 pkgrel='1'
 arch=('any')
-url="https://github.com/SavinaRoja/${_srcname}"
+url="https://github.com/PyUserInput/${_srcname}"
 license=('GPL3')
 
 depends=('python' 'python-xlib')
