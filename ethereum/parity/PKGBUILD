@@ -2,8 +2,8 @@
 pkgname=('parity')
 _srcname='parity'
 pkgdesc='Fast, light, robust Ethereum implementation'
-pkgver='1.7.3'
-_commit='d097956ede0b05ffd29d6ccf4a4248bd90cee599'
+pkgver='1.7.4'
+_commit='d30c71513436c104fd85e5dffdc3470b1c4b2340'
 pkgrel='1'
 arch=('i686' 'x86_64')
 url="https://github.com/paritytech/${_srcname}"
