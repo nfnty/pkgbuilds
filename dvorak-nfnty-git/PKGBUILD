@@ -35,6 +35,10 @@ build() {
 package() {
     cd "${srcdir}/${_srcname}"
 
-    install -D --mode=644 --target-directory="${pkgdir}/usr/share/X11/xkb/symbols" xkb/*
     install -D --mode=644 --target-directory="${pkgdir}/usr/share/kbd/keymaps" kbd/*.map.gz
+
+    cd xkb
+    for directory in *; do
+        install -D --mode=644 --target-directory="${pkgdir}/usr/share/X11/xkb/${directory}" "${directory}/"*
+    done
 }
