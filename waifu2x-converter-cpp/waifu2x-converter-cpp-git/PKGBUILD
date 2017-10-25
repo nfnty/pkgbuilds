@@ -32,7 +32,7 @@ build() {
         -DCMAKE_INSTALL_PREFIX='/usr' \
         -DCMAKE_BUILD_TYPE='Release' \
         -DINSTALL_MODELS='ON' \
-        -DOVERRIDE_OPENCV='ON' \
+        -DOPENCV_PREFIX='/usr' \
         .
     make
 }
