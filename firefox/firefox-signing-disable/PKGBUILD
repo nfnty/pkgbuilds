@@ -1,0 +1,26 @@
+# shellcheck disable=SC2034,SC2154,SC2164
+pkgname=('firefox-signing-disable')
+pkgdesc='Disable firefox signing enforcement'
+pkgver='1'
+pkgrel='1'
+arch=('any')
+license=('MIT')
+
+provides=("${pkgname[0]%-git}")
+conflicts=("${pkgname[0]%-git}")
+
+source=(
+    'config.js'
+    'config-prefs.js'
+)
+sha512sums=(
+    'SKIP'
+    'SKIP'
+)
+
+package() {
+    cd "${srcdir}/${_srcname}"
+
+    install -D --mode=644 config.js "${pkgdir}/usr/lib/firefox/config.js"
+    install -D --mode=644 config-prefs.js "${pkgdir}/usr/lib/firefox/defaults/pref/config-prefs.js"
+}
