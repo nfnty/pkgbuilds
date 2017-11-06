@@ -1,8 +1,8 @@
 # shellcheck disable=SC2034,SC2154,SC2164
 pkgname=('kea')
 _srcname='kea'
-pkgver='1.2.0'
-_commit='8db8de0e102a46bc194d0da73dc1d8083de57bff'
+pkgver='1.3.0'
+_commit='876ad850a98c97f6fb85529321310f3ed579f079'
 pkgrel='1'
 pkgdesc='DHCPv4/DHCPv6 server'
 arch=('i686' 'x86_64')
@@ -10,6 +10,7 @@ url='http://kea.isc.org'
 license=('MPL2.0')
 
 depends=(
+    'boost-libs'
     'openssl'
     'log4cplus'
     'libmariadbclient'

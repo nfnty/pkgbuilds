@@ -9,6 +9,7 @@ url='http://kea.isc.org'
 license=('MPL2.0')
 
 depends=(
+    'boost-libs'
     'openssl'
     'log4cplus'
     'libmariadbclient'
