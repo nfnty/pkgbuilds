@@ -3,14 +3,14 @@ pkgname=('grafana')
 _srcname='grafana'
 _pkgbasename="${pkgname[0]%-git}"
 pkgdesc='Feature rich metrics dashboard and graph editor'
-pkgver='4.6.1'
-_commit='cac8b976d99c61b9047a85f5e2c5aa6abe2869ba'
+pkgver='4.6.2'
+_commit='8db5f087eb2b5a50a5ea64267fc5de792e2e2573'
 pkgrel='1'
 arch=('i686' 'x86_64')
 url="https://github.com/grafana/${_srcname}"
 license=('Apache')
 
-makedepends=('git' 'go' 'npm' 'python2')
+makedepends=('git' 'go' 'npm' 'python2' 'yarn')
 provides=("${pkgname[0]%-git}")
 conflicts=("${pkgname[0]%-git}")
 
@@ -42,7 +42,8 @@ build() {
     cd "${GOPATH}/src/${_url_go}"
     go run build.go build
 
-    npm run build
+    yarn install
+    npm run build release
 }
 
 package() {
@@ -57,7 +58,7 @@ package() {
 
     install --directory "${pkgdir}/usr/share/${_pkgbasename}/vendor"
     cp --recursive vendor/phantomjs "${pkgdir}/usr/share/${_pkgbasename}/vendor/"
-    cp --recursive public_gen "${pkgdir}/usr/share/${_pkgbasename}/public"
+    cp --recursive public "${pkgdir}/usr/share/${_pkgbasename}/public"
 
     chmod --recursive 'u=rwX,g=rX,o=rX' "${pkgdir}"
 }

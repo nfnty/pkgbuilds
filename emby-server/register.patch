@@ -1,157 +1,8 @@
 diff --git a/Emby.Server.Implementations/Security/PluginSecurityManager.cs b/Emby.Server.Implementations/Security/PluginSecurityManager.cs
-index d42fae3ad0..9b974417f6 100644
+index 615ffa1f4b..3498491789 100644
 --- a/Emby.Server.Implementations/Security/PluginSecurityManager.cs
 +++ b/Emby.Server.Implementations/Security/PluginSecurityManager.cs
-@@ -23,22 +23,6 @@ namespace Emby.Server.Implementations.Security
-     /// </summary>
-     public class PluginSecurityManager : ISecurityManager
-     {
--        private const string MBValidateUrl = "https://mb3admin.com/admin/service/registration/validate";
--        private const string AppstoreRegUrl = /*MbAdmin.HttpsUrl*/ "https://mb3admin.com/admin/service/appstore/register";
--
--        /// <summary>
--        /// The _is MB supporter
--        /// </summary>
--        private bool? _isMbSupporter;
--        /// <summary>
--        /// The _is MB supporter initialized
--        /// </summary>
--        private bool _isMbSupporterInitialized;
--        /// <summary>
--        /// The _is MB supporter sync lock
--        /// </summary>
--        private object _isMbSupporterSyncLock = new object();
--
-         /// <summary>
-         /// Gets a value indicating whether this instance is MB supporter.
-         /// </summary>
-@@ -47,17 +31,10 @@ namespace Emby.Server.Implementations.Security
-         {
-             get
-             {
--                LazyInitializer.EnsureInitialized(ref _isMbSupporter, ref _isMbSupporterInitialized, ref _isMbSupporterSyncLock, () => GetSupporterRegistrationStatus().Result.IsRegistered);
--                return _isMbSupporter.Value;
-+                return true;
-             }
-         }
- 
--        private MBLicenseFile _licenseFile;
--        private MBLicenseFile LicenseFile
--        {
--            get { return _licenseFile ?? (_licenseFile = new MBLicenseFile(_appPaths, _fileSystem, _cryptographyProvider)); }
--        }
--
-         private readonly IHttpClient _httpClient;
-         private readonly IJsonSerializer _jsonSerializer;
-         private readonly IServerApplicationHost _appHost;
-@@ -103,7 +80,6 @@ namespace Emby.Server.Implementations.Security
-         {
-             var tasks = new List<Task>();
- 
--            ResetSupporterInfo();
-             tasks.AddRange(RegisteredEntities.Select(i => i.LoadRegistrationInfoAsync()));
-             await Task.WhenAll(tasks);
-         }
-@@ -145,24 +121,10 @@ namespace Emby.Server.Implementations.Security
-         {
-             get
-             {
--                return LicenseFile.RegKey;
-+                return "1";
-             }
-             set
-             {
--                var newValue = value;
--                if (newValue != null)
--                {
--                    newValue = newValue.Trim();
--                }
--
--                if (newValue != LicenseFile.RegKey)
--                {
--                    LicenseFile.RegKey = newValue;
--                    LicenseFile.Save();
--
--                    // re-load registration info
--                    Task.Run(() => LoadAllRegistrationInfo());
--                }
-             }
-         }
- 
-@@ -173,184 +135,23 @@ namespace Emby.Server.Implementations.Security
-         /// <param name="parameters">Json parameters to send to admin server</param>
-         public async Task RegisterAppStoreSale(string parameters)
-         {
--            var options = new HttpRequestOptions()
--            {
--                Url = AppstoreRegUrl,
--                CancellationToken = CancellationToken.None,
--                BufferContent = false
--            };
--            options.RequestHeaders.Add("X-Emby-Token", _appHost.SystemId);
--            options.RequestContent = parameters;
--            options.RequestContentType = "application/json";
--
--            try
--            {
--                using (var response = await _httpClient.Post(options).ConfigureAwait(false))
--                {
--                    var reg = _jsonSerializer.DeserializeFromStream<RegRecord>(response.Content);
--
--                    if (reg == null)
--                    {
--                        var msg = "Result from appstore registration was null.";
--                        _logger.Error(msg);
--                        throw new ArgumentException(msg);
--                    }
--                    if (!String.IsNullOrEmpty(reg.key))
--                    {
--                        SupporterKey = reg.key;
--                    }
--                }
--
--            }
--            catch (ArgumentException)
--            {
--                SaveAppStoreInfo(parameters);
--                throw;
--            }
--            catch (HttpException e)
--            {
--                _logger.ErrorException("Error registering appstore purchase {0}", e, parameters ?? "NO PARMS SENT");
--
--                if (e.StatusCode.HasValue && e.StatusCode.Value == HttpStatusCode.PaymentRequired)
--                {
--                    throw new PaymentRequiredException();
--                }
--                throw new Exception("Error registering store sale");
--            }
--            catch (Exception e)
--            {
--                _logger.ErrorException("Error registering appstore purchase {0}", e, parameters ?? "NO PARMS SENT");
--                SaveAppStoreInfo(parameters);
--                //TODO - could create a re-try routine on start-up if this file is there.  For now we can handle manually.
--                throw new Exception("Error registering store sale");
--            }
--
--        }
--
--        private void SaveAppStoreInfo(string info)
--        {
--            // Save all transaction information to a file
--
--            try
--            {
--                _fileSystem.WriteAllText(Path.Combine(_appPaths.ProgramDataPath, "apptrans-error.txt"), info);
--            }
--            catch (IOException)
--            {
--
--            }
-+            throw new Exception("Error registering store sale");
-         }
- 
-         private async Task<MBRegistrationRecord> GetRegistrationStatusInternal(string feature,
+@@ -245,93 +245,15 @@ namespace Emby.Server.Implementations.Security
              string mb2Equivalent = null,
              string version = null)
          {
@@ -203,10 +54,13 @@ index d42fae3ad0..9b974417f6 100644
 -
 -                    options.SetPostData(data);
 -
--                    using (var json = (await _httpClient.Post(options).ConfigureAwait(false)).Content)
+-                    using (var response = (await _httpClient.Post(options).ConfigureAwait(false)))
 -                    {
--                        reg = _jsonSerializer.DeserializeFromStream<RegRecord>(json);
--                        success = true;
+-                        using (var json = response.Content)
+-                        {
+-                            reg = _jsonSerializer.DeserializeFromStream<RegRecord>(json);
+-                            success = true;
+-                        }
 -                    }
 -
 -                    if (reg.registered)
@@ -228,13 +82,12 @@ index d42fae3ad0..9b974417f6 100644
 -            }
 -
 -            var record = new MBRegistrationRecord
--            {
++            return new MBRegistrationRecord
+             {
 -                IsRegistered = reg.registered,
 -                ExpirationDate = reg.expDate,
 -                RegChecked = true,
 -                RegError = !success
-+            return new MBRegistrationRecord
-+            {
 +                ExpirationDate = DateTime.UtcNow.AddDays(365),
 +                IsRegistered = true,
 +                RegChecked = false,
@@ -249,27 +102,10 @@ index d42fae3ad0..9b974417f6 100644
 -            return record;
          }
  
--        private bool IsInTrial(DateTime expirationDate, bool regChecked, bool isRegistered)
--        {
--            //don't set this until we've successfully obtained exp date
--            if (!regChecked)
--            {
--                return false;
--            }
--
--            var isInTrial = expirationDate > DateTime.UtcNow;
--
--            return isInTrial && !isRegistered;
--        }
--
--        /// <summary>
--        /// Resets the supporter info.
--        /// </summary>
--        private void ResetSupporterInfo()
--        {
--            _isMbSupporter = null;
--            _isMbSupporterInitialized = false;
--        }
+         private bool IsInTrial(DateTime expirationDate, bool regChecked, bool isRegistered)
+@@ -356,4 +278,4 @@ namespace Emby.Server.Implementations.Security
+             _isMbSupporterInitialized = false;
+         }
      }
 -}
 \ No newline at end of file
