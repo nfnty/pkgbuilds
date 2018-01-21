@@ -2,8 +2,8 @@
 pkgname=('cadvisor')
 _srcname='cadvisor'
 pkgdesc='Analyzes resource usage and performance characteristics of running containers'
-pkgver='0.26.1'
-_commit='d19cc94b760cd8f150a0a5d95b404dec39a121a1'
+pkgver='0.28.3'
+_commit='1e567c2ac359c3ed1303e0c80b6cf08edefc841d'
 pkgrel='1'
 arch=('i686' 'x86_64')
 url="https://github.com/google/${_srcname}"
@@ -35,7 +35,7 @@ build() {
     export GOPATH="${srcdir}/gopath"
 
     cd "${GOPATH}/src/${_url_go}"
-    make build
+    make GO_FLAGS='-v' build
 }
 
 package() {
