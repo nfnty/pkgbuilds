@@ -3,8 +3,8 @@ pkgname=('grafana')
 _srcname='grafana'
 _pkgbasename="${pkgname[0]%-git}"
 pkgdesc='Feature rich metrics dashboard and graph editor'
-pkgver='4.6.3'
-_commit='7a06a47e63316d92eb477579469cdb4def46ee04'
+pkgver='5.0.4'
+_commit='7dc36ae2f768618e40d9325b7a16d98512b12a6b'
 pkgrel='1'
 arch=('i686' 'x86_64')
 url="https://github.com/grafana/${_srcname}"
@@ -56,9 +56,9 @@ package() {
     install -D --mode='644' conf/defaults.ini "${pkgdir}/usr/share/${_pkgbasename}/conf/defaults.ini"
     install -D --mode='644' conf/sample.ini "${pkgdir}/etc/${_pkgbasename}/grafana.ini"
 
-    install --directory "${pkgdir}/usr/share/${_pkgbasename}/vendor"
-    cp --recursive vendor/phantomjs "${pkgdir}/usr/share/${_pkgbasename}/vendor/"
-    cp --recursive public "${pkgdir}/usr/share/${_pkgbasename}/public"
+    for dir in vendor public tools; do
+        cp --recursive "${dir}" "${pkgdir}/usr/share/${_pkgbasename}/"
+    done
 
     chmod --recursive 'u=rwX,g=rX,o=rX' "${pkgdir}"
 }
