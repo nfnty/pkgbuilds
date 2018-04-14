@@ -2,8 +2,8 @@
 pkgname=('mypy')
 _srcname='mypy'
 pkgdesc='Optional static typing for Python 2 and 3 (PEP484)'
-pkgver='0.530'
-_commit='f0c941f41bea326d9c8d4e12e0ee13532cb19c42'
+pkgver='0.590'
+_commit='7519e89ae8054ea3f22c4d13f16aaf9ae8f10f0a'
 pkgrel='1'
 arch=('any')
 url="https://github.com/python/${_srcname}"

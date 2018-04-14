@@ -2,7 +2,8 @@
 pkgname=('luacheck')
 _srcname='luacheck'
 pkgdesc='A tool for linting and static analysis of Lua code'
-pkgver='0.17.1'
+pkgver='0.21.2'
+_commit='cf102ac22128eb8cfea1d5be6ee956cb1b5b26d1'
 pkgrel='1'
 arch=('i686' 'x86_64')
 url="https://github.com/mpeterv/${_srcname}"
@@ -14,7 +15,7 @@ provides=("${pkgname[0]%-git}")
 conflicts=("${pkgname[0]%-git}")
 
 source=(
-    "${_srcname}::git+${url}.git#tag=${pkgver}"
+    "${_srcname}::git+${url}.git#commit=${_commit}"
     'bin.sh'
 )
 sha512sums=(

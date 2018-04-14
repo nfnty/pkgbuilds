@@ -2,8 +2,8 @@
 pkgname=('vint')
 _srcname='vint'
 pkgdesc='Fast and Highly Extensible Vim script Language Lint implemented by Python'
-pkgver='0.3.13'
-_pkgver_commit='4763ff738a74c53ba292665ce09380623ff7adda'
+pkgver='0.3.18'
+_pkgver_commit='aa0648cf1272c47ec808fc92737849f082fb53e9'
 pkgrel='1'
 arch=('any')
 url="https://github.com/Kuniwak/${_srcname}"

@@ -2,8 +2,8 @@
 pkgname=('nvme-cli')
 _srcname='nvme-cli'
 pkgdesc='NVMe management command line interface'
-pkgver='1.3 '
-_commit='272240a5a4164e2e2100a84f120e99ffefd1c271'
+pkgver='1.5'
+_commit='121dc80e99ff6e90fb79d57f6ca81527b73364fa'
 pkgrel='1'
 arch=('x86_64')
 url="https://github.com/linux-nvme/${_srcname}"
