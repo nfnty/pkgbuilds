@@ -35,8 +35,10 @@ source=(
     "${_srcname}::git+https://github.com/mltframework/shotcut.git#commit=${_commit}"
     'shotcut.desktop'
     'melt.patch'
+    'qt-5.11.patch'
 )
 sha512sums=(
+    'SKIP'
     'SKIP'
     'SKIP'
     'SKIP'
@@ -46,6 +48,7 @@ prepare() {
     cd "${srcdir}/${_srcname}"
 
     git apply "${srcdir}/melt.patch"
+    git apply "${srcdir}/qt-5.11.patch"
 }
 
 build() {
