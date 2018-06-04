@@ -27,7 +27,7 @@ depends=(
     'frei0r-plugins'
     'ladspa'
 )
-makedepends=('git')
+makedepends=('git' 'qt5-tools')
 provides=("${pkgname[0]%-git}")
 conflicts=("${pkgname[0]%-git}")
 
