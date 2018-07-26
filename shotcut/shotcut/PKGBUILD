@@ -51,7 +51,8 @@ build() {
 
     qmake PREFIX='/usr' \
         QMAKE_CFLAGS_RELEASE="${CFLAGS}" \
-        QMAKE_CXXFLAGS_RELEASE="${CXXFLAGS}"
+        QMAKE_CXXFLAGS_RELEASE="${CXXFLAGS}" \
+        SHOTCUT_VERSION="${pkgver}"
     make
 }
 
