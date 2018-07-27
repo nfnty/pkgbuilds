@@ -33,11 +33,9 @@ conflicts=("${pkgname[0]%-git}")
 
 source=(
     "${_srcname}::git+https://github.com/mltframework/shotcut.git#commit=${_commit}"
-    'shotcut.desktop'
     'melt.patch'
 )
 sha512sums=(
-    'SKIP'
     'SKIP'
     'SKIP'
 )
