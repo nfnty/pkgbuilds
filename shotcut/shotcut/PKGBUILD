@@ -61,6 +61,4 @@ package() {
     cd "${srcdir}/${_srcname}"
 
     make INSTALL_ROOT="${pkgdir}" install
-
-    install -D --mode=644 "${srcdir}/shotcut.desktop" "${pkgdir}/usr/share/applications/shotcut.desktop"
 }
