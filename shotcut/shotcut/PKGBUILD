@@ -33,11 +33,9 @@ conflicts=("${pkgname[0]%-git}")
 
 source=(
     "${_srcname}::git+https://github.com/mltframework/shotcut.git#commit=${_commit}"
-    'shotcut.desktop'
     'melt.patch'
 )
 sha512sums=(
-    'SKIP'
     'SKIP'
     'SKIP'
 )
@@ -61,6 +59,4 @@ package() {
     cd "${srcdir}/${_srcname}"
 
     make INSTALL_ROOT="${pkgdir}" install
-
-    install -D --mode=644 "${srcdir}/shotcut.desktop" "${pkgdir}/usr/share/applications/shotcut.desktop"
 }
