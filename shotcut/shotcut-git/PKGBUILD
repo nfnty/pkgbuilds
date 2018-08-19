@@ -62,10 +62,15 @@ build() {
         QMAKE_CXXFLAGS_RELEASE="${CXXFLAGS}" \
         SHOTCUT_VERSION="${pkgver}"
     make
+
+    cd translations
+    lrelease ./*.ts
 }
 
 package() {
     cd "${srcdir}/${_srcname}"
 
     make INSTALL_ROOT="${pkgdir}" install
+
+    install -D --mode=644 --target-directory="${pkgdir}/usr/share/${_srcname}/translations" translations/*.qm
 }
