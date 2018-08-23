@@ -1,16 +1,16 @@
 # shellcheck disable=SC2034,SC2154,SC2164
 pkgname=('parity')
-_srcname='parity'
+_srcname='parity-ethereum'
 pkgdesc='Fast, light, robust Ethereum implementation'
-pkgver='1.11.7'
-_commit='085035fa2eca416d2f85af9e0b5a9eae97fde71a'
+pkgver='1.11.8'
+_commit='c754a028e036e296ecf47c3377d34bb1517c3ecb'
 pkgrel='1'
 arch=('i686' 'x86_64')
 url="https://github.com/paritytech/${_srcname}"
 license=('GPL3')
 
 depends=('openssl' 'libsystemd')
-makedepends=('git' 'rust' 'cargo' 'systemd' 'gcc' 'pkg-config')
+makedepends=('git' 'rust' 'cargo' 'systemd' 'gcc' 'pkg-config' 'cmake')
 provides=("${pkgname[0]%-git}")
 conflicts=("${pkgname[0]%-git}")
 

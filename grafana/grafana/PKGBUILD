@@ -3,8 +3,8 @@ pkgname=('grafana')
 _srcname='grafana'
 _pkgbasename="${pkgname[0]%-git}"
 pkgdesc='Feature rich metrics dashboard and graph editor'
-pkgver='5.1.3'
-_commit='08714328541b963fdfdbafb8c6ca1bc23499b5f7'
+pkgver='5.2.3'
+_commit='cf4c090fe2e895fffbc319f4dd025d8c85103656'
 pkgrel='1'
 arch=('i686' 'x86_64')
 url="https://github.com/grafana/${_srcname}"
@@ -51,7 +51,7 @@ package() {
     export GOPATH="${srcdir}/gopath"
 
     install --directory "${pkgdir}/"{"etc/${_pkgbasename}",usr/bin,"usr/share/${_pkgbasename}","var/lib/${_pkgbasename}"}
-    install --target-directory="${pkgdir}/usr/bin" bin/grafana-cli bin/grafana-server
+    install --target-directory="${pkgdir}/usr/bin" bin/linux-amd64/grafana-cli bin/linux-amd64/grafana-server
 
     install -D --mode='644' conf/defaults.ini "${pkgdir}/usr/share/${_pkgbasename}/conf/defaults.ini"
     install -D --mode='644' conf/sample.ini "${pkgdir}/etc/${_pkgbasename}/grafana.ini"
