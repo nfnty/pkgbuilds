@@ -63,6 +63,4 @@ package() {
     cd "${srcdir}/${_srcname}"
 
     make INSTALL_ROOT="${pkgdir}" install
-
-    install -D --mode=644 --target-directory="${pkgdir}/usr/share/${_srcname}/translations" translations/*.qm
 }
