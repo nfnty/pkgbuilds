@@ -1,0 +1,17 @@
+diff --git a/components/engine/daemon/oci.go b/components/engine/daemon/oci.go
+index 52050e24fa..87ef671f03 100644
+--- a/components/engine/daemon/oci.go
++++ b/components/engine/daemon/oci.go
+@@ -30,12 +30,6 @@ func setCapabilities(s *specs.Spec, c *container.Container) error {
+ 	s.Process.Capabilities.Bounding = caplist
+ 	s.Process.Capabilities.Permitted = caplist
+ 	s.Process.Capabilities.Inheritable = caplist
+-	// setUser has already been executed here
+-	// if non root drop capabilities in the way execve does
+-	if s.Process.User.UID != 0 {
+-		s.Process.Capabilities.Effective = []string{}
+-		s.Process.Capabilities.Permitted = []string{}
+-	}
+ 	return nil
+ }
+ 
