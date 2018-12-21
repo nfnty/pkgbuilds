@@ -2,8 +2,8 @@
 pkgname=('lego')
 _srcname='lego'
 pkgdesc='Let'"'"'s Encrypt client and ACME library written in Go'
-pkgver='1.1.0'
-_commit_lego='d775f2bcd5fc2e7ca52d868f9d00a1df327f0b44'
+pkgver='1.2.1'
+_commit_lego='286c44337e7fb0b3aceaf71c42448e887a6db218'
 pkgrel='1'
 arch=('i686' 'x86_64')
 url="https://github.com/xenolf/${_srcname}"
