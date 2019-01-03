@@ -29,7 +29,7 @@ build() {
     cd "${srcdir}/${_srcname}"
 
     export CARGO_HOME="${srcdir}/cargo"
-    cargo build --verbose --release
+    cargo build --release
 }
 
 package() {
