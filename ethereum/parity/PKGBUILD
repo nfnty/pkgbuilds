@@ -2,7 +2,7 @@
 pkgname=('parity')
 _srcname='parity-ethereum'
 pkgdesc='Fast, light, robust Ethereum implementation'
-pkgver='2.2.7'
+pkgver='2.2.8'
 _tag="v${pkgver}"
 pkgrel='1'
 arch=('i686' 'x86_64')
