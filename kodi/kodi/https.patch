@@ -1,588 +1,224 @@
 diff --git a/addons/metadata.artists.universal/artistuniversal.xml b/addons/metadata.artists.universal/artistuniversal.xml
-index f6f33b7a84..71a5ab7766 100644
+index 6131998bbc..1861cd772a 100644
 --- a/addons/metadata.artists.universal/artistuniversal.xml
 +++ b/addons/metadata.artists.universal/artistuniversal.xml
-@@ -2,7 +2,7 @@
- <scraper framework="1.1" date="2013-05-29">
- 	<NfoUrl dest="3">
- 		<RegExp input="$$1" output="&lt;url&gt;$INFO[mbsite]/ws/2/artist/\1?inc=url-rels&lt;/url&gt;" dest="3">
--			<expression>http://musicbrainz.org/artist/(.+)</expression>
-+			<expression>https://musicbrainz.org/artist/(.+)</expression>
- 		</RegExp>
- 	</NfoUrl>
- 	<ResolveIDToUrl dest="3">
-@@ -56,7 +56,7 @@
+@@ -47,7 +47,7 @@
  			</RegExp>
  			<!--AMGID - Artist-->
  			<RegExp input="$$1" output="\2" dest="9">
 -				<expression noclean="1">&gt;http://(www.)?allmusic.com/artist/([^&lt;]*)</expression>
 +				<expression noclean="1">&gt;https://(www.)?allmusic.com/artist/([^&lt;]*)</expression>
  			</RegExp>
- 			<RegExp input="$$1" output="&lt;musicBrainzArtistID&gt;$$8&lt;/musicBrainzArtistID&gt;&lt;name&gt;\2&lt;/name&gt;" dest="5">
- 				<expression noclean="1">&lt;artist(.*?)&lt;name&gt;([^&lt;]*)</expression>
-diff --git a/addons/metadata.artists.universal/resources/settings.xml b/addons/metadata.artists.universal/resources/settings.xml
-index 9b86027f1b..b1b3922088 100644
---- a/addons/metadata.artists.universal/resources/settings.xml
-+++ b/addons/metadata.artists.universal/resources/settings.xml
-@@ -35,7 +35,7 @@
-   </category>
-   
-   <category label="30025">
--      <setting label="30026" type="text" id="mbsite" default="http://musicbrainz.org"/>
-+      <setting label="30026" type="text" id="mbsite" default="https://musicbrainz.org"/>
-   </category>
- 
- </settings>
-diff --git a/addons/metadata.common.allmusic.com/allmusic.xml b/addons/metadata.common.allmusic.com/allmusic.xml
-index 20e9ee38ed..a134081e4c 100644
---- a/addons/metadata.common.allmusic.com/allmusic.xml
-+++ b/addons/metadata.common.allmusic.com/allmusic.xml
-@@ -1,7 +1,7 @@
- <?xml version="1.0" encoding="UTF-8"?>
- <scraperfunctions>
- 	<GetAMGDiscographyByAMGID dest="5" clearbuffers="no">
--		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;am-\1-artist-discography.html&quot; function=&quot;ParseAMGDiscography&quot;&gt;http://www.allmusic.com/artist/\1/discography&lt;/url&gt;&lt;/details&gt;" dest="5">
-+		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;am-\1-artist-discography.html&quot; function=&quot;ParseAMGDiscography&quot;&gt;https://www.allmusic.com/artist/\1/discography&lt;/url&gt;&lt;/details&gt;" dest="5">
- 			<expression clear="yes" noclean="1"/>
- 		</RegExp>
- 	</GetAMGDiscographyByAMGID>
-@@ -18,7 +18,7 @@
- 	</ParseAMGDiscography>
- 
- 	<GetAMGBiographyByAMGID dest="5" clearbuffers="no">
--		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;am-\1-artist.html&quot; function=&quot;ParseAMGBiography&quot;&gt;http://www.allmusic.com/artist/\1&lt;/url&gt;&lt;/details&gt;" dest="5">
-+		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;am-\1-artist.html&quot; function=&quot;ParseAMGBiography&quot;&gt;https://www.allmusic.com/artist/\1&lt;/url&gt;&lt;/details&gt;" dest="5">
- 			<expression noclean="1"/>
- 		</RegExp>
- 	</GetAMGBiographyByAMGID>
-@@ -47,7 +47,7 @@
- 	</ParseAMGBiography>
- 
- 	<GetAMGFallbackBiographyByAMGID dest="5" clearbuffers="no">
--		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;am-\1-artist.html&quot; function=&quot;ParseAMGFallbackBiography&quot;&gt;http://www.allmusic.com/artist/\1&lt;/url&gt;&lt;/details&gt;" dest="5">
-+		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;am-\1-artist.html&quot; function=&quot;ParseAMGFallbackBiography&quot;&gt;https://www.allmusic.com/artist/\1&lt;/url&gt;&lt;/details&gt;" dest="5">
- 			<expression noclean="1"/>
- 		</RegExp>
- 	</GetAMGFallbackBiographyByAMGID>
-@@ -64,7 +64,7 @@
- 	</ParseAMGFallbackBiography>
- 
- 	<GetAMGArtistLifeSpanByAMGID dest="5" clearbuffers="no">
--		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;am-\1-artist.html&quot; function=&quot;ParseAMGArtistLifeSpan&quot;&gt;http://www.allmusic.com/artist/\1&lt;/url&gt;&lt;/details&gt;" dest="5">
-+		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;am-\1-artist.html&quot; function=&quot;ParseAMGArtistLifeSpan&quot;&gt;https://www.allmusic.com/artist/\1&lt;/url&gt;&lt;/details&gt;" dest="5">
- 			<expression noclean="1"/>
- 		</RegExp>
- 	</GetAMGArtistLifeSpanByAMGID>
-@@ -105,7 +105,7 @@
- 	</ParseAMGArtistLifeSpan>
- 
- 	<GetAMGFallbackArtistLifeSpanByAMGID dest="5" clearbuffers="no">
--		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;am-\1-artist.html&quot; function=&quot;ParseAMGFallbackArtistLifeSpan&quot;&gt;http://www.allmusic.com/artist/\1&lt;/url&gt;&lt;/details&gt;" dest="5">
-+		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;am-\1-artist.html&quot; function=&quot;ParseAMGFallbackArtistLifeSpan&quot;&gt;https://www.allmusic.com/artist/\1&lt;/url&gt;&lt;/details&gt;" dest="5">
- 			<expression noclean="1"/>
- 		</RegExp>
- 	</GetAMGFallbackArtistLifeSpanByAMGID>
-@@ -131,7 +131,7 @@
- 	</ParseAMGFallbackArtistLifeSpan>
- 
- 	<GetAMGArtistYearsActiveByAMGID dest="5" clearbuffers="no">
--		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;am-\1-artist.html&quot; function=&quot;ParseAMGArtistYearsActive&quot;&gt;http://www.allmusic.com/artist/\1&lt;/url&gt;&lt;/details&gt;" dest="5">
-+		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;am-\1-artist.html&quot; function=&quot;ParseAMGArtistYearsActive&quot;&gt;https://www.allmusic.com/artist/\1&lt;/url&gt;&lt;/details&gt;" dest="5">
- 			<expression noclean="1"/>
- 		</RegExp>
- 	</GetAMGArtistYearsActiveByAMGID>
-@@ -148,7 +148,7 @@
- 	</ParseAMGArtistYearsActive>
- 
- 	<GetAMGArtistGenresByAMGID dest="5" clearbuffers="no">
--		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;am-\1-artist.html&quot; function=&quot;ParseAMGArtistGenres&quot;&gt;http://www.allmusic.com/artist/\1&lt;/url&gt;&lt;/details&gt;" dest="5">
-+		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;am-\1-artist.html&quot; function=&quot;ParseAMGArtistGenres&quot;&gt;https://www.allmusic.com/artist/\1&lt;/url&gt;&lt;/details&gt;" dest="5">
- 			<expression noclean="1"/>
- 		</RegExp>
- 	</GetAMGArtistGenresByAMGID>
-@@ -164,7 +164,7 @@
- 				<expression noclean="1">&lt;h4&gt;Genre&lt;/h4&gt;\s*&lt;div&gt;(.*?)&lt;/div&gt;</expression>
- 			</RegExp>
- 			<RegExp input="$$6" output="&lt;genre&gt;\1&lt;/genre&gt;" dest="11">
--				<expression repeat="yes" noclean="1">&lt;a\shref=&quot;http://www.allmusic.com/genre/[^&quot;]*&quot;&gt;([^&lt;]*)</expression>
-+				<expression repeat="yes" noclean="1">&lt;a\shref=&quot;https://www.allmusic.com/genre/[^&quot;]*&quot;&gt;([^&lt;]*)</expression>
- 			</RegExp>
- 			<RegExp input="$$11" output="$$12" dest="2">
- 				<RegExp input="$INFO[genresfbsource]" output="&lt;chain function=&quot;GetLastFMFallbackArtistGenresByMBID&quot;&gt;$$8&lt;/chain&gt;" dest="12">
-@@ -183,7 +183,7 @@
- 	</ParseAMGArtistGenres>
- 
- 	<GetAMGFallbackArtistGenresByAMGID dest="5" clearbuffers="no">
--		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;am-\1-artist.html&quot; function=&quot;ParseAMGFallbackArtistGenres&quot;&gt;http://www.allmusic.com/artist/\1&lt;/url&gt;&lt;/details&gt;" dest="5">
-+		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;am-\1-artist.html&quot; function=&quot;ParseAMGFallbackArtistGenres&quot;&gt;https://www.allmusic.com/artist/\1&lt;/url&gt;&lt;/details&gt;" dest="5">
- 			<expression noclean="1"/>
- 		</RegExp>
- 	</GetAMGFallbackArtistGenresByAMGID>
-@@ -199,14 +199,14 @@
- 				<expression noclean="1">&lt;h4&gt;Genre&lt;/h4&gt;\s*&lt;div&gt;(.*?)&lt;/div&gt;</expression>
- 			</RegExp>
- 			<RegExp input="$$6" output="&lt;genre&gt;\1&lt;/genre&gt;" dest="2">
--				<expression repeat="yes" noclean="1">&lt;a\shref=&quot;http://www.allmusic.com/genre/[^&quot;]*&quot;&gt;([^&lt;]*)</expression>
-+				<expression repeat="yes" noclean="1">&lt;a\shref=&quot;https://www.allmusic.com/genre/[^&quot;]*&quot;&gt;([^&lt;]*)</expression>
- 			</RegExp>
- 			<expression noclean="1" />
- 		</RegExp>
- 	</ParseAMGFallbackArtistGenres>
- 
- 	<GetAMGArtistStylesByAMGID dest="5" clearbuffers="no">
--		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;am-\1-artist.html&quot; function=&quot;ParseAMGArtistStyles&quot;&gt;http://www.allmusic.com/artist/\1&lt;/url&gt;&lt;/details&gt;" dest="5">
-+		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;am-\1-artist.html&quot; function=&quot;ParseAMGArtistStyles&quot;&gt;https://www.allmusic.com/artist/\1&lt;/url&gt;&lt;/details&gt;" dest="5">
- 			<expression noclean="1"/>
- 		</RegExp>
- 	</GetAMGArtistStylesByAMGID>
-@@ -222,7 +222,7 @@
- 				<expression noclean="1">&lt;h4&gt;Styles&lt;/h4&gt;\s*&lt;div&gt;(.*?)&lt;/div&gt;</expression>
- 			</RegExp>
- 			<RegExp input="$$7" output="&lt;style&gt;\1&lt;/style&gt;" dest="11">
--				<expression repeat="yes" noclean="1">&lt;a\shref=&quot;http://www.allmusic.com/style/[^&quot;]*&quot;&gt;([^&lt;]*)</expression>
-+				<expression repeat="yes" noclean="1">&lt;a\shref=&quot;https://www.allmusic.com/style/[^&quot;]*&quot;&gt;([^&lt;]*)</expression>
- 			</RegExp>
- 			<RegExp input="$$11" output="$$12" dest="2">
- 				<RegExp input="$INFO[stylesfbsource]" output="&lt;chain function=&quot;GetLastFMFallbackArtistStylesByMBID&quot;&gt;$$8&lt;/chain&gt;" dest="12">
-@@ -241,7 +241,7 @@
- 	</ParseAMGArtistStyles>
- 
- 	<GetAMGFallbackArtistStylesByAMGID dest="5" clearbuffers="no">
--		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;am-\1-artist.html&quot; function=&quot;ParseAMGFallbackArtistStyles&quot;&gt;http://www.allmusic.com/artist/\1&lt;/url&gt;&lt;/details&gt;" dest="5">
-+		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;am-\1-artist.html&quot; function=&quot;ParseAMGFallbackArtistStyles&quot;&gt;https://www.allmusic.com/artist/\1&lt;/url&gt;&lt;/details&gt;" dest="5">
- 			<expression noclean="1"/>
- 		</RegExp>
- 	</GetAMGFallbackArtistStylesByAMGID>
-@@ -257,14 +257,14 @@
- 				<expression noclean="1">&lt;h4&gt;Styles&lt;/h4&gt;\s*&lt;div&gt;(.*?)&lt;/div&gt;</expression>
- 			</RegExp>
- 			<RegExp input="$$7" output="&lt;style&gt;\1&lt;/style&gt;" dest="2">
--				<expression repeat="yes" noclean="1">&lt;a\shref=&quot;http://www.allmusic.com/style/[^&quot;]*&quot;&gt;([^&lt;]*)</expression>
-+				<expression repeat="yes" noclean="1">&lt;a\shref=&quot;https://www.allmusic.com/style/[^&quot;]*&quot;&gt;([^&lt;]*)</expression>
- 			</RegExp>
- 			<expression noclean="1" />
- 		</RegExp>
- 	</ParseAMGFallbackArtistStyles>
- 
- 	<GetAMGArtistMoodsByAMGID dest="5" clearbuffers="no">
--		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;am-\1-artist.html&quot; function=&quot;ParseAMGArtistMoods&quot;&gt;http://www.allmusic.com/artist/\1&lt;/url&gt;&lt;/details&gt;" dest="5">
-+		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;am-\1-artist.html&quot; function=&quot;ParseAMGArtistMoods&quot;&gt;https://www.allmusic.com/artist/\1&lt;/url&gt;&lt;/details&gt;" dest="5">
- 			<expression noclean="1"/>
- 		</RegExp>
- 	</GetAMGArtistMoodsByAMGID>
-@@ -296,7 +296,7 @@
- 	</ParseAMGArtistMoods>
- 
- 	<GetAMGFallbackArtistMoodsByAMGID dest="5" clearbuffers="no">
--		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;am-\1-artist.html&quot; function=&quot;ParseAMGFallbackArtistMoods&quot;&gt;http://www.allmusic.com/artist/\1&lt;/url&gt;&lt;/details&gt;" dest="5">
-+		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;am-\1-artist.html&quot; function=&quot;ParseAMGFallbackArtistMoods&quot;&gt;https://www.allmusic.com/artist/\1&lt;/url&gt;&lt;/details&gt;" dest="5">
- 			<expression noclean="1"/>
- 		</RegExp>
- 	</GetAMGFallbackArtistMoodsByAMGID>
-@@ -319,7 +319,7 @@
- 	</ParseAMGFallbackArtistMoods>
- 
- 	<GetAMGArtistThumbsByAMGID dest="5" clearbuffers="no">
--		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;am-\1-artist.html&quot; function=&quot;ParseAMGArtistThumbs&quot;&gt;http://www.allmusic.com/artist/\1&lt;/url&gt;&lt;/details&gt;" dest="5">
-+		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;am-\1-artist.html&quot; function=&quot;ParseAMGArtistThumbs&quot;&gt;https://www.allmusic.com/artist/\1&lt;/url&gt;&lt;/details&gt;" dest="5">
- 			<expression noclean="1"/>
- 		</RegExp>
- 	</GetAMGArtistThumbsByAMGID>
-@@ -334,8 +334,8 @@
- 			<RegExp input="$$1" output="\1" dest="4">
- 				<expression noclean="1">&lt;h\d&gt;Photo\sGallery&lt;/h\d&gt;(.*?)&lt;h2\sclass=&quot;artist-name&quot;</expression>
- 			</RegExp>
--			<RegExp input="$$4" output="&lt;thumb&gt;http://cps-static.rovicorp.com/3/JPG_1080/\1&lt;/thumb&gt;" dest="2">
--				<expression repeat="yes" noclean="1">&lt;img src=&quot;http://cps-static.rovicorp.com/3/JPG_[^/]*/([^&quot;]*)</expression>
-+			<RegExp input="$$4" output="&lt;thumb&gt;https://cps-static.rovicorp.com/3/JPG_1080/\1&lt;/thumb&gt;" dest="2">
-+				<expression repeat="yes" noclean="1">&lt;img src=&quot;https://cps-static.rovicorp.com/3/JPG_[^/]*/([^&quot;]*)</expression>
- 			</RegExp>
- 			<expression noclean="1"/>
- 		</RegExp>
-@@ -343,7 +343,7 @@
- 
- 
- 	<GetAMGAlbumReviewByAMGID dest="5">
--		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;am-\1-album.html&quot; function=&quot;ParseAMGAlbumReview&quot;&gt;http://www.allmusic.com/album/\1&lt;/url&gt;&lt;/details&gt;" dest="5">
-+		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;am-\1-album.html&quot; function=&quot;ParseAMGAlbumReview&quot;&gt;https://www.allmusic.com/album/\1&lt;/url&gt;&lt;/details&gt;" dest="5">
- 			<expression noclean="1"/>
- 		</RegExp>
- 	</GetAMGAlbumReviewByAMGID>
-@@ -357,7 +357,7 @@
- 	</ParseAMGAlbumReview>
- 
- 	<GetAMGAlbumTitleByAMGID dest="5">
--		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;am-\1-album.html&quot; function=&quot;ParseAMGAlbumTitle&quot;&gt;http://www.allmusic.com/album/\1&lt;/url&gt;&lt;/details&gt;" dest="5">
-+		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;am-\1-album.html&quot; function=&quot;ParseAMGAlbumTitle&quot;&gt;https://www.allmusic.com/album/\1&lt;/url&gt;&lt;/details&gt;" dest="5">
- 			<expression noclean="1"/>
- 		</RegExp>
- 	</GetAMGAlbumTitleByAMGID>
-@@ -371,7 +371,7 @@
- 	</ParseAMGAlbumTitle>
- 
- 	<GetAMGAlbumArtistByAMGID dest="5">
--		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;am-\1-album.html&quot; function=&quot;ParseAMGAlbumArtist&quot;&gt;http://www.allmusic.com/album/\1&lt;/url&gt;&lt;/details&gt;" dest="5">
-+		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;am-\1-album.html&quot; function=&quot;ParseAMGAlbumArtist&quot;&gt;https://www.allmusic.com/album/\1&lt;/url&gt;&lt;/details&gt;" dest="5">
- 			<expression noclean="1"/>
- 		</RegExp>
- 	</GetAMGAlbumArtistByAMGID>
-@@ -385,7 +385,7 @@
- 	</ParseAMGAlbumArtist>
- 
- 	<GetAMGAlbumRatingByAMGID dest="5">
--		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;am-\1-album.html&quot; function=&quot;ParseAMGAlbumRating&quot;&gt;http://www.allmusic.com/album/\1&lt;/url&gt;&lt;/details&gt;" dest="5">
-+		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;am-\1-album.html&quot; function=&quot;ParseAMGAlbumRating&quot;&gt;https://www.allmusic.com/album/\1&lt;/url&gt;&lt;/details&gt;" dest="5">
- 			<expression noclean="1"/>
- 		</RegExp>
- 	</GetAMGAlbumRatingByAMGID>
-@@ -399,7 +399,7 @@
- 	</ParseAMGAlbumRating>
- 
- 	<GetAMGAlbumDateByAMGID dest="5">
--		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;am-\1-album.html&quot; function=&quot;ParseAMGAlbumDate&quot;&gt;http://www.allmusic.com/album/\1&lt;/url&gt;&lt;/details&gt;" dest="5">
-+		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;am-\1-album.html&quot; function=&quot;ParseAMGAlbumDate&quot;&gt;https://www.allmusic.com/album/\1&lt;/url&gt;&lt;/details&gt;" dest="5">
- 			<expression noclean="1"/>
- 		</RegExp>
- 	</GetAMGAlbumDateByAMGID>
-@@ -416,7 +416,7 @@
- 	</ParseAMGAlbumDate>
- 
- 	<GetAMGAlbumGenresByAMGID dest="5">
--		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;am-\1-album.html&quot; function=&quot;ParseAMGAlbumGenres&quot;&gt;http://www.allmusic.com/album/\1&lt;/url&gt;&lt;/details&gt;" dest="5">
-+		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;am-\1-album.html&quot; function=&quot;ParseAMGAlbumGenres&quot;&gt;https://www.allmusic.com/album/\1&lt;/url&gt;&lt;/details&gt;" dest="5">
- 			<expression noclean="1"/>
- 		</RegExp>
- 	</GetAMGAlbumGenresByAMGID>
-@@ -426,14 +426,14 @@
- 				<expression noclean="1">&lt;h4&gt;Genre&lt;/h4&gt;\s*&lt;div&gt;(.*?)&lt;/div&gt;</expression>
- 			</RegExp>
- 			<RegExp input="$$6" output="&lt;genre&gt;\1&lt;/genre&gt;" dest="2">
--				<expression repeat="yes" noclean="1">&lt;a\shref=&quot;http://www.allmusic.com/genre/[^&quot;]*&quot;&gt;([^&lt;]*)</expression>
-+				<expression repeat="yes" noclean="1">&lt;a\shref=&quot;https://www.allmusic.com/genre/[^&quot;]*&quot;&gt;([^&lt;]*)</expression>
- 			</RegExp>
- 			<expression noclean="1" />
- 		</RegExp>
- 	</ParseAMGAlbumGenres>
- 
- 	<GetAMGAlbumStylesByAMGID dest="5">
--		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;am-\1-album.html&quot; function=&quot;ParseAMGAlbumStyles&quot;&gt;http://www.allmusic.com/album/\1&lt;/url&gt;&lt;/details&gt;" dest="5">
-+		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;am-\1-album.html&quot; function=&quot;ParseAMGAlbumStyles&quot;&gt;https://www.allmusic.com/album/\1&lt;/url&gt;&lt;/details&gt;" dest="5">
- 			<expression noclean="1"/>
- 		</RegExp>
- 	</GetAMGAlbumStylesByAMGID>
-@@ -443,14 +443,14 @@
- 				<expression noclean="1">&lt;h4&gt;Styles&lt;/h4&gt;\s*&lt;div&gt;(.*?)&lt;/div&gt;</expression>
- 			</RegExp>
- 			<RegExp input="$$7" output="&lt;style&gt;\1&lt;/style&gt;" dest="2">
--				<expression repeat="yes" noclean="1">&lt;a\shref=&quot;http://www.allmusic.com/style/[^&quot;]*&quot;&gt;([^&lt;]*)</expression>
-+				<expression repeat="yes" noclean="1">&lt;a\shref=&quot;https://www.allmusic.com/style/[^&quot;]*&quot;&gt;([^&lt;]*)</expression>
- 			</RegExp>
- 			<expression noclean="1" />
- 		</RegExp>
- 	</ParseAMGAlbumStyles>
- 
- 	<GetAMGAlbumMoodsByAMGID dest="5">
--		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;am-\1-album.html&quot; function=&quot;ParseAMGAlbumMoods&quot;&gt;http://www.allmusic.com/album/\1&lt;/url&gt;&lt;/details&gt;" dest="5">
-+		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;am-\1-album.html&quot; function=&quot;ParseAMGAlbumMoods&quot;&gt;https://www.allmusic.com/album/\1&lt;/url&gt;&lt;/details&gt;" dest="5">
- 			<expression noclean="1"/>
- 		</RegExp>
- 	</GetAMGAlbumMoodsByAMGID>
-@@ -460,14 +460,14 @@
- 				<expression trim="1" noclean="1">&gt;\s*&lt;h4&gt;Album\sMoods&lt;/h4&gt;(.*?)&lt;/section&gt;</expression>
- 			</RegExp>
- 			<RegExp input="$$8" output="&lt;mood&gt;\1&lt;/mood&gt;" dest="2">
--				<expression repeat="yes" noclean="1">&lt;a\shref=&quot;http://www.allmusic.com/mood/[^&quot;]*&quot;&gt;([^&lt;]*)</expression>
-+				<expression repeat="yes" noclean="1">&lt;a\shref=&quot;https://www.allmusic.com/mood/[^&quot;]*&quot;&gt;([^&lt;]*)</expression>
- 			</RegExp>
- 			<expression noclean="1" />
- 		</RegExp>
- 	</ParseAMGAlbumMoods>
- 
- 	<GetAMGAlbumThemesByAMGID dest="5">
--		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;am-\1-album.html&quot; function=&quot;ParseAMGAlbumThemes&quot;&gt;http://www.allmusic.com/album/\1&lt;/url&gt;&lt;/details&gt;" dest="5">
-+		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;am-\1-album.html&quot; function=&quot;ParseAMGAlbumThemes&quot;&gt;https://www.allmusic.com/album/\1&lt;/url&gt;&lt;/details&gt;" dest="5">
- 			<expression noclean="1"/>
- 		</RegExp>
- 	</GetAMGAlbumThemesByAMGID>
-@@ -477,14 +477,14 @@
- 				<expression trim="1" noclean="1">&gt;\s*&lt;h4&gt;Themes&lt;/h4&gt;(.*?)&lt;/ul&gt;</expression>
- 			</RegExp>
- 			<RegExp input="$$4" output="&lt;theme&gt;\1&lt;/theme&gt;" dest="2">
--				<expression repeat="yes" noclean="1">&lt;a\shref=&quot;http://www.allmusic.com/theme/[^&quot;]*&quot;&gt;([^&lt;]*)</expression>
-+				<expression repeat="yes" noclean="1">&lt;a\shref=&quot;https://www.allmusic.com/theme/[^&quot;]*&quot;&gt;([^&lt;]*)</expression>
- 			</RegExp>
- 			<expression noclean="1" />
- 		</RegExp>
- 	</ParseAMGAlbumThemes>
- 
- 	<GetAMGAlbumTracksByAMGID dest="5">
--		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;am-\1-album.html&quot; function=&quot;ParseAMGAlbumTracks&quot;&gt;http://www.allmusic.com/album/\1&lt;/url&gt;&lt;/details&gt;" dest="5">
-+		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;am-\1-album.html&quot; function=&quot;ParseAMGAlbumTracks&quot;&gt;https://www.allmusic.com/album/\1&lt;/url&gt;&lt;/details&gt;" dest="5">
- 			<expression noclean="1"/>
- 		</RegExp>
- 	</GetAMGAlbumTracksByAMGID>
-@@ -498,14 +498,14 @@
- 	</ParseAMGAlbumTracks>
- 
- 	<GetAMGAlbumThumbsByAMGID dest="5">
--		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;am-\1-album.html&quot; function=&quot;ParseAMGAlbumThumbs&quot;&gt;http://www.allmusic.com/album/\1&lt;/url&gt;&lt;/details&gt;" dest="5">
-+		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;am-\1-album.html&quot; function=&quot;ParseAMGAlbumThumbs&quot;&gt;https://www.allmusic.com/album/\1&lt;/url&gt;&lt;/details&gt;" dest="5">
- 			<expression noclean="1"/>
- 		</RegExp>
- 	</GetAMGAlbumThumbsByAMGID>
- 	<ParseAMGAlbumThumbs dest="5">
- 		<RegExp input="$$2" output="&lt;details&gt;\1&lt;/details&gt;" dest="5">
--			<RegExp input="$$1" output="&lt;thumb&gt;http://cps-static.rovicorp.com/3/JPG_500/\1&lt;/thumb&gt;" dest="2">
--				<expression noclean="1">&quot;http://cps-static.rovicorp.com/3/JPG_[^/]*/([^&quot;]*)</expression>
-+			<RegExp input="$$1" output="&lt;thumb&gt;https://cps-static.rovicorp.com/3/JPG_500/\1&lt;/thumb&gt;" dest="2">
-+				<expression noclean="1">&quot;https://cps-static.rovicorp.com/3/JPG_[^/]*/([^&quot;]*)</expression>
- 			</RegExp>
- 			<expression noclean="1" />
- 		</RegExp>
-@@ -513,7 +513,7 @@
- 
- 
- 	<GetAMGFakeBiographyByAMGID dest="5">
--		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;am-\1-artist.html&quot; function=&quot;ParseAMGFakeBiography&quot;&gt;http://www.allmusic.com/artist/\1&lt;/url&gt;&lt;/details&gt;" dest="5">
-+		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;am-\1-artist.html&quot; function=&quot;ParseAMGFakeBiography&quot;&gt;https://www.allmusic.com/artist/\1&lt;/url&gt;&lt;/details&gt;" dest="5">
- 			<expression noclean="1"/>
- 		</RegExp>
- 	</GetAMGFakeBiographyByAMGID>
-@@ -527,7 +527,7 @@
- 	</ParseAMGFakeBiography>
- 
- 	<GetAMGFakeAlbumReviewByAMGID dest="5">
--		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;am-\1-album.html&quot; function=&quot;ParseAMGFakeAlbumReview&quot;&gt;http://www.allmusic.com/album/\1&lt;/url&gt;&lt;/details&gt;" dest="5">
-+		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;am-\1-album.html&quot; function=&quot;ParseAMGFakeAlbumReview&quot;&gt;https://www.allmusic.com/album/\1&lt;/url&gt;&lt;/details&gt;" dest="5">
- 			<expression noclean="1"/>
- 		</RegExp>
- 	</GetAMGFakeAlbumReviewByAMGID>
+ 			<RegExp input="$$1" output="&lt;musicBrainzArtistID&gt;$$8&lt;/musicBrainzArtistID&gt;&lt;name&gt;\1&lt;/name&gt;" dest="5">
+ 				<expression noclean="1">&lt;artist.*?&lt;name&gt;([^&lt;]*)</expression>
 diff --git a/addons/metadata.common.imdb.com/imdb.xml b/addons/metadata.common.imdb.com/imdb.xml
-index 16bde91989..c8e1d3f1f1 100644
+index 74d4f42422..2ef601b15e 100644
 --- a/addons/metadata.common.imdb.com/imdb.xml
 +++ b/addons/metadata.common.imdb.com/imdb.xml
 @@ -1,7 +1,7 @@
- ﻿<?xml version="1.0" encoding="UTF-8"?>
+ <?xml version="1.0" encoding="UTF-8"?>
  <scraperfunctions>
  	<GetIMDBGenresById dest="5">
--		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;$$1-main.html&quot; function=&quot;ParseIMDBGenres&quot;&gt;http://akas.imdb.com/title/$$1/|accept-language=en-us&lt;/url&gt;&lt;/details&gt;" dest="5">
+-		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;$$1-main.html&quot; function=&quot;ParseIMDBGenres&quot;&gt;http://www.imdb.com/title/$$1/|accept-language=en-us&lt;/url&gt;&lt;/details&gt;" dest="5">
 +		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;$$1-main.html&quot; function=&quot;ParseIMDBGenres&quot;&gt;https://www.imdb.com/title/$$1/|accept-language=en-us&lt;/url&gt;&lt;/details&gt;" dest="5">
  			<expression noclean="1" />
  		</RegExp>
  	</GetIMDBGenresById>
-@@ -15,7 +15,7 @@
+@@ -21,7 +21,7 @@
  	</ParseIMDBGenres>
  
  	<GetIMDBRatingById dest="5">	<!-- Compatibility function for Pre-Krypton versions-->
--		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;$$1-main.html&quot; function=&quot;ParseIMDBRating&quot;&gt;http://akas.imdb.com/title/$$1/|accept-language=en-us&lt;/url&gt;&lt;/details&gt;" dest="5">
+-		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;$$1-main.html&quot; function=&quot;ParseIMDBRating&quot;&gt;http://www.imdb.com/title/$$1/|accept-language=en-us&lt;/url&gt;&lt;/details&gt;" dest="5">
 +		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;$$1-main.html&quot; function=&quot;ParseIMDBRating&quot;&gt;https://www.imdb.com/title/$$1/|accept-language=en-us&lt;/url&gt;&lt;/details&gt;" dest="5">
  			<expression noclean="1" />
  		</RegExp>
  	</GetIMDBRatingById>
-@@ -29,7 +29,7 @@
+@@ -35,7 +35,7 @@
  	</ParseIMDBRating>
  
- 	<GetIMDBRatingsById dest="5">
--		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;$$1-main.html&quot; function=&quot;ParseIMDBRatings&quot;&gt;http://akas.imdb.com/title/$$1/|accept-language=en-us&lt;/url&gt;&lt;/details&gt;" dest="5">
-+		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;$$1-main.html&quot; function=&quot;ParseIMDBRatings&quot;&gt;https://www.imdb.com/title/$$1/|accept-language=en-us&lt;/url&gt;&lt;/details&gt;" dest="5">
- 			<expression noclean="1" />
+ 	<GetIMDBRatingsById dest="5" clearbuffers="no">
+-		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;\1-main.html&quot; function=&quot;ParseIMDBRatings&quot;&gt;http://www.imdb.com/title/\1/|accept-language=en-us&lt;/url&gt;&lt;/details&gt;" dest="5">
++		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;\1-main.html&quot; function=&quot;ParseIMDBRatings&quot;&gt;https://www.imdb.com/title/\1/|accept-language=en-us&lt;/url&gt;&lt;/details&gt;" dest="5">
+ 			<expression noclean="1">^(tt\d+)</expression>
  		</RegExp>
- 	</GetIMDBRatingsById>
-@@ -43,7 +43,7 @@
+ 		<RegExp input="$$1" output="default=&quot;true&quot;" dest="3">
+@@ -52,7 +52,7 @@
  	</ParseIMDBRatings>
  
- 	<GetIMDBRatingsByIdAsDef dest="5">
--		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;$$1-main.html&quot; function=&quot;ParseIMDBRatingsAsDef&quot;&gt;http://akas.imdb.com/title/$$1/|accept-language=en-us&lt;/url&gt;&lt;/details&gt;" dest="5">
-+		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;$$1-main.html&quot; function=&quot;ParseIMDBRatingsAsDef&quot;&gt;https://www.imdb.com/title/$$1/|accept-language=en-us&lt;/url&gt;&lt;/details&gt;" dest="5">
- 			<expression noclean="1" />
- 		</RegExp>
- 	</GetIMDBRatingsByIdAsDef>
-@@ -57,7 +57,7 @@
- 	</ParseIMDBRatingsAsDef>
- 
  	<GetIMDBTOP250ById dest="5">
--		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;$$1-main.html&quot; function=&quot;ParseIMDBTOP250&quot;&gt;http://akas.imdb.com/title/$$1/|accept-language=en-us&lt;/url&gt;&lt;/details&gt;" dest="5">
+-		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;$$1-main.html&quot; function=&quot;ParseIMDBTOP250&quot;&gt;http://www.imdb.com/title/$$1/|accept-language=en-us&lt;/url&gt;&lt;/details&gt;" dest="5">
 +		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;$$1-main.html&quot; function=&quot;ParseIMDBTOP250&quot;&gt;https://www.imdb.com/title/$$1/|accept-language=en-us&lt;/url&gt;&lt;/details&gt;" dest="5">
  			<expression noclean="1" />
  		</RegExp>
  	</GetIMDBTOP250ById>
-@@ -71,7 +71,7 @@
+@@ -66,7 +66,7 @@
  	</ParseIMDBTOP250>
  
  	<GetIMDBStudioById dest="5">
--		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;$$1-main.html&quot; function=&quot;ParseIMDBStudio&quot;&gt;http://akas.imdb.com/title/$$1/|accept-language=en-us&lt;/url&gt;&lt;/details&gt;" dest="5">
+-		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;$$1-main.html&quot; function=&quot;ParseIMDBStudio&quot;&gt;http://www.imdb.com/title/$$1/|accept-language=en-us&lt;/url&gt;&lt;/details&gt;" dest="5">
 +		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;$$1-main.html&quot; function=&quot;ParseIMDBStudio&quot;&gt;https://www.imdb.com/title/$$1/|accept-language=en-us&lt;/url&gt;&lt;/details&gt;" dest="5">
  			<expression noclean="1" />
  		</RegExp>
  	</GetIMDBStudioById>
-@@ -85,7 +85,7 @@
+@@ -80,7 +80,7 @@
  	</ParseIMDBStudio>
  
  	<GetIMDBCountryById dest="5">
--		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;$$1-main.html&quot; function=&quot;ParseIMDBCountry&quot;&gt;http://akas.imdb.com/title/$$1/|accept-language=en-us&lt;/url&gt;&lt;/details&gt;" dest="5">
+-		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;$$1-main.html&quot; function=&quot;ParseIMDBCountry&quot;&gt;http://www.imdb.com/title/$$1/|accept-language=en-us&lt;/url&gt;&lt;/details&gt;" dest="5">
 +		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;$$1-main.html&quot; function=&quot;ParseIMDBCountry&quot;&gt;https://www.imdb.com/title/$$1/|accept-language=en-us&lt;/url&gt;&lt;/details&gt;" dest="5">
  			<expression noclean="1" />
  		</RegExp>
  	</GetIMDBCountryById>
-@@ -102,7 +102,7 @@
+@@ -97,7 +97,7 @@
  	</ParseIMDBCountry>
  
  	<GetMetaCriticRatingById dest="5">	<!-- Compatibility function for Pre-Krypton versions-->
--		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;$$1-main.html&quot; function=&quot;ParseMetaCriticRating&quot;&gt;http://akas.imdb.com/title/$$1/|accept-language=en-us&lt;/url&gt;&lt;/details&gt;" dest="5">
-+		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;$$1-main.html&quot; function=&quot;ParseMetaCriticRating&quot;&gt;https://www.imdb.com/title/$$1/|accept-language=en-us&lt;/url&gt;&lt;/details&gt;" dest="5">
+-		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;$$1-criticreviews.html&quot; function=&quot;ParseMetaCriticRating&quot;&gt;http://www.imdb.com/title/$$1/criticreviews|accept-language=en-us&lt;/url&gt;&lt;/details&gt;" dest="5">
++		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;$$1-criticreviews.html&quot; function=&quot;ParseMetaCriticRating&quot;&gt;https://www.imdb.com/title/$$1/criticreviews|accept-language=en-us&lt;/url&gt;&lt;/details&gt;" dest="5">
  			<expression noclean="1" />
  		</RegExp>
  	</GetMetaCriticRatingById>
-@@ -116,7 +116,7 @@
+@@ -117,7 +117,7 @@
  	</ParseMetaCriticRating>
  
- 	<GetMetaCriticRatingsById dest="5">
--		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;$$1-main.html&quot; function=&quot;ParseMetaCriticRatings&quot;&gt;http://akas.imdb.com/title/$$1/|accept-language=en-us&lt;/url&gt;&lt;/details&gt;" dest="5">
-+		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;$$1-main.html&quot; function=&quot;ParseMetaCriticRatings&quot;&gt;https://www.imdb.com/title/$$1/|accept-language=en-us&lt;/url&gt;&lt;/details&gt;" dest="5">
- 			<expression noclean="1" />
+ 	<GetMetaCriticRatingsById dest="5" clearbuffers="no">
+-		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;\1-criticreviews.html&quot; function=&quot;ParseMetaCriticRatings&quot;&gt;http://www.imdb.com/title/\1/criticreviews|accept-language=en-us&lt;/url&gt;&lt;/details&gt;" dest="5">
++		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;\1-criticreviews.html&quot; function=&quot;ParseMetaCriticRatings&quot;&gt;https://www.imdb.com/title/\1/criticreviews|accept-language=en-us&lt;/url&gt;&lt;/details&gt;" dest="5">
+ 			<expression noclean="1">(tt\d+)</expression>
  		</RegExp>
- 	</GetMetaCriticRatingsById>
-@@ -130,7 +130,7 @@
+ 		<RegExp input="$$1" output="default=&quot;true&quot;" dest="3">
+@@ -143,7 +143,7 @@
  	</ParseMetaCriticRatings>
  
- 	<GetMetaCriticRatingsByIdAsDef dest="5">
--		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;$$1-main.html&quot; function=&quot;ParseMetaCriticRatingsAsDef&quot;&gt;http://akas.imdb.com/title/$$1/|accept-language=en-us&lt;/url&gt;&lt;/details&gt;" dest="5">
-+		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;$$1-main.html&quot; function=&quot;ParseMetaCriticRatingsAsDef&quot;&gt;https://www.imdb.com/title/$$1/|accept-language=en-us&lt;/url&gt;&lt;/details&gt;" dest="5">
- 			<expression noclean="1" />
- 		</RegExp>
- 	</GetMetaCriticRatingsByIdAsDef>
-@@ -144,7 +144,7 @@
- 	</ParseMetaCriticRatingsAsDef>
- 
  	<GetIMDBPlotById dest="5">
--		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;$$1-main.html&quot; function=&quot;ParseIMDBPlot&quot;&gt;http://akas.imdb.com/title/$$1/|accept-language=en-us&lt;/url&gt;&lt;/details&gt;" dest="5">
+-		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;$$1-main.html&quot; function=&quot;ParseIMDBPlot&quot;&gt;http://www.imdb.com/title/$$1/|accept-language=en-us&lt;/url&gt;&lt;/details&gt;" dest="5">
 +		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;$$1-main.html&quot; function=&quot;ParseIMDBPlot&quot;&gt;https://www.imdb.com/title/$$1/|accept-language=en-us&lt;/url&gt;&lt;/details&gt;" dest="5">
  			<expression noclean="1" />
  		</RegExp>
  	</GetIMDBPlotById>
-@@ -158,7 +158,7 @@
+@@ -157,7 +157,7 @@
  	</ParseIMDBPlot>
  
  	<GetIMDBTaglineById dest="5">
--		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;$$1-main.html&quot; function=&quot;ParseIMDBTagline&quot;&gt;http://akas.imdb.com/title/$$1/|accept-language=en-us&lt;/url&gt;&lt;/details&gt;" dest="5">
+-		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;$$1-main.html&quot; function=&quot;ParseIMDBTagline&quot;&gt;http://www.imdb.com/title/$$1/|accept-language=en-us&lt;/url&gt;&lt;/details&gt;" dest="5">
 +		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;$$1-main.html&quot; function=&quot;ParseIMDBTagline&quot;&gt;https://www.imdb.com/title/$$1/|accept-language=en-us&lt;/url&gt;&lt;/details&gt;" dest="5">
  			<expression noclean="1" />
  		</RegExp>
  	</GetIMDBTaglineById>
-@@ -172,7 +172,7 @@
+@@ -171,7 +171,7 @@
  	</ParseIMDBTagline>
  
  	<GetIMDBOutlineById dest="5">
--		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;$$1-main.html&quot; function=&quot;ParseIMDBOutline&quot;&gt;http://akas.imdb.com/title/$$1/|accept-language=en-us&lt;/url&gt;&lt;/details&gt;" dest="5">
+-		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;$$1-main.html&quot; function=&quot;ParseIMDBOutline&quot;&gt;http://www.imdb.com/title/$$1/|accept-language=en-us&lt;/url&gt;&lt;/details&gt;" dest="5">
 +		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;$$1-main.html&quot; function=&quot;ParseIMDBOutline&quot;&gt;https://www.imdb.com/title/$$1/|accept-language=en-us&lt;/url&gt;&lt;/details&gt;" dest="5">
  			<expression noclean="1" />
  		</RegExp>
  	</GetIMDBOutlineById>
-@@ -189,7 +189,7 @@
+@@ -191,7 +191,7 @@
  	</ParseIMDBOutline>
  
  	<GetIMDBOutlineToPlotById dest="5">
--		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;$$1-main.html&quot; function=&quot;ParseIMDBOutlineToPlot&quot;&gt;http://akas.imdb.com/title/$$1/|accept-language=en-us&lt;/url&gt;&lt;/details&gt;" dest="5">
+-		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;$$1-main.html&quot; function=&quot;ParseIMDBOutlineToPlot&quot;&gt;http://www.imdb.com/title/$$1/|accept-language=en-us&lt;/url&gt;&lt;/details&gt;" dest="5">
 +		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;$$1-main.html&quot; function=&quot;ParseIMDBOutlineToPlot&quot;&gt;https://www.imdb.com/title/$$1/|accept-language=en-us&lt;/url&gt;&lt;/details&gt;" dest="5">
  			<expression noclean="1" />
  		</RegExp>
  	</GetIMDBOutlineToPlotById>
-@@ -203,7 +203,7 @@
+@@ -211,7 +211,7 @@
  	</ParseIMDBOutlineToPlot>
  
  	<GetIMDBCastById dest="5">
--		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;$$1-main.html&quot; function=&quot;ParseIMDBCast&quot;&gt;http://akas.imdb.com/title/$$1/|accept-language=en-us&lt;/url&gt;&lt;/details&gt;" dest="5">
+-		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;$$1-main.html&quot; function=&quot;ParseIMDBCast&quot;&gt;http://www.imdb.com/title/$$1/|accept-language=en-us&lt;/url&gt;&lt;/details&gt;" dest="5">
 +		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;$$1-main.html&quot; function=&quot;ParseIMDBCast&quot;&gt;https://www.imdb.com/title/$$1/|accept-language=en-us&lt;/url&gt;&lt;/details&gt;" dest="5">
  			<expression noclean="1" />
  		</RegExp>
  	</GetIMDBCastById>
-@@ -226,7 +226,7 @@
+@@ -234,7 +234,7 @@
  	</ParseIMDBCast>
  
  	<GetIMDBDirectorsById dest="5">
--		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;$$1-main.html&quot; function=&quot;ParseIMDBDirectors&quot;&gt;http://akas.imdb.com/title/$$1/|accept-language=en-us&lt;/url&gt;&lt;/details&gt;" dest="5">
+-		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;$$1-main.html&quot; function=&quot;ParseIMDBDirectors&quot;&gt;http://www.imdb.com/title/$$1/|accept-language=en-us&lt;/url&gt;&lt;/details&gt;" dest="5">
 +		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;$$1-main.html&quot; function=&quot;ParseIMDBDirectors&quot;&gt;https://www.imdb.com/title/$$1/|accept-language=en-us&lt;/url&gt;&lt;/details&gt;" dest="5">
  			<expression noclean="1" />
  		</RegExp>
  	</GetIMDBDirectorsById>
-@@ -243,7 +243,7 @@
+@@ -251,7 +251,7 @@
  	</ParseIMDBDirectors>
  
  	<GetIMDBWritersById dest="5">
--		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;$$1-main.html&quot; function=&quot;ParseIMDBWriters&quot;&gt;http://akas.imdb.com/title/$$1/|accept-language=en-us&lt;/url&gt;&lt;/details&gt;" dest="5">
+-		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;$$1-main.html&quot; function=&quot;ParseIMDBWriters&quot;&gt;http://www.imdb.com/title/$$1/|accept-language=en-us&lt;/url&gt;&lt;/details&gt;" dest="5">
 +		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;$$1-main.html&quot; function=&quot;ParseIMDBWriters&quot;&gt;https://www.imdb.com/title/$$1/|accept-language=en-us&lt;/url&gt;&lt;/details&gt;" dest="5">
  			<expression noclean="1" />
  		</RegExp>
  	</GetIMDBWritersById>
-@@ -260,7 +260,7 @@
+@@ -268,7 +268,7 @@
  	</ParseIMDBWriters>
  
  	<GetIMDBFullCastById dest="5">
--		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;$$1-combined.html&quot; function=&quot;ParseIMDBFullCast&quot;&gt;http://akas.imdb.com/title/$$1/combined|accept-language=en-us&lt;/url&gt;&lt;/details&gt;" dest="5">
-+		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;$$1-combined.html&quot; function=&quot;ParseIMDBFullCast&quot;&gt;https://www.imdb.com/title/$$1/combined|accept-language=en-us&lt;/url&gt;&lt;/details&gt;" dest="5">
+-		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;$$1-reference.html&quot; function=&quot;ParseIMDBFullCast&quot;&gt;http://www.imdb.com/title/$$1/reference|accept-language=en-us&lt;/url&gt;&lt;/details&gt;" dest="5">
++		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;$$1-reference.html&quot; function=&quot;ParseIMDBFullCast&quot;&gt;https://www.imdb.com/title/$$1/reference|accept-language=en-us&lt;/url&gt;&lt;/details&gt;" dest="5">
  			<expression noclean="1" />
  		</RegExp>
  	</GetIMDBFullCastById>
-@@ -280,7 +280,7 @@
+@@ -291,7 +291,7 @@
  	</ParseIMDBFullCast>
  
  	<GetIMDBFullDirectorsById dest="5">
--		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;$$1-combined.html&quot; function=&quot;ParseIMDBFullDirectors&quot;&gt;http://akas.imdb.com/title/$$1/combined|accept-language=en-us&lt;/url&gt;&lt;/details&gt;" dest="5">
-+		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;$$1-combined.html&quot; function=&quot;ParseIMDBFullDirectors&quot;&gt;https://www.imdb.com/title/$$1/combined|accept-language=en-us&lt;/url&gt;&lt;/details&gt;" dest="5">
+-		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;$$1-reference.html&quot; function=&quot;ParseIMDBFullDirectors&quot;&gt;http://www.imdb.com/title/$$1/reference|accept-language=en-us&lt;/url&gt;&lt;/details&gt;" dest="5">
++		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;$$1-reference.html&quot; function=&quot;ParseIMDBFullDirectors&quot;&gt;https://www.imdb.com/title/$$1/reference|accept-language=en-us&lt;/url&gt;&lt;/details&gt;" dest="5">
  			<expression noclean="1" />
  		</RegExp>
  	</GetIMDBFullDirectorsById>
-@@ -297,7 +297,7 @@
+@@ -308,7 +308,7 @@
  	</ParseIMDBFullDirectors>
  
  	<GetIMDBFullWritersById dest="5">
--		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;$$1-combined.html&quot; function=&quot;ParseIMDBFullWriters&quot;&gt;http://akas.imdb.com/title/$$1/combined|accept-language=en-us&lt;/url&gt;&lt;/details&gt;" dest="5">
-+		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;$$1-combined.html&quot; function=&quot;ParseIMDBFullWriters&quot;&gt;https://www.imdb.com/title/$$1/combined|accept-language=en-us&lt;/url&gt;&lt;/details&gt;" dest="5">
+-		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;$$1-reference.html&quot; function=&quot;ParseIMDBFullWriters&quot;&gt;http://www.imdb.com/title/$$1/reference|accept-language=en-us&lt;/url&gt;&lt;/details&gt;" dest="5">
++		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;$$1-reference.html&quot; function=&quot;ParseIMDBFullWriters&quot;&gt;https://www.imdb.com/title/$$1/reference|accept-language=en-us&lt;/url&gt;&lt;/details&gt;" dest="5">
  			<expression noclean="1" />
  		</RegExp>
  	</GetIMDBFullWritersById>
-@@ -314,7 +314,7 @@
+@@ -325,7 +325,7 @@
  	</ParseIMDBFullWriters>
  
  	<GetIMDBThumbsById dest="5">
--		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;$$1-posters.html&quot; function=&quot;ParseIMDBThumbs&quot;&gt;http://akas.imdb.com/title/$$1/posters|accept-language=en-us&lt;/url&gt;&lt;/details&gt;" dest="5">
-+		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;$$1-posters.html&quot; function=&quot;ParseIMDBThumbs&quot;&gt;https://www.imdb.com/title/$$1/posters|accept-language=en-us&lt;/url&gt;&lt;/details&gt;" dest="5">
+-		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;$$1-main.html&quot; function=&quot;ParseIMDBThumbs&quot;&gt;http://www.imdb.com/title/$$1/|accept-language=en-us&lt;/url&gt;&lt;/details&gt;" dest="5">
++		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;$$1-main.html&quot; function=&quot;ParseIMDBThumbs&quot;&gt;https://www.imdb.com/title/$$1/|accept-language=en-us&lt;/url&gt;&lt;/details&gt;" dest="5">
  			<expression noclean="1" />
  		</RegExp>
  	</GetIMDBThumbsById>
-@@ -331,7 +331,7 @@
+@@ -339,7 +339,7 @@
  	</ParseIMDBThumbs>
  
  	<GetIMDBUSACert dest="5">
--		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;$$1-combined.html&quot; function=&quot;ParseIMDBUSACert&quot;&gt;http://akas.imdb.com/title/$$1/combined|accept-language=en-us&lt;/url&gt;&lt;/details&gt;" dest="5">
-+		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;$$1-combined.html&quot; function=&quot;ParseIMDBUSACert&quot;&gt;https://www.imdb.com/title/$$1/combined|accept-language=en-us&lt;/url&gt;&lt;/details&gt;" dest="5">
+-		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;$$1-reference.html&quot; function=&quot;ParseIMDBUSACert&quot;&gt;http://www.imdb.com/title/$$1/reference|accept-language=en-us&lt;/url&gt;&lt;/details&gt;" dest="5">
++		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;$$1-reference.html&quot; function=&quot;ParseIMDBUSACert&quot;&gt;https://www.imdb.com/title/$$1/reference|accept-language=en-us&lt;/url&gt;&lt;/details&gt;" dest="5">
  			<expression noclean="1" />
  		</RegExp>
  	</GetIMDBUSACert>
-@@ -345,11 +345,11 @@
+@@ -356,11 +356,11 @@
  	</ParseIMDBUSACert>
  
  	<GetIMDBCountryCert dest="5">
--		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;$$1-combined.html&quot; function=&quot;ParseIMDBCountryCert&quot;&gt;http://akas.imdb.com/title/$$1/combined|accept-language=en-us&lt;/url&gt;&lt;/details&gt;" dest="5">
-+		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;$$1-combined.html&quot; function=&quot;ParseIMDBCountryCert&quot;&gt;https://www.imdb.com/title/$$1/combined|accept-language=en-us&lt;/url&gt;&lt;/details&gt;" dest="5">
+-		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;$$1-reference.html&quot; function=&quot;ParseIMDBCountryCert&quot;&gt;http://www.imdb.com/title/$$1/reference|accept-language=en-us&lt;/url&gt;&lt;/details&gt;" dest="5">
++		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;$$1-reference.html&quot; function=&quot;ParseIMDBCountryCert&quot;&gt;https://www.imdb.com/title/$$1/reference|accept-language=en-us&lt;/url&gt;&lt;/details&gt;" dest="5">
  			<expression noclean="1" />
  		</RegExp>
- 		<RegExp input="$INFO[imdbcertcountry]" output="$$5" dest="5">
--			<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;$$1-combined.html&quot; function=&quot;ParseIMDBUSACert&quot;&gt;http://akas.imdb.com/title/$$1/combined|accept-language=en-us&lt;/url&gt;&lt;/details&gt;" dest="5">
-+			<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;$$1-combined.html&quot; function=&quot;ParseIMDBUSACert&quot;&gt;https://www.imdb.com/title/$$1/combined|accept-language=en-us&lt;/url&gt;&lt;/details&gt;" dest="5">
+ 		<RegExp input="$INFO[imdbcertcountry]" output="$$2" dest="5">
+-			<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;$$1-reference.html&quot; function=&quot;ParseIMDBUSACert&quot;&gt;http://www.imdb.com/title/$$1/reference|accept-language=en-us&lt;/url&gt;&lt;/details&gt;" dest="2">
++			<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;$$1-reference.html&quot; function=&quot;ParseIMDBUSACert&quot;&gt;https://www.imdb.com/title/$$1/reference|accept-language=en-us&lt;/url&gt;&lt;/details&gt;" dest="2">
  				<expression noclean="1"/>
  			</RegExp>
- 			<expression>USA</expression>
-@@ -362,7 +362,7 @@
+ 			<expression>United States</expression>
+@@ -373,7 +373,7 @@
  	</ParseIMDBCountryCert>
  
  	<GetIMDBAKATitlesById dest="5">
--		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;$$1-combined.html&quot; function=&quot;ParseIMDBAKATitles&quot;&gt;http://akas.imdb.com/title/$$1/combined|accept-language=en-us&lt;/url&gt;&lt;/details&gt;" dest="5">
-+		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;$$1-combined.html&quot; function=&quot;ParseIMDBAKATitles&quot;&gt;https://www.imdb.com/title/$$1/combined|accept-language=en-us&lt;/url&gt;&lt;/details&gt;" dest="5">
+-		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;$$1-releaseinfo.html&quot; function=&quot;ParseIMDBAKATitles&quot;&gt;http://www.imdb.com/title/$$1/releaseinfo|accept-language=en-us&lt;/url&gt;&lt;/details&gt;" dest="5">
++		<RegExp input="$$1" output="&lt;details&gt;&lt;url cache=&quot;$$1-releaseinfo.html&quot; function=&quot;ParseIMDBAKATitles&quot;&gt;https://www.imdb.com/title/$$1/releaseinfo|accept-language=en-us&lt;/url&gt;&lt;/details&gt;" dest="5">
  			<expression noclean="1" />
  		</RegExp>
  	</GetIMDBAKATitlesById>
-@@ -474,4 +474,4 @@
+@@ -452,4 +452,4 @@
  		</RegExp>
  	</ParseIMDBAKATitles>
  
@@ -590,7 +226,7 @@ index 16bde91989..c8e1d3f1f1 100644
 \ No newline at end of file
 +</scraperfunctions>
 diff --git a/addons/metadata.common.theaudiodb.com/tadb.xml b/addons/metadata.common.theaudiodb.com/tadb.xml
-index 5538b21f4e..8f9f034283 100644
+index 60912060a7..12f5961a64 100644
 --- a/addons/metadata.common.theaudiodb.com/tadb.xml
 +++ b/addons/metadata.common.theaudiodb.com/tadb.xml
 @@ -1,12 +1,12 @@
@@ -626,6 +262,66 @@ index 5538b21f4e..8f9f034283 100644
 @@ -51,12 +51,12 @@
  	</ParseTADBArtistFanarts>
  
+ 	<GetTADBArtistClearlogoByID dest="5" clearbuffers="no">
+-		<RegExp input="$$1" output="&lt;details&gt;&lt;url function=&quot;ParseTADBArtistClearlogo&quot; cache=&quot;tadb-\1-artist.json&quot;&gt;http://www.theaudiodb.com/api/v1/json/58424d43204d6564696120/artist.php?i=\1&lt;/url&gt;&lt;/details&gt;" dest="5">
++		<RegExp input="$$1" output="&lt;details&gt;&lt;url function=&quot;ParseTADBArtistClearlogo&quot; cache=&quot;tadb-\1-artist.json&quot;&gt;https://www.theaudiodb.com/api/v1/json/58424d43204d6564696120/artist.php?i=\1&lt;/url&gt;&lt;/details&gt;" dest="5">
+ 			<expression noclean="1" />
+ 		</RegExp>
+ 	</GetTADBArtistClearlogoByID>
+ 	<GetTADBArtistClearlogoByMBID dest="5" clearbuffers="no">
+-		<RegExp input="$$1" output="&lt;details&gt;&lt;url function=&quot;ParseTADBArtistClearlogo&quot; cache=&quot;tadb-\1-artist.json&quot;&gt;http://www.theaudiodb.com/api/v1/json/58424d43204d6564696120/artist-mb.php?i=\1&lt;/url&gt;&lt;/details&gt;" dest="5">
++		<RegExp input="$$1" output="&lt;details&gt;&lt;url function=&quot;ParseTADBArtistClearlogo&quot; cache=&quot;tadb-\1-artist.json&quot;&gt;https://www.theaudiodb.com/api/v1/json/58424d43204d6564696120/artist-mb.php?i=\1&lt;/url&gt;&lt;/details&gt;" dest="5">
+ 			<expression noclean="1"/>
+ 		</RegExp>
+ 	</GetTADBArtistClearlogoByMBID>
+@@ -79,12 +79,12 @@
+ 	</ParseTADBArtistClearlogo>
+ 
+ 	<GetTADBArtistClearartByID dest="5" clearbuffers="no">
+-		<RegExp input="$$1" output="&lt;details&gt;&lt;url function=&quot;ParseTADBArtistClearart&quot; cache=&quot;tadb-\1-artist.json&quot;&gt;http://www.theaudiodb.com/api/v1/json/58424d43204d6564696120/artist.php?i=\1&lt;/url&gt;&lt;/details&gt;" dest="5">
++		<RegExp input="$$1" output="&lt;details&gt;&lt;url function=&quot;ParseTADBArtistClearart&quot; cache=&quot;tadb-\1-artist.json&quot;&gt;https://www.theaudiodb.com/api/v1/json/58424d43204d6564696120/artist.php?i=\1&lt;/url&gt;&lt;/details&gt;" dest="5">
+ 			<expression noclean="1" />
+ 		</RegExp>
+ 	</GetTADBArtistClearartByID>
+ 	<GetTADBArtistClearartByMBID dest="5" clearbuffers="no">
+-		<RegExp input="$$1" output="&lt;details&gt;&lt;url function=&quot;ParseTADBArtistClearart&quot; cache=&quot;tadb-\1-artist.json&quot;&gt;http://www.theaudiodb.com/api/v1/json/58424d43204d6564696120/artist-mb.php?i=\1&lt;/url&gt;&lt;/details&gt;" dest="5">
++		<RegExp input="$$1" output="&lt;details&gt;&lt;url function=&quot;ParseTADBArtistClearart&quot; cache=&quot;tadb-\1-artist.json&quot;&gt;https://www.theaudiodb.com/api/v1/json/58424d43204d6564696120/artist-mb.php?i=\1&lt;/url&gt;&lt;/details&gt;" dest="5">
+ 			<expression noclean="1"/>
+ 		</RegExp>
+ 	</GetTADBArtistClearartByMBID>
+@@ -107,12 +107,12 @@
+ 	</ParseTADBArtistClearart>
+ 
+ 	<GetTADBArtistLandscapeByID dest="5" clearbuffers="no">
+-		<RegExp input="$$1" output="&lt;details&gt;&lt;url function=&quot;ParseTADBArtistLandscape&quot; cache=&quot;tadb-\1-artist.json&quot;&gt;http://www.theaudiodb.com/api/v1/json/58424d43204d6564696120/artist.php?i=\1&lt;/url&gt;&lt;/details&gt;" dest="5">
++		<RegExp input="$$1" output="&lt;details&gt;&lt;url function=&quot;ParseTADBArtistLandscape&quot; cache=&quot;tadb-\1-artist.json&quot;&gt;https://www.theaudiodb.com/api/v1/json/58424d43204d6564696120/artist.php?i=\1&lt;/url&gt;&lt;/details&gt;" dest="5">
+ 			<expression noclean="1" />
+ 		</RegExp>
+ 	</GetTADBArtistLandscapeByID>
+ 	<GetTADBArtistLandscapeByMBID dest="5" clearbuffers="no">
+-		<RegExp input="$$1" output="&lt;details&gt;&lt;url function=&quot;ParseTADBArtistLandscape&quot; cache=&quot;tadb-\1-artist.json&quot;&gt;http://www.theaudiodb.com/api/v1/json/58424d43204d6564696120/artist-mb.php?i=\1&lt;/url&gt;&lt;/details&gt;" dest="5">
++		<RegExp input="$$1" output="&lt;details&gt;&lt;url function=&quot;ParseTADBArtistLandscape&quot; cache=&quot;tadb-\1-artist.json&quot;&gt;https://www.theaudiodb.com/api/v1/json/58424d43204d6564696120/artist-mb.php?i=\1&lt;/url&gt;&lt;/details&gt;" dest="5">
+ 			<expression noclean="1"/>
+ 		</RegExp>
+ 	</GetTADBArtistLandscapeByMBID>
+@@ -135,12 +135,12 @@
+ 	</ParseTADBArtistLandscape>
+ 
+ 	<GetTADBArtistBannerByID dest="5" clearbuffers="no">
+-		<RegExp input="$$1" output="&lt;details&gt;&lt;url function=&quot;ParseTADBArtistBanner&quot; cache=&quot;tadb-\1-artist.json&quot;&gt;http://www.theaudiodb.com/api/v1/json/58424d43204d6564696120/artist.php?i=\1&lt;/url&gt;&lt;/details&gt;" dest="5">
++		<RegExp input="$$1" output="&lt;details&gt;&lt;url function=&quot;ParseTADBArtistBanner&quot; cache=&quot;tadb-\1-artist.json&quot;&gt;https://www.theaudiodb.com/api/v1/json/58424d43204d6564696120/artist.php?i=\1&lt;/url&gt;&lt;/details&gt;" dest="5">
+ 			<expression noclean="1" />
+ 		</RegExp>
+ 	</GetTADBArtistBannerByID>
+ 	<GetTADBArtistBannerByMBID dest="5" clearbuffers="no">
+-		<RegExp input="$$1" output="&lt;details&gt;&lt;url function=&quot;ParseTADBArtistBanner&quot; cache=&quot;tadb-\1-artist.json&quot;&gt;http://www.theaudiodb.com/api/v1/json/58424d43204d6564696120/artist-mb.php?i=\1&lt;/url&gt;&lt;/details&gt;" dest="5">
++		<RegExp input="$$1" output="&lt;details&gt;&lt;url function=&quot;ParseTADBArtistBanner&quot; cache=&quot;tadb-\1-artist.json&quot;&gt;https://www.theaudiodb.com/api/v1/json/58424d43204d6564696120/artist-mb.php?i=\1&lt;/url&gt;&lt;/details&gt;" dest="5">
+ 			<expression noclean="1"/>
+ 		</RegExp>
+ 	</GetTADBArtistBannerByMBID>
+@@ -163,12 +163,12 @@
+ 	</ParseTADBArtistBanner>
+ 
  	<GetTADBBiographyByID dest="5" clearbuffers="no">
 -		<RegExp input="$$1" output="&lt;details&gt;&lt;url function=&quot;ParseTADBBiography&quot; cache=&quot;tadb-\1-artist.json&quot;&gt;http://www.theaudiodb.com/api/v1/json/58424d43204d6564696120/artist.php?i=\1&lt;/url&gt;&lt;/details&gt;" dest="5">
 +		<RegExp input="$$1" output="&lt;details&gt;&lt;url function=&quot;ParseTADBBiography&quot; cache=&quot;tadb-\1-artist.json&quot;&gt;https://www.theaudiodb.com/api/v1/json/58424d43204d6564696120/artist.php?i=\1&lt;/url&gt;&lt;/details&gt;" dest="5">
@@ -638,7 +334,7 @@ index 5538b21f4e..8f9f034283 100644
  			<expression noclean="1"/>
  		</RegExp>
  	</GetTADBBiographyByMBID>
-@@ -91,7 +91,7 @@
+@@ -203,7 +203,7 @@
  	</ParseTADBBiography>
  
  	<GetTADBFMFallbackBiographyByMBID dest="5" clearbuffers="no">
@@ -647,7 +343,7 @@ index 5538b21f4e..8f9f034283 100644
  			<expression noclean="1"/>
  		</RegExp>
  	</GetTADBFMFallbackBiographyByMBID>
-@@ -111,12 +111,12 @@
+@@ -223,12 +223,12 @@
  	</ParseTADBFallbackBiography>
  
  	<GetTADBDiscographyByID dest="5" clearbuffers="no">
@@ -662,7 +358,7 @@ index 5538b21f4e..8f9f034283 100644
  			<expression noclean="1" />
  		</RegExp>
  	</GetTADBDiscographyByMBID>
-@@ -133,12 +133,12 @@
+@@ -245,12 +245,12 @@
  	</ParseTADBDiscography>
  
  	<GetTADBLifeSpanByID dest="5" clearbuffers="no">
@@ -677,7 +373,7 @@ index 5538b21f4e..8f9f034283 100644
  			<expression noclean="1"/>
  		</RegExp>
  	</GetTADBLifeSpanByMBID>
-@@ -182,7 +182,7 @@
+@@ -294,7 +294,7 @@
  	</ParseTADBLifeSpan>
  
  	<GetTADBFallbackLifeSpanByMBID dest="5" clearbuffers="no">
@@ -686,7 +382,7 @@ index 5538b21f4e..8f9f034283 100644
  			<expression noclean="1"/>
  		</RegExp>
  	</GetTADBFallbackLifeSpanByMBID>
-@@ -217,12 +217,12 @@
+@@ -329,12 +329,12 @@
  	</ParseTADBFallbackLifeSpan>
  
  	<GetTADBArtistGenresByID dest="5" clearbuffers="no">
@@ -701,7 +397,7 @@ index 5538b21f4e..8f9f034283 100644
  			<expression noclean="1"/>
  		</RegExp>
  	</GetTADBArtistGenresByMBID>
-@@ -254,7 +254,7 @@
+@@ -366,7 +366,7 @@
  	</ParseTADBArtistGenres>
  
  	<GetTADBFallbackArtistGenresByMBID dest="5" clearbuffers="no">
@@ -710,7 +406,7 @@ index 5538b21f4e..8f9f034283 100644
  			<expression noclean="1"/>
  		</RegExp>
  	</GetTADBFallbackArtistGenresByMBID>
-@@ -271,12 +271,12 @@
+@@ -383,12 +383,12 @@
  	</ParseTADBFallbackArtistGenres>
  
  	<GetTADBArtistMoodsByID dest="5" clearbuffers="no">
@@ -725,7 +421,7 @@ index 5538b21f4e..8f9f034283 100644
  			<expression noclean="1"/>
  		</RegExp>
  	</GetTADBArtistMoodsByMBID>
-@@ -308,7 +308,7 @@
+@@ -420,7 +420,7 @@
  	</ParseTADBArtistMoods>
  
  	<GetTADBFallbackArtistMoodsByMBID dest="5" clearbuffers="no">
@@ -734,7 +430,7 @@ index 5538b21f4e..8f9f034283 100644
  			<expression noclean="1"/>
  		</RegExp>
  	</GetTADBFallbackArtistMoodsByMBID>
-@@ -325,12 +325,12 @@
+@@ -437,12 +437,12 @@
  	</ParseTADBFallbackArtistMoods>
  
  	<GetTADBArtistStylesByID dest="5" clearbuffers="no">
@@ -749,7 +445,7 @@ index 5538b21f4e..8f9f034283 100644
  			<expression noclean="1"/>
  		</RegExp>
  	</GetTADBArtistStylesByMBID>
-@@ -362,7 +362,7 @@
+@@ -474,7 +474,7 @@
  	</ParseTADBArtistStyles>
  
  	<GetTADBFallbackArtistStylesByMBID dest="5" clearbuffers="no">
@@ -758,7 +454,7 @@ index 5538b21f4e..8f9f034283 100644
  			<expression noclean="1"/>
  		</RegExp>
  	</GetTADBFallbackArtistStylesByMBID>
-@@ -379,12 +379,12 @@
+@@ -491,12 +491,12 @@
  	</ParseTADBFallbackArtistStyles>
  
  	<GetTADBAlbumReviewByID dest="5">
@@ -773,7 +469,7 @@ index 5538b21f4e..8f9f034283 100644
  			<expression noclean="1"/>
  		</RegExp>
  	</GetTADBAlbumReviewByMBID>
-@@ -401,12 +401,12 @@
+@@ -513,12 +513,12 @@
  	</ParseTADBAlbumReview>
  
  	<GetTADBAlbumRating dest="5">
@@ -788,7 +484,7 @@ index 5538b21f4e..8f9f034283 100644
  			<expression noclean="1"/>
  		</RegExp>
  	</GetTADBAlbumRatingByMBID>
-@@ -420,7 +420,7 @@
+@@ -532,7 +532,7 @@
  	</ParseTADBAlbumRating>
  
  	<GetTADBAlbumTitleByID dest="5">
@@ -797,7 +493,7 @@ index 5538b21f4e..8f9f034283 100644
  			<expression noclean="1"/>
  		</RegExp>
  	</GetTADBAlbumTitleByID>
-@@ -434,7 +434,7 @@
+@@ -546,7 +546,7 @@
  	</ParseTADBAlbumTitle>
  
  	<GetTADBAlbumArtistByID dest="5">
@@ -806,7 +502,7 @@ index 5538b21f4e..8f9f034283 100644
  			<expression noclean="1"/>
  		</RegExp>
  	</GetTADBAlbumArtistByID>
-@@ -448,12 +448,12 @@
+@@ -560,12 +560,12 @@
  	</ParseTADBAlbumArtist>
  
  	<GetTADBAlbumDateByID dest="5">
@@ -821,7 +517,7 @@ index 5538b21f4e..8f9f034283 100644
  			<expression noclean="1"/>
  		</RegExp>
  	</GetTADBAlbumDateByMBID>
-@@ -467,12 +467,12 @@
+@@ -579,12 +579,12 @@
  	</ParseTADBAlbumDate>
  
  	<GetTADBAlbumGenresByID dest="5">
@@ -836,7 +532,7 @@ index 5538b21f4e..8f9f034283 100644
  			<expression noclean="1"/>
  		</RegExp>
  	</GetTADBAlbumGenresByMBID>
-@@ -486,12 +486,12 @@
+@@ -598,12 +598,12 @@
  	</ParseTADBAlbumGenres>
  
  	<GetTADBAlbumMoodsByID dest="5">
@@ -851,7 +547,7 @@ index 5538b21f4e..8f9f034283 100644
  			<expression noclean="1"/>
  		</RegExp>
  	</GetTADBAlbumMoodsByMBID>
-@@ -505,12 +505,12 @@
+@@ -617,12 +617,12 @@
  	</ParseTADBAlbumMoods>
  
  	<GetTADBAlbumStylesByID dest="5">
@@ -866,7 +562,7 @@ index 5538b21f4e..8f9f034283 100644
  			<expression noclean="1"/>
  		</RegExp>
  	</GetTADBAlbumStylesByMBID>
-@@ -524,12 +524,12 @@
+@@ -636,12 +636,12 @@
  	</ParseTADBAlbumStyles>
  
  	<GetTADBAlbumThemeByID dest="5">
@@ -881,7 +577,7 @@ index 5538b21f4e..8f9f034283 100644
  			<expression noclean="1"/>
  		</RegExp>
  	</GetTADBAlbumThemeByMBID>
-@@ -543,7 +543,7 @@
+@@ -655,7 +655,7 @@
  	</ParseTADBAlbumTheme>
  
  	<GetTADBAlbumTracksByID dest="5">
@@ -890,7 +586,7 @@ index 5538b21f4e..8f9f034283 100644
  			<expression noclean="1"/>
  		</RegExp>
  	</GetTADBAlbumTracksByID>
-@@ -557,12 +557,12 @@
+@@ -669,12 +669,12 @@
  	</ParseTADBAlbumTracks>
  
  	<GetTADBAlbumThumbsByID dest="5">
@@ -905,233 +601,539 @@ index 5538b21f4e..8f9f034283 100644
  			<expression noclean="1"/>
  		</RegExp>
  	</GetTADBAlbumThumbsByMBID>
-diff --git a/addons/metadata.tvdb.com/tvdb.xml b/addons/metadata.tvdb.com/tvdb.xml
-index 8feb37d007..9d78ae65fc 100644
---- a/addons/metadata.tvdb.com/tvdb.xml
-+++ b/addons/metadata.tvdb.com/tvdb.xml
-@@ -92,7 +92,7 @@
- 		</RegExp>
- 		<XSLT input="&lt;data&gt;$$4&lt;/data&gt;" output="\1" dest="6">
- 			<xsl:stylesheet version = "1.0"
--					xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
-+					xmlns:xsl="https://www.w3.org/1999/XSL/Transform">
- 				<xsl:output encoding="UTF-8" indent="yes"/>
+@@ -688,12 +688,12 @@
+ 	</ParseTADBAlbumThumbs>
  
- 				<xsl:variable name="notAllowedId">313081</xsl:variable>
-@@ -267,7 +267,7 @@
- 	</GetActors>
- 	<ParseActors dest="4">
- 		<RegExp input="$$5" output="&lt;details&gt;\1&lt;/details&gt;" dest="4">
--			<RegExp input="$$1" output="&lt;actor&gt;&lt;name&gt;\1&lt;/name&gt;&lt;role&gt;\2&lt;/role&gt;&lt;order&gt;\3&lt;/order&gt;&lt;thumb&gt;http://www.thetvdb.com/banners/\4&lt;/thumb&gt;&lt;/actor&gt;" dest="5">
-+			<RegExp input="$$1" output="&lt;actor&gt;&lt;name&gt;\1&lt;/name&gt;&lt;role&gt;\2&lt;/role&gt;&lt;order&gt;\3&lt;/order&gt;&lt;thumb&gt;https://www.thetvdb.com/banners/\4&lt;/thumb&gt;&lt;/actor&gt;" dest="5">
- 				<expression repeat="yes" fixchars="1,2">"name": "([^}]+)",\s+"role": "([^}]+)",\s+"sortOrder": (\d+),\s+"image": "([^"]+)",</expression>
- 			</RegExp>
- 			<RegExp input="$$1" output="&lt;actor&gt;&lt;name&gt;\1&lt;/name&gt;&lt;role&gt;\2&lt;/role&gt;&lt;order&gt;\3&lt;/order&gt;&lt;/actor&gt;" dest="5+">
-@@ -347,14 +347,14 @@
- 		</RegExp>
- 		<XSLT input="&lt;Banners&gt;$$10&lt;/Banners&gt;" output="\1" dest="4">
- 			<xsl:stylesheet version = "1.0"
--					xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
-+					xmlns:xsl="https://www.w3.org/1999/XSL/Transform">
- 				<xsl:output omit-xml-declaration="yes" indent="yes"/>
- 				<xsl:strip-space elements="*"/>
- 				<xsl:key name="BannersById" match="Banner" use="id"/>
- 
- 				<xsl:template match="Banners">
- 					<details>
--						<fanart url="http://www.thetvdb.com/banners/">
-+						<fanart url="https://www.thetvdb.com/banners/">
- 							<xsl:apply-templates select="Banner[(keyType='fanart') and (generate-id()=generate-id(key('BannersById', id)[1]))]">
- 								<xsl:sort data-type="number" order="descending" select="average"/>
- 							</xsl:apply-templates>
-@@ -397,7 +397,7 @@
- 							<xsl:attribute name="type">season</xsl:attribute>
- 							<xsl:attribute name="season"><xsl:value-of select="subKey"/></xsl:attribute>
- 						</xsl:if>
--						<xsl:attribute name="language"><xsl:value-of select="language"/></xsl:attribute>http://www.thetvdb.com/banners/<xsl:value-of select="fileName"/>
-+						<xsl:attribute name="language"><xsl:value-of select="language"/></xsl:attribute>https://www.thetvdb.com/banners/<xsl:value-of select="fileName"/>
- 					</thumb>
- 				</xsl:template>
- 
-@@ -411,7 +411,7 @@
- 						</xsl:attribute>
- 						<xsl:attribute name="type">season</xsl:attribute>
- 						<xsl:attribute name="season">-1</xsl:attribute>
--						<xsl:attribute name="language"><xsl:value-of select="language"/></xsl:attribute>http://www.thetvdb.com/banners/<xsl:value-of select="fileName"/></thumb>
-+						<xsl:attribute name="language"><xsl:value-of select="language"/></xsl:attribute>https://www.thetvdb.com/banners/<xsl:value-of select="fileName"/></thumb>
- 				</xsl:template>
- 
- 			</xsl:stylesheet>
-@@ -435,10 +435,10 @@
- 			
- 			<!-- Backwards-compatibility code.  Scraper will still fail if/when the old URLs 404 (or similar), as this function just won't be run. -->
- 			<RegExp input="$$2" output="&lt;url function=&quot;GetEpisodeList&quot; post=&quot;yes&quot; cache=&quot;auth.json&quot;&gt;https://api.thetvdb.com/login?{&quot;apikey&quot;:&quot;439DFEBA9D3059C6&quot;,&quot;id&quot;:\1}|Content-Type=application/json&lt;/url&gt;" dest="5">
--				<expression>http://(?:www\.)?thetvdb\.com/api/.+/series/(\d+)/all/</expression>
-+				<expression>https://(?:www\.)?thetvdb\.com/api/.+/series/(\d+)/all/</expression>
- 			</RegExp>
- 			<RegExp input="$$2" output="https://api.thetvdb.com/login?{&quot;apikey&quot;:&quot;439DFEBA9D3059C6&quot;,&quot;id&quot;:\1}|Content-Type=application/json" dest="2">
--				<expression>http://(?:www\.)?thetvdb\.com/api/.+/series/(\d+)/all/</expression>
-+				<expression>https://(?:www\.)?thetvdb\.com/api/.+/series/(\d+)/all/</expression>
- 			</RegExp>
- 		<expression noclean="1"/>
- 		</RegExp>
-@@ -456,7 +456,7 @@
- 			</RegExp>
- 			<XSLT input="$$5" output="\1" dest="4">
- 				<xsl:stylesheet version = "1.0"
--						xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
-+						xmlns:xsl="https://www.w3.org/1999/XSL/Transform">
- 					<xsl:output omit-xml-declaration="yes" indent="yes"/>
- 					<xsl:strip-space elements="*"/>
- 					<xsl:template match="Data">
-@@ -504,7 +504,7 @@
- 		</RegExp>
- 		<XSLT input="&lt;Data&gt;$$11&lt;/Data&gt;" output="\1" dest="12">
- 			<xsl:stylesheet version = "1.0"
--					xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
-+					xmlns:xsl="https://www.w3.org/1999/XSL/Transform">
- 				<xsl:output omit-xml-declaration="yes" indent="yes"/>
- 				<xsl:strip-space elements="*"/>
- 				<xsl:key name="EpisodesBySeason" match="Episode" use="SeasonNumber"/>
-@@ -539,7 +539,7 @@
- 		</XSLT>
- 		<XSLT input="&lt;Data&gt;$$11&lt;/Data&gt;" output="\1" dest="4">
- 			<xsl:stylesheet version = "1.0"
--					xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
-+					xmlns:xsl="https://www.w3.org/1999/XSL/Transform">
- 				<xsl:output omit-xml-declaration="yes" indent="yes"/>
- 				<xsl:strip-space elements="*"/>
- 				<xsl:key name="EpisodesByDVDnumber" match="Episode" use="concat(DVD_season,',',substring-before(DVD_episodenumber,'.'))"/>
-@@ -803,7 +803,7 @@
- 			</RegExp>
- 			<XSLT input="&lt;Data&gt;&lt;current&gt;$$13&lt;/current&gt;&lt;all&gt;$$11&lt;/all&gt;&lt;/Data&gt;" output="\1" dest="5">
- 				<xsl:stylesheet version = "1.0"
--						xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
-+						xmlns:xsl="https://www.w3.org/1999/XSL/Transform">
- 					<xsl:output indent="yes"/>
- 					<xsl:strip-space elements="*"/>
- 					<xsl:key name="EpisodesByDVDnumber" match="current/Episode" use="concat(dvdSeason,',',substring-before(dvdEpisodeNumber,'.'))"/>
-@@ -1062,7 +1062,7 @@
- 					</xsl:template>
- 
- 					<xsl:template match="Episode" mode="match">
--						<xsl:if test="filename!=''"><thumb>http://www.thetvdb.com/banners/<xsl:value-of select="filename"/></thumb></xsl:if>
-+						<xsl:if test="filename!=''"><thumb>https://www.thetvdb.com/banners/<xsl:value-of select="filename"/></thumb></xsl:if>
- 						<xsl:for-each select="credits|director|actor">
- 							<xsl:copy-of select="."/>
- 						</xsl:for-each>
-@@ -1087,4 +1087,4 @@
+ 	<GetTADBAlbumBackByID dest="5">
+-		<RegExp input="$$1" output="&lt;details&gt;&lt;url function=&quot;ParseTADBAlbumBack&quot; cache=&quot;tadb-\1-album.json&quot;&gt;http://www.theaudiodb.com/api/v1/json/58424d43204d6564696120/album.php?m=\1&lt;/url&gt;&lt;/details&gt;" dest="5">
++		<RegExp input="$$1" output="&lt;details&gt;&lt;url function=&quot;ParseTADBAlbumBack&quot; cache=&quot;tadb-\1-album.json&quot;&gt;https://www.theaudiodb.com/api/v1/json/58424d43204d6564696120/album.php?m=\1&lt;/url&gt;&lt;/details&gt;" dest="5">
  			<expression noclean="1"/>
  		</RegExp>
- 	</ParseEpisodeDetails>
--</scraper>
-\ No newline at end of file
-+</scraper>
-diff --git a/addons/webinterface.default/js/kodi-webinterface.js b/addons/webinterface.default/js/kodi-webinterface.js
-index a8aa184c77..8b573e9068 100644
---- a/addons/webinterface.default/js/kodi-webinterface.js
-+++ b/addons/webinterface.default/js/kodi-webinterface.js
-@@ -1519,7 +1519,7 @@ helpers.url.path = function() {
+ 	</GetTADBAlbumBackByID>
+ 	<GetTADBAlbumBackByMBID dest="5">
+-		<RegExp input="$$1" output="&lt;details&gt;&lt;url function=&quot;ParseTADBAlbumBack&quot; cache=&quot;tadb-\1-album.json&quot;&gt;http://www.theaudiodb.com/api/v1/json/58424d43204d6564696120/album-mb.php?i=\1&lt;/url&gt;&lt;/details&gt;" dest="5">
++		<RegExp input="$$1" output="&lt;details&gt;&lt;url function=&quot;ParseTADBAlbumBack&quot; cache=&quot;tadb-\1-album.json&quot;&gt;https://www.theaudiodb.com/api/v1/json/58424d43204d6564696120/album-mb.php?i=\1&lt;/url&gt;&lt;/details&gt;" dest="5">
+ 			<expression noclean="1"/>
+ 		</RegExp>
+ 	</GetTADBAlbumBackByMBID>
+@@ -707,12 +707,12 @@
+ 	</ParseTADBAlbumBack>
  
- helpers.url.imdbUrl = function(imdbNumber, text) {
-   var url;
--  url = "http://www.imdb.com/title/" + imdbNumber + "/";
-+  url = "https://www.imdb.com/title/" + imdbNumber + "/";
-   return "<a href='" + url + "' class='imdblink' target='_blank'>" + (t.gettext(text)) + "</a>";
- };
+ 	<GetTADBAlbumDiscartByID dest="5">
+-		<RegExp input="$$1" output="&lt;details&gt;&lt;url function=&quot;ParseTADBAlbumDiscart&quot; cache=&quot;tadb-\1-album.json&quot;&gt;http://www.theaudiodb.com/api/v1/json/58424d43204d6564696120/album.php?m=\1&lt;/url&gt;&lt;/details&gt;" dest="5">
++		<RegExp input="$$1" output="&lt;details&gt;&lt;url function=&quot;ParseTADBAlbumDiscart&quot; cache=&quot;tadb-\1-album.json&quot;&gt;https://www.theaudiodb.com/api/v1/json/58424d43204d6564696120/album.php?m=\1&lt;/url&gt;&lt;/details&gt;" dest="5">
+ 			<expression noclean="1"/>
+ 		</RegExp>
+ 	</GetTADBAlbumDiscartByID>
+ 	<GetTADBAlbumDiscartByMBID dest="5">
+-		<RegExp input="$$1" output="&lt;details&gt;&lt;url function=&quot;ParseTADBAlbumDiscart&quot; cache=&quot;tadb-\1-album.json&quot;&gt;http://www.theaudiodb.com/api/v1/json/58424d43204d6564696120/album-mb.php?i=\1&lt;/url&gt;&lt;/details&gt;" dest="5">
++		<RegExp input="$$1" output="&lt;details&gt;&lt;url function=&quot;ParseTADBAlbumDiscart&quot; cache=&quot;tadb-\1-album.json&quot;&gt;https://www.theaudiodb.com/api/v1/json/58424d43204d6564696120/album-mb.php?i=\1&lt;/url&gt;&lt;/details&gt;" dest="5">
+ 			<expression noclean="1"/>
+ 		</RegExp>
+ 	</GetTADBAlbumDiscartByMBID>
+@@ -726,12 +726,12 @@
+ 	</ParseTADBAlbumDiscart>
  
-@@ -1535,7 +1535,7 @@ helpers.url.parseTrailerUrl = function(trailer) {
-   if (trailer.indexOf('youtube') > -1) {
-     ret.source = 'youtube';
-     ret.id = urlParts.videoid;
--    ret.img = "http://img.youtube.com/vi/" + ret.id + "/0.jpg";
-+    ret.img = "https://img.youtube.com/vi/" + ret.id + "/0.jpg";
-     ret.url = "https://www.youtube.com/watch?v=" + ret.id;
-   }
-   return ret;
-@@ -2062,7 +2062,7 @@ this.Kodi.module("Entities", function(Entities, App, Backbone, Marionette, $, _)
-   var API;
-   API = {
-     apiKey: 'ed4b784f97227358b31ca4dd966a04f1',
--    baseURL: 'http://webservice.fanart.tv/v3/',
-+    baseURL: 'https://webservice.fanart.tv/v3/',
-     maxImageCount: 15,
-     artistFieldTranslate: {
-       artistbackground: 'fanart',
-@@ -2150,7 +2150,7 @@ this.Kodi.module("Entities", function(Entities, App, Backbone, Marionette, $, _)
- this.Kodi.module("Entities", function(Entities, App, Backbone, Marionette, $, _) {
-   var API;
-   API = {
--    baseURL: 'http://musicbrainz.org/ws/2/',
-+    baseURL: 'https://musicbrainz.org/ws/2/',
-     maxCount: 1,
-     call: function(path, params, callback) {
-       var url;
-@@ -9966,7 +9966,7 @@ this.Kodi.module("CastApp", function(CastApp, App, Backbone, Marionette, $, _) {
-         return window.open('https://www.google.com/webhp?#q=' + encodeURIComponent(child.model.get('name')));
-       });
-       App.listenTo(view, 'childview:cast:imdb', function(parent, child) {
--        return window.open('http://www.imdb.com/find?s=nm&q=' + encodeURIComponent(child.model.get('name')));
-+        return window.open('https://www.imdb.com/find?s=nm&q=' + encodeURIComponent(child.model.get('name')));
-       });
-       return view;
-     }
-@@ -18632,9 +18632,9 @@ this.Kodi.module("SearchApp", function(SearchApp, App, Backbone, Marionette, $,
-     keyUpTimeout: 2000,
-     externalSearchUrls: {
-       google: 'https://www.google.com/webhp?#q=[QUERY]',
--      imdb: 'http://www.imdb.com/find?s=all&q=[QUERY]',
-+      imdb: 'https://www.imdb.com/find?s=all&q=[QUERY]',
-       tmdb: 'https://www.themoviedb.org/search?query=[QUERY]',
--      tvdb: 'http://thetvdb.com/?searchseriesid=&tab=listseries&function=Search&string=[QUERY]',
-+      tvdb: 'https://thetvdb.com/?searchseriesid=&tab=listseries&function=Search&string=[QUERY]',
-       soundcloud: 'https://soundcloud.com/search?q=[QUERY]',
-       youtube: 'https://www.youtube.com/results?search_query=[QUERY]'
-     },
-@@ -21009,7 +21009,7 @@ this.Kodi.module("StateApp.Kodi", function(StateApp, App, Backbone, Marionette,
-           wait = 60;
-           App.inputTimeout = setTimeout((function() {
-             var msg, wotd;
--            wotd = '<a href="http://goo.gl/PGE7wg" target="_blank">word of the day</a>';
-+            wotd = '<a href="https://goo.gl/PGE7wg" target="_blank">word of the day</a>';
-             msg = t.sprintf(tr("%1$d seconds ago, an input dialog opened in Kodi and it is still open! To prevent " + "a mainframe implosion, you should probably give me some text. I don't really care what it " + "is at this point, why not be creative? Do you have a %2$s? I won't tell..."), wait, wotd);
-             App.execute("input:textbox", msg);
-           }), 1000 * wait);
-diff --git a/addons/webinterface.default/videoPlayer.html b/addons/webinterface.default/videoPlayer.html
-index 2ee7e3e7b3..2aee1c2d31 100644
---- a/addons/webinterface.default/videoPlayer.html
-+++ b/addons/webinterface.default/videoPlayer.html
-@@ -59,7 +59,7 @@
-             if(player == 'vlc'){
-                 $player = $('<embed>', {
-                     "type": "application/x-vlc-plugin",
--                    "pluginspage": "http://www.videolan.org",
-+                    "pluginspage": "https://www.videolan.org",
-                     "version": "VideoLAN.VLCPlugin.2",
-                     "width": width,
-                     "height": height,
-@@ -75,7 +75,7 @@
-                     "classid": "clsid:67DABFBF-D0AB-41fa-9C46-CC0F21721616",
-                     "width": width,
-                     "height": height,
--                    "codebase": "http://go.divx.com/plugin/DivXBrowserPlugin.cab"
-+                    "codebase": "https://go.divx.com/plugin/DivXBrowserPlugin.cab"
-                 });
-                 $player.append($('<param>', {name: 'custommode', value: 'none'}));
-                 $player.append($('<param>', {name: 'previewImage', value: ''}));
-@@ -89,7 +89,7 @@
-                     height: height,
-                     autoplay: "true",
-                     previewImage: '',
--                    pluginspage: 'http://go.divx.com/plugin/download/'
-+                    pluginspage: 'https://go.divx.com/plugin/download/'
-                 }));
-             }
+ 	<GetTADBAlbumSpineByID dest="5">
+-		<RegExp input="$$1" output="&lt;details&gt;&lt;url function=&quot;ParseTADBAlbumSpine&quot; cache=&quot;tadb-\1-album.json&quot;&gt;http://www.theaudiodb.com/api/v1/json/58424d43204d6564696120/album.php?m=\1&lt;/url&gt;&lt;/details&gt;" dest="5">
++		<RegExp input="$$1" output="&lt;details&gt;&lt;url function=&quot;ParseTADBAlbumSpine&quot; cache=&quot;tadb-\1-album.json&quot;&gt;https://www.theaudiodb.com/api/v1/json/58424d43204d6564696120/album.php?m=\1&lt;/url&gt;&lt;/details&gt;" dest="5">
+ 			<expression noclean="1"/>
+ 		</RegExp>
+ 	</GetTADBAlbumSpineByID>
+ 	<GetTADBAlbumSpineByMBID dest="5">
+-		<RegExp input="$$1" output="&lt;details&gt;&lt;url function=&quot;ParseTADBAlbumSpine&quot; cache=&quot;tadb-\1-album.json&quot;&gt;http://www.theaudiodb.com/api/v1/json/58424d43204d6564696120/album-mb.php?i=\1&lt;/url&gt;&lt;/details&gt;" dest="5">
++		<RegExp input="$$1" output="&lt;details&gt;&lt;url function=&quot;ParseTADBAlbumSpine&quot; cache=&quot;tadb-\1-album.json&quot;&gt;https://www.theaudiodb.com/api/v1/json/58424d43204d6564696120/album-mb.php?i=\1&lt;/url&gt;&lt;/details&gt;" dest="5">
+ 			<expression noclean="1"/>
+ 		</RegExp>
+ 	</GetTADBAlbumSpineByMBID>
+diff --git a/addons/metadata.tvshows.themoviedb.org/tmdb.xml b/addons/metadata.tvshows.themoviedb.org/tmdb.xml
+index 181a5b80d0..5097c6156f 100644
+--- a/addons/metadata.tvshows.themoviedb.org/tmdb.xml
++++ b/addons/metadata.tvshows.themoviedb.org/tmdb.xml
+@@ -1,23 +1,23 @@
+ ﻿<?xml version="1.0" encoding="UTF-8"?>
+ <scraper framework="1.1" date="2013-10-26">
+ 	<CreateSearchUrl dest="3">
+-		<RegExp input="$$1" output="&lt;url&gt;http://api.themoviedb.org/3/search/tv?api_key=6a5be4999abf74eba1f9a8311294c267&amp;amp;query=\1&amp;amp;language=$INFO[language]&amp;amp;append_to_response=credits,external_ids,images&amp;amp;include_image_language=$INFO[language],en,null&lt;/url&gt;" dest="3">
++		<RegExp input="$$1" output="&lt;url&gt;https://api.themoviedb.org/3/search/tv?api_key=6a5be4999abf74eba1f9a8311294c267&amp;amp;query=\1&amp;amp;language=$INFO[language]&amp;amp;append_to_response=credits,external_ids,images&amp;amp;include_image_language=$INFO[language],en,null&lt;/url&gt;" dest="3">
+ 			<expression noclean="1" />
+ 		</RegExp>
+ 	</CreateSearchUrl>
  
-@@ -222,4 +222,4 @@
-     <script src="lib/video-js/video.min.js"></script>
-     <script src="lib/video-js/plugins/videojs-chromecast/videojs-chromecast.min.js"></script>
- </body>
--</html>
-\ No newline at end of file
-+</html>
+ 	<NfoUrl dest="3">
+ 		<RegExp input="$$5" output="&lt;details&gt;\1&lt;/details&gt;" dest="3">
+-			<RegExp input="$$1" output="&lt;url function=&quot;GetTMDBId&quot;&gt;http://api.themoviedb.org/3/find/\1?api_key=6a5be4999abf74eba1f9a8311294c267&amp;amp;external_source=imdb_id&lt;/url&gt;" dest="5">
++			<RegExp input="$$1" output="&lt;url function=&quot;GetTMDBId&quot;&gt;https://api.themoviedb.org/3/find/\1?api_key=6a5be4999abf74eba1f9a8311294c267&amp;amp;external_source=imdb_id&lt;/url&gt;" dest="5">
+ 				<expression clear="yes" noclean="1">imdb....?/title/(tt[0-9]*)</expression>
+ 			</RegExp>
+-			<RegExp input="$$1" output="&lt;url function=&quot;GetTMDBId&quot;&gt;http://api.themoviedb.org/3/find/tt\1?api_key=6a5be4999abf74eba1f9a8311294c267&amp;amp;external_source=imdb_id&lt;/url&gt;" dest="5">
++			<RegExp input="$$1" output="&lt;url function=&quot;GetTMDBId&quot;&gt;https://api.themoviedb.org/3/find/tt\1?api_key=6a5be4999abf74eba1f9a8311294c267&amp;amp;external_source=imdb_id&lt;/url&gt;" dest="5">
+ 				<expression noclean="1">imdb....?/Title\?([0-9]*)</expression>
+ 			</RegExp>
+-			<RegExp input="$$1" output="&lt;url function=&quot;GetTMDBId&quot;&gt;http://api.themoviedb.org/3/find/\1?api_key=6a5be4999abf74eba1f9a8311294c267&amp;amp;external_source=tvdb_id&lt;/url&gt;" dest="5">
+-				<expression noclean="1">http://(?:www\.)?thetvdb\.com/(?:index\.php)?\?tab=series&amp;id=([0-9]+)</expression>
++			<RegExp input="$$1" output="&lt;url function=&quot;GetTMDBId&quot;&gt;https://api.themoviedb.org/3/find/\1?api_key=6a5be4999abf74eba1f9a8311294c267&amp;amp;external_source=tvdb_id&lt;/url&gt;" dest="5">
++				<expression noclean="1">https://(?:www\.)?thetvdb\.com/(?:index\.php)?\?tab=series&amp;id=([0-9]+)</expression>
+ 			</RegExp>
+-			<RegExp input="$$1" output="&lt;url cache=&quot;tmdb-\1-$INFO[language].json&quot;&gt;http://api.themoviedb.org/3/tv/\1?api_key=6a5be4999abf74eba1f9a8311294c267&amp;amp;language=$INFO[language]&amp;amp;append_to_response=content_ratings,credits,external_ids,images&amp;amp;include_image_language=$INFO[language],en,null&lt;/url&gt;&lt;id&gt;\1&lt;/id&gt;" dest="5">
++			<RegExp input="$$1" output="&lt;url cache=&quot;tmdb-\1-$INFO[language].json&quot;&gt;https://api.themoviedb.org/3/tv/\1?api_key=6a5be4999abf74eba1f9a8311294c267&amp;amp;language=$INFO[language]&amp;amp;append_to_response=content_ratings,credits,external_ids,images&amp;amp;include_image_language=$INFO[language],en,null&lt;/url&gt;&lt;id&gt;\1&lt;/id&gt;" dest="5">
+ 				<expression noclean="1">themoviedb\.org/tv/([0-9]+)</expression>
+ 			</RegExp>
+ 			<expression noclean="1" />
+@@ -25,7 +25,7 @@
+ 	</NfoUrl>
+ 	<GetTMDBId dest="3">
+ 		<RegExp input="$$5" output="&lt;details&gt;\1&lt;/details&gt;" dest="3">
+-			<RegExp input="$$7" output="&lt;url cache=&quot;tmdb-\1-$INFO[language].json&quot;&gt;http://api.themoviedb.org/3/tv/\1?api_key=6a5be4999abf74eba1f9a8311294c267&amp;amp;language=$INFO[language]&amp;amp;append_to_response=content_ratings,credits,external_ids,images&amp;amp;include_image_language=$INFO[language],en,null&lt;/url&gt;&lt;id&gt;\1&lt;/id&gt;" dest="5">
++			<RegExp input="$$7" output="&lt;url cache=&quot;tmdb-\1-$INFO[language].json&quot;&gt;https://api.themoviedb.org/3/tv/\1?api_key=6a5be4999abf74eba1f9a8311294c267&amp;amp;language=$INFO[language]&amp;amp;append_to_response=content_ratings,credits,external_ids,images&amp;amp;include_image_language=$INFO[language],en,null&lt;/url&gt;&lt;id&gt;\1&lt;/id&gt;" dest="5">
+ 				<RegExp input="$$1" output="\1" dest="7">
+ 					<expression noclean="1">"tv_results":\[([^\]]+)\]</expression>
+ 				</RegExp>
+@@ -37,16 +37,16 @@
+ 
+ 	<GetSearchResults dest="8">
+ 		<RegExp input="$$3" output="&lt;results&gt;\1&lt;/results&gt;" dest="8">
+-			<RegExp input="$$1" output="&lt;entity&gt;&lt;title&gt;\3&lt;/title&gt;&lt;id&gt;\1&lt;/id&gt;&lt;year&gt;\2&lt;/year&gt;&lt;url cache=&quot;tmdb-\1-$INFO[language].json&quot;&gt;http://api.themoviedb.org/3/tv/\1?api_key=6a5be4999abf74eba1f9a8311294c267&amp;amp;language=$INFO[language]&amp;amp;append_to_response=content_ratings,credits,external_ids,images&amp;amp;include_image_language=$INFO[language],en,null&lt;/url&gt;&lt;/entity&gt;" dest="3">
++			<RegExp input="$$1" output="&lt;entity&gt;&lt;title&gt;\3&lt;/title&gt;&lt;id&gt;\1&lt;/id&gt;&lt;year&gt;\2&lt;/year&gt;&lt;url cache=&quot;tmdb-\1-$INFO[language].json&quot;&gt;https://api.themoviedb.org/3/tv/\1?api_key=6a5be4999abf74eba1f9a8311294c267&amp;amp;language=$INFO[language]&amp;amp;append_to_response=content_ratings,credits,external_ids,images&amp;amp;include_image_language=$INFO[language],en,null&lt;/url&gt;&lt;/entity&gt;" dest="3">
+ 				<expression repeat="yes">&quot;id&quot;:([0-9]*),.*?&quot;first_air_date&quot;:&quot;([0-9]+).*?&quot;original_name&quot;:&quot;([^&quot;]*)&quot;</expression>
+ 			</RegExp>
+-			<RegExp input="$$1" output="&lt;entity&gt;&lt;title&gt;\2&lt;/title&gt;&lt;id&gt;\1&lt;/id&gt;&lt;url cache=&quot;tmdb-\1-$INFO[language].json&quot;&gt;http://api.themoviedb.org/3/tv/\1?api_key=6a5be4999abf74eba1f9a8311294c267&amp;amp;language=$INFO[language]&amp;amp;append_to_response=content_ratings,credits,external_ids,images&amp;amp;include_image_language=$INFO[language],en,null&lt;/url&gt;&lt;/entity&gt;" dest="3+">
++			<RegExp input="$$1" output="&lt;entity&gt;&lt;title&gt;\2&lt;/title&gt;&lt;id&gt;\1&lt;/id&gt;&lt;url cache=&quot;tmdb-\1-$INFO[language].json&quot;&gt;https://api.themoviedb.org/3/tv/\1?api_key=6a5be4999abf74eba1f9a8311294c267&amp;amp;language=$INFO[language]&amp;amp;append_to_response=content_ratings,credits,external_ids,images&amp;amp;include_image_language=$INFO[language],en,null&lt;/url&gt;&lt;/entity&gt;" dest="3+">
+ 				<expression repeat="yes">&quot;id&quot;:([0-9]*),.*?&quot;first_air_date&quot;:null.*?&quot;original_name&quot;:&quot;([^&quot;]*)&quot;</expression>
+ 			</RegExp>
+-			<RegExp input="$$1" output="&lt;entity&gt;&lt;title&gt;\1&lt;/title&gt;&lt;id&gt;\2&lt;/id&gt;&lt;year&gt;\3&lt;/year&gt;&lt;url cache=&quot;tmdb-\2-$INFO[language].json&quot;&gt;http://api.themoviedb.org/3/tv/\2?api_key=6a5be4999abf74eba1f9a8311294c267&amp;amp;language=$INFO[language]&amp;amp;append_to_response=content_ratings,credits,external_ids,images&amp;amp;include_image_language=$INFO[language],en,null&lt;/url&gt;&lt;/entity&gt;" dest="3+">
++			<RegExp input="$$1" output="&lt;entity&gt;&lt;title&gt;\1&lt;/title&gt;&lt;id&gt;\2&lt;/id&gt;&lt;year&gt;\3&lt;/year&gt;&lt;url cache=&quot;tmdb-\2-$INFO[language].json&quot;&gt;https://api.themoviedb.org/3/tv/\2?api_key=6a5be4999abf74eba1f9a8311294c267&amp;amp;language=$INFO[language]&amp;amp;append_to_response=content_ratings,credits,external_ids,images&amp;amp;include_image_language=$INFO[language],en,null&lt;/url&gt;&lt;/entity&gt;" dest="3+">
+ 				<expression repeat="yes">original_name&quot;:&quot;([^&quot;]*)&quot;,&quot;id&quot;:([0-9]*),.*?&quot;first_air_date&quot;:&quot;([0-9]+).*?&quot;</expression>
+ 			</RegExp>
+-			<RegExp input="$$1" output="&lt;entity&gt;&lt;title&gt;\1&lt;/title&gt;&lt;id&gt;\2&lt;/id&gt;&lt;url cache=&quot;tmdb-\2-$INFO[language].json&quot;&gt;http://api.themoviedb.org/3/tv/\2?api_key=6a5be4999abf74eba1f9a8311294c267&amp;amp;language=$INFO[language]&amp;amp;append_to_response=content_ratings,credits,external_ids,images&amp;amp;include_image_language=$INFO[language],en,null&lt;/url&gt;&lt;/entity&gt;" dest="3+">
++			<RegExp input="$$1" output="&lt;entity&gt;&lt;title&gt;\1&lt;/title&gt;&lt;id&gt;\2&lt;/id&gt;&lt;url cache=&quot;tmdb-\2-$INFO[language].json&quot;&gt;https://api.themoviedb.org/3/tv/\2?api_key=6a5be4999abf74eba1f9a8311294c267&amp;amp;language=$INFO[language]&amp;amp;append_to_response=content_ratings,credits,external_ids,images&amp;amp;include_image_language=$INFO[language],en,null&lt;/url&gt;&lt;/entity&gt;" dest="3+">
+ 				<expression repeat="yes">original_name&quot;:&quot;([^&quot;]*)&quot;,&quot;id&quot;:([0-9]*),.*?&quot;first_air_date&quot;:null.*?&quot;</expression>
+ 			</RegExp>
+ 			<expression noclean="1" />
+@@ -119,7 +119,7 @@
+ 				<expression>(.+)</expression>
+ 			</RegExp>
+ 			<RegExp input="$$9" output="$$8" dest="5+">
+-				<RegExp input="$INFO[language]" output="&lt;url function=&quot;ParseFallbackTMDBPlot&quot; cache=&quot;tmdb-$$2-en.json&quot;&gt;http://api.themoviedb.org/3/tv/$$2?api_key=6a5be4999abf74eba1f9a8311294c267&amp;amp;language=en&lt;/url&gt;" dest="8">
++				<RegExp input="$INFO[language]" output="&lt;url function=&quot;ParseFallbackTMDBPlot&quot; cache=&quot;tmdb-$$2-en.json&quot;&gt;https://api.themoviedb.org/3/tv/$$2?api_key=6a5be4999abf74eba1f9a8311294c267&amp;amp;language=en&lt;/url&gt;" dest="8">
+ 					<expression clear="yes">^(?!en).*</expression>
+ 				</RegExp>
+ 				<expression>^$</expression>
+@@ -148,7 +148,7 @@
+ 			<RegExp input="$$1" output="\1" dest="5">
+ 				<expression>"id":([0-9]+),"in_production"</expression>
+ 			</RegExp>
+-			<RegExp input="$$1" output="&lt;url cache=&quot;tmdb-$$5-$INFO[language]-season-\1.json&quot; function=&quot;GetSeasonEpisodeList&quot;&gt;http://api.themoviedb.org/3/tv/$$5/season/\1?api_key=6a5be4999abf74eba1f9a8311294c267&amp;amp;language=$INFO[language]&lt;/url&gt;" dest="4">
++			<RegExp input="$$1" output="&lt;url cache=&quot;tmdb-$$5-$INFO[language]-season-\1.json&quot; function=&quot;GetSeasonEpisodeList&quot;&gt;https://api.themoviedb.org/3/tv/$$5/season/\1?api_key=6a5be4999abf74eba1f9a8311294c267&amp;amp;language=$INFO[language]&lt;/url&gt;" dest="4">
+ 				<expression repeat="yes">"season_number":([0-9]+)</expression>
+ 			</RegExp>
+ 			<expression noclean="1"/>
+@@ -159,7 +159,7 @@
+ 			<RegExp input="$$1" output="\1" dest="6">
+ 				<expression clear="yes">"season_number":([0-9]+)</expression>
+ 			</RegExp>
+-			<RegExp input="$$1" output="&lt;episode&gt;&lt;title&gt;\4&lt;/title&gt;&lt;aired&gt;\2&lt;/aired&gt;&lt;epnum&gt;\3&lt;/epnum&gt;&lt;season&gt;$$6&lt;/season&gt;&lt;url cache=&quot;tmdb-$$5-$INFO[language]-episode-s$$6e\3.json&quot;&gt;http://api.themoviedb.org/3/tv/$$5/season/$$6/episode/\3?api_key=6a5be4999abf74eba1f9a8311294c267&amp;amp;language=$INFO[language]&amp;amp;append_to_response=credits,external_ids,images&amp;amp;include_image_language=$INFO[language],en,null&lt;/url&gt;&lt;id&gt;$$5|$$6|\3&lt;/id&gt;&lt;/episode&gt;" dest="4">
++			<RegExp input="$$1" output="&lt;episode&gt;&lt;title&gt;\4&lt;/title&gt;&lt;aired&gt;\2&lt;/aired&gt;&lt;epnum&gt;\3&lt;/epnum&gt;&lt;season&gt;$$6&lt;/season&gt;&lt;url cache=&quot;tmdb-$$5-$INFO[language]-episode-s$$6e\3.json&quot;&gt;https://api.themoviedb.org/3/tv/$$5/season/$$6/episode/\3?api_key=6a5be4999abf74eba1f9a8311294c267&amp;amp;language=$INFO[language]&amp;amp;append_to_response=credits,external_ids,images&amp;amp;include_image_language=$INFO[language],en,null&lt;/url&gt;&lt;id&gt;$$5|$$6|\3&lt;/id&gt;&lt;/episode&gt;" dest="4">
+ 				<expression repeat="yes" clear="yes">"air_date":("([^"]+)"|null),"episode_number":([0-9]+),"id":[0-9]+,"name":"((?:[^"]|(?&lt;=\\)")*)",</expression>
+ 			</RegExp>
+ 			<expression noclean="1"/>
+@@ -184,7 +184,7 @@
+ 				<expression>(.+)</expression>
+ 			</RegExp>
+ 			<RegExp input="$$9" output="$$8" dest="5+">
+-				<RegExp input="$INFO[language]" output="&lt;url function=&quot;ParseFallbackTMDBEpisodeTitle&quot; cache=&quot;tmdb-$$6-en-episode-s$$10e$$11.json&quot;&gt;http://api.themoviedb.org/3/tv/$$6/season/$$10/episode/$$11?api_key=6a5be4999abf74eba1f9a8311294c267&amp;amp;language=en&lt;/url&gt;" dest="8">
++				<RegExp input="$INFO[language]" output="&lt;url function=&quot;ParseFallbackTMDBEpisodeTitle&quot; cache=&quot;tmdb-$$6-en-episode-s$$10e$$11.json&quot;&gt;https://api.themoviedb.org/3/tv/$$6/season/$$10/episode/$$11?api_key=6a5be4999abf74eba1f9a8311294c267&amp;amp;language=en&lt;/url&gt;" dest="8">
+ 					<expression clear="yes">^(?!en).*</expression>
+ 				</RegExp>
+ 				<expression>^$</expression>
+@@ -214,7 +214,7 @@
+ 				<expression>(.+)</expression>
+ 			</RegExp>
+ 			<RegExp input="$$9" output="$$8" dest="5+">
+-				<RegExp input="$INFO[language]" output="&lt;url function=&quot;ParseFallbackTMDBPlot&quot; cache=&quot;tmdb-$$6-en-episode-s$$10e$$11.json&quot;&gt;http://api.themoviedb.org/3/tv/$$6/season/$$10/episode/$$11?api_key=6a5be4999abf74eba1f9a8311294c267&amp;amp;language=en&lt;/url&gt;" dest="8">
++				<RegExp input="$INFO[language]" output="&lt;url function=&quot;ParseFallbackTMDBPlot&quot; cache=&quot;tmdb-$$6-en-episode-s$$10e$$11.json&quot;&gt;https://api.themoviedb.org/3/tv/$$6/season/$$10/episode/$$11?api_key=6a5be4999abf74eba1f9a8311294c267&amp;amp;language=en&lt;/url&gt;" dest="8">
+ 					<expression clear="yes">^(?!en).*</expression>
+ 				</RegExp>
+ 				<expression>^$</expression>
+@@ -267,13 +267,13 @@
+ 
+ 	<GetCast dest="3">
+ 		<RegExp input="$$5" output="&lt;details&gt;\1&lt;/details&gt;" dest="3">
+-			<RegExp input="$$1" output="&lt;url function=&quot;ParseTMDBBaseImageURL&quot; cache=&quot;tmdb-config.json&quot;&gt;http://api.themoviedb.org/3/configuration?api_key=6a5be4999abf74eba1f9a8311294c267&lt;/url&gt;" dest="5">
++			<RegExp input="$$1" output="&lt;url function=&quot;ParseTMDBBaseImageURL&quot; cache=&quot;tmdb-config.json&quot;&gt;https://api.themoviedb.org/3/configuration?api_key=6a5be4999abf74eba1f9a8311294c267&lt;/url&gt;" dest="5">
+ 				<expression />
+ 			</RegExp>
+-			<RegExp input="$$1" output="&lt;url cache=&quot;tmdb-\1-$INFO[language].json&quot; function=&quot;ParseCast&quot;&gt;http://api.themoviedb.org/3/tv/\1?api_key=6a5be4999abf74eba1f9a8311294c267&amp;amp;language=$INFO[language]&amp;amp;append_to_response=credits&lt;/url&gt;" dest="5+">
++			<RegExp input="$$1" output="&lt;url cache=&quot;tmdb-\1-$INFO[language].json&quot; function=&quot;ParseCast&quot;&gt;https://api.themoviedb.org/3/tv/\1?api_key=6a5be4999abf74eba1f9a8311294c267&amp;amp;language=$INFO[language]&amp;amp;append_to_response=credits&lt;/url&gt;" dest="5+">
+ 				<expression>^([0-9]+)$</expression> />
+ 			</RegExp>
+-			<RegExp input="$$1" output="&lt;url cache=&quot;tmdb-\1-$INFO[language]-episode-s\2e\3.json&quot; function=&quot;ParseCast&quot;&gt;http://api.themoviedb.org/3/tv/\1/season/\2/episode/\3?api_key=6a5be4999abf74eba1f9a8311294c267&amp;amp;language=$INFO[language]&amp;amp;append_to_response=credits&lt;/url&gt;" dest="5+">
++			<RegExp input="$$1" output="&lt;url cache=&quot;tmdb-\1-$INFO[language]-episode-s\2e\3.json&quot; function=&quot;ParseCast&quot;&gt;https://api.themoviedb.org/3/tv/\1/season/\2/episode/\3?api_key=6a5be4999abf74eba1f9a8311294c267&amp;amp;language=$INFO[language]&amp;amp;append_to_response=credits&lt;/url&gt;" dest="5+">
+ 				<expression>^([0-9]+)\|([0-9]+)\|([0-9]+)$</expression> />
+ 			</RegExp>
+ 			<expression noclean="1" />
+@@ -305,10 +305,10 @@
+ 
+ 	<GetArt dest="3">
+ 		<RegExp input="$$5" output="&lt;details&gt;\1&lt;/details&gt;" dest="3">
+-			<RegExp input="$$1" output="&lt;url function=&quot;ParseTMDBBaseImageURL&quot; cache=&quot;tmdb-config.json&quot;&gt;http://api.themoviedb.org/3/configuration?api_key=6a5be4999abf74eba1f9a8311294c267&lt;/url&gt;" dest="5">
++			<RegExp input="$$1" output="&lt;url function=&quot;ParseTMDBBaseImageURL&quot; cache=&quot;tmdb-config.json&quot;&gt;https://api.themoviedb.org/3/configuration?api_key=6a5be4999abf74eba1f9a8311294c267&lt;/url&gt;" dest="5">
+ 				<expression />
+ 			</RegExp>
+-			<RegExp input="$$1" output="&lt;url cache=&quot;tmdb-\1-$INFO[language].json&quot; function=&quot;ParseArt&quot;&gt;http://api.themoviedb.org/3/tv/\1?api_key=6a5be4999abf74eba1f9a8311294c267&amp;amp;language=$INFO[language]&amp;amp;append_to_response=external_ids,images&amp;amp;include_image_language=$INFO[language],en,null&lt;/url&gt;" dest="5+">
++			<RegExp input="$$1" output="&lt;url cache=&quot;tmdb-\1-$INFO[language].json&quot; function=&quot;ParseArt&quot;&gt;https://api.themoviedb.org/3/tv/\1?api_key=6a5be4999abf74eba1f9a8311294c267&amp;amp;language=$INFO[language]&amp;amp;append_to_response=external_ids,images&amp;amp;include_image_language=$INFO[language],en,null&lt;/url&gt;" dest="5+">
+ 				<expression />
+ 			</RegExp>
+ 			<expression noclean="1" />
+@@ -348,13 +348,13 @@
+ 	</ParseArt>
+ 	<GetSeasonArt clearbuffers="no" dest="3">
+ 		<RegExp input="$$5" output="&lt;details&gt;\1&lt;/details&gt;" dest="3">
+-			<RegExp input="$$1" output="&lt;url function=&quot;ParseTMDBBaseImageURL&quot; cache=&quot;tmdb-config.json&quot;&gt;http://api.themoviedb.org/3/configuration?api_key=6a5be4999abf74eba1f9a8311294c267&lt;/url&gt;" dest="5">
++			<RegExp input="$$1" output="&lt;url function=&quot;ParseTMDBBaseImageURL&quot; cache=&quot;tmdb-config.json&quot;&gt;https://api.themoviedb.org/3/configuration?api_key=6a5be4999abf74eba1f9a8311294c267&lt;/url&gt;" dest="5">
+ 				<expression>^([0-9]+)\|</expression>
+ 			</RegExp>
+ 			<RegExp input="$$1" output="\1" dest="10">
+ 				<expression>\|([0-9]+)$</expression>
+ 			</RegExp>
+-			<RegExp input="$$1" output="&lt;url cache=&quot;tmdb-\1-$INFO[language]-season-\2.json&quot; function=&quot;ParseSeasonArt&quot;&gt;http://api.themoviedb.org/3/tv/\1/season/\2?api_key=6a5be4999abf74eba1f9a8311294c267&amp;amp;language=$INFO[language]&amp;amp;append_to_response=images&amp;amp;include_image_language=$INFO[language],en,null&lt;/url&gt;" dest="5+">
++			<RegExp input="$$1" output="&lt;url cache=&quot;tmdb-\1-$INFO[language]-season-\2.json&quot; function=&quot;ParseSeasonArt&quot;&gt;https://api.themoviedb.org/3/tv/\1/season/\2?api_key=6a5be4999abf74eba1f9a8311294c267&amp;amp;language=$INFO[language]&amp;amp;append_to_response=images&amp;amp;include_image_language=$INFO[language],en,null&lt;/url&gt;" dest="5+">
+ 				<expression>^([0-9]+)\|([0-9]+)$</expression>
+ 			</RegExp>
+ 			<expression noclean="1" />
+@@ -376,10 +376,10 @@
+ 	</ParseSeasonArt>
+ 	<GetEpisodeArt dest="3">
+ 		<RegExp input="$$5" output="&lt;details&gt;\1&lt;/details&gt;" dest="3">
+-			<RegExp input="$$1" output="&lt;url function=&quot;ParseTMDBBaseImageURL&quot; cache=&quot;tmdb-config.json&quot;&gt;http://api.themoviedb.org/3/configuration?api_key=6a5be4999abf74eba1f9a8311294c267&lt;/url&gt;" dest="5">
++			<RegExp input="$$1" output="&lt;url function=&quot;ParseTMDBBaseImageURL&quot; cache=&quot;tmdb-config.json&quot;&gt;https://api.themoviedb.org/3/configuration?api_key=6a5be4999abf74eba1f9a8311294c267&lt;/url&gt;" dest="5">
+ 				<expression>^([0-9]+)\|</expression>
+ 			</RegExp>
+-			<RegExp input="$$1" output="&lt;url cache=&quot;tmdb-\1-$INFO[language]-episode-s\2e\3.json&quot; function=&quot;ParseEpisodeArt&quot;&gt;http://api.themoviedb.org/3/tv/\1/season/\2/episode/\3/images?api_key=6a5be4999abf74eba1f9a8311294c267&amp;amp;language=$INFO[language]&amp;amp;include_image_language=$INFO[language],en,null&lt;/url&gt;" dest="5+">
++			<RegExp input="$$1" output="&lt;url cache=&quot;tmdb-\1-$INFO[language]-episode-s\2e\3.json&quot; function=&quot;ParseEpisodeArt&quot;&gt;https://api.themoviedb.org/3/tv/\1/season/\2/episode/\3/images?api_key=6a5be4999abf74eba1f9a8311294c267&amp;amp;language=$INFO[language]&amp;amp;include_image_language=$INFO[language],en,null&lt;/url&gt;" dest="5+">
+ 				<expression>^([0-9]+)\|([0-9]+)\|([0-9]+)$</expression>
+ 			</RegExp>
+ 			<expression noclean="1" />
+diff --git a/addons/repository.xbmc.org/addon.xml b/addons/repository.xbmc.org/addon.xml
+index c431c0fbca..ce6bdb59b8 100644
+--- a/addons/repository.xbmc.org/addon.xml
++++ b/addons/repository.xbmc.org/addon.xml
+@@ -8,10 +8,10 @@
+   </requires>
+ 	<extension point="xbmc.addon.repository">
+ 		<!-- Do not forget to bump add-on version when changing paths to force a repo refresh -->
+-		<info>http://mirrors.kodi.tv/addons/leia/addons.xml.gz</info>
+-		<checksum verify="sha256">http://mirrors.kodi.tv/addons/leia/addons.xml.gz?sha256</checksum>
++		<info>https://mirrors.kodi.tv/addons/leia/addons.xml.gz</info>
++		<checksum verify="sha256">https://mirrors.kodi.tv/addons/leia/addons.xml.gz?sha256</checksum>
+ 		<datadir>https://mirrors.kodi.tv/addons/leia</datadir>
+-		<artdir>http://mirrors.kodi.tv/addons/leia</artdir>
++		<artdir>https://mirrors.kodi.tv/addons/leia</artdir>
+ 		<hashes>sha256</hashes>
+ 	</extension>
+ 	<extension point="xbmc.addon.metadata">
+diff --git a/cmake/addons/depends/common/tinyxml/tinyxml.txt b/cmake/addons/depends/common/tinyxml/tinyxml.txt
+index f8e05e8756..01b61b939e 100644
+--- a/cmake/addons/depends/common/tinyxml/tinyxml.txt
++++ b/cmake/addons/depends/common/tinyxml/tinyxml.txt
+@@ -1 +1 @@
+-tinyxml http://mirrors.kodi.tv/build-deps/sources/tinyxml-2.6.2_2.tar.gz
++tinyxml https://mirrors.kodi.tv/build-deps/sources/tinyxml-2.6.2_2.tar.gz
+diff --git a/cmake/modules/FindCrossGUID.cmake b/cmake/modules/FindCrossGUID.cmake
+index 7384747b20..8440d9903b 100644
+--- a/cmake/modules/FindCrossGUID.cmake
++++ b/cmake/modules/FindCrossGUID.cmake
+@@ -10,7 +10,7 @@ if(ENABLE_INTERNAL_CROSSGUID)
+   if(CROSSGUID_URL)
+     get_filename_component(CROSSGUID_URL "${CROSSGUID_URL}" ABSOLUTE)
+   else()
+-    set(CROSSGUID_URL http://mirrors.kodi.tv/build-deps/sources/crossguid-${CGUID_VER}.tar.gz)
++    set(CROSSGUID_URL https://mirrors.kodi.tv/build-deps/sources/crossguid-${CGUID_VER}.tar.gz)
+   endif()
+   if(VERBOSE)
+     message(STATUS "CROSSGUID_URL: ${CROSSGUID_URL}")
+diff --git a/cmake/modules/FindFlatBuffers.cmake b/cmake/modules/FindFlatBuffers.cmake
+index 6f7e6a2f25..f6c06665f6 100644
+--- a/cmake/modules/FindFlatBuffers.cmake
++++ b/cmake/modules/FindFlatBuffers.cmake
+@@ -19,7 +19,7 @@ if(ENABLE_INTERNAL_FLATBUFFERS)
+   if(FLATBUFFERS_URL)
+     get_filename_component(FLATBUFFERS_URL "${FLATBUFFERS_URL}" ABSOLUTE)
+   else()
+-    set(FLATBUFFERS_URL http://mirrors.kodi.tv/build-deps/sources/flatbuffers-${FLATBUFFERS_VER}.tar.gz)
++    set(FLATBUFFERS_URL https://mirrors.kodi.tv/build-deps/sources/flatbuffers-${FLATBUFFERS_VER}.tar.gz)
+   endif()
+   if(VERBOSE)
+     message(STATUS "FLATBUFFERS_URL: ${FLATBUFFERS_URL}")
+diff --git a/cmake/modules/FindFmt.cmake b/cmake/modules/FindFmt.cmake
+index 47cf8be864..d58aa78a00 100644
+--- a/cmake/modules/FindFmt.cmake
++++ b/cmake/modules/FindFmt.cmake
+@@ -22,7 +22,7 @@ if(ENABLE_INTERNAL_FMT)
+   if(FMT_URL)
+       get_filename_component(FMT_URL "${FMT_URL}" ABSOLUTE)
+   else()
+-      set(FMT_URL http://mirrors.kodi.tv/build-deps/sources/fmt-${FMT_VERSION}.tar.gz)
++      set(FMT_URL https://mirrors.kodi.tv/build-deps/sources/fmt-${FMT_VERSION}.tar.gz)
+   endif()
+   if(VERBOSE)
+       message(STATUS "FMT_URL: ${FMT_URL}")
+diff --git a/cmake/modules/FindRapidJSON.cmake b/cmake/modules/FindRapidJSON.cmake
+index a21ed0bdc5..d844beb7d2 100644
+--- a/cmake/modules/FindRapidJSON.cmake
++++ b/cmake/modules/FindRapidJSON.cmake
+@@ -18,7 +18,7 @@ if(ENABLE_INTERNAL_RapidJSON)
+   if(RapidJSON_URL)
+     get_filename_component(RapidJSON_URL "${RapidJSON_URL}" ABSOLUTE)
+   else()
+-    set(RapidJSON_URL http://mirrors.kodi.tv/build-deps/sources/rapidjson-${RJSON_VER}.tar.gz)
++    set(RapidJSON_URL https://mirrors.kodi.tv/build-deps/sources/rapidjson-${RJSON_VER}.tar.gz)
+   endif()
+   if(VERBOSE)
+     message(STATUS "RapidJSON_URL: ${RapidJSON_URL}")
+diff --git a/cmake/modules/Findfstrcmp.cmake b/cmake/modules/Findfstrcmp.cmake
+index f0c15d3142..fbef0b7a64 100644
+--- a/cmake/modules/Findfstrcmp.cmake
++++ b/cmake/modules/Findfstrcmp.cmake
+@@ -22,7 +22,7 @@ if(ENABLE_INTERNAL_FSTRCMP)
+   if(FSTRCMP_URL)
+     get_filename_component(FSTRCMP_URL "${FSTRCMP_URL}" ABSOLUTE)
+   else()
+-    set(FSTRCMP_URL http://mirrors.kodi.tv/build-deps/sources/fstrcmp-${FSTRCMP_VER}.tar.gz)
++    set(FSTRCMP_URL https://mirrors.kodi.tv/build-deps/sources/fstrcmp-${FSTRCMP_VER}.tar.gz)
+   endif()
+   if(VERBOSE)
+     message(STATUS "FSTRCMPURL: ${FSTRCMP_URL}")
+diff --git a/cmake/scripts/common/PrepareEnv.cmake b/cmake/scripts/common/PrepareEnv.cmake
+index 20dbaf60af..8fdeff6f1f 100644
+--- a/cmake/scripts/common/PrepareEnv.cmake
++++ b/cmake/scripts/common/PrepareEnv.cmake
+@@ -4,7 +4,7 @@ core_find_versions()
+ 
+ # in case we need to download something, set KODI_MIRROR to the default if not already set
+ if(NOT DEFINED KODI_MIRROR)
+-  set(KODI_MIRROR "http://mirrors.kodi.tv")
++  set(KODI_MIRROR "https://mirrors.kodi.tv")
+ endif()
+ 
+ ### copy all the addon binding header files to include/kodi
+diff --git a/project/BuildDependencies/scripts/get_formed.cmd b/project/BuildDependencies/scripts/get_formed.cmd
+index 92fcb80a8c..2fd9d84fc0 100644
+--- a/project/BuildDependencies/scripts/get_formed.cmd
++++ b/project/BuildDependencies/scripts/get_formed.cmd
+@@ -24,7 +24,7 @@ IF EXIST %FORMED_FAILED_LIST% (
+ )
+ 
+ REM If KODI_MIRROR is not set externally to this script, set it to the default mirror URL
+-IF "%KODI_MIRROR%" == "" SET KODI_MIRROR=http://mirrors.kodi.tv
++IF "%KODI_MIRROR%" == "" SET KODI_MIRROR=https://mirrors.kodi.tv
+ echo Downloading from mirror %KODI_MIRROR%
+ 
+ 
+diff --git a/project/Win32BuildSetup/getdeploydependencies.bat b/project/Win32BuildSetup/getdeploydependencies.bat
+index 2054984505..77acc001fb 100644
+--- a/project/Win32BuildSetup/getdeploydependencies.bat
++++ b/project/Win32BuildSetup/getdeploydependencies.bat
+@@ -1,7 +1,7 @@
+ @echo off
+ 
+ REM If KODI_MIRROR is not set externally to this script, set it to the default mirror URL
+-IF "%KODI_MIRROR%" == "" SET KODI_MIRROR=http://mirrors.kodi.tv
++IF "%KODI_MIRROR%" == "" SET KODI_MIRROR=https://mirrors.kodi.tv
+ echo Downloading from mirror %KODI_MIRROR%
+ 
+ 
+diff --git a/tools/buildsteps/windows/download-dependencies.bat b/tools/buildsteps/windows/download-dependencies.bat
+index a316de08be..55eaf1c8cc 100644
+--- a/tools/buildsteps/windows/download-dependencies.bat
++++ b/tools/buildsteps/windows/download-dependencies.bat
+@@ -16,7 +16,7 @@ ECHO TARGETPLATFORM: %TARGETPLATFORM%
+ ECHO NATIVEPLATFORM: %NATIVEPLATFORM%
+ 
+ REM If KODI_MIRROR is not set externally to this script, set it to the default mirror URL
+-IF "%KODI_MIRROR%" == "" SET KODI_MIRROR=http://mirrors.kodi.tv
++IF "%KODI_MIRROR%" == "" SET KODI_MIRROR=https://mirrors.kodi.tv
+ echo Downloading from mirror %KODI_MIRROR%
+ 
+ REM Locate the BuildDependencies directory, based on the path of this script
+@@ -48,7 +48,7 @@ IF NOT EXIST %FORMED_OK_FLAG% (
+   ECHO.
+   ECHO I tried to get the packages from %KODI_MIRROR%;
+   ECHO if this download mirror seems to be having problems, try choosing another from
+-  ECHO the list on http://mirrors.kodi.tv/list.html, and setting %%KODI_MIRROR%% to
++  ECHO the list on https://mirrors.kodi.tv/list.html, and setting %%KODI_MIRROR%% to
+   ECHO point to it, like so:
+   ECHO   C:\^> SET KODI_MIRROR=http://example.com/pub/xbmc/
+   ECHO.
+diff --git a/tools/buildsteps/windows/download-msys2.bat b/tools/buildsteps/windows/download-msys2.bat
+index 40b985f1be..9c141d4de7 100644
+--- a/tools/buildsteps/windows/download-msys2.bat
++++ b/tools/buildsteps/windows/download-msys2.bat
+@@ -35,7 +35,7 @@ set usemirror=yes
+ set opt=mintty
+ 
+ :: if KODI_MIRROR is not set externally to this script, set it to the default mirror URL
+-if "%KODI_MIRROR%"=="" set KODI_MIRROR=http://mirrors.kodi.tv
++if "%KODI_MIRROR%"=="" set KODI_MIRROR=https://mirrors.kodi.tv
+ if "%usemirror%"=="yes" (
+     echo -------------------------------------------------------------------------------
+     echo. Downloading will be performed from mirror %KODI_MIRROR%
+diff --git a/tools/depends/Makefile.include.in b/tools/depends/Makefile.include.in
+index 3d31962c90..af8f45ad3e 100644
+--- a/tools/depends/Makefile.include.in
++++ b/tools/depends/Makefile.include.in
+@@ -31,7 +31,7 @@ NEED_LIBICONV=@need_libiconv@
+ LINK_ICONV=@link_iconv@
+ ENABLE_GPLV3=@use_gplv3@
+ 
+-BASE_URL=http://mirrors.kodi.tv/build-deps/sources
++BASE_URL=https://mirrors.kodi.tv/build-deps/sources
+ ifneq ($(KODI_MIRROR),)
+ BASE_URL=$(KODI_MIRROR)/build-deps/sources
+ endif
+diff --git a/tools/depends/native/flatbuffers-native/Makefile b/tools/depends/native/flatbuffers-native/Makefile
+index 7c362e82cf..c0cfc6e132 100644
+--- a/tools/depends/native/flatbuffers-native/Makefile
++++ b/tools/depends/native/flatbuffers-native/Makefile
+@@ -8,7 +8,7 @@ LIBNAME=flatbuffers
+ VERSION=1.9.0
+ SOURCE=$(LIBNAME)-$(VERSION)
+ ARCHIVE=$(SOURCE).tar.gz
+-BASE_URL=http://mirrors.kodi.tv/build-deps/sources
++BASE_URL=https://mirrors.kodi.tv/build-deps/sources
+ 
+ APP=$(PLATFORM)/flatc
+ 
+diff --git a/tools/depends/target/crossguid/Makefile b/tools/depends/target/crossguid/Makefile
+index bb676f546c..b637f30505 100644
+--- a/tools/depends/target/crossguid/Makefile
++++ b/tools/depends/target/crossguid/Makefile
+@@ -18,7 +18,7 @@ else
+   ifeq ($(PLATFORM),)
+     PLATFORM = native
+     TARBALLS_LOCATION = $(ROOT_DIR)
+-    BASE_URL := http://mirrors.kodi.tv/build-deps/sources
++    BASE_URL := https://mirrors.kodi.tv/build-deps/sources
+     RETRIEVE_TOOL := curl -Ls --create-dirs -f -O
+     ARCHIVE_TOOL := tar --strip-components=1 -xf
+   endif
+diff --git a/tools/depends/target/flatbuffers/Makefile b/tools/depends/target/flatbuffers/Makefile
+index fb30172000..0059d2d766 100644
+--- a/tools/depends/target/flatbuffers/Makefile
++++ b/tools/depends/target/flatbuffers/Makefile
+@@ -12,7 +12,7 @@ ifeq ($(PLATFORM),)
+ 	ROOT_DIR := $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
+ 	PLATFORM = native
+ 	TARBALLS_LOCATION = $(ROOT_DIR)
+-	BASE_URL := http://mirrors.kodi.tv/build-deps/sources
++	BASE_URL := https://mirrors.kodi.tv/build-deps/sources
+ 	RETRIEVE_TOOL := curl -Ls --create-dirs -f -O
+ 	ARCHIVE_TOOL := tar --strip-components=1 -xf
+ 	CMAKE := cmake
+diff --git a/tools/depends/target/libfmt/Makefile b/tools/depends/target/libfmt/Makefile
+index 6c61bceaa9..a600ef6dd8 100644
+--- a/tools/depends/target/libfmt/Makefile
++++ b/tools/depends/target/libfmt/Makefile
+@@ -18,7 +18,7 @@ else
+   ifeq ($(PLATFORM),)
+     PLATFORM = native
+     TARBALLS_LOCATION = $(ROOT_DIR)
+-    BASE_URL := http://mirrors.kodi.tv/build-deps/sources
++    BASE_URL := https://mirrors.kodi.tv/build-deps/sources
+     RETRIEVE_TOOL := curl
+     RETRIEVE_TOOL_FLAGS := -Ls --create-dirs -f -O
+     ARCHIVE_TOOL := tar
+diff --git a/tools/depends/target/rapidjson/Makefile b/tools/depends/target/rapidjson/Makefile
+index b54af9190c..109584897e 100644
+--- a/tools/depends/target/rapidjson/Makefile
++++ b/tools/depends/target/rapidjson/Makefile
+@@ -18,7 +18,7 @@ else
+   ifeq ($(PLATFORM),)
+     PLATFORM = native
+     TARBALLS_LOCATION = $(ROOT_DIR)
+-    BASE_URL := http://mirrors.kodi.tv/build-deps/sources
++    BASE_URL := https://mirrors.kodi.tv/build-deps/sources
+     RETRIEVE_TOOL := curl
+     RETRIEVE_TOOL_FLAGS := -Ls --create-dirs -f -O
+     ARCHIVE_TOOL := tar
+diff --git a/tools/depends/target/wayland-protocols/Makefile b/tools/depends/target/wayland-protocols/Makefile
+index 340eb41a74..eef496898b 100644
+--- a/tools/depends/target/wayland-protocols/Makefile
++++ b/tools/depends/target/wayland-protocols/Makefile
+@@ -12,7 +12,7 @@ ifeq ($(PLATFORM),)
+ 	ROOT_DIR := $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
+ 	PLATFORM = native
+ 	TARBALLS_LOCATION = $(ROOT_DIR)
+-	BASE_URL := http://mirrors.kodi.tv/build-deps/sources
++	BASE_URL := https://mirrors.kodi.tv/build-deps/sources
+ 	RETRIEVE_TOOL := curl -Ls --create-dirs -f -O
+ 	ARCHIVE_TOOL := tar --strip-components=1 -xf
+ else
+diff --git a/tools/depends/target/waylandpp/Makefile b/tools/depends/target/waylandpp/Makefile
+index 94018f3393..bfcbe5f876 100644
+--- a/tools/depends/target/waylandpp/Makefile
++++ b/tools/depends/target/waylandpp/Makefile
+@@ -14,7 +14,7 @@ ifeq ($(PLATFORM),)
+ 	ROOT_DIR := $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
+ 	PLATFORM = native
+ 	TARBALLS_LOCATION = $(ROOT_DIR)
+-	BASE_URL := http://mirrors.kodi.tv/build-deps/sources
++	BASE_URL := https://mirrors.kodi.tv/build-deps/sources
+ 	RETRIEVE_TOOL := curl -Ls --create-dirs -f -O
+ 	ARCHIVE_TOOL := tar --strip-components=1 -xf
+ 	CMAKE := cmake
+diff --git a/xbmc/addons/kodi-addon-dev-kit/doxygen/DoxygenLayout.xml b/xbmc/addons/kodi-addon-dev-kit/doxygen/DoxygenLayout.xml
+index b6a6b2c7a7..af3f985fbc 100644
+--- a/xbmc/addons/kodi-addon-dev-kit/doxygen/DoxygenLayout.xml
++++ b/xbmc/addons/kodi-addon-dev-kit/doxygen/DoxygenLayout.xml
+@@ -21,11 +21,11 @@
+     </tab>
+     <tab type="examples" visible="yes" title="" intro=""/>
+     <tab type="usergroup" title="Older versions">
+-      <tab type="user" url="http://mirrors.kodi.tv/docs/python-docs/16.x-jarvis/" title="Kodi 16.x Jarvis"/>
+-      <tab type="user" url="http://mirrors.kodi.tv/docs/python-docs/15.x-isengard/" title="Kodi 15.x Isengard"/>
+-      <tab type="user" url="http://mirrors.kodi.tv/docs/python-docs/14.x-helix/" title="Kodi 14.x Helix"/>
+-      <tab type="user" url="http://mirrors.kodi.tv/docs/python-docs/13.0-gotham/" title="XBMC 13.x Gotham"/>
+-      <tab type="user" url="http://mirrors.kodi.tv/docs/python-docs/12.2-frodo/" title="XBMC 12.x Frodo"/>
++      <tab type="user" url="https://mirrors.kodi.tv/docs/python-docs/16.x-jarvis/" title="Kodi 16.x Jarvis"/>
++      <tab type="user" url="https://mirrors.kodi.tv/docs/python-docs/15.x-isengard/" title="Kodi 15.x Isengard"/>
++      <tab type="user" url="https://mirrors.kodi.tv/docs/python-docs/14.x-helix/" title="Kodi 14.x Helix"/>
++      <tab type="user" url="https://mirrors.kodi.tv/docs/python-docs/13.0-gotham/" title="XBMC 13.x Gotham"/>
++      <tab type="user" url="https://mirrors.kodi.tv/docs/python-docs/12.2-frodo/" title="XBMC 12.x Frodo"/>
+     </tab>
+   </navindex>
+ 
+diff --git a/xbmc/addons/kodi-addon-dev-kit/doxygen/Modules/modules_python.dox b/xbmc/addons/kodi-addon-dev-kit/doxygen/Modules/modules_python.dox
+index 1149e23329..2ac995d960 100644
+--- a/xbmc/addons/kodi-addon-dev-kit/doxygen/Modules/modules_python.dox
++++ b/xbmc/addons/kodi-addon-dev-kit/doxygen/Modules/modules_python.dox
+@@ -153,17 +153,17 @@ web applications or frameworks for the Python programming language.
+ @page python_v17 Python API v17
+ \python_removed_function{
+       getCaptureState,
+-      http://mirrors.kodi.tv/docs/python-docs/16.x-jarvis/xbmc.html#RenderCapture-getCaptureState,
++      https://mirrors.kodi.tv/docs/python-docs/16.x-jarvis/xbmc.html#RenderCapture-getCaptureState,
+       <b>xbmc.RenderCapture().getCaptureState()</b> function was removed completely.
+ }
+ \python_removed_function{
+       waitForCaptureStateChangeEvent,
+-      http://mirrors.kodi.tv/docs/python-docs/16.x-jarvis/xbmc.html#RenderCapture-waitForCaptureStateChangeEvent,
++      https://mirrors.kodi.tv/docs/python-docs/16.x-jarvis/xbmc.html#RenderCapture-waitForCaptureStateChangeEvent,
+       <b>xbmc.RenderCapture().waitForCaptureStateChangeEvent()</b> function was removed completely.
+ }
+ \python_removed_function{
+       disableSubtitles,
+-      http://mirrors.kodi.tv/docs/python-docs/16.x-jarvis/xbmc.html#Player,
++      https://mirrors.kodi.tv/docs/python-docs/16.x-jarvis/xbmc.html#Player,
+       <b>xbmc.Player().disableSubtitles()</b> function was removed completely.
+       Use \endhtmlonly \link XBMCAddon::xbmc::Player::showSubtitles() xbmc.Player().showSubtitles(...) \endlink \htmlonly instead.
+ }
+@@ -184,7 +184,7 @@ web applications or frameworks for the Python programming language.
+ @page python_v12 Python API v12
+ \python_removed_function{
+       executehttpapi,
+-      http://mirrors.kodi.tv/docs/python-docs/12.2-frodo/xbmc.html#-executehttpapi,
++      https://mirrors.kodi.tv/docs/python-docs/12.2-frodo/xbmc.html#-executehttpapi,
+       <b>xbmc.executehttpapi()</b> function was removed completely.
+ }
+ */
