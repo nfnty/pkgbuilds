@@ -2,8 +2,8 @@
 pkgname=('parity')
 _srcname='parity-ethereum'
 pkgdesc='Fast, light, robust Ethereum implementation'
-pkgver='2.2.10'
-_tag="v${pkgver}"
+pkgver='2.3.5'
+_commit='ebd0fd0117415808ac341e7c1b19ec310d29b157'
 pkgrel='1'
 arch=('i686' 'x86_64')
 url="https://github.com/paritytech/${_srcname}"
@@ -14,9 +14,8 @@ makedepends=('git' 'rust' 'cargo' 'systemd' 'gcc' 'pkg-config' 'cmake')
 provides=("${pkgname[0]%-git}")
 conflicts=("${pkgname[0]%-git}")
 
-source=("${_srcname}::git+${url}.git#tag=${_tag}?signed")
+source=("${_srcname}::git+${url}.git#commit=${_commit}")
 sha512sums=('SKIP')
-validpgpkeys=('E936D730543251567C801E731A40871B597F5F80')
 
 build() {
     cd "${srcdir}/${_srcname}"
