@@ -1,9 +1,0 @@
-[Desktop Entry]
-Type=Application
-Name=Visual Studio Code
-GenericName=Text Editor
-Comment=Text Editor
-Exec=vscode
-Icon=applications-development
-Terminal=false
-Categories=Utility;TextEditor;Development;
