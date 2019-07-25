@@ -12,7 +12,6 @@ license=('LGPL')
 depends=('qt5-base' 'gtk2' 'libx11')
 makedepends=('git')
 provides=("${pkgname[0]%-git}")
-conflicts=("${pkgname[0]%-git}")
 
 source=("${_srcname}::git+https://code.qt.io/qt/${_srcname}.git#commit=${_commit}")
 sha512sums=('SKIP')

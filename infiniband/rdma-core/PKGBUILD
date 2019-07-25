@@ -16,7 +16,7 @@ _provides=("${pkgname[0]%-git}" 'rdma' 'ibacm' 'libiwpm' 'libibcm' 'libibumad' '
            'librdmacm' 'libcxgb3' 'libcxgb4' 'libmlx4' 'libmlx5' 'libmthca' 'libnes' 'libocrdma'
            'srptools')
 provides=("${_provides[@]}")
-conflicts=("${_provides[@]}")
+conflicts=("${_provides[@]:1}")
 replaces=("${_provides[@]:1}")
 
 source=("${_srcname}::git+${url}.git#tag=${_tag}?signed")

@@ -12,7 +12,6 @@ license=('MIT')
 depends=('python' 'python-yaml' 'python-chardet' 'python-ansicolor')
 makedepends=('git' 'python-setuptools')
 provides=("${pkgname[0]%-git}")
-conflicts=("${pkgname[0]%-git}")
 
 source=("${_srcname}::git+${url}.git#commit=${_pkgver_commit}")
 sha512sums=('SKIP')

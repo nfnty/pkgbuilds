@@ -12,7 +12,6 @@ license=('GPL3')
 depends=('openssl' 'libsystemd')
 makedepends=('git' 'rust' 'cargo' 'systemd' 'gcc' 'pkg-config' 'cmake')
 provides=("${pkgname[0]%-git}")
-conflicts=("${pkgname[0]%-git}")
 
 source=("${_srcname}::git+${url}.git#commit=${_commit}")
 sha512sums=('SKIP')
