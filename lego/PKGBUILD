@@ -10,7 +10,6 @@ url="https://github.com/go-acme/${_srcname}"
 license=('MIT')
 
 makedepends=('git' 'go')
-provides=("${pkgname[0]%-git}")
 
 source=("${_srcname}::git+${url}.git#commit=${_commit_lego}")
 sha512sums=('SKIP')

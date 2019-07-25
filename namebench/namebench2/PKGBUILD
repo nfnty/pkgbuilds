@@ -10,7 +10,6 @@ license=('Apache')
 
 depends=('')
 makedepends=('git' 'go')
-provides=("${pkgname[0]%-git}")
 
 source=("${_srcname}::git+${url}.git")
 sha256sums=('SKIP')

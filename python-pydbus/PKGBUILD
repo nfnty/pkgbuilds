@@ -10,7 +10,6 @@ license=('LGPL2')
 
 depends=('python')
 makedepends=('git' 'python-setuptools')
-provides=("${pkgname[0]%-git}")
 
 source=("${_srcname}::git+${url}.git#tag=v${pkgver}")
 sha512sums=('SKIP')

@@ -10,7 +10,6 @@ license=('custom:BSD')
 
 depends=('zlib' 'bzip2' 'snappy' 'gcc-libs')
 makedepends=('git' 'make' 'gcc')
-provides=("${pkgname[0]%-git}")
 
 source=("${_srcname}::git+${url}.git#tag=v${pkgver}")
 sha512sums=('SKIP')

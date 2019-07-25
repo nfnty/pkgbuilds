@@ -10,7 +10,6 @@ url="https://github.com/linux-nvme/${_srcname}"
 license=('GPL2')
 
 makedepends=('git')
-provides=("${pkgname[0]%-git}")
 
 source=("${_srcname}::git+${url}.git#commit=${_commit}")
 sha512sums=('SKIP')

@@ -10,7 +10,6 @@ url="https://github.com/prometheus/${_srcname}"
 license=('Apache')
 
 makedepends=('git' 'go')
-provides=("${pkgname[0]%-git}")
 
 source=(
     "${_srcname}::git+${url}.git#commit=${_commit}"

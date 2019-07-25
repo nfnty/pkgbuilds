@@ -11,7 +11,6 @@ url="https://github.com/grafana/${_srcname}"
 license=('Apache')
 
 makedepends=('git' 'go' 'npm' 'python2' 'yarn')
-provides=("${pkgname[0]%-git}")
 
 source=("${_srcname}::git+${url}.git")
 sha512sums=('SKIP')

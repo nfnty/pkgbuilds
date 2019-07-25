@@ -10,7 +10,6 @@ license=('MIT')
 
 depends=('python2')
 makedepends=('git' 'python2-setuptools')
-provides=("${pkgname[0]%-git}")
 
 source=("${_srcname}::git+${url}.git#tag=v${pkgver}")
 sha512sums=('SKIP')

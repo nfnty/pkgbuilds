@@ -10,7 +10,6 @@ license=('GPL3')
 
 depends=('glibc')
 makedepends=('git' 'go' 'gmp')
-provides=("${pkgname[0]%-git}")
 
 source=("${_srcname}::git+${url}.git#tag=v${pkgver}")
 sha512sums=('SKIP')

@@ -11,7 +11,6 @@ license=('ISC')
 
 depends=('ncurses' 'libevent' 'libutempter')
 makedepends=('git')
-provides=("${pkgname[0]%-git}")
 
 source=(
     "${_srcname}::git+${url}.git#commit=${_commit_tmux}"

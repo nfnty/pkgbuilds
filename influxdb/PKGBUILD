@@ -10,7 +10,6 @@ url="https://github.com/influxdata/${_srcname}"
 license=('MIT')
 
 makedepends=('git' 'go')
-provides=("${pkgname[0]%-git}")
 
 source=("${_srcname}::git+${url}.git#commit=${_commit}")
 sha512sums=('SKIP')

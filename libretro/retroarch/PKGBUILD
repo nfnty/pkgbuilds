@@ -10,7 +10,6 @@ license=('GPL3')
 
 depends=('libgl' 'alsa-lib' 'freetype2' 'libxml2' 'nvidia-cg-toolkit')
 makedepends=('git')
-provides=("${pkgname[0]%-git}")
 
 source=("${_srcname}::git+${url}.git#tag=v${pkgver}")
 sha512sums=('SKIP')
