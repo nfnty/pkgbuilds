@@ -1,8 +1,8 @@
-diff --git a/components/engine/daemon/oci.go b/components/engine/daemon/oci.go
-index 52050e24fa..87ef671f03 100644
---- a/components/engine/daemon/oci.go
-+++ b/components/engine/daemon/oci.go
-@@ -30,12 +30,6 @@ func setCapabilities(s *specs.Spec, c *container.Container) error {
+diff --git a/components/engine/oci/oci.go b/components/engine/oci/oci.go
+index 6c84ba3488..d931f92d27 100644
+--- a/components/engine/oci/oci.go
++++ b/components/engine/oci/oci.go
+@@ -18,12 +18,6 @@ func SetCapabilities(s *specs.Spec, caplist []string) error {
  	s.Process.Capabilities.Bounding = caplist
  	s.Process.Capabilities.Permitted = caplist
  	s.Process.Capabilities.Inheritable = caplist
