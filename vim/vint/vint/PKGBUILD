@@ -3,7 +3,7 @@ pkgname=('vint')
 _srcname='vint'
 pkgdesc='Fast and Highly Extensible Vim script Language Lint implemented by Python'
 pkgver='0.3.18'
-_pkgver_commit='aa0648cf1272c47ec808fc92737849f082fb53e9'
+_commit='aa0648cf1272c47ec808fc92737849f082fb53e9'
 pkgrel='1'
 arch=('any')
 url="https://github.com/Kuniwak/${_srcname}"
@@ -12,7 +12,7 @@ license=('MIT')
 depends=('python' 'python-yaml' 'python-chardet' 'python-ansicolor')
 makedepends=('git' 'python-setuptools')
 
-source=("${_srcname}::git+${url}.git#commit=${_pkgver_commit}")
+source=("${_srcname}::git+${url}.git#commit=${_commit}")
 sha512sums=('SKIP')
 
 package() {

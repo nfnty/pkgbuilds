@@ -3,7 +3,7 @@ pkgname=('lego')
 _srcname='lego'
 pkgdesc='Let'"'"'s Encrypt client and ACME library written in Go'
 pkgver='3.0.2'
-_commit_lego='fd11248e65c1d04a7a9d3902438d244ad9eef598'
+_commit='fd11248e65c1d04a7a9d3902438d244ad9eef598'
 pkgrel='1'
 arch=('i686' 'x86_64')
 url="https://github.com/go-acme/${_srcname}"
@@ -11,7 +11,7 @@ license=('MIT')
 
 makedepends=('git' 'go')
 
-source=("${_srcname}::git+${url}.git#commit=${_commit_lego}")
+source=("${_srcname}::git+${url}.git#commit=${_commit}")
 sha512sums=('SKIP')
 
 _url_go="${url#*//}"

@@ -3,7 +3,7 @@ pkgname=('python-ansicolor')
 _srcname='ansicolor'
 pkgdesc='A library to produce ansi color output and colored highlighting and diffing'
 pkgver='0.2.4'
-_pkgver_commit='597338e9f371b10a091719159a4b8e1bff6a4d53'
+_commit='597338e9f371b10a091719159a4b8e1bff6a4d53'
 pkgrel='1'
 arch=('any')
 url="https://github.com/numerodix/${_srcname}"
@@ -12,7 +12,7 @@ license=('Apache')
 depends=('python')
 makedepends=('git' 'python-setuptools')
 
-source=("${_srcname}::git+${url}.git#commit=${_pkgver_commit}")
+source=("${_srcname}::git+${url}.git#commit=${_commit}")
 sha512sums=('SKIP')
 
 package() {
