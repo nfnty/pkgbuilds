@@ -2,8 +2,8 @@
 pkgname=('prometheus')
 _srcname='prometheus'
 pkgdesc='Monitoring system and time series database'
-pkgver='2.11.1'
-_commit='e5b22494857deca4b806f74f6e3a6ee30c251763'
+pkgver='2.13.0'
+_commit='6ea4252299f542669aca11860abc2192bdc7bede'
 pkgrel='1'
 arch=('i686' 'x86_64')
 url="https://github.com/prometheus/${_srcname}"
