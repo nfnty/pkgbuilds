@@ -21,7 +21,7 @@ pkgver() {
 
     printf 'r%s.%s.%s\n' \
         "$( git rev-list --count 'HEAD' )" \
-        "$( git log --max-count='1' --pretty='format:%ct' )" \
+        "$( git log --no-show-signature --max-count='1' --pretty='format:%ct' )" \
         "$( git rev-parse --short 'HEAD' )"
 }
 
