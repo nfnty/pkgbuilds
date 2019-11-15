@@ -12,8 +12,14 @@ license=('Apache')
 
 makedepends=('git' 'go' 'npm' 'python2' 'yarn')
 
-source=("${_srcname}::git+${url}.git")
-sha512sums=('SKIP')
+source=(
+    "${_srcname}::git+${url}.git"
+    'golang-xerrors.patch'
+)
+sha512sums=(
+    'SKIP'
+    'SKIP'
+)
 
 _url_go="${url#*//}"
 
@@ -29,6 +35,7 @@ prepare() {
     git remote set-url origin "${url}"
     go run build.go setup
     git checkout --quiet "${_commit}"
+    git apply "${srcdir}/golang-xerrors.patch"
 
     npm install
 }
