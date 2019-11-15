@@ -1,5 +1,5 @@
 diff --git a/telldus-core/service/CMakeLists.txt b/telldus-core/service/CMakeLists.txt
-index 595d551..541477e 100644
+index b2c8999f..b3787f5d 100644
 --- a/telldus-core/service/CMakeLists.txt
 +++ b/telldus-core/service/CMakeLists.txt
 @@ -254,7 +254,7 @@ IF (UNIX)
@@ -12,7 +12,7 @@ index 595d551..541477e 100644
  		DESTINATION ${SYSCONF_INSTALL_DIR}
  	)
 diff --git a/telldus-core/tdadmin/CMakeLists.txt b/telldus-core/tdadmin/CMakeLists.txt
-index 7c72b26..58793c6 100644
+index 16c2bc76..e846ecd4 100644
 --- a/telldus-core/tdadmin/CMakeLists.txt
 +++ b/telldus-core/tdadmin/CMakeLists.txt
 @@ -56,7 +56,7 @@ IF (UNIX)
@@ -22,10 +22,10 @@ index 7c72b26..58793c6 100644
 -INSTALL(TARGETS tdadmin RUNTIME DESTINATION sbin)
 +INSTALL(TARGETS tdadmin RUNTIME DESTINATION bin)
  
- IF (UNIX AND NOT APPLE)
+ IF (UNIX AND NOT APPLE AND NOT CMAKE_SYSTEM_NAME MATCHES "FreeBSD")
  	SET(UDEV_RULES_DIR	"/etc/udev/rules.d" CACHE PATH "The directory where udev store its rules" )
 diff --git a/telldus-core/tdadmin/udev.sh b/telldus-core/tdadmin/udev.sh
-index 3b935d7..074c7dc 100755
+index 3b935d78..074c7dc7 100755
 --- a/telldus-core/tdadmin/udev.sh
 +++ b/telldus-core/tdadmin/udev.sh
 @@ -2,8 +2,8 @@
