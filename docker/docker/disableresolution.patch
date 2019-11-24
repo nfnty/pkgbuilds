@@ -1,0 +1,23 @@
+diff --git a/components/engine/daemon/network.go b/components/engine/daemon/network.go
+index 01b5956adb..eb44df7895 100644
+--- a/components/engine/daemon/network.go
++++ b/components/engine/daemon/network.go
+@@ -10,7 +10,6 @@ import (
+ 	"sync"
+ 
+ 	"github.com/docker/docker/api/types"
+-	containertypes "github.com/docker/docker/api/types/container"
+ 	"github.com/docker/docker/api/types/filters"
+ 	"github.com/docker/docker/api/types/network"
+ 	"github.com/docker/docker/container"
+@@ -860,9 +859,7 @@ func buildCreateEndpointOptions(c *container.Container, n libnetwork.Network, ep
+ 		createOptions = append(createOptions, libnetwork.CreateOptionService(svcCfg.Name, svcCfg.ID, net.ParseIP(vip), portConfigs, svcCfg.Aliases[n.ID()]))
+ 	}
+ 
+-	if !containertypes.NetworkMode(n.Name()).IsUserDefined() {
+-		createOptions = append(createOptions, libnetwork.CreateOptionDisableResolution())
+-	}
++	createOptions = append(createOptions, libnetwork.CreateOptionDisableResolution())
+ 
+ 	// configs that are applicable only for the endpoint in the network
+ 	// to which container was connected to on docker run.
