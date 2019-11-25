@@ -2,14 +2,15 @@
 pkgname=('prometheus')
 _srcname='prometheus'
 pkgdesc='Monitoring system and time series database'
-pkgver='2.13.0'
-_commit='6ea4252299f542669aca11860abc2192bdc7bede'
+pkgver='2.14.0'
+_commit='edeb7a44cbf745f1d8be4ea6f215e79e651bfe19'
 pkgrel='1'
 arch=('i686' 'x86_64')
 url="https://github.com/prometheus/${_srcname}"
 license=('Apache')
 
-makedepends=('git' 'go')
+depends=('glibc')
+makedepends=('git' 'go-pie' 'yarn')
 
 source=("${_srcname}::git+${url}.git#commit=${_commit}")
 sha512sums=('SKIP')

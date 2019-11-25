@@ -2,8 +2,8 @@
 pkgname=('prometheus-exporter-node')
 _srcname='node_exporter'
 pkgdesc='Prometheus exporter for machine metrics'
-pkgver='0.17.0'
-_commit='f6f6194a436b9a63d0439abc585c76b19a206b21'
+pkgver='0.18.1'
+_commit='3db77732e925c08f675d7404a8c46466b2ece83e'
 pkgrel='1'
 arch=('i686' 'x86_64')
 url="https://github.com/prometheus/${_srcname}"
