@@ -1,0 +1,12 @@
+diff --git a/package.json b/package.json
+index 1ca5b27f15..898118354d 100644
+--- a/package.json
++++ b/package.json
+@@ -275,6 +275,6 @@
+     "puppeteer": "node_modules/puppeteer-core"
+   },
+   "engines": {
+-    "node": ">=10 <11"
++    "node": ">=10"
+   }
+ }

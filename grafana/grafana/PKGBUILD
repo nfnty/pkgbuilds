@@ -3,8 +3,8 @@ pkgname=('grafana')
 _srcname='grafana'
 _pkgbasename="${pkgname[0]%-git}"
 pkgdesc='Feature rich metrics dashboard and graph editor'
-pkgver='6.4.4'
-_commit='092e51408a7b81b742e284263dee5a896eb326d6'
+pkgver='6.5.0'
+_commit='24a5d2fe8b3eb9111861b11f5b718da52717c6cd'
 pkgrel='1'
 arch=('i686' 'x86_64')
 url="https://github.com/grafana/${_srcname}"
@@ -14,7 +14,7 @@ makedepends=('git' 'go' 'npm' 'python2' 'yarn')
 
 source=(
     "${_srcname}::git+${url}.git"
-    'golang-xerrors.patch'
+    'package_json.patch'
 )
 sha512sums=(
     'SKIP'
@@ -35,7 +35,7 @@ prepare() {
     git remote set-url origin "${url}"
     go run build.go setup
     git checkout --quiet "${_commit}"
-    git apply "${srcdir}/golang-xerrors.patch"
+    git apply "${srcdir}/package_json.patch"
 
     npm install
 }
