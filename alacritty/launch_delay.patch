@@ -1,0 +1,32 @@
+diff --git a/alacritty/src/display.rs b/alacritty/src/display.rs
+index e02381e..4cae43f 100644
+--- a/alacritty/src/display.rs
++++ b/alacritty/src/display.rs
+@@ -118,6 +118,7 @@ pub struct Display {
+     renderer: QuadRenderer,
+     glyph_cache: GlyphCache,
+     meter: Meter,
++    first_update: bool,
+ }
+ 
+ impl Display {
+@@ -240,6 +241,7 @@ impl Display {
+             size_info,
+             urls: Urls::new(),
+             highlighted_url: None,
++            first_update: true,
+         })
+     }
+ 
+@@ -298,6 +300,11 @@ impl Display {
+         config: &Config,
+         update_pending: DisplayUpdate,
+     ) {
++        if self.first_update {
++            std::thread::sleep(std::time::Duration::from_millis(100));
++            self.first_update = false;
++        }
++
+         // Update font size and cell dimensions
+         if let Some(font) = update_pending.font {
+             self.update_glyph_cache(config, font);
