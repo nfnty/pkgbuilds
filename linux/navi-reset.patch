@@ -52,7 +52,7 @@ index 44c4ae1abd00..a3325beff5a6 100644
 +	/* map BAR5 */
 +	mmio_base = pci_resource_start(dev, 5);
 +	mmio_size = pci_resource_len(dev, 5);
-+	mmio = ioremap_nocache(mmio_base, mmio_size);
++	mmio = ioremap(mmio_base, mmio_size);
 +	if (mmio == NULL) {
 +		pci_disable_device(dev);
 +		pci_err(dev, "Navi10: cannot iomap device\n");
