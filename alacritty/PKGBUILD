@@ -4,9 +4,9 @@
 # Contributor: quininer <quininer@live.com>
 pkgname='alacritty'
 pkgdesc="A cross-platform, GPU-accelerated terminal emulator"
-_pkgver=0.4.1
+_pkgver=0.4.2
 pkgver="$_pkgver"
-pkgrel=2
+pkgrel=1
 arch=('x86_64')
 url="https://github.com/jwilm/alacritty"
 license=('Apache')
@@ -18,7 +18,7 @@ source=(
   "launch_delay.patch"
 )
 sha256sums=(
-  'ee807f03a4014e7f989cf649a7c8209c0c5f57297812a39f4b163f9580b9a539'
+  '8dda9d580b9ec793cfdb336b000b73b7e98b4eba91c23ee04ee72a1728754ab2'
   'SKIP'
 )
 
@@ -40,7 +40,7 @@ check(){
 
 package() {
   cd "$pkgbase-$_pkgver"
-  desktop-file-install -m 644 --dir "$pkgdir/usr/share/applications/" "extra/linux/alacritty.desktop"
+  desktop-file-install -m 644 --dir "$pkgdir/usr/share/applications/" "extra/linux/Alacritty.desktop"
   install -D -m755 "target/release/alacritty" "$pkgdir/usr/bin/alacritty"
   install -D -m644 "extra/alacritty.man" "$pkgdir/usr/share/man/man1/alacritty.1"
   install -D -m644 "extra/linux/io.alacritty.Alacritty.appdata.xml" "$pkgdir/usr/share/appdata/io.alacritty.Alacritty.appdata.xml"
