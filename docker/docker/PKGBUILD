@@ -1,8 +1,8 @@
 # Maintainer: Sébastien "Seblu" Luttringer
 
 pkgname=docker
-pkgver=19.03.11
-pkgrel=1
+pkgver=19.03.12
+pkgrel=2
 epoch=1
 pkgdesc='Pack, ship and run any application as a lightweight container'
 arch=('x86_64')
@@ -18,7 +18,7 @@ options=('!strip' '!buildflags')
 # Use exact commit version from Dockerfile, see them in:
 # https://github.com/docker/docker-ce/blob/master/components/engine/hack/dockerfile/install/
 _TINI_COMMIT=fec3683b971d9c3ef73f284f176672c44b448662
-_LIBNETWORK_COMMIT=153d0769a1181bf591a9637fd487a541ec7db1e6
+_LIBNETWORK_COMMIT=026aabaa659832804b01754aaadd2c0f420c68b6
 _APP_TAG='v0.9.1-beta3'
 source=("git+https://github.com/docker/docker-ce.git#tag=v$pkgver"
         "git+https://github.com/docker/libnetwork.git#commit=$_LIBNETWORK_COMMIT"
@@ -40,7 +40,7 @@ sha256sums=('SKIP'
             '541826011a9836d05a2f42293d5f1beadf2ca8d89fb604487d61a013505678eb')
 
 prepare() {
-  sed -i 's,/var/run,/run,' docker-ce/components/engine/contrib/init/systemd/docker.socket
+  sed -i 's,/var/run,/run,' docker-ce/components/packaging/systemd/docker.socket
 
   cd "${srcdir}/docker-ce"
   patch --strip=1 --input="${srcdir}/capabilities.patch"
@@ -143,15 +143,17 @@ package() {
   install -Dm755 libnetwork/proxy "$pkgdir/usr/bin/docker-proxy"
   ### init
   install -Dm755 tini/tini-static "$pkgdir/usr/bin/docker-init"
+  ### systemd units
+  cd "$srcdir"/docker-ce/components/packaging
+  install -Dm644 'systemd/docker.service' \
+    "$pkgdir/usr/lib/systemd/system/docker.service"
+  install -Dm644 'systemd/docker.socket' \
+    "$pkgdir/usr/lib/systemd/system/docker.socket"
   ### engine
   cd "$srcdir"/docker-ce/components/engine
   # binary
   install -Dm755 {bundles/dynbinary-daemon,"$pkgdir"/usr/bin}/dockerd
-  # systemd
-  install -Dm644 'contrib/init/systemd/docker.service' \
-    "$pkgdir/usr/lib/systemd/system/docker.service"
-  install -Dm644 'contrib/init/systemd/docker.socket' \
-    "$pkgdir/usr/lib/systemd/system/docker.socket"
+  # systemd rules
   install -Dm644 'contrib/udev/80-docker.rules' \
     "$pkgdir/usr/lib/udev/rules.d/80-docker.rules"
   install -Dm644 "$srcdir/$pkgname.sysusers" \
