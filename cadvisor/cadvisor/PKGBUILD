@@ -2,14 +2,14 @@
 pkgname=('cadvisor')
 _srcname='cadvisor'
 pkgdesc='Analyzes resource usage and performance characteristics of running containers'
-pkgver='0.34.0'
-_commit='24a6a52fceb2e1c5a319b97bfc6bebf8f5b816cf'
+pkgver='0.36.0'
+_commit='4fe450a23991beb6c61dc941c0f87f56021ad386'
 pkgrel='1'
 arch=('i686' 'x86_64')
 url="https://github.com/google/${_srcname}"
 license=('Apache')
 
-makedepends=('git' 'make' 'go' 'godep')
+makedepends=('git' 'make' 'go')
 
 source=("${_srcname}::git+${url}.git#commit=${_commit}")
 sha512sums=('SKIP')
