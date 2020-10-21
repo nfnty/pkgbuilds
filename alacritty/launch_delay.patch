@@ -23,7 +23,7 @@ index e02381e..4cae43f 100644
          update_pending: DisplayUpdate,
      ) {
 +        if self.first_update {
-+            std::thread::sleep(std::time::Duration::from_millis(100));
++            std::thread::sleep(std::time::Duration::from_millis(400));
 +            self.first_update = false;
 +        }
 +
