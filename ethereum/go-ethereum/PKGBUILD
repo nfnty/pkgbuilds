@@ -1,0 +1,31 @@
+# Maintainer: Nicola Squartini <tensor5@gmail.com>
+
+pkgname=go-ethereum
+pkgver=1.9.24
+_commit=cc05b050df5f88e80bb26aaf6d2f339c49c2d702
+pkgrel=2
+pkgdesc='Official Go implementation of the Ethereum protocol'
+arch=('x86_64')
+url='https://geth.ethereum.org/'
+license=('GPL3')
+depends=('glibc')
+makedepends=('git' 'go')
+provides=('geth')
+conflicts=('geth')
+replaces=('geth')
+source=("git+https://github.com/ethereum/go-ethereum.git#commit=${_commit}")
+sha256sums=('SKIP')
+
+build() {
+    cd ${pkgname}
+
+#    export CGO_LDFLAGS="${LDFLAGS}"
+    export GOFLAGS="-buildmode=pie"
+    make all
+}
+
+package() {
+    cd ${pkgname}
+
+    install -Dm755 -t "${pkgdir}"/usr/bin build/bin/*
+}
