@@ -32,7 +32,6 @@ conflicts=("${pkgname[0]%-git}")
 
 source=(
     "${_srcname}::git+${url}.git"
-    'melt.patch'
 )
 sha512sums=(
     'SKIP'
@@ -50,8 +49,6 @@ pkgver() {
 
 prepare() {
     cd "${srcdir}/${_srcname}"
-
-    git apply "${srcdir}/melt.patch"
 }
 
 build() {
