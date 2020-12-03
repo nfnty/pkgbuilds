@@ -1,0 +1,39 @@
+# shellcheck disable=SC2034,SC2154,SC2164
+pkgname=('prysm')
+_srcname='prysm'
+pkgdesc='Go implementation of the Ethereum 2.0 blockchain'
+pkgver='1.0.3'
+_commit='fc7c6776f66c675dfc0e26a9f16141720bf9f2df'
+pkgrel='1'
+arch=('x86_64')
+url="https://github.com/prysmaticlabs/${_srcname}"
+license=('GPL3')
+
+makedepends=('git' 'go')
+provides=("${pkgname[0]%-git}")
+conflicts=("${pkgname[0]%-git}")
+
+source=("${_srcname}::git+${url}.git#commit=${_commit}")
+sha512sums=('SKIP')
+
+build() {
+    cd "${srcdir}/${_srcname}"
+
+    export CGO_CPPFLAGS="${CPPFLAGS}"
+    export CGO_CFLAGS="${CFLAGS}"
+    export CGO_CXXFLAGS="${CXXFLAGS}"
+    export CGO_LDFLAGS="${LDFLAGS}"
+    export GOFLAGS="-buildmode=pie -trimpath -ldflags=-linkmode=external -mod=readonly -modcacherw"
+
+    mkdir output
+    go build -o output -v ./...
+}
+
+package() {
+    cd "${srcdir}/${_srcname}"
+
+    cd output
+    for target in *; do
+        install -D --mode=755 "${target}" "${pkgdir}/usr/bin/prysm-${target}"
+    done
+}
