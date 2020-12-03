@@ -1,0 +1,31 @@
+# shellcheck disable=SC2034,SC2154,SC2164
+pkgname=('lighthouse')
+_srcname='lighthouse'
+pkgdesc='An open-source Ethereum 2.0 client, written in Rust and maintained by Sigma Prime'
+pkgver='1.0.3'
+_commit='65dcdc361b0c91dabe53c886e32aa7952251be68'
+pkgrel='1'
+arch=('x86_64')
+url="https://github.com/sigp/${_srcname}"
+license=('Apache')
+
+depends=('openssl')
+makedepends=('git' 'rust' 'cmake')
+provides=("${pkgname[0]%-git}")
+conflicts=("${pkgname[0]%-git}")
+
+source=("${_srcname}::git+${url}.git#commit=${_commit}")
+sha512sums=('SKIP')
+
+build() {
+    cd "${srcdir}/${_srcname}"
+
+    cargo build --release
+}
+
+package() {
+    cd "${srcdir}/${_srcname}"
+
+    install -D --mode=755 target/release/lighthouse "${pkgdir}/usr/bin/lighthouse"
+    install -D --mode=644 LICENSE "${pkgdir}/usr/share/licenses/${_srcname}/LICENSE"
+}
