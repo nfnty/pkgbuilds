@@ -9,24 +9,12 @@ arch=('x86_64')
 url="https://github.com/prysmaticlabs/${_srcname}"
 license=('GPL3')
 
-makedepends=('git' 'bazel' 'cmake' 'ncurses5-compat-libs' 'python2')
+makedepends=('git' 'go')
 provides=("${pkgname[0]%-git}")
 conflicts=("${pkgname[0]%-git}")
 
-source=(
-    "${_srcname}::git+${url}.git#commit=${_commit}"
-    'bazel.patch'
-)
-sha512sums=(
-    'SKIP'
-    'SKIP'
-)
-
-prepare() {
-    cd "${srcdir}/${_srcname}"
-
-    git apply "${srcdir}/bazel.patch"
-}
+source=("${_srcname}::git+${url}.git#commit=${_commit}")
+sha512sums=('SKIP')
 
 build() {
     cd "${srcdir}/${_srcname}"
@@ -38,7 +26,7 @@ build() {
     export GOFLAGS="-buildmode=pie -trimpath -ldflags=-linkmode=external -mod=readonly -modcacherw"
 
     mkdir output
-    bazel build ... --output_base="${srcdir}/output" --config=release
+    go build -o output -v ./...
 }
 
 package() {
