@@ -1,9 +1,9 @@
 # shellcheck disable=SC2034,SC2154,SC2164
-pkgname=('parity')
+pkgname=('openethereum')
 _srcname='openethereum'
 pkgdesc='Fast, light, robust Ethereum implementation'
-pkgver='2.7.2'
-_commit='2662d1925ec794f3ad7c5759b2412ff5128d259b'
+pkgver='3.1.0'
+_commit='56131b6d9212dc73d4bddc5658072afb286eb6eb'
 pkgrel='1'
 arch=('i686' 'x86_64')
 url="https://github.com/openethereum/${_srcname}"
@@ -25,6 +25,6 @@ build() {
 package() {
     cd "${srcdir}/${_srcname}"
 
-    install -D --mode=755 target/release/parity "${pkgdir}/usr/bin/parity"
+    install -D --mode=755 target/release/openethereum "${pkgdir}/usr/bin/openethereum"
     install -D --mode=644 LICENSE "${pkgdir}/usr/share/licenses/${pkgname[0]%-git}/LICENSE"
 }
