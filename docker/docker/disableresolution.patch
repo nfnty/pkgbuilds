@@ -1,7 +1,7 @@
-diff --git a/components/engine/daemon/network.go b/components/engine/daemon/network.go
+diff --git a/daemon/network.go b/daemon/network.go
 index 01b5956adb..eb44df7895 100644
---- a/components/engine/daemon/network.go
-+++ b/components/engine/daemon/network.go
+--- a/daemon/network.go
++++ b/daemon/network.go
 @@ -10,7 +10,6 @@ import (
  	"sync"
  
