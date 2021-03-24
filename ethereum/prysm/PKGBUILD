@@ -2,8 +2,8 @@
 pkgname=('prysm')
 _srcname='prysm'
 pkgdesc='Go implementation of the Ethereum 2.0 blockchain'
-pkgver='1.3.2'
-_commit='29d1959b81921946f620b8fc745be660c8185d39'
+pkgver='1.3.4'
+_commit='d2b1115f469b056520bc1e52964caccf219f3439'
 pkgrel='1'
 arch=('x86_64')
 url="https://github.com/prysmaticlabs/${_srcname}"
