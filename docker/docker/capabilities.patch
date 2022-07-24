@@ -1,17 +1,27 @@
 diff --git a/oci/oci.go b/oci/oci.go
-index 6c84ba3488..d931f92d27 100644
+index 60227c2680..2727ed38ce 100644
 --- a/oci/oci.go
 +++ b/oci/oci.go
-@@ -18,12 +18,6 @@ func SetCapabilities(s *specs.Spec, caplist []string) error {
- 	s.Process.Capabilities.Bounding = caplist
- 	s.Process.Capabilities.Permitted = caplist
- 	s.Process.Capabilities.Inheritable = caplist
--	// setUser has already been executed here
--	// if non root drop capabilities in the way execve does
--	if s.Process.User.UID != 0 {
--		s.Process.Capabilities.Effective = []string{}
--		s.Process.Capabilities.Permitted = []string{}
--	}
+@@ -20,18 +20,10 @@ var deviceCgroupRuleRegex = regexp.MustCompile("^([acb]) ([0-9]+|\\*):([0-9]+|\\
+ // All capabilities are added if privileged is true.
+ func SetCapabilities(s *specs.Spec, caplist []string) error {
+ 	// setUser has already been executed here
+-	if s.Process.User.UID == 0 {
+-		s.Process.Capabilities = &specs.LinuxCapabilities{
+-			Effective: caplist,
+-			Bounding:  caplist,
+-			Permitted: caplist,
+-		}
+-	} else {
+-		// Do not set Effective and Permitted capabilities for non-root users,
+-		// to match what execve does.
+-		s.Process.Capabilities = &specs.LinuxCapabilities{
+-			Bounding: caplist,
+-		}
++	s.Process.Capabilities = &specs.LinuxCapabilities{
++		Effective: caplist,
++		Bounding:  caplist,
++		Permitted: caplist,
+ 	}
  	return nil
  }
- 
