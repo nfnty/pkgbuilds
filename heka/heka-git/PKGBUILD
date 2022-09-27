@@ -53,6 +53,7 @@ build() {
     export GOBIN="${GOPATH}/bin"
     export PATH="${GOBIN}:${PATH}"
     export CTEST_OUTPUT_ON_FAILURE=1
+    export GO111MODULE='off'
 
     cmake \
         -DCMAKE_INSTALL_PREFIX='/usr' \
