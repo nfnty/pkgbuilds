@@ -25,6 +25,7 @@ source=("https://ftp.exim.org/pub/exim/exim4/exim-$pkgver.tar.bz2"{,.asc}
         exim.socket
         exim-submission.socket
         exim.sysusers
+        dmarc_api_change.patch
         exim.tmpfiles)
 sha512sums=('675dcb13dac449edede61926e7af6dcc3ff3a455c053d413a35c873b926dfc4d63540ba7d52347516c6a9b4b60a3627b449685210ddfba0a4c61ec7a0a0b8333'
             'SKIP'
@@ -37,11 +38,18 @@ sha512sums=('675dcb13dac449edede61926e7af6dcc3ff3a455c053d413a35c873b926dfc4d635
             'db621116907ceb573e6f34581f47c91f751bff593054d7ddc32397b34c7f2405bec184bdb0589d2ac457fa3a61bcba072761e3a6293a99c9c764d2d9fd6069ae'
             '4a233761793e3510e9efa5aad3a6098c41b757f13133a7ea825680f2b393aba8d7935f16bf1dd065dde884fe7ba45639a8d398333a7d9bf0a6b72f88c8f2a09d'
             '87a16aa7bd60a8df0da8131bb811825232f25e934b9326460a2f8f0f8e0f44c53d71b1225ecfee8d30c8714f6e9f85f5f0821e346a7751d43683b406376d605b'
+            'SKIP'
             'f8a34fea0a65d0992732bc444bbb334d060de7d91d9cca6f00bc950ba289afa813783517dd3999437f89bc194290785805df7081606a65abb1db3fd3b3aa94ca')
 validpgpkeys=('C693A034E1ED6EE954CAE2DA13DAD99C7E41519C'  # Phil Pennock <pdp@exim.org>
               'ACBB4324393ADE3515DA2DDA4D1E900E14C1CC04'  # Phil Pennock <phil.pennock@spodhuis.org>
               'E5CA331D44AB8E4C806FDBEE26101B62F69376CE'  # Heiko Schlittermann (Exim MTA Maintainer) <heiko@exim.org>
               'A986F3A6BD6377D8730958DEBCE58C8CE41F32DF') # Jeremy Harris <jgh@wizmail.org>
+
+prepare() {
+  cd $pkgname-$pkgver
+
+  patch --strip=2 --input="${srcdir}/dmarc_api_change.patch"
+}
 
 build() {
   cd $pkgname-$pkgver

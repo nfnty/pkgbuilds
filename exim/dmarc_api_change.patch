@@ -1,0 +1,54 @@
+diff --git a/src/src/EDITME b/src/src/EDITME
+index 80bd07817..28d3d538e 100644
+--- a/src/src/EDITME
++++ b/src/src/EDITME
+@@ -602,14 +602,17 @@ DISABLE_MAL_MKS=yes
+ 
+ # Uncomment the following line to add DMARC checking capability, implemented
+ # using libopendmarc libraries. You must have SPF and DKIM support enabled also.
+-# Library version libopendmarc-1.4.1-1.fc33.x86_64  (on Fedora 33) is known broken;
+-# 1.3.2-3 works.  I seems that the OpenDMARC project broke their API.
+ # SUPPORT_DMARC=yes
+ # CFLAGS += -I/usr/local/include
+ # LDFLAGS += -lopendmarc
+ # Uncomment the following if you need to change the default. You can
+ # override it at runtime (main config option dmarc_tld_file)
+ # DMARC_TLD_FILE=/etc/exim/opendmarc.tlds
++#
++# Library version libopendmarc-1.4.1-1.fc33.x86_64  (on Fedora 33) is known broken;
++# 1.3.2-3 works.  It seems that the OpenDMARC project broke their API.
++# Use this option if you need to build with an old library (1.3.x)
++# DMARC_API=100300
+ 
+ # Uncomment the following line to add ARC (Authenticated Received Chain)
+ # support.  You must have SPF and DKIM support enabled also.
+diff --git a/src/src/config.h.defaults b/src/src/config.h.defaults
+index 25ab75506..221705224 100644
+--- a/src/src/config.h.defaults
++++ b/src/src/config.h.defaults
+@@ -150,6 +150,7 @@ Do not put spaces between # and the 'define'.
+ #define SUPPORT_CRYPTEQ
+ #define SUPPORT_DANE
+ #define SUPPORT_DMARC
++#define DMARC_API 100400
+ #define DMARC_TLD_FILE "/etc/exim/opendmarc.tlds"
+ #define SUPPORT_I18N
+ #define SUPPORT_I18N_2008
+diff --git a/src/src/dmarc.c b/src/src/dmarc.c
+index 17bba9d75..ad0c26c91 100644
+--- a/src/src/dmarc.c
++++ b/src/src/dmarc.c
+@@ -459,7 +459,12 @@ if (!dmarc_abort && !sender_host_authenticated)
+ 		  vs == PDKIM_VERIFY_INVALID ? DMARC_POLICY_DKIM_OUTCOME_TMPFAIL :
+ 		  DMARC_POLICY_DKIM_OUTCOME_NONE;
+     libdm_status = opendmarc_policy_store_dkim(dmarc_pctx, US sig->domain,
+-					       dkim_result, US"");
++/* The opendmarc project broke its API in a way we can't detect * easily.
++ * The EDITME provides a DMARC_API variable */
++#if DMARC_API >= 100400
++                                               sig->selector,
++#endif
++                                               dkim_result, US"");
+     DEBUG(D_receive)
+       debug_printf("DMARC adding DKIM sender domain = %s\n", sig->domain);
+     if (libdm_status != DMARC_PARSE_OKAY)
