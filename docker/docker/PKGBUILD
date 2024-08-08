@@ -21,19 +21,16 @@ _TINI_COMMIT=de40ad007797e0dcd8b7126f27bb87401d224240
 source=("git+https://github.com/docker/cli.git#tag=v$pkgver"
         "git+https://github.com/moby/moby.git#tag=v$pkgver"
         "git+https://github.com/krallin/tini.git#commit=$_TINI_COMMIT"
-        'capabilities.patch'
         'disableresolution.patch'
         "$pkgname.sysusers")
 sha256sums=('4ed0d3d0427cc06c92bacae0a02683ec5bfd7a4705d9ee6082eece90883c16b9'
             'b01447e534d0dd60860227b197f1387067ba74430631fac6a66e9658b1a1c595'
             '28a6641d508f60d47315efb3c85d97360188750a45bd6d3c8737d3f1a2b44121'
             'SKIP'
-            'SKIP'
             '541826011a9836d05a2f42293d5f1beadf2ca8d89fb604487d61a013505678eb')
 
 prepare() {
   cd "${srcdir}/moby"
-  patch --strip=1 --input="${srcdir}/capabilities.patch"
   patch --strip=1 --input="${srcdir}/disableresolution.patch"
 }
 # create a fake go path directory and pushd into it

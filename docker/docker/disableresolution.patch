@@ -1,23 +1,32 @@
 diff --git a/daemon/network.go b/daemon/network.go
-index 01b5956adb..eb44df7895 100644
+index 0896378906..4ab7ad55b5 100644
 --- a/daemon/network.go
 +++ b/daemon/network.go
-@@ -10,7 +10,6 @@ import (
- 	"sync"
+@@ -12,7 +12,6 @@ import (
  
- 	"github.com/docker/docker/api/types"
+ 	"github.com/containerd/log"
+ 	"github.com/docker/docker/api/types/backend"
 -	containertypes "github.com/docker/docker/api/types/container"
+ 	"github.com/docker/docker/api/types/events"
  	"github.com/docker/docker/api/types/filters"
- 	"github.com/docker/docker/api/types/network"
- 	"github.com/docker/docker/container"
-@@ -860,9 +859,7 @@ func buildCreateEndpointOptions(c *container.Container, n libnetwork.Network, ep
- 		createOptions = append(createOptions, libnetwork.CreateOptionService(svcCfg.Name, svcCfg.ID, net.ParseIP(vip), portConfigs, svcCfg.Aliases[n.ID()]))
+ 	networktypes "github.com/docker/docker/api/types/network"
+@@ -815,8 +814,6 @@ func buildCreateEndpointOptions(c *container.Container, n *libnetwork.Network, e
+ 	var createOptions []libnetwork.EndpointOption
+ 	var genericOptions = make(options.Generic)
+ 
+-	nwName := n.Name()
+-
+ 	if epConfig != nil {
+ 		if ipam := epConfig.IPAMConfig; ipam != nil {
+ 			var ipList []net.IP
+@@ -877,9 +874,7 @@ func buildCreateEndpointOptions(c *container.Container, n *libnetwork.Network, e
+ 		createOptions = append(createOptions, libnetwork.CreateOptionService(svcCfg.Name, svcCfg.ID, vip, portConfigs, svcCfg.Aliases[nwID]))
  	}
  
--	if !containertypes.NetworkMode(n.Name()).IsUserDefined() {
+-	if !containertypes.NetworkMode(nwName).IsUserDefined() {
 -		createOptions = append(createOptions, libnetwork.CreateOptionDisableResolution())
 -	}
 +	createOptions = append(createOptions, libnetwork.CreateOptionDisableResolution())
  
- 	// configs that are applicable only for the endpoint in the network
- 	// to which container was connected to on docker run.
+ 	epOpts, err := buildPortsRelatedCreateEndpointOptions(c, n, sb)
+ 	if err != nil {
