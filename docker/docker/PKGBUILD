@@ -2,13 +2,13 @@
 # Maintainer: Morten Linderud <foxboron@archlinux.org>
 
 pkgname=docker
-pkgver=24.0.5
+pkgver=27.1.1
 pkgrel=1
 epoch=1
 pkgdesc='Pack, ship and run any application as a lightweight container'
 arch=('x86_64' 'aarch64')
 url='https://www.docker.com/'
-license=('Apache')
+license=('Apache-2.0')
 depends=('glibc' 'bridge-utils' 'iproute2' 'device-mapper' 'sqlite' 'systemd-libs'
          'libseccomp' 'libtool' 'runc' 'containerd')
 makedepends=('git' 'go' 'btrfs-progs' 'cmake' 'systemd' 'go-md2man' 'sed')
@@ -17,7 +17,6 @@ optdepends=('btrfs-progs: btrfs backend support'
             'docker-scan: vulnerability scanner'
             'docker-buildx: extended build capabilities')
 options=(!lto)
-# https://github.com/moby/moby/tree/v20.10.0/hack/dockerfile/install
 _TINI_COMMIT=de40ad007797e0dcd8b7126f27bb87401d224240
 source=("git+https://github.com/docker/cli.git#tag=v$pkgver"
         "git+https://github.com/moby/moby.git#tag=v$pkgver"
@@ -25,9 +24,9 @@ source=("git+https://github.com/docker/cli.git#tag=v$pkgver"
         'capabilities.patch'
         'disableresolution.patch'
         "$pkgname.sysusers")
-sha256sums=('SKIP'
-            'SKIP'
-            'SKIP'
+sha256sums=('4ed0d3d0427cc06c92bacae0a02683ec5bfd7a4705d9ee6082eece90883c16b9'
+            'b01447e534d0dd60860227b197f1387067ba74430631fac6a66e9658b1a1c595'
+            '28a6641d508f60d47315efb3c85d97360188750a45bd6d3c8737d3f1a2b44121'
             'SKIP'
             'SKIP'
             '541826011a9836d05a2f42293d5f1beadf2ca8d89fb604487d61a013505678eb')
@@ -82,7 +81,7 @@ build() {
   export CGO_CXXFLAGS="${CXXFLAGS}"
   export CGO_LDFLAGS="${LDFLAGS}"
   export LDFLAGS=''
-  export GOFLAGS='-buildmode=pie -trimpath -mod=readonly -modcacherw -ldflags=-linkmode=external'
+  export GOFLAGS='-buildmode=pie -trimpath -mod=readonly -modcacherw -ldflags=-linkmode=external -ldflags=-compressdwarf=false -ldflags=-B=gobuildid'
   export GO111MODULE=off
   export DISABLE_WARN_OUTSIDE_CONTAINER=1
 
