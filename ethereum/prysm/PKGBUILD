@@ -2,8 +2,8 @@
 pkgname=('prysm')
 _srcname='prysm'
 pkgdesc='Go implementation of the Ethereum 2.0 blockchain'
-pkgver='2.0.2'
-_commit='a80b1c252a9b4773493b41999769bf3134ac373f'
+pkgver='5.1.0'
+_commit='b8cd77945df2b8fa8fe50520df0495309a52c2f3'
 pkgrel='1'
 arch=('x86_64')
 url="https://github.com/prysmaticlabs/${_srcname}"
@@ -13,8 +13,20 @@ makedepends=('git' 'go')
 provides=("${pkgname[0]%-git}")
 conflicts=("${pkgname[0]%-git}")
 
-source=("${_srcname}::git+${url}.git#commit=${_commit}")
-sha512sums=('SKIP')
+source=(
+    "${_srcname}::git+${url}.git#commit=${_commit}"
+    'memsize.patch'
+)
+sha512sums=(
+    'SKIP'
+    'SKIP'
+)
+
+prepare() {
+    cd "${srcdir}/${_srcname}"
+
+    git apply "${srcdir}/memsize.patch"
+}
 
 build() {
     cd "${srcdir}/${_srcname}"

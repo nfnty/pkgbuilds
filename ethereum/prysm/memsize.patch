@@ -1,0 +1,83 @@
+diff --git a/deps.bzl b/deps.bzl
+index da7c8c7d0..72d0fda7b 100644
+--- a/deps.bzl
++++ b/deps.bzl
+@@ -912,12 +912,6 @@ def prysm_deps():
+         sum = "h1:bBLctRc7kr01YGvaDfgLbTwjFNW5jdp5y5rj8XXBHfY=",
+         version = "v0.0.0-20230517082657-f9840df7b83e",
+     )
+-    go_repository(
+-        name = "com_github_fjl_memsize",
+-        importpath = "github.com/fjl/memsize",
+-        sum = "h1:FtmdgXiUlNeRsoNMFlKLDt+S+6hbjVMEW6RGQ7aUf7c=",
+-        version = "v0.0.0-20190710130421-bcb5799ab5e5",
+-    )
+     go_repository(
+         name = "com_github_flosch_pongo2_v4",
+         importpath = "github.com/flosch/pongo2/v4",
+diff --git a/go.mod b/go.mod
+index 482659fb5..a35c2e6b7 100644
+--- a/go.mod
++++ b/go.mod
+@@ -18,7 +18,6 @@ require (
+ 	github.com/dustin/go-humanize v1.0.0
+ 	github.com/emicklei/dot v0.11.0
+ 	github.com/ethereum/go-ethereum v1.13.5
+-	github.com/fjl/memsize v0.0.0-20190710130421-bcb5799ab5e5
+ 	github.com/fsnotify/fsnotify v1.6.0
+ 	github.com/ghodss/yaml v1.0.0
+ 	github.com/go-yaml/yaml v2.1.0+incompatible
+diff --git a/go.sum b/go.sum
+index c15dec2fc..de8075ae0 100644
+--- a/go.sum
++++ b/go.sum
+@@ -272,8 +272,6 @@ github.com/fatih/color v1.13.0 h1:8LOYc1KYPPmyKMuN8QV2DNRWNbLo6LZ0iLs8+mlH53w=
+ github.com/fatih/color v1.13.0/go.mod h1:kLAiJbzzSOZDVNGyDpeOxJ47H46qBXwg5ILebYFFOfk=
+ github.com/ferranbt/fastssz v0.0.0-20210120143747-11b9eff30ea9 h1:9VDpsWq096+oGMDTT/SgBD/VgZYf4pTF+KTPmZ+OaKM=
+ github.com/ferranbt/fastssz v0.0.0-20210120143747-11b9eff30ea9/go.mod h1:DyEu2iuLBnb/T51BlsiO3yLYdJC6UbGMrIkqK1KmQxM=
+-github.com/fjl/memsize v0.0.0-20190710130421-bcb5799ab5e5 h1:FtmdgXiUlNeRsoNMFlKLDt+S+6hbjVMEW6RGQ7aUf7c=
+-github.com/fjl/memsize v0.0.0-20190710130421-bcb5799ab5e5/go.mod h1:VvhXpOYNQvB+uIk2RvXzuaQtkQJzzIx6lSBe1xv7hi0=
+ github.com/flynn/go-shlex v0.0.0-20150515145356-3f9db97f8568/go.mod h1:xEzjJPgXI435gkrCt3MPfRiAkVrwSbHsst4LCFVfpJc=
+ github.com/flynn/noise v1.1.0 h1:KjPQoQCEFdZDiP03phOvGi11+SVVhBG2wOWAorLsstg=
+ github.com/flynn/noise v1.1.0/go.mod h1:xbMo+0i6+IGbYdJhF31t2eR1BIU0CYc12+BNAKwUTag=
+diff --git a/runtime/debug/BUILD.bazel b/runtime/debug/BUILD.bazel
+index db34de5e7..bd3d7bdce 100644
+--- a/runtime/debug/BUILD.bazel
++++ b/runtime/debug/BUILD.bazel
+@@ -18,7 +18,6 @@ go_library(
+     importpath = "github.com/prysmaticlabs/prysm/v5/runtime/debug",
+     visibility = ["//visibility:public"],
+     deps = [
+-        "@com_github_fjl_memsize//memsizeui:go_default_library",
+         "@com_github_prometheus_client_golang//prometheus:go_default_library",
+         "@com_github_prometheus_client_golang//prometheus/promauto:go_default_library",
+         "@com_github_sirupsen_logrus//:go_default_library",
+diff --git a/runtime/debug/debug.go b/runtime/debug/debug.go
+index ab79ec4be..45c6994c5 100644
+--- a/runtime/debug/debug.go
++++ b/runtime/debug/debug.go
+@@ -37,7 +37,6 @@ import (
+ 	"sync"
+ 	"time"
+ 
+-	"github.com/fjl/memsize/memsizeui"
+ 	log "github.com/sirupsen/logrus"
+ 	"github.com/urfave/cli/v2"
+ )
+@@ -45,8 +44,6 @@ import (
+ // Handler is the global debugging handler.
+ var Handler = new(HandlerT)
+ 
+-// Memsize is the memsizeui Handler(?).
+-var Memsize memsizeui.Handler
+ var (
+ 	// PProfFlag to enable pprof HTTP server.
+ 	PProfFlag = &cli.BoolFlag{
+@@ -351,7 +348,6 @@ func Setup(ctx *cli.Context) error {
+ }
+ 
+ func startPProf(address string) {
+-	http.Handle("/memsize/", http.StripPrefix("/memsize", &Memsize))
+ 	log.WithField("addr", fmt.Sprintf("http://%s/debug/pprof", address)).Info("Starting pprof server")
+ 	go func() {
+ 		srv := &http.Server{
