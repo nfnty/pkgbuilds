@@ -1,9 +1,8 @@
-# shellcheck disable=SC2034,SC2154,SC2164
 pkgname=('mlt-git')
 _srcname='mlt'
 pkgdesc='Multimedia Framework'
-pkgver='r1'
-pkgrel='1'
+pkgver=6.26.1.r148.g941c6ca7
+pkgrel=1
 arch=('i686' 'x86_64')
 url="https://github.com/mltframework/${_srcname}"
 license=('GPL2')
@@ -22,6 +21,7 @@ optdepends=(
     'movit: opengl plugin'
 )
 makedepends=(
+    'cmake'
     'ladspa'
     'frei0r-plugins'
     'libdv'
@@ -46,29 +46,16 @@ sha512sums=('SKIP')
 
 pkgver() {
     cd "${srcdir}/${_srcname}"
-
-    printf 'r%s.%s.%s\n' \
-        "$( git rev-list --count 'HEAD' )" \
-        "$( git log --max-count='1' --pretty='format:%ct' )" \
-        "$( git rev-parse --short 'HEAD' )"
+    git describe --tags --long | sed 's/^v//;s/\([^-]*-g\)/r\1/;s/-/./g'
 }
 
 build() {
-    cd "${srcdir}/${_srcname}"
-
-    ./configure \
-        --prefix='/usr' \
-        --avformat-swscale \
-        --enable-gpl \
-        --enable-gpl3 \
-        --qt-libdir='/usr/lib' \
-        --qt-includedir='/usr/include/qt'
-
-    make
+    cmake -S "${srcdir}/${_srcname}" -B build \
+          -DCMAKE_INSTALL_PREFIX=/usr \
+          -DCMAKE_BUILD_TYPE=Release
+    make -C build
 }
 
 package() {
-    cd "${srcdir}/${_srcname}"
-
-    make DESTDIR="${pkgdir}" install
+    make -C build DESTDIR="${pkgdir}" install
 }
