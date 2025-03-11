@@ -2,14 +2,14 @@
 # Maintainer: Morten Linderud <foxboron@archlinux.org>
 
 pkgname=docker
-pkgver=27.1.1
+pkgver=28.0.1
 pkgrel=1
 epoch=1
 pkgdesc='Pack, ship and run any application as a lightweight container'
 arch=('x86_64' 'aarch64')
 url='https://www.docker.com/'
 license=('Apache-2.0')
-depends=('glibc' 'bridge-utils' 'iproute2' 'device-mapper' 'sqlite' 'systemd-libs'
+depends=('glibc' 'iproute2' 'device-mapper' 'sqlite' 'systemd-libs'
          'libseccomp' 'libtool' 'runc' 'containerd')
 makedepends=('git' 'go' 'btrfs-progs' 'cmake' 'systemd' 'go-md2man' 'sed')
 optdepends=('btrfs-progs: btrfs backend support'
@@ -23,8 +23,8 @@ source=("git+https://github.com/docker/cli.git#tag=v$pkgver"
         "git+https://github.com/krallin/tini.git#commit=$_TINI_COMMIT"
         'disableresolution.patch'
         "$pkgname.sysusers")
-sha256sums=('4ed0d3d0427cc06c92bacae0a02683ec5bfd7a4705d9ee6082eece90883c16b9'
-            'b01447e534d0dd60860227b197f1387067ba74430631fac6a66e9658b1a1c595'
+sha256sums=('8885ea9d04414ff887d0a5a652b6aeaee94d17c0e495ebafd6b58fbd2d7a43c2'
+            '477289a41f11c3a9c1b0fea64b1b50089a732289077a91132832c156c77d71d8'
             '28a6641d508f60d47315efb3c85d97360188750a45bd6d3c8737d3f1a2b44121'
             'SKIP'
             '541826011a9836d05a2f42293d5f1beadf2ca8d89fb604487d61a013505678eb')

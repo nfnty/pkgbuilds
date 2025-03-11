@@ -2,8 +2,8 @@
 pkgname=('lighthouse')
 _srcname='lighthouse'
 pkgdesc='An open-source Ethereum 2.0 client, written in Rust and maintained by Sigma Prime'
-pkgver='5.3.0'
-_commit='d6ba8c397557f5c977b70f0d822a9228e98ca214'
+pkgver='6.0.1'
+_commit='0d90135047519f4c2ee586d50e560f7bb2ff9b10'
 pkgrel='1'
 arch=('x86_64')
 url="https://github.com/sigp/${_srcname}"
