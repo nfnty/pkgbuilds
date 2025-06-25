@@ -39,6 +39,6 @@ package() {
 
     cd xkb
     for directory in *; do
-        install -D --mode=644 --target-directory="${pkgdir}/usr/share/X11/xkb/${directory}" "${directory}/"*
+        install -D --mode=644 --target-directory="${pkgdir}/usr/share/xkeyboard-config-2/${directory}" "${directory}/"*
     done
 }
