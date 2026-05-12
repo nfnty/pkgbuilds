@@ -14,8 +14,20 @@ makedepends=('git' 'rust' 'cmake' 'clang' 'protobuf' 'postgresql-libs')
 provides=("${pkgname[0]%-git}")
 conflicts=("${pkgname[0]%-git}")
 
-source=("${_srcname}::git+${url}.git#commit=${_commit}")
-sha512sums=('SKIP')
+source=(
+    "${_srcname}::git+${url}.git#commit=${_commit}"
+    'xdelta.patch'
+)
+sha512sums=(
+    'SKIP'
+    'SKIP'
+)
+
+prepare() {
+    cd "${srcdir}/${_srcname}"
+
+    git apply "${srcdir}/xdelta.patch"
+}
 
 build() {
     cd "${srcdir}/${_srcname}"
