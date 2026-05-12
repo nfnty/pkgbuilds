@@ -1,25 +1,25 @@
 diff --git a/daemon/network.go b/daemon/network.go
-index 0896378906..4ab7ad55b5 100644
+index 60ff295d92..1866a167da 100644
 --- a/daemon/network.go
 +++ b/daemon/network.go
-@@ -12,7 +12,6 @@ import (
+@@ -14,7 +14,6 @@ import (
+ 	"sync"
  
  	"github.com/containerd/log"
- 	"github.com/docker/docker/api/types/backend"
--	containertypes "github.com/docker/docker/api/types/container"
- 	"github.com/docker/docker/api/types/events"
- 	"github.com/docker/docker/api/types/filters"
- 	networktypes "github.com/docker/docker/api/types/network"
-@@ -815,8 +814,6 @@ func buildCreateEndpointOptions(c *container.Container, n *libnetwork.Network, e
+-	containertypes "github.com/moby/moby/api/types/container"
+ 	"github.com/moby/moby/api/types/events"
+ 	networktypes "github.com/moby/moby/api/types/network"
+ 	clustertypes "github.com/moby/moby/v2/daemon/cluster/provider"
+@@ -935,8 +934,6 @@ func buildCreateEndpointOptions(c *container.Container, n *libnetwork.Network, e
  	var createOptions []libnetwork.EndpointOption
- 	var genericOptions = make(options.Generic)
+ 	genericOptions := make(options.Generic)
  
 -	nwName := n.Name()
 -
  	if epConfig != nil {
  		if ipam := epConfig.IPAMConfig; ipam != nil {
  			var ipList []net.IP
-@@ -877,9 +874,7 @@ func buildCreateEndpointOptions(c *container.Container, n *libnetwork.Network, e
+@@ -990,9 +987,7 @@ func buildCreateEndpointOptions(c *container.Container, n *libnetwork.Network, e
  		createOptions = append(createOptions, libnetwork.CreateOptionService(svcCfg.Name, svcCfg.ID, vip, portConfigs, svcCfg.Aliases[nwID]))
  	}
  

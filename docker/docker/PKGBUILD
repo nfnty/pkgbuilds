@@ -2,7 +2,7 @@
 # Maintainer: Morten Linderud <foxboron@archlinux.org>
 
 pkgname=docker
-pkgver=28.3.3
+pkgver=29.4.3
 pkgrel=1
 epoch=1
 pkgdesc='Pack, ship and run any application as a lightweight container'
@@ -10,7 +10,7 @@ arch=('x86_64' 'aarch64')
 url='https://www.docker.com/'
 license=('Apache-2.0')
 depends=('glibc' 'iproute2' 'device-mapper' 'sqlite' 'systemd-libs'
-         'libseccomp' 'libtool' 'runc' 'containerd')
+         'libseccomp' 'libtool' 'nftables' 'runc' 'containerd')
 makedepends=('git' 'go' 'btrfs-progs' 'cmake' 'systemd' 'go-md2man' 'sed')
 optdepends=('btrfs-progs: btrfs backend support'
             'pigz: parallel gzip compressor support'
@@ -18,12 +18,12 @@ optdepends=('btrfs-progs: btrfs backend support'
 options=(!lto)
 _TINI_COMMIT=de40ad007797e0dcd8b7126f27bb87401d224240
 source=("git+https://github.com/docker/cli.git#tag=v$pkgver"
-        "git+https://github.com/moby/moby.git#tag=v$pkgver"
+        "git+https://github.com/moby/moby.git#tag=docker-v$pkgver"
         "git+https://github.com/krallin/tini.git#commit=$_TINI_COMMIT"
         'disableresolution.patch'
         "$pkgname.sysusers")
-sha256sums=('e35ed1d086748340c4e12ffe2cb4dcf7251f8eff20f609f13c37ba75e7d26ebd'
-            'e20dbb122f7b496917de4076d9692c783f7b851957f6d368ce279f9e8dbcaca0'
+sha256sums=('e3761de1f2b2bcca0e25119d0eeb1c263ddbf23091e44ed3f48f1ceb910b8e7c'
+            '22390c4f020f90c5a8189dd178e9ea0261bc40ff59b63732b0aad42cf05a7437'
             '28a6641d508f60d47315efb3c85d97360188750a45bd6d3c8737d3f1a2b44121'
             'SKIP'
             '541826011a9836d05a2f42293d5f1beadf2ca8d89fb604487d61a013505678eb')
@@ -90,7 +90,7 @@ build() {
 
   ### daemon
   echo 'Building daemon'
-  _fake_gopath_pushd moby github.com/docker/docker
+  _fake_gopath_pushd moby github.com/moby/moby/v2
   DOCKER_GITCOMMIT=$(cd "$srcdir"/moby && git rev-parse --short HEAD) \
     DOCKER_BUILDTAGS='seccomp journald apparmor' \
     VERSION=$pkgver \
@@ -117,7 +117,6 @@ package() {
   install -Dm644 'init/systemd/docker.service' "$pkgdir/usr/lib/systemd/system/docker.service"
   install -Dm644 'init/systemd/docker.socket' "$pkgdir/usr/lib/systemd/system/docker.socket"
   # systemd rules
-  install -Dm644 'udev/80-docker.rules' "$pkgdir/usr/lib/udev/rules.d/80-docker.rules"
   install -Dm644 "$srcdir/$pkgname.sysusers" "$pkgdir/usr/lib/sysusers.d/$pkgname.conf"
   ### cli
   cd "$srcdir"/cli
